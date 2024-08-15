@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnrf07o2xqjni"]
 
-[ext_resource type="Script" path="res://Prefabs/monster.gd" id="1_8ie6h"]
+[ext_resource type="Script" path="res://Prefabs/monster_obj.gd" id="1_8ie6h"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/placeholder_monster.tres" id="2_cy5to"]
 
 [node name="Monster" type="Node3D"]

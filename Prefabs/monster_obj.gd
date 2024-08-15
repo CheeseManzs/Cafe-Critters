@@ -11,7 +11,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	rotate_y(delta)
+	rotate_y(delta) 
 	$Sprite3D.texture = monsterData.sprite
 	t += delta
 	print(t)
