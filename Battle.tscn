@@ -1,3 +1,25 @@
-[gd_scene format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=4 format=3 uid="uid://ndn4xwrerfcs"]
+
+[ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1guf"]
+albedo_color = Color(0.277118, 0.159207, 0.0452019, 1)
 
 [node name="Battle" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, 0, 0)
+mesh = SubResource("BoxMesh_6m2jc")
+surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.041, 1.3119)
+
+[node name="Monster" parent="." instance=ExtResource("1_6cll2")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.650536, 0.759476, 0, -0.759476, 0.650536, 0, 2.74825, 0)
+shadow_enabled = true
+shadow_blur = 0.0
