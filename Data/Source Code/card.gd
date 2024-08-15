@@ -1,5 +1,8 @@
+class_name Card
+
 #list of god alignments
 enum ALIGNMENT {
+	Default,
 	Mise,
 	Scythanna,
 	Anvi,
@@ -19,12 +22,17 @@ enum ROLE {
 }
 
 #cost of card
-var cost: int = 0
+var cost: int
 #priority of card
-var priority: int = 0
+var priority: int
 #god alignment of card
-var alignment: ALIGNMENT = ALIGNMENT.Mise
+var alignment: ALIGNMENT
 #role of card
-var role: ROLE = ROLE.Generic
-var description: String = ""
-var name: String = ""
+var role: ROLE
+#card desc
+var description: String
+#card name
+var name: String
+
+func effect() -> void:
+	pass
