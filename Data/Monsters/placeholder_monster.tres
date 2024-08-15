@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bepmuf4wv2p6v"]
+
+[ext_resource type="Script" path="res://Data/Custom Resource Source Code/monster_object.gd" id="1_im42t"]
+[ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="2_aq5nh"]
+
+[resource]
+script = ExtResource("1_im42t")
+id = 0
+name = "Placeholder McPlaceholder"
+sprite = ExtResource("2_aq5nh")
