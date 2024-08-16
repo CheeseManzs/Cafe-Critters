@@ -1,4 +1,5 @@
 class_name Card
+extends Resource
 
 #list of god alignments
 enum ALIGNMENT {
