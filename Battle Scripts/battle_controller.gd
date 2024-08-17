@@ -5,22 +5,31 @@ extends Node
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int
 #node that corrosponds to the player monster
-@export var playerMonsterObj: Node3D
+var playerMonsterObj: Node3D
 #node that corrosponds to the enemy monster
-@export var enemyMonsterObj: Node3D
+var enemyMonsterObj: Node3D
 
 @export var debugTeamA: Array
 @export var debugTeamB: Array
 
+#UIs for active player monsters
+@export var playerUI: Array[Node]
+#UIs for active enemy monsters
+@export var enemyUI: Array[Node]
+
+
+var maxActiveMons: int = 1
 #battle monsters owned by the player
-var playerTeam: Array[Monster] = []
-var playerObjs: Array[Monster] = []
+var playerTeam: Array[BattleMonster] = []
+#index for current active player mon
+var activePlayerMon = 0
 #battle monsters owned by the enemy
-var enemyTeam: Array[Monster] = []
-var enemyObjs: Array[Monster] = []
+var enemyTeam: Array[BattleMonster] = []
+#index for current active enemy mon
+var activeEnemyMon = 0
 
 #instantiates a monster
-func createMonster(isPlayer, monObj, tID) -> void:
+func createMonster(isPlayer, monObj, tID) -> Node3D:
 	#instantiate monster node from scene
 	var newObj: Node3D = monsterObject.instantiate()
 	#set the team id
@@ -31,14 +40,35 @@ func createMonster(isPlayer, monObj, tID) -> void:
 	newObj.set_meta("playerControlled", isPlayer)
 	#add monster node to scene
 	add_child(newObj)
+	return newObj
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#create monsters on the player's side
 	for index in len(plrTeam):
-		createMonster(true, plrTeam[index], index)
+		#create battle monster object
+		var newBattleMon = BattleMonster.new(plrTeam[index])
+		#add to player team
+		playerTeam.push_back(newBattleMon)
+	
 	#create monsters on the enemy's side
 	for index in len(enmTeam):
-		createMonster(false, enmTeam[index], index)
+		#create battle monster object
+		var newBattleMon = BattleMonster.new(enmTeam[index])
+		#add to enemy team
+		enemyTeam.push_back(newBattleMon)
+	
+	
+	
+	for idIndex in min(maxActiveMons, len(playerTeam)):
+		#create battle object for player
+		playerMonsterObj = createMonster(true, playerTeam[activePlayerMon + idIndex].rawData, idIndex)
+		#create battle object for enemy
+		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)
+	
+		#assign ui to player mon
+		playerUI[idIndex].setConnectedMon(playerTeam[activePlayerMon+idIndex])
+		#assign ui to enemy mon
+		enemyUI[idIndex].setConnectedMon(enemyTeam[activeEnemyMon+idIndex])
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -49,4 +79,5 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	pass

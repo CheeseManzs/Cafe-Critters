@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
 
-[node name="Player Mon Details" type="Panel"]
+[node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("connectedLabel", "connectedBar")]
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 210.0
 offset_bottom = 68.355
 script = ExtResource("1_2qbiv")
+connectedLabel = NodePath("RichTextLabel")
+connectedBar = NodePath("ProgressBar")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1
