@@ -17,8 +17,8 @@ var enemyMonsterObj: Node3D
 #UIs for active enemy monsters
 @export var enemyUI: Array[Node]
 
-
-var maxActiveMons: int = 1
+#maximum number of monster than can be on the field per side at the same time
+var maxActiveMons: int = 3
 #battle monsters owned by the player
 var playerTeam: Array[BattleMonster] = []
 #index for current active player mon
