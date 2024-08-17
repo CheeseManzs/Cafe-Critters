@@ -4,6 +4,8 @@ class_name BattleMonster
 @export var rawData: Monster
 #current deck of the monster
 @export var currentDeck: Zone
+#current hand of the monster/player
+@export var currentHand: Zone
 #current level of the monster
 @export var level: int
 #current health of the monster
@@ -28,6 +30,8 @@ func _init(data: Monster) -> void:
 	defense = rawData.statDefense
 	attack = rawData.statAttack
 	currentDeck = rawData.deck.clone()
+	hardReset()
+	
 
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:
@@ -42,9 +46,23 @@ func damageShield(depletionAmount: int) -> int:
 		return overdamage
 	return 0
 
-# Resets values for the start of a turn
-func reset() -> void:
+#reset that happens on switch-in
+func hardReset() -> void:
 	shield = 0
+	currentHand = Zone.new()
+	currentHand.storedCards = currentDeck.bulkDraw(5)
+
+# Resets values for the start of a turn
+func reset(active = true) -> void:
+	shield = 0
+	if active && len(currentDeck.storedCards) == 0:
+		BattleLog.singleton.log("DEBUG: Resetting deck")
+		currentDeck = rawData.deck.clone()
+	
+	if active && len(currentDeck.storedCards) > 0 && len(currentHand.storedCards) < 5:
+		var card: Array[Card] = currentDeck.bulkDraw(1)
+		BattleLog.singleton.log("DEBUG: " + rawData.name + " drew " + card[0].name)
+		currentHand.storedCards += card
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
@@ -62,7 +80,6 @@ func trueDamage(dmg: int) -> void:
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	#damage shield and calculate overdamage
-	print('took ',dmg,' damage')
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg)	

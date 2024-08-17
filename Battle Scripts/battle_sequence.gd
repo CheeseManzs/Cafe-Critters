@@ -26,11 +26,9 @@ func rearrange() -> void:
 	actions.sort_custom(sortAction)
 
 func runActions(battleController: Node) -> void:
-	print('running turns')
 	for i in len(actions):
 		var action = actions[i]
 		#run card action
 		var val = action.card.effect(action.battleMonster, action.target)
 		action.printAction(val)
 		await battleController.get_tree().create_timer(0.75).timeout
-		print('done turn')

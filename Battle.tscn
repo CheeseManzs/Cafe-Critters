@@ -1,11 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=11 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="2_4d2cp"]
-[ext_resource type="Texture2D" uid="uid://ccewpecod4tj7" path="res://Placeholder Icons/sword icon.png" id="3_5afs8"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_i2ofm"]
-[ext_resource type="Texture2D" uid="uid://do2k64pubhvkg" path="res://Placeholder Icons/shield icon.png" id="4_korlb"]
 [ext_resource type="Texture2D" uid="uid://20l40cwgl1w6" path="res://Placeholder Icons/card icon.png" id="5_43dfa"]
 [ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="7_yuiyn"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_6owi0"]
@@ -31,7 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "attackButton", "defendButton", "cardButton")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "cardButtons")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
@@ -39,9 +37,7 @@ debugTeamB = [ExtResource("2_4d2cp"), ExtResource("3_i2ofm"), ExtResource("2_4d2
 playerUI = [NodePath("../Control/Player Mon Details"), NodePath("../Control/Player Mon Details2"), NodePath("../Control/Player Mon Details3")]
 enemyUI = [NodePath("../Control/Enemy Mon Details"), NodePath("../Control/Enemy Mon Details2"), NodePath("../Control/Enemy Mon Details3")]
 playerChoiceUI = NodePath("../Control/Panel")
-attackButton = NodePath("../Control/Panel/GridContainer/Attack")
-defendButton = NodePath("../Control/Panel/GridContainer/Defend")
-cardButton = NodePath("../Control/Panel/GridContainer/Card")
+cardButtons = [NodePath("../Control/Panel/VBoxContainer/Card 0"), NodePath("../Control/Panel/VBoxContainer/Card 1"), NodePath("../Control/Panel/VBoxContainer/Card 2"), NodePath("../Control/Panel/VBoxContainer/Card 3"), NodePath("../Control/Panel/VBoxContainer/Card 4")]
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -52,44 +48,58 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 30.0
-offset_top = -131.0
+offset_top = -201.0
 offset_right = 461.0
 offset_bottom = -30.0
 grow_vertical = 0
 
-[node name="GridContainer" type="GridContainer" parent="Control/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "Available Actions"
 
-[node name="Card" type="Button" parent="Control/Panel/GridContainer"]
+[node name="Card 0" type="Button" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Use Card"
 icon = ExtResource("5_43dfa")
 expand_icon = true
 
-[node name="Attack" type="Button" parent="Control/Panel/GridContainer"]
+[node name="Card 1" type="Button" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Debug Shortcut: Attack"
-icon = ExtResource("3_5afs8")
+text = "Use Card"
+icon = ExtResource("5_43dfa")
 expand_icon = true
 
-[node name="Defend" type="Button" parent="Control/Panel/GridContainer"]
+[node name="Card 2" type="Button" parent="Control/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Debug Shortcut: Defend"
-icon = ExtResource("4_korlb")
+text = "Use Card"
+icon = ExtResource("5_43dfa")
+expand_icon = true
+
+[node name="Card 3" type="Button" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use Card"
+icon = ExtResource("5_43dfa")
+expand_icon = true
+
+[node name="Card 4" type="Button" parent="Control/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use Card"
+icon = ExtResource("5_43dfa")
 expand_icon = true
 
 [node name="Player Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
@@ -151,13 +161,17 @@ layout_mode = 1
 offset_left = -3.0
 offset_top = 301.0
 offset_right = 235.0
-offset_bottom = 893.0
+offset_bottom = 684.0
 script = ExtResource("9_6owi0")
 logPrefab = ExtResource("10_8ijj2")
 
-[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="onCardPressed"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="emitGUISignal"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="onAttackPressed"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="emitGUISignal"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="onDefendPressed"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 0" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 0" to="Battle Controller" method="onHand" binds= [0]]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 1" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 1" to="Battle Controller" method="onHand" binds= [1]]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 2" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 2" to="Battle Controller" method="onHand" binds= [2]]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 3" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 3" to="Battle Controller" method="onHand" binds= [3]]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 4" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/VBoxContainer/Card 4" to="Battle Controller" method="onHand" binds= [4]]

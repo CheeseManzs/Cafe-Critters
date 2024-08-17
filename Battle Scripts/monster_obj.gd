@@ -25,7 +25,6 @@ func reloadMonster() -> void:
 func _ready() -> void:
 	reloadMonster()
 	playerControlled = get_meta("playerControlled")
-	print(monsterData)
 	#generate the bobbing offset
 	randOffset = rng.randf_range(0, 20)
 
@@ -40,7 +39,6 @@ func posOddNegEven(x) -> int:
 func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
 	var positionIndex = ceil(teamID/2.0)
-	print(teamID, ' ', positionIndex)
 	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex
 	var pos = Vector3(-2 - positionIndex*1.5 + deltaZ/1.3, 0.953, 0.25 + deltaZ)
 	if !playerControlled:

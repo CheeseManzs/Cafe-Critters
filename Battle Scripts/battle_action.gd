@@ -18,10 +18,13 @@ func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targ
 	card = p_card
 
 func printAction(value: int):
+	#target of action
 	var targName: String = target.rawData.name
+	#user of action
 	var plrName: String = battleMonster.rawData.name
-	var initText: String
+	#text to print
 	var printText: String
 	printText = plrName + " used " + card.name.to_lower() + " > " + str(value)
+	#send text to battle log
 	BattleLog.singleton.log(printText)
 	

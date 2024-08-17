@@ -25,7 +25,7 @@ var enemyMonsterObj: Node3D
 #action buttons
 @export var attackButton: Button
 @export var defendButton: Button
-@export var cardButton: Button
+@export var cardButtons: Array[Button]
 
 #maximum number of monster than can be on the field per side at the same time
 var maxActiveMons: int = 1
@@ -43,6 +43,7 @@ var timer
 var inTurn: bool = false
 #player's chosen (cached) action
 var playerAction: Card
+var playerCardID = -1
 #enemy's chosen action
 var enemyAction: Card
 
@@ -120,9 +121,12 @@ func enemyDeclare() -> Array[BattleAction]:
 	var actions: Array[BattleAction] = []
 	for i in maxActiveMons:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
+		if len(mon.currentHand.storedCards) == 0:
+			BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
+			continue
 		var chosenTarget = playerTeam[activePlayerMon]
-		var chosenCard: Card = mon.currentDeck.storedCards.pick_random()
-			#add chosen card logic here
+		var chosenCard: Card = mon.currentHand.bulkDraw(1)[0]
+		#add chosen card logic here
 		
 		#add to action queue
 		var battleAction: BattleAction = BattleAction.new(
@@ -146,6 +150,7 @@ func activeTurn() -> void:
 	 
 	
 	playerAction = null
+	playerCardID = -1
 	#hide player gui
 	playerChoiceUI.hide()
 	#wait for enemy choice and animations
@@ -157,14 +162,24 @@ func activeTurn() -> void:
 		#show player gui
 		playerChoiceUI.show()
 		var mon: BattleMonster = playerTeam[activePlayerMon + i]
+		
+		for uiIndex in len(cardButtons):
+			var cardButton: Button = cardButtons[uiIndex]
+			if uiIndex >= len(mon.currentHand.storedCards):
+				cardButton.hide()
+			else:
+				cardButton.show()
+				cardButton.text = mon.currentHand.storedCards[uiIndex].name
+		
 		#wait for a gui choice to be made
 		await gui_choice
+		playerChoiceUI.hide()
+		await get_tree().create_timer(0.01).timeout
 		#run choices for player and enemy
-		print("Chosen: ",playerAction)
-		
 		var chosenTarget = enemyTeam[activeEnemyMon]
 		var chosenPriority = 0
-		var chosenCard: Card = playerAction
+		print(playerCardID)
+		var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
 		
 		#add to action queue
 		var battleAction: BattleAction = BattleAction.new(
@@ -175,7 +190,7 @@ func activeTurn() -> void:
 			chosenCard
 		)
 		actions.push_back(battleAction)
-		playerChoiceUI.hide()
+		
 		#wait a bit for the next monster
 		await get_tree().create_timer(0.3).timeout
 	
@@ -195,6 +210,11 @@ func onDefendPressed() -> void:
 
 func onCardPressed() -> void:
 	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[0]
+
+func onHand(index: int) -> void:
+	print("hand index ",index)
+	playerCardID = index
+	print("player card:",index)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
