@@ -20,6 +20,6 @@ transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 
 [node name="Monster" parent="." instance=ExtResource("1_6cll2")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.650536, 0.759476, 0, -0.759476, 0.650536, 0, 2.74825, 0)
+transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
 shadow_enabled = true
 shadow_blur = 0.0
