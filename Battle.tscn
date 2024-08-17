@@ -15,7 +15,7 @@ mesh = SubResource("BoxMesh_6m2jc")
 surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.041, 1.3119)
+transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 2.387)
 
 [node name="Monster" parent="." instance=ExtResource("1_6cll2")]
 
@@ -23,3 +23,6 @@ transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 
 transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
 shadow_enabled = true
 shadow_blur = 0.0
+
+[node name="Enemy Monster" parent="." instance=ExtResource("1_6cll2")]
+metadata/playerControlled = false
