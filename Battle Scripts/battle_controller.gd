@@ -47,6 +47,11 @@ var playerCardID = -1
 #enemy's chosen action
 var enemyAction: Card
 
+#set MP of player
+var playerMP = 0
+#set MP of enemy
+var enemyMP = 0
+
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
 	#instantiate monster node from scene
@@ -65,14 +70,14 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#create monsters on the player's side
 	for index in len(plrTeam):
 		#create battle monster object
-		var newBattleMon = BattleMonster.new(plrTeam[index])
+		var newBattleMon = BattleMonster.new(plrTeam[index], self, true)
 		#add to player team
 		playerTeam.push_back(newBattleMon)
 	
 	#create monsters on the enemy's side
 	for index in len(enmTeam):
 		#create battle monster object
-		var newBattleMon = BattleMonster.new(enmTeam[index])
+		var newBattleMon = BattleMonster.new(enmTeam[index], self, false)
 		#add to enemy team
 		enemyTeam.push_back(newBattleMon)
 	
@@ -94,21 +99,6 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	enemyUI[0].setConnectedMon(enemyTeam[activeEnemyMon])
 
 
-#damage formula for basic attack
-static func damageAttack(attacker: BattleMonster, defender: BattleMonster):
-	return attacker.attack
-
-static func actionAttack(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = damageAttack(attacker, defender)
-	var trueDmg = defender.receiveDamage(dmg, attacker)
-	return trueDmg
-
-static func actionDefend(defender: BattleMonster) -> int:
-	var shield = defender.defense
-	defender.addShield(shield)
-	return shield
-
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -117,13 +107,15 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func enemyDeclare() -> Array[BattleAction]:
-	#wait 1 second
+	#initialize list of possible actions
 	var actions: Array[BattleAction] = []
+	#loop through active mons (currently only supports 1 active mon so it doesnt really matter)
 	for i in maxActiveMons:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		if len(mon.currentHand.storedCards) == 0:
 			BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
 			continue
+		#target is automatically set to the main active mon
 		var chosenTarget = playerTeam[activePlayerMon]
 		var chosenCard: Card = mon.currentHand.bulkDraw(1)[0]
 		#add chosen card logic here
@@ -143,6 +135,13 @@ func enemyDeclare() -> Array[BattleAction]:
 
 func activeTurn() -> void:
 	inTurn = true
+	
+	playerMP += 3
+	enemyMP += 3
+	if playerMP > 6:
+		playerMP = 6
+	if enemyMP > 6:
+		enemyMP = 6
 	
 	#reset temporary values
 	playerTeam[activePlayerMon].reset()

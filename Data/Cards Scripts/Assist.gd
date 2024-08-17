@@ -9,4 +9,11 @@ func _init() -> void:
 	name = "Assist"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return 0
+	#gives 5 shield
+	var shieldGiven = 5
+	var mpGiven = 1
+	#return add shield to user
+	attacker.addShield(shieldGiven)
+	#add mp
+	attacker.addMP(mpGiven)
+	return shieldGiven

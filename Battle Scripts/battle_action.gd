@@ -26,5 +26,5 @@ func printAction(value: int):
 	var printText: String
 	printText = plrName + " used " + card.name.to_lower() + " > " + str(value)
 	#send text to battle log
-	BattleLog.singleton.log(printText)
+	#BattleLog.singleton.log(printText)
 	

@@ -18,10 +18,15 @@ class_name BattleMonster
 @export var attack: int
 #monster's current shield
 @export var shield: int
+#battle controller that instantiated the monster
+var battleController: BattleController
+var playerControlled: bool
 
-func _init(data: Monster) -> void:
+func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
 	#set raw data
 	rawData = data
+	#set the controller
+	battleController = controller
 	#copy data for raw data
 	level = 1
 	shield = 0
@@ -30,6 +35,7 @@ func _init(data: Monster) -> void:
 	defense = rawData.statDefense
 	attack = rawData.statAttack
 	currentDeck = rawData.deck.clone()
+	playerControlled = p_playerControlled
 	hardReset()
 	
 
@@ -67,12 +73,14 @@ func reset(active = true) -> void:
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
 	shield += shieldAmount
+	BattleLog.singleton.log(rawData.name + " gained " + str(shieldAmount) + " shield")
 	if shield < 0:
 		shield = 0
 #does pure damage to the monster
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
 	health -= dmg
+	BattleLog.singleton.log(rawData.name + " took " + str(dmg) + " damage")
 	#health cannot be negative
 	if health <= 0:
 		health = 0
@@ -84,4 +92,12 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg)	
 	return pureDmg
+
+#adds mp to the monster's team
+func addMP(mpAmount: int) -> void:
+	BattleLog.singleton.log(rawData.name + "'s team gained " + str(mpAmount) + " MP")
+	if playerControlled:
+		battleController.playerMP += mpAmount
+	else:
+		battleController.enemyMP += mpAmount
 	
