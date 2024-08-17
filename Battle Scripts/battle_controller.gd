@@ -1,3 +1,4 @@
+class_name BattleController
 extends Node
 
 #action enums 
@@ -33,19 +34,19 @@ var enemyMonsterObj: Node3D
 @export var cardButton: Button
 
 #maximum number of monster than can be on the field per side at the same time
-var maxActiveMons: int = 3
+var maxActiveMons: int = 1
 #battle monsters owned by the player
 var playerTeam: Array[BattleMonster] = []
 #index for current active player mon
-var activePlayerMon = 0
+var activePlayerMon: int = 0
 #battle monsters owned by the enemy
 var enemyTeam: Array[BattleMonster] = []
 #index for current active enemy mon
-var activeEnemyMon = 0
+var activeEnemyMon: int = 0
 #timer for waiting
 var timer
 #check if in turn
-var inTurn = false
+var inTurn: bool = false
 #player's chosen (cached) action
 var playerAction: ACTION
 #enemy's chosen action
@@ -82,28 +83,37 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	
 	
 	
-	for idIndex in min(maxActiveMons, len(playerTeam)):
+	for idIndex in len(playerTeam):
 		#create battle object for player
 		playerMonsterObj = createMonster(true, playerTeam[activePlayerMon + idIndex].rawData, idIndex)
+		
+		
+	for idIndex in len(enemyTeam):	
 		#create battle object for enemy
-		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)
+		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)	
+		
 	
-		#assign ui to player mon
-		playerUI[idIndex].setConnectedMon(playerTeam[activePlayerMon+idIndex])
-		#assign ui to enemy mon
-		enemyUI[idIndex].setConnectedMon(enemyTeam[activeEnemyMon+idIndex])
+	#assign ui to player mon
+	playerUI[0].setConnectedMon(playerTeam[activePlayerMon])
+	#assign ui to enemy mon
+	enemyUI[0].setConnectedMon(enemyTeam[activeEnemyMon])
+
 
 #damage formula for basic attack
 static func damageAttack(attacker: BattleMonster, defender: BattleMonster):
-	return attacker.shield
+	return attacker.attack
 
-func actionAttack(attacker: BattleMonster, defender: BattleMonster) -> void:
+static func actionAttack(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg = damageAttack(attacker, defender)
-	defender.receiveDamage(dmg, attacker)
+	var trueDmg = defender.receiveDamage(dmg, attacker)
+	return trueDmg
 
-func enemyDeclare() -> void:
-	#wait 1 second
-	await get_tree().create_timer(1.0).timeout
+static func actionDefend(defender: BattleMonster) -> int:
+	var shield = defender.defense
+	defender.addShield(shield)
+	return shield
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -111,24 +121,99 @@ func _ready() -> void:
 	initialize(debugTeamA, debugTeamB)
 	pass # Replace with function body.
 
+func enemyDeclare() -> Array[BattleAction]:
+	#wait 1 second
+	var actions: Array[BattleAction] = []
+	for i in maxActiveMons:
+		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
+		var chosenTarget = playerTeam[activePlayerMon]
+		var chosenAction: BattleAction.DEFAULT_ACTION = BattleAction.DEFAULT_ACTION.NONE
+		var chosenPriority = 0
+		var chosenCard: Card = null
+		var enemyAction: ACTION = [ACTION.ATTACK, ACTION.DEFEND].pick_random()
+		#set chosen action based on the player action
+		if enemyAction == ACTION.ATTACK:
+			chosenAction = BattleAction.DEFAULT_ACTION.ATTACK
+			chosenPriority = 0
+		if enemyAction == ACTION.DEFEND:
+			chosenAction = BattleAction.DEFAULT_ACTION.DEFEND
+			chosenPriority = 1
+		if enemyAction == ACTION.CARD:
+			chosenAction = BattleAction.DEFAULT_ACTION.NONE
+			#add chosen card logic here
+		
+		#add to action queue
+		var battleAction: BattleAction = BattleAction.new(
+			mon,
+			false,
+			chosenPriority,
+			chosenTarget,
+			chosenCard,
+			chosenAction
+		)
+		actions.push_back(battleAction)
+	
+	return actions
+	#await get_tree().create_timer(1.0).timeout
+
 func activeTurn() -> void:
 	inTurn = true
+	
+	#reset temporary values
+	playerTeam[activePlayerMon].reset()
+	enemyTeam[activeEnemyMon].reset()
+	 
+	
 	playerAction = 0
 	#hide player gui
 	playerChoiceUI.hide()
 	#wait for enemy choice and animations
-	await enemyDeclare()
-	#show player gui
-	playerChoiceUI.show()
-	#wait for a gui choice to be made
-	await gui_choice
+	var enemyActions = enemyDeclare()
+
 	
-	#run choices for player and enemy
-	print("Chosen: ",playerAction)
-	if playerAction == ACTION.ATTACK:
-		actionAttack(playerTeam[activePlayerMon], enemyTeam[activeEnemyMon])
+	var actions: Array[BattleAction] = []
+	for i in maxActiveMons:
+		#show player gui
+		playerChoiceUI.show()
+		var mon: BattleMonster = playerTeam[activePlayerMon + i]
+		#wait for a gui choice to be made
+		await gui_choice
+		#run choices for player and enemy
+		print("Chosen: ",playerAction)
+		
+		var chosenTarget = enemyTeam[activeEnemyMon]
+		var chosenAction: BattleAction.DEFAULT_ACTION = BattleAction.DEFAULT_ACTION.NONE
+		var chosenPriority = 0
+		var chosenCard: Card = null
+		
+		#set chosen action based on the player action
+		if playerAction == ACTION.ATTACK:
+			chosenAction = BattleAction.DEFAULT_ACTION.ATTACK
+			chosenPriority = 0
+		if playerAction == ACTION.DEFEND:
+			chosenAction = BattleAction.DEFAULT_ACTION.DEFEND
+			chosenPriority = 1
+		if playerAction == ACTION.CARD:
+			chosenAction = BattleAction.DEFAULT_ACTION.NONE
+			#add chosen card logic here
+		
+		#add to action queue
+		var battleAction: BattleAction = BattleAction.new(
+			mon,
+			true,
+			chosenPriority,
+			chosenTarget,
+			chosenCard,
+			chosenAction
+		)
+		actions.push_back(battleAction)
+		playerChoiceUI.hide()
+		#wait a bit for the next monster
+		await get_tree().create_timer(0.3).timeout
 	
-	await get_tree().create_timer(1.0).timeout
+	actions += enemyActions
+	var turnSequence = BattleSequence.new(actions)
+	await turnSequence.runActions(self)
 	inTurn = false
 
 func emitGUISignal() -> void:

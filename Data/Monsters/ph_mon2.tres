@@ -10,4 +10,4 @@ name = "hoi5678"
 sprite = ExtResource("2_dwuog")
 statHealth = 5
 statDefense = 3
-statAttack = 0
+statAttack = 2

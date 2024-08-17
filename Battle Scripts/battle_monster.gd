@@ -41,6 +41,15 @@ func damageShield(depletionAmount: int) -> int:
 		return overdamage
 	return 0
 
+# Resets values for the start of a turn
+func reset() -> void:
+	shield = 0
+
+#adds to monster's shield
+func addShield(shieldAmount: int) -> void:
+	shield += shieldAmount
+	if shield < 0:
+		shield = 0
 #does pure damage to the monster
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
@@ -50,9 +59,11 @@ func trueDamage(dmg: int) -> void:
 		health = 0
 
 #applies general damage
-func receiveDamage(dmg:int, attacker: BattleMonster) -> void:
+func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	#damage shield and calculate overdamage
+	print('took ',dmg,' damage')
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg)	
+	return pureDmg
 	

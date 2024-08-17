@@ -29,10 +29,20 @@ func _ready() -> void:
 	#generate the bobbing offset
 	randOffset = rng.randf_range(0, 20)
 
+# Returns negative for even values of x and positive of odd values of x
+func posOddNegEven(x) -> int:
+	if x%2 == 0:
+		return -1
+	else:
+		return 1
+
 # Returns intended position of monster (using its teamID and designation as a player/enemy monster)
 func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
-	var pos = Vector3(-2 + teamID*0.3, 0.953, 0.25-teamID*0.5)
+	var positionIndex = ceil(teamID/2.0)
+	print(teamID, ' ', positionIndex)
+	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex
+	var pos = Vector3(-2 - positionIndex*1.5 + deltaZ/1.3, 0.953, 0.25 + deltaZ)
 	if !playerControlled:
 		#flip the position across the origin if its an enemy monster
 		pos.x *= -1
