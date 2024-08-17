@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bepmuf4wv2p6v"]
+
+[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
+[ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="2_343v3"]
+
+[resource]
+script = ExtResource("1_clwfr")
+id = 0
+name = "Qnibi"
+sprite = ExtResource("2_343v3")
+statHealth = 5
+statDefense = 1
+statAttack = 3

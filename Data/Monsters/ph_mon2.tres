@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://jf4us7y5q5ot"]
+
+[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i1c1e"]
+[ext_resource type="Texture2D" uid="uid://j8rs8rcndwfq" path="res://Graphics/Monsters/placeholder3.png" id="2_dwuog"]
+
+[resource]
+script = ExtResource("1_i1c1e")
+id = 1
+name = "hoi5678"
+sprite = ExtResource("2_dwuog")
+statHealth = 5
+statDefense = 3
+statAttack = 1

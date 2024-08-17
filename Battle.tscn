@@ -1,6 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=11 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
+[ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
+[ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="2_4d2cp"]
+[ext_resource type="Texture2D" uid="uid://ccewpecod4tj7" path="res://Placeholder Icons/sword icon.png" id="3_5afs8"]
+[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_i2ofm"]
+[ext_resource type="Texture2D" uid="uid://do2k64pubhvkg" path="res://Placeholder Icons/shield icon.png" id="4_korlb"]
+[ext_resource type="Texture2D" uid="uid://20l40cwgl1w6" path="res://Placeholder Icons/card icon.png" id="5_43dfa"]
+[ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="7_yuiyn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -17,12 +24,74 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 2.387)
 
-[node name="Monster" parent="." instance=ExtResource("1_6cll2")]
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Enemy Monster" parent="." instance=ExtResource("1_6cll2")]
-metadata/playerControlled = false
+[node name="Battle Controller" type="Node3D" parent="."]
+script = ExtResource("2_0hcab")
+monsterObject = ExtResource("1_6cll2")
+debugTeamA = [ExtResource("3_i2ofm"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
+debugTeamB = [ExtResource("2_4d2cp"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 583.0
+offset_right = 451.0
+offset_bottom = 684.0
+
+[node name="GridContainer" type="GridContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Available Actions"
+
+[node name="Attack" type="Button" parent="Control/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Attack"
+icon = ExtResource("3_5afs8")
+expand_icon = true
+
+[node name="Defend" type="Button" parent="Control/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Defend"
+icon = ExtResource("4_korlb")
+expand_icon = true
+
+[node name="Card" type="Button" parent="Control/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use Card"
+icon = ExtResource("5_43dfa")
+expand_icon = true
+
+[node name="Player Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 158.355
+
+[node name="Enemy Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 100.0
+offset_right = -100.0
+offset_bottom = 158.355
+grow_horizontal = 0

@@ -15,13 +15,15 @@ var randOffset = 0
 #rng struct
 var rng = RandomNumberGenerator.new()
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	#grab monster data from metadata
+# Reloads monster from metadata
+func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")
 	#set sprite to the monster this object represents
 	$Sprite3D.texture = monsterData.sprite
-	#grab player-controlled boolean from metadata
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	reloadMonster()
 	playerControlled = get_meta("playerControlled")
 	print(monsterData)
 	#generate the bobbing offset
@@ -30,12 +32,14 @@ func _ready() -> void:
 # Returns intended position of monster (using its teamID and designation as a player/enemy monster)
 func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
-	var pos = Vector3(-2, 0.953, 0)
+	var pos = Vector3(-2 + teamID*0.3, 0.953, 0.25-teamID*0.5)
 	if !playerControlled:
 		#flip the position across the origin if its an enemy monster
 		pos.x *= -1
 	return pos
 
+
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	

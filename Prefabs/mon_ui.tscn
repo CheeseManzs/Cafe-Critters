@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcw4ey42763fd"]
+
+[ext_resource type="Script" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
+
+[node name="Player Mon Details" type="Panel"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 68.355
+script = ExtResource("1_2qbiv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_right = -10.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Mon"
+fit_content = true
+scroll_active = false
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -37.355
+offset_right = -10.0
+offset_bottom = -10.355
+grow_horizontal = 2
+grow_vertical = 0
+value = 100.0
+rounded = true
