@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bepmuf4wv2p6v"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://bepmuf4wv2p6v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
@@ -6,11 +6,12 @@
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_tklcb"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Attack.tres" id="3_r0vpa"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Defend.tres" id="4_5ju0k"]
+[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="5_giqia"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
 name = "Deck"
-storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_r0vpa"), ExtResource("4_5ju0k")])
+storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_r0vpa"), ExtResource("4_5ju0k"), ExtResource("5_giqia")])
 
 [resource]
 script = ExtResource("1_clwfr")

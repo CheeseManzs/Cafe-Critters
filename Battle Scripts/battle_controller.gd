@@ -48,9 +48,9 @@ var playerCardID = -1
 var enemyAction: Card
 
 #set MP of player
-var playerMP = 0
+var playerMP = 3
 #set MP of enemy
-var enemyMP = 0
+var enemyMP = 3
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -73,6 +73,9 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 		var newBattleMon = BattleMonster.new(plrTeam[index], self, true)
 		#add to player team
 		playerTeam.push_back(newBattleMon)
+	#set mp values
+		playerMP = 3
+		enemyMP = 3
 	
 	#create monsters on the enemy's side
 	for index in len(enmTeam):
@@ -136,8 +139,6 @@ func enemyDeclare() -> Array[BattleAction]:
 func activeTurn() -> void:
 	inTurn = true
 	
-	playerMP += 3
-	enemyMP += 3
 	if playerMP > 6:
 		playerMP = 6
 	if enemyMP > 6:

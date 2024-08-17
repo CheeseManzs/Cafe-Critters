@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dqtq4dx1gk8nh"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Assist.gd" id="1_nv258"]
+
+[resource]
+script = ExtResource("1_nv258")
