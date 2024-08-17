@@ -1,12 +1,6 @@
 class_name BattleController
 extends Node
 
-#action enums 
-enum ACTION {
-	ATTACK,
-	DEFEND,
-	CARD
-}
 #signal for gui choice
 signal gui_choice
 
@@ -48,9 +42,9 @@ var timer
 #check if in turn
 var inTurn: bool = false
 #player's chosen (cached) action
-var playerAction: ACTION
+var playerAction: Card
 #enemy's chosen action
-var enemyAction: ACTION
+var enemyAction: Card
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -127,29 +121,16 @@ func enemyDeclare() -> Array[BattleAction]:
 	for i in maxActiveMons:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		var chosenTarget = playerTeam[activePlayerMon]
-		var chosenAction: BattleAction.DEFAULT_ACTION = BattleAction.DEFAULT_ACTION.NONE
-		var chosenPriority = 0
-		var chosenCard: Card = null
-		var enemyAction: ACTION = [ACTION.ATTACK, ACTION.DEFEND].pick_random()
-		#set chosen action based on the player action
-		if enemyAction == ACTION.ATTACK:
-			chosenAction = BattleAction.DEFAULT_ACTION.ATTACK
-			chosenPriority = 0
-		if enemyAction == ACTION.DEFEND:
-			chosenAction = BattleAction.DEFAULT_ACTION.DEFEND
-			chosenPriority = 1
-		if enemyAction == ACTION.CARD:
-			chosenAction = BattleAction.DEFAULT_ACTION.NONE
+		var chosenCard: Card = mon.currentDeck.storedCards.pick_random()
 			#add chosen card logic here
 		
 		#add to action queue
 		var battleAction: BattleAction = BattleAction.new(
 			mon,
 			false,
-			chosenPriority,
+			chosenCard.priority,
 			chosenTarget,
-			chosenCard,
-			chosenAction
+			chosenCard
 		)
 		actions.push_back(battleAction)
 	
@@ -164,7 +145,7 @@ func activeTurn() -> void:
 	enemyTeam[activeEnemyMon].reset()
 	 
 	
-	playerAction = 0
+	playerAction = null
 	#hide player gui
 	playerChoiceUI.hide()
 	#wait for enemy choice and animations
@@ -182,20 +163,8 @@ func activeTurn() -> void:
 		print("Chosen: ",playerAction)
 		
 		var chosenTarget = enemyTeam[activeEnemyMon]
-		var chosenAction: BattleAction.DEFAULT_ACTION = BattleAction.DEFAULT_ACTION.NONE
 		var chosenPriority = 0
-		var chosenCard: Card = null
-		
-		#set chosen action based on the player action
-		if playerAction == ACTION.ATTACK:
-			chosenAction = BattleAction.DEFAULT_ACTION.ATTACK
-			chosenPriority = 0
-		if playerAction == ACTION.DEFEND:
-			chosenAction = BattleAction.DEFAULT_ACTION.DEFEND
-			chosenPriority = 1
-		if playerAction == ACTION.CARD:
-			chosenAction = BattleAction.DEFAULT_ACTION.NONE
-			#add chosen card logic here
+		var chosenCard: Card = playerAction
 		
 		#add to action queue
 		var battleAction: BattleAction = BattleAction.new(
@@ -203,8 +172,7 @@ func activeTurn() -> void:
 			true,
 			chosenPriority,
 			chosenTarget,
-			chosenCard,
-			chosenAction
+			chosenCard
 		)
 		actions.push_back(battleAction)
 		playerChoiceUI.hide()
@@ -220,13 +188,13 @@ func emitGUISignal() -> void:
 	gui_choice.emit()
 	
 func onAttackPressed() -> void:
-	playerAction = ACTION.ATTACK
+	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[0]
 
 func onDefendPressed() -> void:
-	playerAction = ACTION.DEFEND
+	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[1]
 
 func onCardPressed() -> void:
-	playerAction = ACTION.CARD
+	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[0]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

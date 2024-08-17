@@ -1,13 +1,23 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=3 format=3 uid="uid://jf4us7y5q5ot"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://jf4us7y5q5ot"]
 
+[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_5p4td"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i1c1e"]
+[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_8xsqr"]
 [ext_resource type="Texture2D" uid="uid://j8rs8rcndwfq" path="res://Graphics/Monsters/placeholder3.png" id="2_dwuog"]
+[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Attack.tres" id="3_y7hmn"]
+[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Defend.tres" id="4_o0otr"]
+
+[sub_resource type="Resource" id="Resource_j0mjt"]
+script = ExtResource("1_5p4td")
+name = "Deck"
+storedCards = Array[ExtResource("2_8xsqr")]([ExtResource("3_y7hmn"), ExtResource("4_o0otr")])
 
 [resource]
 script = ExtResource("1_i1c1e")
 id = 1
 name = "hoi5678"
 sprite = ExtResource("2_dwuog")
+deck = SubResource("Resource_j0mjt")
 statHealth = 5
 statDefense = 3
 statAttack = 2

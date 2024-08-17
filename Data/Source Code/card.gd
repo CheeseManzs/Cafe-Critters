@@ -35,5 +35,5 @@ var description: String
 #card name
 var name: String
 
-func effect() -> void:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0

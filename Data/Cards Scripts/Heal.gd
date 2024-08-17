@@ -1,4 +1,3 @@
-
 extends Card
 
 func _init() -> void:
@@ -9,5 +8,5 @@ func _init() -> void:
 	description = "Heal target shelved critter for 5 HP."
 	name = "Heal"
 
-func effect() -> void:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0

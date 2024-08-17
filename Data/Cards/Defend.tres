@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://duleufd5ra7w0"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Defend.gd" id="1_v048h"]
+
+[resource]
+script = ExtResource("1_v048h")

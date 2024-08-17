@@ -27,6 +27,7 @@ func _init(data: Monster) -> void:
 	health = maxHP
 	defense = rawData.statDefense
 	attack = rawData.statAttack
+	currentDeck = rawData.deck.clone()
 
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:

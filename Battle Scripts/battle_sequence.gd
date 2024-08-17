@@ -29,19 +29,8 @@ func runActions(battleController: Node) -> void:
 	print('running turns')
 	for i in len(actions):
 		var action = actions[i]
-		
-		#run attack action
-		
-		if action.defaultAction == BattleAction.DEFAULT_ACTION.ATTACK:
-			var val = BattleController.actionAttack(action.battleMonster, action.target)
-			action.printAction(val)
-		#run defend action
-		if action.defaultAction == BattleAction.DEFAULT_ACTION.DEFEND:
-			var val = BattleController.actionDefend(action.battleMonster)
-			action.printAction(val)
 		#run card action
-		if action.defaultAction == BattleAction.DEFAULT_ACTION.NONE:
-			print('card action')
-			#action.card.effect(action.battleMonster, action.target)
+		var val = action.card.effect(action.battleMonster, action.target)
+		action.printAction(val)
 		await battleController.get_tree().create_timer(0.75).timeout
 		print('done turn')

@@ -45,9 +45,11 @@ cardButton = NodePath("../Control/Panel/GridContainer/Card")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1280.0
-offset_bottom = 720.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 1
@@ -69,25 +71,25 @@ grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "Available Actions"
 
+[node name="Card" type="Button" parent="Control/Panel/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use Card"
+icon = ExtResource("5_43dfa")
+expand_icon = true
+
 [node name="Attack" type="Button" parent="Control/Panel/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Attack"
+text = "Debug Shortcut: Attack"
 icon = ExtResource("3_5afs8")
 expand_icon = true
 
 [node name="Defend" type="Button" parent="Control/Panel/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Defend"
+text = "Debug Shortcut: Defend"
 icon = ExtResource("4_korlb")
-expand_icon = true
-
-[node name="Card" type="Button" parent="Control/Panel/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Use Card"
-icon = ExtResource("5_43dfa")
 expand_icon = true
 
 [node name="Player Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
@@ -149,13 +151,13 @@ layout_mode = 1
 offset_left = -3.0
 offset_top = 301.0
 offset_right = 235.0
-offset_bottom = 566.0
+offset_bottom = 893.0
 script = ExtResource("9_6owi0")
 logPrefab = ExtResource("10_8ijj2")
 
+[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="onCardPressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="emitGUISignal"]
 [connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="onAttackPressed"]
 [connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="emitGUISignal"]
 [connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="onDefendPressed"]
 [connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="emitGUISignal"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="onCardPressed"]
-[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="emitGUISignal"]

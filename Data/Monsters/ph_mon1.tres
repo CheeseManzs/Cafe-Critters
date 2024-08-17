@@ -1,13 +1,23 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bepmuf4wv2p6v"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bepmuf4wv2p6v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
+[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="2_343v3"]
+[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_tklcb"]
+[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Attack.tres" id="3_r0vpa"]
+[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Defend.tres" id="4_5ju0k"]
+
+[sub_resource type="Resource" id="Resource_470u8"]
+script = ExtResource("1_il4dp")
+name = "Deck"
+storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_r0vpa"), ExtResource("4_5ju0k")])
 
 [resource]
 script = ExtResource("1_clwfr")
 id = 0
 name = "Qnibi"
 sprite = ExtResource("2_343v3")
+deck = SubResource("Resource_470u8")
 statHealth = 5
 statDefense = 1
 statAttack = 3

@@ -1,4 +1,3 @@
-
 extends Card
 
 func _init() -> void:
@@ -9,5 +8,5 @@ func _init() -> void:
 	description = "Set your Attack to 0. Empower the next card played."
 	name = "Reckless Motivation"
 
-func effect() -> void:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0
