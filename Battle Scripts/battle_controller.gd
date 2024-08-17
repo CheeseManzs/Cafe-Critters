@@ -139,6 +139,9 @@ func enemyDeclare() -> Array[BattleAction]:
 func activeTurn() -> void:
 	inTurn = true
 	
+	playerMP += 3
+	enemyMP += 3
+	
 	if playerMP > 6:
 		playerMP = 6
 	if enemyMP > 6:
@@ -168,8 +171,13 @@ func activeTurn() -> void:
 			if uiIndex >= len(mon.currentHand.storedCards):
 				cardButton.hide()
 			else:
+				var card =  mon.currentHand.storedCards[uiIndex]
 				cardButton.show()
-				cardButton.text = mon.currentHand.storedCards[uiIndex].name
+				cardButton.text = card.name + " (" + str(card.cost) + " MP)"
+				if card.statusConditions.has(Status.EFFECTS.EMPOWER):
+					cardButton.text += " (EMP)"
+				cardButton.disabled = card.cost > playerMP
+				
 		
 		#wait for a gui choice to be made
 		await gui_choice

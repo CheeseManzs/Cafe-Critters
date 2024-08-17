@@ -29,6 +29,9 @@ func runActions(battleController: Node) -> void:
 	for i in len(actions):
 		var action = actions[i]
 		#run card action
-		var val = action.card.effect(action.battleMonster, action.target)
-		action.printAction(val)
+		action.printAction()
+		action.battleMonster.removeMP(action.card.cost)
+		await battleController.get_tree().create_timer(0.75).timeout
+		action.card.effect(action.battleMonster, action.target)
+		
 		await battleController.get_tree().create_timer(0.75).timeout

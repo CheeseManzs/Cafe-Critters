@@ -6,7 +6,7 @@ var logText: String
 #timer
 var t = 0
 #max time before removal
-var lifeTime = 1.5
+var lifeTime = 4
 @export var richText: RichTextLabel
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

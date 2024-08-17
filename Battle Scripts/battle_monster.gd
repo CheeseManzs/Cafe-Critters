@@ -20,7 +20,10 @@ class_name BattleMonster
 @export var shield: int
 #battle controller that instantiated the monster
 var battleController: BattleController
+#is monster owned by player
 var playerControlled: bool
+#status conditions
+var statusConditions: Array[Status]
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
 	#set raw data
@@ -52,23 +55,42 @@ func damageShield(depletionAmount: int) -> int:
 		return overdamage
 	return 0
 
+#check for status condition
+func hasStatus(eff: Status.EFFECTS) -> bool:
+	for i in len(statusConditions):
+		var status: Status = statusConditions[i]
+		if status.effect == eff && !status.effectDone:
+			return true
+	return false
 #reset that happens on switch-in
 func hardReset() -> void:
 	shield = 0
 	currentHand = Zone.new()
-	currentHand.storedCards = currentDeck.bulkDraw(5)
+	currentHand.storedCards = currentDeck.specialDraw(5, battleController, self)
+
 
 # Resets values for the start of a turn
 func reset(active = true) -> void:
 	shield = 0
+	for i in len(statusConditions):
+		var status: Status = statusConditions[i]
+		status.newTurn()
+	#if there are no cards in the deck, reset the deck
 	if active && len(currentDeck.storedCards) == 0:
 		BattleLog.singleton.log("DEBUG: Resetting deck")
 		currentDeck = rawData.deck.clone()
 	
+	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
 	if active && len(currentDeck.storedCards) > 0 && len(currentHand.storedCards) < 5:
-		var card: Array[Card] = currentDeck.bulkDraw(1)
+		var card: Array[Card] = currentDeck.specialDraw(1, battleController, self)
 		BattleLog.singleton.log("DEBUG: " + rawData.name + " drew " + card[0].name)
 		currentHand.storedCards += card
+
+func addStatusCondition(status: Status, broadcast = false):
+	statusConditions.push_back(status)
+	if broadcast:
+		var printText = rawData.name + " was afflicted with " + status.toString()
+		BattleLog.log(printText)
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
@@ -95,9 +117,20 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 
 #adds mp to the monster's team
 func addMP(mpAmount: int) -> void:
+	#log mp adding
 	BattleLog.singleton.log(rawData.name + "'s team gained " + str(mpAmount) + " MP")
+	#if player, add mp to player variable
 	if playerControlled:
 		battleController.playerMP += mpAmount
+	#if enemy, add mp to enemy variable
 	else:
 		battleController.enemyMP += mpAmount
+
+func removeMP(mpAmount: int) -> void:
+	#if player, remove mp from player
+	if playerControlled:
+		battleController.playerMP -= mpAmount
+	#if enemy, remove mp from enemy
+	else:
+		battleController.enemyMP -= mpAmount
 	

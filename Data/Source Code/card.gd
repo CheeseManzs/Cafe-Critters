@@ -35,5 +35,17 @@ var description: String
 #card name
 var name: String
 
+var statusConditions: Array[Status.EFFECTS] = []
+
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
+
+func clone():
+	var newCard: Card = get_script().new()
+	newCard.cost = cost
+	newCard.priority = priority
+	newCard.alignment = alignment
+	newCard.role = role
+	newCard.description = description
+	newCard.name = name
+	return newCard

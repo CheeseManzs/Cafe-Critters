@@ -1,17 +1,21 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://jf4us7y5q5ot"]
+[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://jf4us7y5q5ot"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_5p4td"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i1c1e"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_8xsqr"]
 [ext_resource type="Texture2D" uid="uid://j8rs8rcndwfq" path="res://Graphics/Monsters/placeholder3.png" id="2_dwuog"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Attack.tres" id="3_y7hmn"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Defend.tres" id="4_o0otr"]
+[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="3_tm8gn"]
+[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="4_8hvtd"]
 [ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="5_pa8dg"]
+[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Minor Block.tres" id="6_f0yq1"]
+[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_sv66d"]
+[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="8_ryej3"]
+[ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="9_ypmk0"]
 
 [sub_resource type="Resource" id="Resource_j0mjt"]
 script = ExtResource("1_5p4td")
 name = "Deck"
-storedCards = Array[ExtResource("2_8xsqr")]([ExtResource("3_y7hmn"), ExtResource("4_o0otr"), ExtResource("5_pa8dg")])
+storedCards = Array[ExtResource("2_8xsqr")]([ExtResource("3_tm8gn"), ExtResource("4_8hvtd"), ExtResource("5_pa8dg"), ExtResource("6_f0yq1"), ExtResource("7_sv66d"), ExtResource("8_ryej3"), ExtResource("9_ypmk0")])
 
 [resource]
 script = ExtResource("1_i1c1e")
@@ -19,6 +23,6 @@ id = 1
 name = "hoi5678"
 sprite = ExtResource("2_dwuog")
 deck = SubResource("Resource_j0mjt")
-statHealth = 5
+statHealth = 20
 statDefense = 3
 statAttack = 2

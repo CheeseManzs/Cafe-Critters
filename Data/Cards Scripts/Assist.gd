@@ -9,11 +9,8 @@ func _init() -> void:
 	name = "Assist"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#gives 5 shield
-	var shieldGiven = 5
+	#idk what barrier is ngl but remember to apply empower to it
 	var mpGiven = 1
-	#return add shield to user
-	attacker.addShield(shieldGiven)
 	#add mp
 	attacker.addMP(mpGiven)
-	return shieldGiven
+	return mpGiven

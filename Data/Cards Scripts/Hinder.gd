@@ -9,4 +9,8 @@ func _init() -> void:
 	name = "Hinder"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	#create status object
+	var slowStatus = Status.new(Status.EFFECTS.SLOW, 2)
+	#apply to target
+	defender.addStatusCondition(slowStatus, true)
 	return 0
