@@ -29,13 +29,15 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerChoiceUI", "attackButton", "defendButton", "cardButton")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
 debugTeamB = [ExtResource("2_4d2cp"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
-playerUI = [NodePath("../Control/Player Mon Details"), NodePath("../Control/Player Mon Details2"), NodePath("../Control/Player Mon Details3")]
-enemyUI = [NodePath("../Control/Enemy Mon Details"), NodePath("../Control/Enemy Mon Details2"), NodePath("../Control/Enemy Mon Details3")]
+playerChoiceUI = NodePath("../Control/Panel")
+attackButton = NodePath("../Control/Panel/GridContainer/Attack")
+defendButton = NodePath("../Control/Panel/GridContainer/Defend")
+cardButton = NodePath("../Control/Panel/GridContainer/Card")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -133,3 +135,10 @@ offset_top = 216.71
 offset_right = -100.0
 offset_bottom = 275.065
 grow_horizontal = 0
+
+[connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="onAttackPressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Attack" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="onDefendPressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Defend" to="Battle Controller" method="emitGUISignal"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="onCardPressed"]
+[connection signal="pressed" from="Control/Panel/GridContainer/Card" to="Battle Controller" method="emitGUISignal"]

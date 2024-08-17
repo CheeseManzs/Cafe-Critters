@@ -14,14 +14,45 @@ class_name BattleMonster
 @export var defense: int
 #monster's current attack stat
 @export var attack: int
+#monster's current shield
+@export var shield: int
 
 func _init(data: Monster) -> void:
 	#set raw data
 	rawData = data
 	#copy data for raw data
 	level = 1
+	shield = 0
 	maxHP = rawData.statHealth
 	health = maxHP
 	defense = rawData.statDefense
 	attack = rawData.statAttack
+
+#applies damage to shield and returns overdamage
+func damageShield(depletionAmount: int) -> int:
+	#remove damage from shield
+	shield -= depletionAmount
+	#if shield takes more damage than it has, it is considered overdamage
+	if shield < 0:
+		#overdamage is the negative of the remaining shield
+		var overdamage = -shield
+		#reset shield
+		shield = 0
+		return overdamage
+	return 0
+
+#does pure damage to the monster
+func trueDamage(dmg: int) -> void:
+	#remove damage from hp
+	health -= dmg
+	#health cannot be negative
+	if health <= 0:
+		health = 0
+
+#applies general damage
+func receiveDamage(dmg:int, attacker: BattleMonster) -> void:
+	#damage shield and calculate overdamage
+	var pureDmg = damageShield(dmg)
+	#apply overdamage to monster as true damage
+	trueDamage(pureDmg)	
 	
