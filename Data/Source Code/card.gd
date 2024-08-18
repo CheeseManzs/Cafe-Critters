@@ -40,6 +40,18 @@ var statusConditions: Array[Status.EFFECTS] = []
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
 
+#for ai damage calculations
+func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0
+
+#for ai damage calculations
+func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0
+
+#for ai damage calculations
+func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 0
+
 func clone():
 	var newCard: Card = get_script().new()
 	newCard.cost = cost

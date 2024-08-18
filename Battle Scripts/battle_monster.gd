@@ -126,6 +126,17 @@ func addMP(mpAmount: int) -> void:
 	else:
 		battleController.enemyMP += mpAmount
 
+#adds to mp gain
+func addMPPerTurn(mpGainAmount: int) -> void:
+	#log mp adding
+	BattleLog.singleton.log(rawData.name + "'s MP gain has increased by " + str(mpGainAmount))
+	#if player, add mp gain to player variable
+	if playerControlled:
+		battleController.playerMPGain += mpGainAmount
+	#if enemy, add mp gain to enemy variable
+	else:
+		battleController.enemyMPGain += mpGainAmount
+
 func removeMP(mpAmount: int) -> void:
 	#if player, remove mp from player
 	if playerControlled:

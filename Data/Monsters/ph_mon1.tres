@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://bepmuf4wv2p6v"]
+[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://bepmuf4wv2p6v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
@@ -11,11 +11,12 @@
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_6mmx6"]
 [ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="8_i2qvr"]
 [ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="9_wvu4v"]
+[ext_resource type="Resource" uid="uid://cgc5v44kiego7" path="res://Data/Cards/Meditate.tres" id="10_x3fin"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
 name = "Deck"
-storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_a2rj5"), ExtResource("4_7tlbj"), ExtResource("5_giqia"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("8_i2qvr"), ExtResource("9_wvu4v")])
+storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_a2rj5"), ExtResource("4_7tlbj"), ExtResource("5_giqia"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("8_i2qvr"), ExtResource("9_wvu4v"), ExtResource("10_x3fin")])
 
 [resource]
 script = ExtResource("1_clwfr")
@@ -23,6 +24,6 @@ id = 0
 name = "Qnibi"
 sprite = ExtResource("2_343v3")
 deck = SubResource("Resource_470u8")
-statHealth = 15
+statHealth = 10
 statDefense = 1
 statAttack = 3

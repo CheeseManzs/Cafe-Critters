@@ -48,9 +48,15 @@ var playerCardID = -1
 var enemyAction: Card
 
 #set MP of player
-var playerMP = 3
+var playerMP = 0
 #set MP of enemy
-var enemyMP = 3
+var enemyMP = 0
+#player passive MP gain
+var playerMPGain = 3
+#enemy passive MP gain
+var enemyMPGain = 3
+#enemy ai object
+var enemyAI: BattleAI
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -74,8 +80,11 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 		#add to player team
 		playerTeam.push_back(newBattleMon)
 	#set mp values
-		playerMP = 3
-		enemyMP = 3
+	playerMP = 0
+	enemyMP = 0
+	playerMPGain = 3
+	enemyMPGain = 3
+	
 	
 	#create monsters on the enemy's side
 	for index in len(enmTeam):
@@ -100,7 +109,8 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	playerUI[0].setConnectedMon(playerTeam[activePlayerMon])
 	#assign ui to enemy mon
 	enemyUI[0].setConnectedMon(enemyTeam[activeEnemyMon])
-
+	#initialize AI
+	enemyAI = BattleAI.new(self)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -120,7 +130,8 @@ func enemyDeclare() -> Array[BattleAction]:
 			continue
 		#target is automatically set to the main active mon
 		var chosenTarget = playerTeam[activePlayerMon]
-		var chosenCard: Card = mon.currentHand.bulkDraw(1)[0]
+		var chosenCard: Card = enemyAI.choiceEnemy(true)
+		BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
 		#add chosen card logic here
 		
 		#add to action queue
@@ -139,8 +150,8 @@ func enemyDeclare() -> Array[BattleAction]:
 func activeTurn() -> void:
 	inTurn = true
 	
-	playerMP += 3
-	enemyMP += 3
+	playerMP += playerMPGain
+	enemyMP += enemyMPGain
 	
 	if playerMP > 6:
 		playerMP = 6

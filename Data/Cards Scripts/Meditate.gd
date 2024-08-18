@@ -9,4 +9,8 @@ func _init() -> void:
 	name = "Meditate"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	attacker.addMPPerTurn(1)
 	return 0
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 6
