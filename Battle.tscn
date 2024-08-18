@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=13 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_6owi0"]
 [ext_resource type="PackedScene" uid="uid://rgsl5d282v0i" path="res://Prefabs/mp_bar.tscn" id="9_ftoux"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_8ijj2"]
+[ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="10_dfc7v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -30,14 +31,15 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "cardButtons")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI", "cardButtons")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
 debugTeamB = [ExtResource("2_4d2cp"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
-playerUI = [NodePath("../Control/Player Mon Details"), NodePath("../Control/Player Mon Details2"), NodePath("../Control/Player Mon Details3")]
-enemyUI = [NodePath("../Control/Enemy Mon Details"), NodePath("../Control/Enemy Mon Details2"), NodePath("../Control/Enemy Mon Details3")]
+playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]
+enemyUI = [NodePath("../Control/EnemyHP/Enemy Mon Details"), NodePath("../Control/EnemyHP/Enemy Mon Details2"), NodePath("../Control/EnemyHP/Enemy Mon Details3")]
 playerChoiceUI = NodePath("../Control/Panel")
+shelfedMonUI = [NodePath("../Control/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI3")]
 cardButtons = [NodePath("../Control/Panel/VBoxContainer/Card 0"), NodePath("../Control/Panel/VBoxContainer/Card 1"), NodePath("../Control/Panel/VBoxContainer/Card 2"), NodePath("../Control/Panel/VBoxContainer/Card 3"), NodePath("../Control/Panel/VBoxContainer/Card 4")]
 
 [node name="Control" type="Control" parent="."]
@@ -103,66 +105,15 @@ text = "Use Card"
 icon = ExtResource("5_43dfa")
 expand_icon = true
 
-[node name="Player Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-offset_left = 100.0
-offset_top = 100.0
-offset_right = 300.0
-offset_bottom = 158.355
-
-[node name="Player Mon Details2" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-offset_left = 100.0
-offset_top = 158.355
-offset_right = 300.0
-offset_bottom = 216.71
-
-[node name="Player Mon Details3" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-offset_left = 100.0
-offset_top = 216.71
-offset_right = 300.0
-offset_bottom = 275.065
-
-[node name="Enemy Mon Details" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -300.0
-offset_top = 100.0
-offset_right = -100.0
-offset_bottom = 158.355
-grow_horizontal = 0
-
-[node name="Enemy Mon Details2" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -300.0
-offset_top = 158.355
-offset_right = -100.0
-offset_bottom = 216.71
-grow_horizontal = 0
-
-[node name="Enemy Mon Details3" parent="Control" instance=ExtResource("7_yuiyn")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -300.0
-offset_top = 216.71
-offset_right = -100.0
-offset_bottom = 275.065
-grow_horizontal = 0
-
 [node name="Battle Log" type="VBoxContainer" parent="Control"]
 layout_mode = 1
-offset_left = -3.0
-offset_top = 301.0
-offset_right = 235.0
-offset_bottom = 684.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -238.0
+offset_top = 181.0
+offset_bottom = 564.0
+grow_horizontal = 0
 script = ExtResource("9_6owi0")
 logPrefab = ExtResource("10_8ijj2")
 
@@ -186,6 +137,62 @@ offset_right = -100.0
 offset_bottom = 84.0
 grow_horizontal = 0
 battleController = NodePath("../../Battle Controller")
+
+[node name="Player HP" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 85.0
+offset_right = 708.0
+offset_bottom = 143.355
+
+[node name="Player Mon Details" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="Player Mon Details2" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="Player Mon Details3" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="EnemyHP" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -708.0
+offset_top = 85.0
+offset_right = -100.0
+offset_bottom = 143.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="Enemy Mon Details2" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="Enemy Mon Details3" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="Enemy Mon Details" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+layout_mode = 2
+
+[node name="Shelfed Mon View" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 144.0
+offset_right = 400.0
+offset_bottom = 344.0
+
+[node name="Shelfed Mon UI" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
+
+[node name="Shelfed Mon UI2" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
+
+[node name="Shelfed Mon UI3" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
 
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Card 0" to="Battle Controller" method="emitGUISignal"]
 [connection signal="pressed" from="Control/Panel/VBoxContainer/Card 0" to="Battle Controller" method="onHand" binds= [0]]

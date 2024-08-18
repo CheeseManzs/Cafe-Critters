@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
 
 [node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("connectedLabel", "connectedBar")]
+custom_minimum_size = Vector2(200, 58.355)
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 210.0

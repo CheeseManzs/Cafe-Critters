@@ -1,26 +1,19 @@
-class_name MonsterUI
+class_name ShelfUI
 extends Panel
-
-#connected monster object
+@export var hpBar: ProgressBar
+@export var faceTexture: TextureRect
+@export var nameText: RichTextLabel
 var connectedMon: BattleMonster
-#object's text label for the monster's name
-@export var connectedLabel: RichTextLabel
-#object's progress bar
-@export var connectedBar: ProgressBar
-
-func setConnectedMon(mon):
-	connectedMon = mon
-
-func reloadUI() -> void:
-	if connectedMon == null:
-		return
-	connectedLabel.text = connectedMon.rawData.name
+@export var battleController: BattleController
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	reloadUI()
 	pass # Replace with function body.
 
+func reprocess() -> void:
+	nameText.text = "[center]"+connectedMon.rawData.name+"[/center]"
+	faceTexture.texture = connectedMon.rawData.sprite
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -34,17 +27,19 @@ func _process(delta: float) -> void:
 	var reductionRate = delta*100
 	#check for acceptable error
 	#print(abs(connectedBar.value - goalValue), " : ",reductionRate)
-	var withinError = abs(connectedBar.value - goalValue) < reductionRate
+	var withinError = abs(hpBar.value - goalValue) < reductionRate
 	
 	#check if connected bar is outside of acceptable range of error
 	#if more then remove value
 	if withinError:
-		connectedBar.value = goalValue
+		hpBar.value = goalValue
 	
-	if !withinError && connectedBar.value > goalValue:
-		connectedBar.value -= reductionRate
+	if !withinError && hpBar.value > goalValue:
+		hpBar.value -= reductionRate
 	#if less then add value
-	if !withinError && connectedBar.value < goalValue:
-		connectedBar.value += reductionRate
-		
+	if !withinError && hpBar.value < goalValue:
+		hpBar.value += reductionRate
 	pass
+
+func swapIn():
+	battleController.playerSwap(battleController.playerTeam.find(connectedMon))

@@ -73,6 +73,7 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 #reset that happens on switch-in
 func hardReset() -> void:
 	shield = 0
+	currentDeck = rawData.deck.clone()
 	currentHand = Zone.new()
 	currentHand.storedCards = currentDeck.specialDraw(4, battleController, self)
 

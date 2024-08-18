@@ -17,24 +17,29 @@ var enemyMonsterObj: Node3D
 @export var debugTeamB: Array
 
 #UIs for active player monsters
-@export var playerUI: Array[Node]
+@export var playerUI: Array[MonsterUI]
 #UIs for active enemy monsters
-@export var enemyUI: Array[Node]
+@export var enemyUI: Array[MonsterUI]
 #UI for choosing player actions
 @export var playerChoiceUI: Control
+#UI for shelfed mons
+@export var shelfedMonUI: Array[ShelfUI]
 #action buttons
 @export var attackButton: Button
 @export var defendButton: Button
 @export var cardButtons: Array[Button]
 
+
 #maximum number of monster than can be on the field per side at the same time
 var maxActiveMons: int = 1
 #battle monsters owned by the player
 var playerTeam: Array[BattleMonster] = []
+var playerObjs: Array[MonsterDisplay] = [] 
 #index for current active player mon
 var activePlayerMon: int = 0
 #battle monsters owned by the enemy
 var enemyTeam: Array[BattleMonster] = []
+var enemyObjs: Array[MonsterDisplay] = [] 
 #index for current active enemy mon
 var activeEnemyMon: int = 0
 #timer for waiting
@@ -60,6 +65,8 @@ var playerMPTempGain = 0
 var enemyMPTempGain = 0
 #enemy ai object
 var enemyAI: BattleAI
+#add skipping
+var skipChoice = false
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -80,6 +87,8 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for index in len(plrTeam):
 		#create battle monster object
 		var newBattleMon = BattleMonster.new(plrTeam[index], self, true)
+		shelfedMonUI[index].connectedMon = newBattleMon
+		shelfedMonUI[index].reprocess()
 		#add to player team
 		playerTeam.push_back(newBattleMon)
 	#set mp values
@@ -101,12 +110,13 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for idIndex in len(playerTeam):
 		#create battle object for player
 		playerMonsterObj = createMonster(true, playerTeam[activePlayerMon + idIndex].rawData, idIndex)
+		playerObjs.push_back(playerMonsterObj)
 		
 		
 	for idIndex in len(enemyTeam):	
 		#create battle object for enemy
 		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)	
-		
+		enemyObjs.push_back(enemyMonsterObj)
 	
 	#assign ui to player mon
 	playerUI[0].setConnectedMon(playerTeam[activePlayerMon])
@@ -150,11 +160,45 @@ func enemyDeclare() -> Array[BattleAction]:
 	return actions
 	#await get_tree().create_timer(1.0).timeout
 
-
+func playerSwap(newID) -> void:
+	print("switching in ",newID," from ",activePlayerMon)
+	if activePlayerMon == newID || playerMP < 1:
+		return
+	print("running switch")
+	#get monster structs and objects
+	var currentMon: BattleMonster = playerTeam[activePlayerMon]
+	var newMon: BattleMonster = playerTeam[newID]
+	var currentObj: MonsterDisplay = playerObjs[activePlayerMon]
+	var newObj: MonsterDisplay = playerObjs[newID]
+	
+	print(newObj.teamID)
+	print(newObj.getMonsterPosition())
+	#swap team IDs
+	var oldTID = currentObj.teamID
+	currentObj.teamID = newObj.teamID
+	newObj.teamID = oldTID
+	
+	print(newObj.teamID)
+	print(newObj.getMonsterPosition())
+	
+	playerUI[0].connectedMon = newMon
+	playerUI[0].reloadUI()
+	
+	#setup new mon
+	newMon.hardReset()
+	
+	activePlayerMon = newID
+	#remove 1 MP
+	playerMP -= 1
+	
+	#emit signal
+	skipChoice = true
+	emitGUISignal()
+	
 
 func activeTurn() -> void:
 	inTurn = true
-	
+	skipChoice = false
 	playerMP += playerMPGain + playerMPTempGain
 	enemyMP += enemyMPGain + enemyMPTempGain
 	
@@ -201,6 +245,8 @@ func activeTurn() -> void:
 		#wait for a gui choice to be made
 		await gui_choice
 		playerChoiceUI.hide()
+		if skipChoice:
+			continue
 		await get_tree().create_timer(0.01).timeout
 		#run choices for player and enemy
 		var chosenTarget = enemyTeam[activeEnemyMon]

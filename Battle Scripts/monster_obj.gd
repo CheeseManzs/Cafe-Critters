@@ -1,3 +1,4 @@
+class_name MonsterDisplay
 extends Node3D
 
 #total "time elapsed" tracker
