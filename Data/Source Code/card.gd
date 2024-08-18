@@ -48,4 +48,7 @@ func clone():
 	newCard.role = role
 	newCard.description = description
 	newCard.name = name
+	newCard.statusConditions = []
+	if statusConditions != null:
+		newCard.statusConditions += statusConditions
 	return newCard
