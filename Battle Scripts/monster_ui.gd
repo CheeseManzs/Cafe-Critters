@@ -7,6 +7,7 @@ var connectedMon: BattleMonster
 @export var connectedLabel: RichTextLabel
 #object's progress bar
 @export var connectedBar: ProgressBar
+@export var hpText: RichTextLabel
 
 func setConnectedMon(mon):
 	connectedMon = mon
@@ -46,5 +47,7 @@ func _process(delta: float) -> void:
 	#if less then add value
 	if !withinError && connectedBar.value < goalValue:
 		connectedBar.value += reductionRate
-		
+	#set text to resemble bar
+	var barHP = connectedMon.maxHP*connectedBar.value/100.0
+	hpText.text = "[center]"+str(floor(barHP))+"/"+str(connectedMon.maxHP)+"[/center]"
 	pass

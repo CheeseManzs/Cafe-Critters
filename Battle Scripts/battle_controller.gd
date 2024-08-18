@@ -119,9 +119,9 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 		enemyObjs.push_back(enemyMonsterObj)
 	
 	#assign ui to player mon
-	playerUI[0].setConnectedMon(playerTeam[activePlayerMon])
+	playerUI[0].setConnectedMon(getActivePlayerMon())
 	#assign ui to enemy mon
-	enemyUI[0].setConnectedMon(enemyTeam[activeEnemyMon])
+	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
 	enemyAI = BattleAI.new(self)
 
@@ -142,7 +142,8 @@ func enemyDeclare() -> Array[BattleAction]:
 			BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
 			continue
 		#target is automatically set to the main active mon
-		var chosenTarget = playerTeam[activePlayerMon]
+		var chosenTargetID = -1
+		var targSelf = false
 		var chosenCard: Card = enemyAI.choiceEnemy(true)
 		BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
 		#add chosen card logic here
@@ -152,13 +153,21 @@ func enemyDeclare() -> Array[BattleAction]:
 			mon,
 			false,
 			chosenCard.priority,
-			chosenTarget,
-			chosenCard
+			chosenTargetID,
+			targSelf,
+			chosenCard,
+			self
 		)
 		actions.push_back(battleAction)
 	
 	return actions
 	#await get_tree().create_timer(1.0).timeout
+
+func getActivePlayerMon() -> BattleMonster:
+	return playerTeam[activePlayerMon]
+
+func getActiveEnemyMon() -> BattleMonster:
+	return enemyTeam[activeEnemyMon]
 
 func playerSwap(newID) -> void:
 	print("switching in ",newID," from ",activePlayerMon)
@@ -166,7 +175,7 @@ func playerSwap(newID) -> void:
 		return
 	print("running switch")
 	#get monster structs and objects
-	var currentMon: BattleMonster = playerTeam[activePlayerMon]
+	var currentMon: BattleMonster = getActivePlayerMon()
 	var newMon: BattleMonster = playerTeam[newID]
 	var currentObj: MonsterDisplay = playerObjs[activePlayerMon]
 	var newObj: MonsterDisplay = playerObjs[newID]
@@ -211,8 +220,8 @@ func activeTurn() -> void:
 		enemyMP = 6
 	
 	#reset temporary values
-	playerTeam[activePlayerMon].reset()
-	enemyTeam[activeEnemyMon].reset()
+	getActivePlayerMon().reset()
+	getActiveEnemyMon().reset()
 	 
 	
 	playerAction = null
@@ -249,7 +258,8 @@ func activeTurn() -> void:
 			continue
 		await get_tree().create_timer(0.01).timeout
 		#run choices for player and enemy
-		var chosenTarget = enemyTeam[activeEnemyMon]
+		var chosenTargetID = -1
+		var targSelf = false
 		var chosenPriority = 0
 		print(playerCardID)
 		var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
@@ -258,9 +268,11 @@ func activeTurn() -> void:
 		var battleAction: BattleAction = BattleAction.new(
 			mon,
 			true,
-			chosenPriority,
-			chosenTarget,
-			chosenCard
+			chosenCard.priority,
+			chosenTargetID,
+			targSelf,
+			chosenCard,
+			self
 		)
 		actions.push_back(battleAction)
 		
@@ -276,13 +288,13 @@ func emitGUISignal() -> void:
 	gui_choice.emit()
 	
 func onAttackPressed() -> void:
-	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[0]
+	playerAction = getActivePlayerMon().currentDeck.storedCards[0]
 
 func onDefendPressed() -> void:
-	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[1]
+	playerAction = getActivePlayerMon().currentDeck.storedCards[1]
 
 func onCardPressed() -> void:
-	playerAction = playerTeam[activePlayerMon].currentDeck.storedCards[0]
+	playerAction = getActivePlayerMon().currentDeck.storedCards[0]
 
 func onHand(index: int) -> void:
 	print("hand index ",index)

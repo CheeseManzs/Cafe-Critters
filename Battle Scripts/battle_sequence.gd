@@ -32,6 +32,6 @@ func runActions(battleController: Node) -> void:
 		action.printAction()
 		action.battleMonster.removeMP(action.card.cost)
 		await battleController.get_tree().create_timer(0.75).timeout
-		action.card.effect(action.battleMonster, action.target)
+		action.card.effect(action.battleMonster, action.getTarget())
 		
 		await battleController.get_tree().create_timer(0.75).timeout

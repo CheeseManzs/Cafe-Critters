@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=14 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="2_4d2cp"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_i2ofm"]
+[ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="4_2xc6c"]
 [ext_resource type="Texture2D" uid="uid://20l40cwgl1w6" path="res://Placeholder Icons/card icon.png" id="5_43dfa"]
 [ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="7_yuiyn"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_6owi0"]
@@ -34,8 +35,8 @@ shadow_blur = 0.0
 [node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI", "cardButtons")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
-debugTeamA = [ExtResource("3_i2ofm"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
-debugTeamB = [ExtResource("2_4d2cp"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
+debugTeamA = [ExtResource("3_i2ofm"), ExtResource("2_4d2cp"), ExtResource("4_2xc6c")]
+debugTeamB = [ExtResource("2_4d2cp"), ExtResource("4_2xc6c"), ExtResource("3_i2ofm")]
 playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]
 enemyUI = [NodePath("../Control/EnemyHP/Enemy Mon Details"), NodePath("../Control/EnemyHP/Enemy Mon Details2"), NodePath("../Control/EnemyHP/Enemy Mon Details3")]
 playerChoiceUI = NodePath("../Control/Panel")
