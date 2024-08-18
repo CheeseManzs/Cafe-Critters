@@ -9,4 +9,12 @@ func _init() -> void:
 	name = "Store Power"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	#add temporary MP
+	var mpNextTurn = 1
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		mpNextTurn = ceil(mpNextTurn*1.5)
+	attacker.addTempMPPerTurn(mpNextTurn)
 	return 0
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return 1

@@ -62,11 +62,19 @@ func hasStatus(eff: Status.EFFECTS) -> bool:
 		if status.effect == eff && !status.effectDone:
 			return true
 	return false
+
+#returns status effect of specific type
+func getStatus(eff: Status.EFFECTS) -> Status:
+	for i in len(statusConditions):
+		var status: Status = statusConditions[i]
+		if status.effect == eff && !status.effectDone:
+			return status
+	return null
 #reset that happens on switch-in
 func hardReset() -> void:
 	shield = 0
 	currentHand = Zone.new()
-	currentHand.storedCards = currentDeck.specialDraw(5, battleController, self)
+	currentHand.storedCards = currentDeck.specialDraw(4, battleController, self)
 
 
 # Resets values for the start of a turn
@@ -81,8 +89,10 @@ func reset(active = true) -> void:
 		currentDeck = rawData.deck.clone()
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
-	if active && len(currentDeck.storedCards) > 0 && len(currentHand.storedCards) < 5:
-		var card: Array[Card] = currentDeck.specialDraw(1, battleController, self)
+	if active && len(currentDeck.storedCards) > 0:
+		var drawBonus = 0
+		drawBonus += floor(getKnowledge()/3.0)
+		var card: Array[Card] = currentDeck.specialDraw(1 + drawBonus, battleController, self)
 		BattleLog.singleton.log("DEBUG: " + rawData.name + " drew " + card[0].name)
 		currentHand.storedCards += card
 
@@ -107,6 +117,14 @@ func trueDamage(dmg: int) -> void:
 	if health <= 0:
 		health = 0
 
+#adds status as counter
+func addCounter(eff: Status.EFFECTS, x, y = 0):
+	if !hasStatus(eff):
+		addStatusCondition(Status.new(eff,0,0), true)
+	var status: Status = getStatus(eff)
+	status.X += x
+	status.Y += y
+
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	#damage shield and calculate overdamage
@@ -115,6 +133,11 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	trueDamage(pureDmg)	
 	return pureDmg
 
+#get knowledge counter
+func getKnowledge() -> int:
+	if hasStatus(Status.EFFECTS.KNOWLEDGE):
+		return getStatus(Status.EFFECTS.KNOWLEDGE).X
+	return 0
 #adds mp to the monster's team
 func addMP(mpAmount: int) -> void:
 	#log mp adding
@@ -136,6 +159,16 @@ func addMPPerTurn(mpGainAmount: int) -> void:
 	#if enemy, add mp gain to enemy variable
 	else:
 		battleController.enemyMPGain += mpGainAmount
+
+func addTempMPPerTurn(mpGainAmount: int) -> void:
+	#log mp adding
+	BattleLog.singleton.log(rawData.name + " will gain " + str(mpGainAmount) + " more MP next turn")
+	#if player, add mp gain to player variable
+	if playerControlled:
+		battleController.playerMPTempGain += mpGainAmount
+	#if enemy, add mp gain to enemy variable
+	else:
+		battleController.enemyMPTempGain += mpGainAmount
 
 func removeMP(mpAmount: int) -> void:
 	#if player, remove mp from player

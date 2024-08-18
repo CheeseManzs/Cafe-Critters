@@ -9,4 +9,12 @@ func _init() -> void:
 	name = "Prepare"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var mpGiven = 1
+	var knowledgeGiven = 1
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		knowledgeGiven = ceil(knowledgeGiven*1.5)
+	#add mp
+	attacker.addMP(mpGiven)
+	#add knowledge counter
+	attacker.addCounter(Status.EFFECTS.KNOWLEDGE,knowledgeGiven)
 	return 0

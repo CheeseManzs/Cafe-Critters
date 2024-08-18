@@ -55,6 +55,9 @@ var enemyMP = 0
 var playerMPGain = 3
 #enemy passive MP gain
 var enemyMPGain = 3
+#player/enemy temporary passive MP gain
+var playerMPTempGain = 0
+var enemyMPTempGain = 0
 #enemy ai object
 var enemyAI: BattleAI
 
@@ -147,11 +150,16 @@ func enemyDeclare() -> Array[BattleAction]:
 	return actions
 	#await get_tree().create_timer(1.0).timeout
 
+
+
 func activeTurn() -> void:
 	inTurn = true
 	
-	playerMP += playerMPGain
-	enemyMP += enemyMPGain
+	playerMP += playerMPGain + playerMPTempGain
+	enemyMP += enemyMPGain + enemyMPTempGain
+	
+	playerMPTempGain = 0
+	enemyMPTempGain = 0
 	
 	if playerMP > 6:
 		playerMP = 6
