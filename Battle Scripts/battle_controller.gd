@@ -110,12 +110,14 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for idIndex in len(playerTeam):
 		#create battle object for player
 		playerMonsterObj = createMonster(true, playerTeam[activePlayerMon + idIndex].rawData, idIndex)
+		playerMonsterObj.position = playerMonsterObj.getMonsterPosition()
 		playerObjs.push_back(playerMonsterObj)
 		
 		
 	for idIndex in len(enemyTeam):	
 		#create battle object for enemy
 		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)	
+		enemyMonsterObj.position = enemyMonsterObj.getMonsterPosition()
 		enemyObjs.push_back(enemyMonsterObj)
 	
 	#assign ui to player mon
@@ -124,7 +126,8 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
 	enemyAI = BattleAI.new(self)
-
+	
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -132,34 +135,57 @@ func _ready() -> void:
 	initialize(debugTeamA, debugTeamB)
 	pass # Replace with function body.
 
+# Check if a monster swap is valid
+func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
+	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
+	return valid
+
+func promptPlayerSwitch() -> void:
+	BattleLog.singleton.log("Choose a switch-in!")
+	playerChoiceUI.hide()
+	for shelfUI in shelfedMonUI:
+		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
+	await gui_choice
+	for shelfUI in shelfedMonUI:
+			shelfUI.switchButton.disabled = true
+	await get_tree().create_timer(1.0).timeout
+	
+
+
 func enemyDeclare() -> Array[BattleAction]:
 	#initialize list of possible actions
 	var actions: Array[BattleAction] = []
 	#loop through active mons (currently only supports 1 active mon so it doesnt really matter)
 	for i in maxActiveMons:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
-		if len(mon.currentHand.storedCards) == 0:
-			BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
-			continue
-		#target is automatically set to the main active mon
-		var chosenTargetID = -1
-		var targSelf = false
-		var chosenCard: Card = enemyAI.choiceEnemy(true)
-		BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
-		#add chosen card logic here
-		
-		#add to action queue
-		var battleAction: BattleAction = BattleAction.new(
-			mon,
-			false,
-			chosenCard.priority,
-			chosenTargetID,
-			targSelf,
-			chosenCard,
-			self
-		)
-		actions.push_back(battleAction)
-	
+		if !mon.hasStatus(Status.EFFECTS.KO):
+			#choose card if mon has not fainted
+			if len(mon.currentHand.storedCards) == 0:
+				BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
+				continue
+			#target is automatically set to the main active mon
+			var chosenTargetID = -1
+			var targSelf = false
+			var chosenCard: Card = enemyAI.choiceEnemy(true)
+			BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
+			#add chosen card logic here
+			
+			#add to action queue
+			var battleAction: BattleAction = BattleAction.new(
+				mon,
+				false,
+				chosenCard.priority,
+				chosenTargetID,
+				targSelf,
+				chosenCard,
+				self
+			)
+			actions.push_back(battleAction)
+		else:
+			enemySwap(enemyAI.enemySwitch())
+			#swap enemy
+			pass
+			
 	return actions
 	#await get_tree().create_timer(1.0).timeout
 
@@ -170,25 +196,20 @@ func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
 func playerSwap(newID) -> void:
-	print("switching in ",newID," from ",activePlayerMon)
-	if activePlayerMon == newID || playerMP < 1:
-		return
-	print("running switch")
+	
 	#get monster structs and objects
 	var currentMon: BattleMonster = getActivePlayerMon()
 	var newMon: BattleMonster = playerTeam[newID]
 	var currentObj: MonsterDisplay = playerObjs[activePlayerMon]
 	var newObj: MonsterDisplay = playerObjs[newID]
 	
-	print(newObj.teamID)
-	print(newObj.getMonsterPosition())
+	if !validSwap(currentMon, newMon) || playerMP < 1:
+		return
+	
 	#swap team IDs
 	var oldTID = currentObj.teamID
 	currentObj.teamID = newObj.teamID
 	newObj.teamID = oldTID
-	
-	print(newObj.teamID)
-	print(newObj.getMonsterPosition())
 	
 	playerUI[0].connectedMon = newMon
 	playerUI[0].reloadUI()
@@ -202,6 +223,34 @@ func playerSwap(newID) -> void:
 	
 	#emit signal
 	skipChoice = true
+	emitGUISignal()
+
+func enemySwap(newID) -> void:
+	#get monster structs and objects
+	var currentMon: BattleMonster = getActiveEnemyMon()
+	var newMon: BattleMonster = enemyTeam[newID]
+	var currentObj: MonsterDisplay = enemyObjs[activeEnemyMon]
+	var newObj: MonsterDisplay = enemyObjs[newID]
+	
+	if !validSwap(currentMon, newMon) || playerMP < 1:
+		return
+	
+	#swap team IDs
+	var oldTID = currentObj.teamID
+	currentObj.teamID = newObj.teamID
+	newObj.teamID = oldTID
+	
+	enemyUI[0].connectedMon = newMon
+	enemyUI[0].reloadUI()
+	
+	#setup new mon
+	newMon.hardReset()
+	
+	activeEnemyMon = newID
+	#remove 1 MP
+	enemyMP -= 1
+	
+	#emit signal
 	emitGUISignal()
 	
 
@@ -233,6 +282,21 @@ func activeTurn() -> void:
 
 	
 	var actions: Array[BattleAction] = []
+	
+	print(getActiveEnemyMon().rawData.name)
+	
+	if getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
+		await promptPlayerSwitch()
+		inTurn = false
+		return
+	
+	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
+		enemySwap(enemyAI.enemySwitch())
+		await get_tree().create_timer(1.0).timeout
+		inTurn = false
+		return
+		
+	
 	for i in maxActiveMons:
 		#show player gui
 		playerChoiceUI.show()
@@ -248,11 +312,14 @@ func activeTurn() -> void:
 				cardButton.text = card.name + " (" + str(card.cost) + " MP)"
 				if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 					cardButton.text += " (EMP)"
-				cardButton.disabled = card.cost > playerMP
+				cardButton.disabled = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
 				
-		
+		for shelfUI in shelfedMonUI:
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 		#wait for a gui choice to be made
 		await gui_choice
+		for shelfUI in shelfedMonUI:
+			shelfUI.switchButton.disabled = true
 		playerChoiceUI.hide()
 		if skipChoice:
 			continue
@@ -286,15 +353,6 @@ func activeTurn() -> void:
 
 func emitGUISignal() -> void:
 	gui_choice.emit()
-	
-func onAttackPressed() -> void:
-	playerAction = getActivePlayerMon().currentDeck.storedCards[0]
-
-func onDefendPressed() -> void:
-	playerAction = getActivePlayerMon().currentDeck.storedCards[1]
-
-func onCardPressed() -> void:
-	playerAction = getActivePlayerMon().currentDeck.storedCards[0]
 
 func onHand(index: int) -> void:
 	print("hand index ",index)

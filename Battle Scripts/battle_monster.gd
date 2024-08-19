@@ -117,6 +117,9 @@ func trueDamage(dmg: int) -> void:
 	#health cannot be negative
 	if health <= 0:
 		health = 0
+		#add knocked out status
+		BattleLog.log(rawData.name + " has been KO'd")
+		addStatusCondition(Status.new(Status.EFFECTS.KO), false)
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):

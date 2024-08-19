@@ -28,6 +28,10 @@ func rearrange() -> void:
 func runActions(battleController: Node) -> void:
 	for i in len(actions):
 		var action = actions[i]
+		if action.battleMonster.hasStatus(Status.EFFECTS.KO):
+			if action.battleMonster == battleController.getActivePlayerMon():
+				await battleController.promptPlayerSwitch()
+			continue
 		#run card action
 		action.printAction()
 		action.battleMonster.removeMP(action.card.cost)

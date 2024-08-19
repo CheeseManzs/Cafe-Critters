@@ -5,6 +5,7 @@ extends Panel
 @export var nameText: RichTextLabel
 var connectedMon: BattleMonster
 @export var battleController: BattleController
+@export var switchButton: Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

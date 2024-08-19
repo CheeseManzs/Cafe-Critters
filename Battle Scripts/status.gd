@@ -1,6 +1,7 @@
 class_name Status
 #enum of status effects
 enum EFFECTS {
+	KO, #mon hp is 0
 	DECAY,
 	EMPOWER,
 	EMPOWER_NEXT,
@@ -39,6 +40,8 @@ func _init(eff: EFFECTS, p_X:int = 0, p_Y:int = 0):
 
 func rawToString() -> String:
 	match effect:
+		EFFECTS.KO:
+			return "Knocked Out"
 		EFFECTS.DECAY:
 			return "Decay"
 		EFFECTS.EMPOWER:
@@ -82,6 +85,8 @@ func toString() -> String:
 func newTurn() -> void:
 	#check effect
 	match effect:
+		EFFECTS.KO:
+			return
 		EFFECTS.DECAY:
 			return
 		EFFECTS.EMPOWER:

@@ -13,14 +13,18 @@ var teamID = 0
 var idleStrength = 0.05
 #random offset for bobbing
 var randOffset = 0
+#bobbing multipler
+var bobAddition = 0
 #rng struct
 var rng = RandomNumberGenerator.new()
+var jumping = false
 
 # Reloads monster from metadata
 func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")
 	#set sprite to the monster this object represents
 	$Sprite3D.texture = monsterData.sprite
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -47,16 +51,36 @@ func getMonsterPosition() -> Vector3:
 		pos.x *= -1
 	return pos
 
-
+func jumpToPosition(pos: Vector3, delta) -> void:
+	var initial: Vector3 = position
+	var elapsed = 0
+	var timeMax = ceil((pos - initial).length())/15
+	print(timeMax)
+	var yVertex = 1
+	while elapsed < timeMax:
+		var progress = elapsed/timeMax
+		var posX: float = initial.x + (pos.x - initial.x)*progress
+		var posY: float = initial.y + -(progress)*(progress - 1)*yVertex
+		var posZ: float = initial.z + (pos.z - initial.z)*progress
+		position = Vector3(posX, posY, posZ)
+		elapsed += delta/4
+		bobAddition = -10*(progress)*(progress - 1)
+		await get_tree().create_timer(delta/10).timeout
+	bobAddition = 0
+	position = pos
+	jumping = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
 	#calculate and set the monster position to the intended position
-	position =  getMonsterPosition()
+	var intendedPosition: Vector3 =  getMonsterPosition()
+	if (intendedPosition - position).length() > 0.2 && !jumping:
+		jumping = true
+		jumpToPosition(intendedPosition, delta)
 	
 	#calculate the delta for the bobbing
-	var bobDelta = idleStrength*sin(t + randOffset)
+	var bobDelta = idleStrength*(sin(t*2 + randOffset) + bobAddition)
 	
 	if playerControlled:
 		#if monster is player controlled, rotate the sprite 180 degrees
@@ -64,6 +88,7 @@ func _process(delta: float) -> void:
 	else:
 		#if the monster is enemy controlled, no sprite rotation is needed
 		$Sprite3D.rotation_degrees = Vector3(0, 0, 0)
+	
 	
 	#change the scale of the sprite to simulate bobbing
 	$Sprite3D.scale = Vector3(1, (1 - idleStrength) + bobDelta,  1)

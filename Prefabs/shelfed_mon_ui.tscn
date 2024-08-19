@@ -3,12 +3,13 @@
 [ext_resource type="Script" path="res://Battle Scripts/shelfed_ui.gd" id="1_xwuo6"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="1_yyvxt"]
 
-[node name="Shelfed Mon UI" type="Panel" node_paths=PackedStringArray("hpBar", "faceTexture", "nameText")]
+[node name="Shelfed Mon UI" type="Panel" node_paths=PackedStringArray("hpBar", "faceTexture", "nameText", "switchButton")]
 custom_minimum_size = Vector2(300, 50)
 script = ExtResource("1_xwuo6")
 hpBar = NodePath("VBoxContainer/HBoxContainer/ProgressBar")
 faceTexture = NodePath("Face Container/TextureRect")
 nameText = NodePath("VBoxContainer/Name Container/RichTextLabel")
+switchButton = NodePath("Button")
 
 [node name="Face Container" type="Control" parent="."]
 clip_contents = true

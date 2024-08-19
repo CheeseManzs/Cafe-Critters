@@ -5,13 +5,21 @@ var battleController: BattleController
 func _init(controller: BattleController) -> void:
 	battleController = controller
 
+func enemySwitch():
+	for mon in battleController.enemyTeam:
+		var oldMon = battleController.getActiveEnemyMon()
+		var newMon = mon
+		if battleController.validSwap(oldMon, newMon):
+			return battleController.enemyTeam.find(mon)
+	return -1
+
 func choiceEnemy(removeChoice = false):
 	
 	#get current enemy mp
 	var MP: int = battleController.enemyMP
 	#get current enemy mon
-	var mon: BattleMonster = battleController.enemyTeam[battleController.activeEnemyMon]
-	var plrMon: BattleMonster = battleController.playerTeam[battleController.activePlayerMon]
+	var mon: BattleMonster = battleController.getActiveEnemyMon()
+	var plrMon: BattleMonster = battleController.getActivePlayerMon()
 	#get current enemy cards
 	var cards: Array[Card] = mon.currentHand.storedCards
 	
@@ -33,7 +41,7 @@ func choiceEnemy(removeChoice = false):
 	for card in available:
 		var score = 0
 		score += card.calcBonus(mon, plrMon)
-		score += card.calcDamage(mon, plrMon)
+		score += card.calcDamage(mon, plrMon)*3
 		score += card.calcShield(mon,plrMon)/2
 		if mon.maxHP < plrMon.attack*2:
 			score += card.calcShield(mon,plrMon)/2
