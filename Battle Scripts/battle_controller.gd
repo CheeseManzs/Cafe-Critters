@@ -9,9 +9,9 @@ signal gui_choice
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int
 #node that corrosponds to the player monster
-var playerMonsterObj: Node3D
+var playerMonsterObj: MonsterDisplay
 #node that corrosponds to the enemy monster
-var enemyMonsterObj: Node3D
+var enemyMonsterObj: MonsterDisplay
 
 @export var debugTeamA: Array
 @export var debugTeamB: Array
@@ -109,15 +109,19 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	
 	for idIndex in len(playerTeam):
 		#create battle object for player
-		playerMonsterObj = createMonster(true, playerTeam[activePlayerMon + idIndex].rawData, idIndex)
+		var mon: BattleMonster = playerTeam[activePlayerMon + idIndex]
+		playerMonsterObj = createMonster(true, mon.rawData, idIndex)
 		playerMonsterObj.position = playerMonsterObj.getMonsterPosition()
+		playerMonsterObj.connectedMon = mon 
 		playerObjs.push_back(playerMonsterObj)
 		
 		
 	for idIndex in len(enemyTeam):	
 		#create battle object for enemy
-		enemyMonsterObj = createMonster(false, enemyTeam[activeEnemyMon + idIndex].rawData, idIndex)	
+		var mon: BattleMonster = enemyTeam[activeEnemyMon + idIndex]
+		enemyMonsterObj = createMonster(false, mon.rawData, idIndex)	
 		enemyMonsterObj.position = enemyMonsterObj.getMonsterPosition()
+		enemyMonsterObj.connectedMon = mon
 		enemyObjs.push_back(enemyMonsterObj)
 	
 	#assign ui to player mon
@@ -158,7 +162,7 @@ func enemyDeclare() -> Array[BattleAction]:
 	#loop through active mons (currently only supports 1 active mon so it doesnt really matter)
 	for i in maxActiveMons:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
-		if !mon.hasStatus(Status.EFFECTS.KO):
+		if !enemyAI.enemyShouldSwitch() && !mon.hasStatus(Status.EFFECTS.KO):
 			#choose card if mon has not fainted
 			if len(mon.currentHand.storedCards) == 0:
 				BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")

@@ -13,18 +13,37 @@ var teamID = 0
 var idleStrength = 0.05
 #random offset for bobbing
 var randOffset = 0
-#bobbing multipler
-var bobAddition = 0
+#bobbing addition/multipler
+var bobAddition: float = 0
+var bobMultiplier: float = 1
 #rng struct
 var rng = RandomNumberGenerator.new()
 var jumping = false
+#connected battle mon
+var connectedMon: BattleMonster
+#ko checker
+var faintAnimated = false
 
 # Reloads monster from metadata
 func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")
 	#set sprite to the monster this object represents
 	$Sprite3D.texture = monsterData.sprite
+
+func faintAnimation(delta: float):
+	if faintAnimated:
+		return
+	print("running faint anim")
+	faintAnimated = true	
+	var elapsed: float = 0
+	var timeMax: float = 1
+	while elapsed < timeMax:
+		bobMultiplier = 1 - elapsed/timeMax
+		elapsed += delta
+		await get_tree().create_timer(delta/10).timeout
+	bobMultiplier = 0
 	
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -75,6 +94,11 @@ func _process(delta: float) -> void:
 	
 	#calculate and set the monster position to the intended position
 	var intendedPosition: Vector3 =  getMonsterPosition()
+	#check if KO'd
+	if connectedMon.isKO():
+		#run KO animation
+		faintAnimation(delta)
+	
 	if (intendedPosition - position).length() > 0.2 && !jumping:
 		jumping = true
 		jumpToPosition(intendedPosition, delta)
@@ -91,8 +115,8 @@ func _process(delta: float) -> void:
 	
 	
 	#change the scale of the sprite to simulate bobbing
-	$Sprite3D.scale = Vector3(1, (1 - idleStrength) + bobDelta,  1)
+	$Sprite3D.scale = bobMultiplier*Vector3(1, (1 - idleStrength) + bobDelta,  1)
 	#to anchor it at the bottom, add (delta - max)/2 to the position of the **sprite** (not actual monster)
-	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2, 0)
+	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier - 1, 0)
 	#update the total time by adding the delta time to the tracker
 	t += delta

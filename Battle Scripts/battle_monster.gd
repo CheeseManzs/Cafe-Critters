@@ -70,6 +70,11 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 		if status.effect == eff && !status.effectDone:
 			return status
 	return null
+
+#check if KO'd
+func isKO() -> bool:
+	return hasStatus(Status.EFFECTS.KO)
+
 #reset that happens on switch-in
 func hardReset() -> void:
 	shield = 0

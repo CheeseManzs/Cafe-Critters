@@ -13,6 +13,15 @@ func enemySwitch():
 			return battleController.enemyTeam.find(mon)
 	return -1
 
+func enemyShouldSwitch():
+	var shouldSwich = false
+	#get active monster
+	var mon = battleController.getActiveEnemyMon()
+	#if monster is at or below 50% hp then switch out
+	if float(mon.health)/float(mon.maxHP) <= 0.5:
+		shouldSwich = true
+	return shouldSwich
+
 func choiceEnemy(removeChoice = false):
 	
 	#get current enemy mp
