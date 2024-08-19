@@ -68,6 +68,8 @@ var enemyMPTempGain = 0
 var enemyAI: BattleAI
 #add skipping
 var skipChoice = false
+# graveyard
+var graveyard: Array[Card] = []
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -144,6 +146,15 @@ func _ready() -> void:
 func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
 	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
 	return valid
+
+func addToGraveyard(card: Card):
+	graveyard.push_back(card)
+	#search for relevants statusses
+	for mon in (playerTeam + enemyTeam):
+		#decay
+		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.DECAY):
+			var decayStatus = mon.getStatus(Status.EFFECTS.DECAY)
+			mon.trueDamage(decayStatus.X)
 
 func promptPlayerSwitch() -> void:
 	BattleLog.singleton.log("Choose a switch-in!")

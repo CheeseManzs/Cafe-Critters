@@ -35,6 +35,7 @@ shadow_blur = 0.0
 [node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI", "cardButtons")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
+currentTurn = null
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("2_4d2cp"), ExtResource("4_2xc6c")]
 debugTeamB = [ExtResource("4_2xc6c"), ExtResource("2_4d2cp"), ExtResource("3_i2ofm")]
 playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]
