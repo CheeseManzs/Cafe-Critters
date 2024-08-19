@@ -6,6 +6,13 @@ func _init(controller: BattleController) -> void:
 	battleController = controller
 
 func enemySwitch():
+	#run advanced check
+	for mon in battleController.enemyTeam:
+		var oldMon = battleController.getActiveEnemyMon()
+		var newMon = mon
+		if newMon.health > oldMon.health && battleController.validSwap(oldMon, newMon):
+			return battleController.enemyTeam.find(mon)
+	#if no match, find first valid switch
 	for mon in battleController.enemyTeam:
 		var oldMon = battleController.getActiveEnemyMon()
 		var newMon = mon
@@ -19,7 +26,9 @@ func enemyShouldSwitch():
 	var mon = battleController.getActiveEnemyMon()
 	#if monster is at or below 50% hp then switch out
 	if float(mon.health)/float(mon.maxHP) <= 0.5:
-		shouldSwich = true
+		for otherMon in battleController.enemyTeam:
+			if otherMon.health > mon.health:
+				shouldSwich = true
 	return shouldSwich
 
 func choiceEnemy(removeChoice = false):

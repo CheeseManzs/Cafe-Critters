@@ -91,7 +91,6 @@ func reset(active = true) -> void:
 		status.newTurn()
 	#if there are no cards in the deck, reset the deck
 	if active && len(currentDeck.storedCards) == 0:
-		BattleLog.singleton.log("DEBUG: Resetting deck")
 		currentDeck = rawData.deck.clone()
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
@@ -99,7 +98,6 @@ func reset(active = true) -> void:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
 		var card: Array[Card] = currentDeck.specialDraw(1 + drawBonus, battleController, self)
-		BattleLog.singleton.log("DEBUG: " + rawData.name + " drew " + card[0].name)
 		currentHand.storedCards += card
 
 func addStatusCondition(status: Status, broadcast = false):

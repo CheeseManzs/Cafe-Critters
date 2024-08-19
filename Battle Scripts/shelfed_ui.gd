@@ -43,4 +43,6 @@ func _process(delta: float) -> void:
 	pass
 
 func swapIn():
-	battleController.playerSwap(battleController.playerTeam.find(connectedMon))
+	battleController.playerSwitchID = (battleController.playerTeam.find(connectedMon))
+	battleController.skipChoice = true
+	battleController.emitGUISignal()

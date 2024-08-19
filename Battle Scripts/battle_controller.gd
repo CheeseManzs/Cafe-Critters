@@ -49,6 +49,7 @@ var inTurn: bool = false
 #player's chosen (cached) action
 var playerAction: Card
 var playerCardID = -1
+var playerSwitchID = -1
 #enemy's chosen action
 var enemyAction: Card
 
@@ -150,6 +151,7 @@ func promptPlayerSwitch() -> void:
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 	await gui_choice
+	playerSwap(playerSwitchID)
 	for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout
@@ -186,7 +188,19 @@ func enemyDeclare() -> Array[BattleAction]:
 			)
 			actions.push_back(battleAction)
 		else:
-			enemySwap(enemyAI.enemySwitch())
+			var switchID: int = enemyAI.enemySwitch()
+			var battleAction: BattleAction = BattleAction.new(
+				mon,
+				false,
+				100,
+				switchID,
+				false,
+				null,
+				self,
+				true
+			)
+			BattleLog.singleton.log(mon.rawData.name + " is going to swap to " + enemyTeam[switchID].rawData.name)
+			actions.push_back(battleAction)
 			#swap enemy
 			pass
 			
@@ -226,7 +240,6 @@ func playerSwap(newID) -> void:
 	playerMP -= 1
 	
 	#emit signal
-	skipChoice = true
 	emitGUISignal()
 
 func enemySwap(newID) -> void:
@@ -325,26 +338,38 @@ func activeTurn() -> void:
 		for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 		playerChoiceUI.hide()
+		var battleAction: BattleAction
 		if skipChoice:
-			continue
-		await get_tree().create_timer(0.01).timeout
-		#run choices for player and enemy
-		var chosenTargetID = -1
-		var targSelf = false
-		var chosenPriority = 0
-		print(playerCardID)
-		var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
+			battleAction = BattleAction.new(
+				mon,
+				true,
+				100,
+				playerSwitchID,
+				false,
+				null,
+				self,
+				true
+			)
+		else:
+			await get_tree().create_timer(0.01).timeout
+			#run choices for player and enemy
+			var chosenTargetID = -1
+			var targSelf = false
+			var chosenPriority = 0
+			print(playerCardID)
+			var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
 		
 		#add to action queue
-		var battleAction: BattleAction = BattleAction.new(
-			mon,
-			true,
-			chosenCard.priority,
-			chosenTargetID,
-			targSelf,
-			chosenCard,
-			self
-		)
+			battleAction = BattleAction.new(
+				mon,
+				true,
+				chosenCard.priority,
+				chosenTargetID,
+				targSelf,
+				chosenCard,
+				self,
+				false
+			)
 		actions.push_back(battleAction)
 		
 		#wait a bit for the next monster
