@@ -117,5 +117,4 @@ func newTurn() -> void:
 			X -= 1
 			return
 		EFFECTS.REGEN:
-			X -= 1
 			return

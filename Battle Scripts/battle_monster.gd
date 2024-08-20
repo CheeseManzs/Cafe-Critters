@@ -88,6 +88,20 @@ func reset(active = true) -> void:
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]
 		status.newTurn()
+	#heal from regen
+	if hasStatus(Status.EFFECTS.REGEN):
+		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
+		var regenAmount: int = regenStatus.X
+		addHP(regenAmount)
+		regenStatus.X -= 1
+		if regenStatus.X <= 0:
+			regenStatus.effectDone = true
+	
+	#remove removable status effects
+	for status in statusConditions:
+		if status.effectDone:
+			statusConditions.remove_at(statusConditions.find(status))
+	
 	#move cards from hand into the deck
 	currentDeck.storedCards += currentHand.bulkDraw(len(currentHand.storedCards))
 	#if there are no cards in the deck, reset the deck
@@ -153,6 +167,12 @@ func addShield(shieldAmount: int) -> void:
 	if shield < 0:
 		shield = 0
 #does pure damage to the monster
+func addHP(hp: int):
+	BattleLog.singleton.log(rawData.name + " regenerated " + str(hp) + " HP")
+	health += hp
+	if health > maxHP:
+		health = maxHP
+
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
 	health -= dmg
