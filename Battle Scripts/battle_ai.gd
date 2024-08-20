@@ -10,9 +10,14 @@ func enemySwitch():
 	for mon in battleController.enemyTeam:
 		var oldMon = battleController.getActiveEnemyMon()
 		var newMon = mon
-		if newMon.health > oldMon.health && battleController.validSwap(oldMon, newMon):
+		if newMon.health > oldMon.health && battleController.validSwap(oldMon, newMon) && len(newMon.playableCards()) > 0:
 			return battleController.enemyTeam.find(mon)
 	#if no match, find first valid switch
+	for mon in battleController.enemyTeam:
+		var oldMon = battleController.getActiveEnemyMon()
+		var newMon = mon
+		if battleController.validSwap(oldMon, newMon) && len(newMon.playableCards()) > 0:
+			return battleController.enemyTeam.find(mon)
 	for mon in battleController.enemyTeam:
 		var oldMon = battleController.getActiveEnemyMon()
 		var newMon = mon

@@ -49,5 +49,5 @@ func _process(delta: float) -> void:
 		connectedBar.value += reductionRate
 	#set text to resemble bar
 	var barHP = connectedMon.maxHP*connectedBar.value/100.0
-	hpText.text = "[center]"+str(ceil(barHP))+"/"+str(connectedMon.maxHP)+"[/center]"
+	hpText.text = "[center]"+str(round(barHP))+"/"+str(connectedMon.maxHP)+"[/center]"
 	pass

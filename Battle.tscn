@@ -185,3 +185,10 @@ battleController = NodePath("../../../Battle Controller")
 [node name="Shelfed Mon UI3" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
+
+[node name="Button" type="Button" parent="Control/Shelfed Mon View"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Skip"
+
+[connection signal="pressed" from="Control/Shelfed Mon View/Button" to="Battle Controller" method="skipTurn"]
