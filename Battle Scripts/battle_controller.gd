@@ -70,6 +70,13 @@ var enemyAI: BattleAI
 var skipChoice = false
 # graveyard
 var graveyard: Array[Card] = []
+# banished cards
+var banishedPlayerCards: Array[Card] = []
+var banishedEnemyCards: Array[Card] = []
+# list for future actions system
+var futureActions: Array[FutureAction] = []
+# list for conditional actions system
+var conditionalActions: Array[ConditionalAction] = []
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -156,6 +163,40 @@ func addToGraveyard(card: Card):
 			var decayStatus = mon.getStatus(Status.EFFECTS.DECAY)
 			mon.trueDamage(decayStatus.X)
 
+func addArrayToGraveyard(cards: Array[Card]):
+	for card in cards:
+		addToGraveyard(card)
+
+func chooseCards(count: int) -> Array[Card]:
+	
+	playerChoiceUI.show()
+	setCardSelection(getActivePlayerMon(), true)
+	for shelfUI in shelfedMonUI:
+		shelfUI.switchButton.disabled = true
+	var cardsChosen: Array[Card] = []
+	while len(cardsChosen) < count && len(getActivePlayerMon().currentHand.storedCards) - len(cardsChosen) > 0:
+		#check for chosen cards
+		for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
+			var uiButton = cardButtons[uiIndex]
+			var uiCard = getActivePlayerMon().currentHand.storedCards[uiIndex]
+			print(uiCard.name,' ',uiIndex)
+			if cardsChosen.has(uiCard):
+				uiButton.setTextColor(Color.GOLD)
+			else:
+				uiButton.setTextColor(Color.WHITE)
+		await gui_choice
+		print('card ID:',playerCardID)
+		var card = getActivePlayerMon().currentHand.storedCards[playerCardID]
+		if !cardsChosen.has(card):
+			cardsChosen.push_back(card)
+		else:
+			cardsChosen.remove_at(cardsChosen.find(card))
+	for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
+			var uiButton = cardButtons[uiIndex]
+			uiButton.setTextColor(Color.WHITE)
+	return cardsChosen
+		
+
 func promptPlayerSwitch() -> void:
 	BattleLog.singleton.log("Choose a switch-in!")
 	playerChoiceUI.hide()
@@ -224,6 +265,7 @@ func getActivePlayerMon() -> BattleMonster:
 func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
+#swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:
 	
 	#get monster structs and objects
@@ -253,6 +295,7 @@ func playerSwap(newID) -> void:
 	#emit signal
 	emitGUISignal()
 
+#swaps active enemy mon to new mon at index newID
 func enemySwap(newID) -> void:
 	#get monster structs and objects
 	var currentMon: BattleMonster = getActiveEnemyMon()
@@ -281,6 +324,48 @@ func enemySwap(newID) -> void:
 	#emit signal
 	emitGUISignal()
 	
+#set card selection ui to specific mon
+func setCardSelection(mon: BattleMonster, allSelectable = false):
+	for uiIndex in len(cardButtons):
+		var cardButton: Button = cardButtons[uiIndex]
+		if uiIndex >= len(mon.currentHand.storedCards):
+			cardButton.hide()
+		else:
+			var card =  mon.currentHand.storedCards[uiIndex]
+			cardButton.show()
+			cardButton.text = card.name + " (" + str(card.cost) + " MP)"
+			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
+				cardButton.text += " (EMP)"
+			cardButton.disabled = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
+			if allSelectable:
+				cardButton.disabled = false
+
+#banishes player cards to the graveyard
+func banishPlayerCards(count: int):
+	var cc = await chooseCards(count)
+	getActivePlayerMon().currentHand.removeCards(cc)
+	for c in cc:
+		banishedPlayerCards.push_back(c)
+	
+
+#banishes enemy cards to the graveyard
+func banishEnemyCards(count: int):
+	var cc = []
+	for index in count:
+		cc.push_back(getActiveEnemyMon().currentHand.storedCards[index])
+	getActiveEnemyMon().currentHand.removeCards(cc)
+	for c in cc:
+		banishedEnemyCards.push_back(c)
+
+func banishEnemyArray(cards: Array[Card]):
+	banishArray(cards, false)
+
+func banishArray(cards: Array[Card], isPlayer = true):
+	for card in cards:
+		if isPlayer:
+			banishedPlayerCards.push_back(card)
+		else:
+			banishedPlayerCards.push_back(card)
 
 func activeTurn() -> void:
 	inTurn = true
@@ -295,6 +380,18 @@ func activeTurn() -> void:
 		playerMP = 6
 	if enemyMP > 6:
 		enemyMP = 6
+	
+	#run future actions
+	for futureAction in futureActions:
+		#run future action (returns true if it activated this turn
+		if await futureAction.processTurn():
+			futureActions.remove_at(futureActions.find(futureAction))
+	
+	#run conditoinal actions
+	for conditionalAction in conditionalActions:
+		#run future action (returns true if it activated this turn
+		if await conditionalAction.processTurn():
+			conditionalActions.remove_at(conditionalActions.find(conditionalAction))
 	
 	#reset temporary values
 	getActivePlayerMon().reset()
@@ -313,6 +410,7 @@ func activeTurn() -> void:
 	
 	print(getActiveEnemyMon().rawData.name)
 	
+	print(getActivePlayerMon().health, ',',getActivePlayerMon().hasStatus(Status.EFFECTS.KO))
 	if getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
 		await promptPlayerSwitch()
 		inTurn = false
@@ -325,26 +423,19 @@ func activeTurn() -> void:
 		return
 		
 	
+	
 	for i in maxActiveMons:
 		#show player gui
+		
 		playerChoiceUI.show()
 		var mon: BattleMonster = playerTeam[activePlayerMon + i]
 		
-		for uiIndex in len(cardButtons):
-			var cardButton: Button = cardButtons[uiIndex]
-			if uiIndex >= len(mon.currentHand.storedCards):
-				cardButton.hide()
-			else:
-				var card =  mon.currentHand.storedCards[uiIndex]
-				cardButton.show()
-				cardButton.text = card.name + " (" + str(card.cost) + " MP)"
-				if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-					cardButton.text += " (EMP)"
-				cardButton.disabled = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
-				
+		setCardSelection(mon)
+		
 		for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 		#wait for a gui choice to be made
+		
 		await gui_choice
 		for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true

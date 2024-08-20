@@ -27,7 +27,13 @@ func pullCard(cardID: int) -> Card:
 	var card = storedCards[cardID]
 	storedCards.remove_at(cardID)
 	return card.clone()
-	
+
+#remove list of cards
+func removeCards(cards: Array[Card]):
+	for card in cards:
+		if storedCards.has(card):
+			storedCards.remove_at(storedCards.find(card))
+
 # draws/removes random cards in bulk and returns an array
 func bulkDraw(count: int) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()

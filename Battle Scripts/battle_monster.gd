@@ -80,7 +80,6 @@ func hardReset() -> void:
 	shield = 0
 	currentDeck = rawData.deck.clone()
 	currentHand = Zone.new()
-	currentHand.storedCards = currentDeck.specialDraw(4, battleController, self)
 
 
 # Resets values for the start of a turn
@@ -89,22 +88,63 @@ func reset(active = true) -> void:
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]
 		status.newTurn()
+	#move cards from hand into the deck
+	currentDeck.storedCards += currentHand.bulkDraw(len(currentHand.storedCards))
 	#if there are no cards in the deck, reset the deck
 	if active && len(currentDeck.storedCards) == 0:
+		BattleLog.singleton.log("Ressting cards!")
 		currentDeck = rawData.deck.clone()
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
 	if active && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
-		var card: Array[Card] = currentDeck.specialDraw(1 + drawBonus, battleController, self)
+		var card: Array[Card] = currentDeck.specialDraw(5 + drawBonus, battleController, self)
 		currentHand.storedCards += card
 
+func checkStatusForArray0(x) -> bool:
+	return statusConditions.has(x[0])
+
 func addStatusCondition(status: Status, broadcast = false):
-	statusConditions.push_back(status)
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
+	#if effect is suspend then it occurs immediately
+	if playerControlled && status.effect == Status.EFFECTS.SUSPEND:
+		var toBanish = await battleController.chooseCards(status.X)
+		
+		battleController.banishArray(toBanish)
+		currentHand.removeCards(toBanish)
+		
+		var graveAction: ConditionalAction = ConditionalAction.new(
+			battleController,
+			battleController.addArrayToGraveyard,
+			checkStatusForArray0,
+			toBanish,
+			[self]
+		)
+		battleController.conditionalActions.push_back(graveAction)
+	#enemy suspension
+	if !playerControlled && status.effect == Status.EFFECTS.SUSPEND:
+		var toBanish: Array[Card] = []
+		for index in min(status.X, len(currentHand.storedCards)):
+			var cardChosen = currentHand.bulkDraw(1)
+			toBanish.push_back(cardChosen)
+			
+		battleController.banishEnemyArray(toBanish)
+		currentHand.removeCards(toBanish)
+		
+		var graveAction: ConditionalAction = ConditionalAction.new(
+			battleController,
+			battleController.addArrayToGraveyard,
+			checkStatusForArray0,
+			toBanish,
+			[self]
+		)
+		battleController.conditionalActions.push_back(graveAction)
+	
+	statusConditions.push_back(status)
+	
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
