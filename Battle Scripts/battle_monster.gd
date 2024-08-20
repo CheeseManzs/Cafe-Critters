@@ -173,9 +173,23 @@ func addHP(hp: int):
 	if health > maxHP:
 		health = maxHP
 
+func dmgAnim() -> void:
+	var obj: MonsterDisplay
+	if playerControlled:
+		obj = battleController.playerObjs[battleController.playerTeam.find(self)]
+	else:
+		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
+	obj.hitAnimation()
+	
+
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
 	health -= dmg
+	#run camera shake if damage is done
+	if dmg > 0:
+		BattleCamera.singleton.shake(0.2*dmg/float(maxHP))
+		
+		
 	BattleLog.singleton.log(rawData.name + " took " + str(dmg) + " damage")
 	#health cannot be negative
 	if health <= 0:
@@ -183,6 +197,8 @@ func trueDamage(dmg: int) -> void:
 		#add knocked out status
 		BattleLog.log(rawData.name + " has been KO'd")
 		addStatusCondition(Status.new(Status.EFFECTS.KO), false)
+	elif dmg > 0:
+		dmgAnim()
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):

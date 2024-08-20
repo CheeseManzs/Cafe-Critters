@@ -23,6 +23,8 @@ var jumping = false
 var connectedMon: BattleMonster
 #ko checker
 var faintAnimated = false
+var lockToIntendedPosition = true
+var lastDelta = 0
 
 # Reloads monster from metadata
 func reloadMonster() -> void:
@@ -39,9 +41,24 @@ func faintAnimation(delta: float):
 	var timeMax: float = 1
 	while elapsed < timeMax:
 		bobMultiplier = 1 - elapsed/timeMax
-		elapsed += delta
+		elapsed += delta*2
 		await get_tree().create_timer(delta/10).timeout
 	bobMultiplier = 0
+
+func hitAnimation() -> void:
+	lockToIntendedPosition = false
+	var elapsed: float = 0
+	var timeMax: float = 0.5
+	var back: int = 1
+	if playerControlled:
+		back = -1
+	while elapsed < timeMax:
+		var progress: float = elapsed/timeMax
+		position += Vector3(2*lastDelta*back*(1 - progress), 0, 0)
+		elapsed += lastDelta
+		await get_tree().create_timer(lastDelta).timeout
+	await get_tree().create_timer(0.1).timeout
+	lockToIntendedPosition = true
 	
 
 
@@ -71,6 +88,7 @@ func getMonsterPosition() -> Vector3:
 	return pos
 
 func jumpToPosition(pos: Vector3, delta) -> void:
+	
 	var initial: Vector3 = position
 	var elapsed = 0
 	var timeMax = ceil((pos - initial).length())/15
@@ -91,17 +109,19 @@ func jumpToPosition(pos: Vector3, delta) -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+	lastDelta = delta
 	#calculate and set the monster position to the intended position
-	var intendedPosition: Vector3 =  getMonsterPosition()
+	if lockToIntendedPosition:
+		var intendedPosition: Vector3 =  getMonsterPosition()
+		if (intendedPosition - position).length() > 0.2 && !jumping:
+			jumping = true
+			jumpToPosition(intendedPosition, delta)
 	#check if KO'd
 	if connectedMon.isKO():
 		#run KO animation
 		faintAnimation(delta)
 	
-	if (intendedPosition - position).length() > 0.2 && !jumping:
-		jumping = true
-		jumpToPosition(intendedPosition, delta)
+	
 	
 	#calculate the delta for the bobbing
 	var bobDelta = idleStrength*(sin(t*2 + randOffset) + bobAddition)
@@ -117,6 +137,6 @@ func _process(delta: float) -> void:
 	#change the scale of the sprite to simulate bobbing
 	$Sprite3D.scale = bobMultiplier*Vector3(1, (1 - idleStrength) + bobDelta,  1)
 	#to anchor it at the bottom, add (delta - max)/2 to the position of the **sprite** (not actual monster)
-	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier - 1, 0)
+	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + 0.5*(bobMultiplier - 1), 0)
 	#update the total time by adding the delta time to the tracker
 	t += delta

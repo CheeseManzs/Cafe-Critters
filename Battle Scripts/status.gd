@@ -14,7 +14,9 @@ enum EFFECTS {
 	PITCH,
 	KNOWLEDGE,
 	BARRIER,
-	REGEN
+	REGEN,
+	BECOME_RECKLESS,
+	RECKLESS
 }
 var X: int = 0
 var Y: int = 0
@@ -68,6 +70,10 @@ func rawToString() -> String:
 			return "Barrier"
 		EFFECTS.REGEN:
 			return "Regen"
+		EFFECTS.BECOME_RECKLESS:
+			return "Becoming Reckless"
+		EFFECTS.RECKLESS:
+			return "Reckless"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]

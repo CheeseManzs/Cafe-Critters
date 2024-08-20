@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=15 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
+[ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_tjquj"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="2_4d2cp"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_i2ofm"]
@@ -26,6 +27,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
+script = ExtResource("1_tjquj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
