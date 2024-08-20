@@ -218,7 +218,7 @@ func enemyDeclare() -> Array[BattleAction]:
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		if !enemyAI.enemyShouldSwitch() && !mon.hasStatus(Status.EFFECTS.KO):
 			#choose card if mon has not fainted
-			if len(mon.currentHand.storedCards) == 0:
+			if len(mon.playableCards()) == 0:
 				BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
 				continue
 			#target is automatically set to the main active mon
@@ -398,24 +398,13 @@ func activeTurn() -> void:
 	getActiveEnemyMon().reset()
 	 
 	
-	playerAction = null
-	playerCardID = -1
-	#hide player gui
-	playerChoiceUI.hide()
+	
 	#wait for enemy choice and animations
-	var enemyActions = enemyDeclare()
-
-	
-	var actions: Array[BattleAction] = []
-	
-	print(getActiveEnemyMon().rawData.name)
-	
-	print(getActivePlayerMon().health, ',',getActivePlayerMon().hasStatus(Status.EFFECTS.KO))
 	if getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
-		await promptPlayerSwitch()
-		inTurn = false
-		return
-	
+			await promptPlayerSwitch()
+			inTurn = false
+			return
+		
 	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
 		enemySwap(enemyAI.enemySwitch())
 		await get_tree().create_timer(1.0).timeout
@@ -423,63 +412,78 @@ func activeTurn() -> void:
 		return
 		
 	
-	
-	for i in maxActiveMons:
-		#show player gui
+	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && len(getActivePlayerMon().playableCards()) + len(getActiveEnemyMon().playableCards()) > 0:
 		
-		playerChoiceUI.show()
-		var mon: BattleMonster = playerTeam[activePlayerMon + i]
-		
-		setCardSelection(mon)
-		
-		for shelfUI in shelfedMonUI:
-			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
-		#wait for a gui choice to be made
-		
-		await gui_choice
-		for shelfUI in shelfedMonUI:
-			shelfUI.switchButton.disabled = true
+		playerAction = null
+		playerCardID = -1
+		#hide player gui
 		playerChoiceUI.hide()
-		var battleAction: BattleAction
-		if skipChoice:
-			battleAction = BattleAction.new(
-				mon,
-				true,
-				100,
-				playerSwitchID,
-				false,
-				null,
-				self,
-				true
-			)
-		else:
-			await get_tree().create_timer(0.01).timeout
-			#run choices for player and enemy
-			var chosenTargetID = -1
-			var targSelf = false
-			var chosenPriority = 0
-			print(playerCardID)
-			var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
-		
-		#add to action queue
-			battleAction = BattleAction.new(
-				mon,
-				true,
-				chosenCard.priority,
-				chosenTargetID,
-				targSelf,
-				chosenCard,
-				self,
-				false
-			)
-		actions.push_back(battleAction)
-		
-		#wait a bit for the next monster
-		await get_tree().create_timer(0.3).timeout
+		var enemyActions = enemyDeclare()
 	
-	actions += enemyActions
-	var turnSequence = BattleSequence.new(actions)
-	await turnSequence.runActions(self)
+		var actions: Array[BattleAction] = []
+		
+		print(getActiveEnemyMon().rawData.name)
+		
+		print(getActivePlayerMon().health, ',',getActivePlayerMon().hasStatus(Status.EFFECTS.KO))
+		
+		
+		for i in maxActiveMons:
+			#show player gui
+			
+			playerChoiceUI.show()
+			var mon: BattleMonster = playerTeam[activePlayerMon + i]
+			
+			setCardSelection(mon)
+			
+			for shelfUI in shelfedMonUI:
+				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
+			#wait for a gui choice to be made
+			if len(mon.playableCards()) <= 0:
+				continue
+			await gui_choice
+			for shelfUI in shelfedMonUI:
+				shelfUI.switchButton.disabled = true
+			playerChoiceUI.hide()
+			var battleAction: BattleAction
+			if skipChoice:
+				battleAction = BattleAction.new(
+					mon,
+					true,
+					100,
+					playerSwitchID,
+					false,
+					null,
+					self,
+					true
+				)
+			else:
+				await get_tree().create_timer(0.01).timeout
+				#run choices for player and enemy
+				var chosenTargetID = -1
+				var targSelf = false
+				var chosenPriority = 0
+				print(playerCardID)
+				var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
+			
+			#add to action queue
+				battleAction = BattleAction.new(
+					mon,
+					true,
+					chosenCard.priority,
+					chosenTargetID,
+					targSelf,
+					chosenCard,
+					self,
+					false
+				)
+			actions.push_back(battleAction)
+			
+			#wait a bit for the next monster
+			await get_tree().create_timer(0.3).timeout
+		
+		actions += enemyActions
+		var turnSequence = BattleSequence.new(actions)
+		await turnSequence.runActions(self)
 	inTurn = false
 
 func emitGUISignal() -> void:

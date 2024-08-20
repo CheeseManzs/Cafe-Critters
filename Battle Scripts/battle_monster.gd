@@ -71,6 +71,17 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 			return status
 	return null
 
+func playableCards() -> Array[Card]:
+	var playable: Array[Card] = []
+	var mp = battleController.enemyMP
+	if playerControlled:
+		mp = battleController.playerMP
+		
+	for card in currentHand.storedCards:
+		if card.cost <= mp:
+			playable.push_back(card)
+
+	return playable
 #check if KO'd
 func isKO() -> bool:
 	return hasStatus(Status.EFFECTS.KO)
@@ -181,6 +192,8 @@ func dmgAnim() -> void:
 		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
 	obj.hitAnimation()
 	
+func drawCards(count: int) -> void:
+	pass
 
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
