@@ -9,7 +9,10 @@ func _init() -> void:
 	name = "Meditate"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	attacker.addMPPerTurn(1)
+	var mpBonus = 1
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		mpBonus = ceil(mpBonus*1.5)
+	attacker.addMPPerTurn(mpBonus)
 	return 0
 
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:

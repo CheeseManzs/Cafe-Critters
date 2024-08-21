@@ -42,6 +42,9 @@ func _process(delta: float) -> void:
 		hpBar.value += reductionRate
 	pass
 
+func setTextColor(col: Color):
+	switchButton.set("theme_override_colors/font_color",col)
+
 func swapIn():
 	battleController.playerSwitchID = (battleController.playerTeam.find(connectedMon))
 	battleController.skipChoice = true

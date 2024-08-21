@@ -9,4 +9,8 @@ func _init() -> void:
 	name = "Restock"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var extraDraws = 2
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		extraDraws = ceil(extraDraws*1.5)
+	attacker.extraDraw += extraDraws
 	return 0

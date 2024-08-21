@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://bepmuf4wv2p6v"]
+[gd_resource type="Resource" script_class="Monster" load_steps=16 format=3 uid="uid://bepmuf4wv2p6v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
@@ -6,16 +6,19 @@
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_tklcb"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="3_a2rj5"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="4_7tlbj"]
-[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="5_giqia"]
+[ext_resource type="Resource" uid="uid://cb06un47xr505" path="res://Data/Cards/Boiling Point.tres" id="4_navpy"]
+[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="5_jiryu"]
 [ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Minor Block.tres" id="6_q24d2"]
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_6mmx6"]
-[ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="9_wvu4v"]
-[ext_resource type="Resource" uid="uid://bwaam8s51mxx0" path="res://Data/Cards/Store Power.tres" id="11_vcpsf"]
+[ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="7_bboeb"]
+[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="10_dc40c"]
+[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="10_ychg7"]
+[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Restock.tres" id="11_kb5o1"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
 name = "Deck"
-storedCards = Array[ExtResource("2_tklcb")]([ExtResource("3_a2rj5"), ExtResource("4_7tlbj"), ExtResource("5_giqia"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("9_wvu4v"), ExtResource("11_vcpsf")])
+storedCards = Array[ExtResource("2_tklcb")]([ExtResource("10_dc40c"), ExtResource("4_navpy"), ExtResource("5_jiryu"), ExtResource("4_7tlbj"), ExtResource("7_bboeb"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("10_ychg7"), ExtResource("11_kb5o1"), ExtResource("3_a2rj5")])
 
 [resource]
 script = ExtResource("1_clwfr")

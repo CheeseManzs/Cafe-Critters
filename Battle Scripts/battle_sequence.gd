@@ -32,6 +32,7 @@ func runActions(battleController: Node) -> void:
 			if action.battleMonster == battleController.getActivePlayerMon():
 				await battleController.promptPlayerSwitch()
 			continue
+		
 		#run card action
 		action.printAction()
 		if action.switching:
@@ -39,7 +40,14 @@ func runActions(battleController: Node) -> void:
 			action.runSwitch()
 			await battleController.get_tree().create_timer(1.0).timeout
 			continue
-			
+		
+		#if empower next played: empower card
+		if action.battleMonster.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+			action.battleMonster.getStatus(Status.EFFECTS.EMPOWER_PLAYED).effectDone = true
+			action.card.statusConditions.push_back(Status.EFFECTS.EMPOWER)
+			BattleLog.log(action.card.name + " was Empowered!")
+			await battleController.get_tree().create_timer(0.75).timeout
+		
 		action.battleMonster.removeMP(action.card.cost)
 		await battleController.get_tree().create_timer(0.75).timeout
 		await action.card.effect(action.battleMonster, action.getTarget())

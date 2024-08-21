@@ -24,6 +24,10 @@ var battleController: BattleController
 var playerControlled: bool
 #status conditions
 var statusConditions: Array[Status]
+#extra cards to draw
+var extraDraw = 0
+var attackBonus = 0
+var defenseBonus = 0
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
 	#set raw data
@@ -71,6 +75,27 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 			return status
 	return null
 
+func addAttackBonus(mod: float):
+	attackBonus += mod
+	BattleLog.singleton.log(rawData.name + "'s gained " + str(100*mod) + "% Attack")
+
+func addDefenseBonus(mod: float):
+	defenseBonus += mod
+	BattleLog.singleton.log(rawData.name + "'s gained " + str(100*mod) + "% Defense")
+
+func setAttack(atk: int):
+	attack = atk
+	BattleLog.singleton.log(rawData.name + "'s Attack is now " + str(atk))
+#removes random card and returns the removed card
+func discardRandomCard() -> Card:
+	var cards = currentHand.bulkDraw(1)
+	if len(cards) == 0:
+		return null
+	var card = cards[0]
+	battleController.addToGraveyard(card)
+	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
+	return card
+
 func playableCards() -> Array[Card]:
 	var playable: Array[Card] = []
 	var mp = battleController.enemyMP
@@ -91,11 +116,27 @@ func hardReset() -> void:
 	shield = 0
 	currentDeck = rawData.deck.clone()
 	currentHand = Zone.new()
+	drawCards(5)
 
+func removeCard(card: Card):
+	currentHand.removeCards([card])
+	battleController.addToGraveyard(card)
 
+func meetsRequirement(requirement: Callable) -> bool:
+	for card in currentHand.storedCards:
+		if requirement.call(card):
+			return true
+	return false
 # Resets values for the start of a turn
 func reset(active = true) -> void:
+	if isKO():
+		return
+	
+	#reset bonusses
 	shield = 0
+	attackBonus = 0
+	defenseBonus = 0
+	
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]
 		status.newTurn()
@@ -124,8 +165,8 @@ func reset(active = true) -> void:
 	if active && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
-		var card: Array[Card] = currentDeck.specialDraw(5 + drawBonus, battleController, self)
-		currentHand.storedCards += card
+		drawCards(5 + drawBonus + extraDraw)
+	extraDraw = 0
 
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
@@ -170,6 +211,11 @@ func addStatusCondition(status: Status, broadcast = false):
 	
 	statusConditions.push_back(status)
 	
+func getAttack():
+	return attack*(1 + attackBonus)
+
+func getDefense():
+	return defense*(1 + defenseBonus)
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
@@ -191,9 +237,11 @@ func dmgAnim() -> void:
 	else:
 		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
 	obj.hitAnimation()
-	
+
+#draw cards from deck	
 func drawCards(count: int) -> void:
-	pass
+	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
+	currentHand.storedCards += card
 
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp

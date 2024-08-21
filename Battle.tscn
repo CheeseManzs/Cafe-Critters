@@ -34,16 +34,17 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI", "cardButtons")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("cardbuttonContiner", "playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
+cardbuttonContiner = NodePath("../Control/Panel/ScrollContainer/Card Buttons")
+cardbuttonPrefab = ExtResource("6_5l1w1")
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("2_4d2cp"), ExtResource("4_2xc6c")]
 debugTeamB = [ExtResource("4_2xc6c"), ExtResource("2_4d2cp"), ExtResource("3_i2ofm")]
 playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]
 enemyUI = [NodePath("../Control/EnemyHP/Enemy Mon Details"), NodePath("../Control/EnemyHP/Enemy Mon Details2"), NodePath("../Control/EnemyHP/Enemy Mon Details3")]
 playerChoiceUI = NodePath("../Control/Panel")
 shelfedMonUI = [NodePath("../Control/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI3")]
-cardButtons = [NodePath("../Control/Panel/VBoxContainer/Card Button"), NodePath("../Control/Panel/VBoxContainer/Card Button2"), NodePath("../Control/Panel/VBoxContainer/Card Button3"), NodePath("../Control/Panel/VBoxContainer/Card Button4"), NodePath("../Control/Panel/VBoxContainer/Card Button5")]
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -65,7 +66,7 @@ offset_right = 461.0
 offset_bottom = -30.0
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,29 +74,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Card Button" parent="Control/Panel/VBoxContainer" node_paths=PackedStringArray("controller") instance=ExtResource("6_5l1w1")]
+[node name="Card Buttons" type="VBoxContainer" parent="Control/Panel/ScrollContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(431, 0)
 layout_mode = 2
-controller = NodePath("../../../../Battle Controller")
-
-[node name="Card Button2" parent="Control/Panel/VBoxContainer" node_paths=PackedStringArray("controller") instance=ExtResource("6_5l1w1")]
-layout_mode = 2
-choiceID = 1
-controller = NodePath("../../../../Battle Controller")
-
-[node name="Card Button3" parent="Control/Panel/VBoxContainer" node_paths=PackedStringArray("controller") instance=ExtResource("6_5l1w1")]
-layout_mode = 2
-choiceID = 2
-controller = NodePath("../../../../Battle Controller")
-
-[node name="Card Button4" parent="Control/Panel/VBoxContainer" node_paths=PackedStringArray("controller") instance=ExtResource("6_5l1w1")]
-layout_mode = 2
-choiceID = 3
-controller = NodePath("../../../../Battle Controller")
-
-[node name="Card Button5" parent="Control/Panel/VBoxContainer" node_paths=PackedStringArray("controller") instance=ExtResource("6_5l1w1")]
-layout_mode = 2
-choiceID = 4
-controller = NodePath("../../../../Battle Controller")
 
 [node name="Battle Log" type="VBoxContainer" parent="Control"]
 layout_mode = 1

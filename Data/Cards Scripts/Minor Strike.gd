@@ -9,14 +9,14 @@ func _init() -> void:
 	name = "Minor Strike"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = ceil(attacker.attack/2.0)
+	var dmg = ceil(attacker.getAttack()/2.0)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		dmg = ceil(dmg*1.5)
 	var trueDmg = defender.receiveDamage(dmg, attacker)
 	return trueDmg
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = ceil(attacker.attack/2.0)
+	var dmg = ceil(attacker.getAttack()/2.0)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		dmg = ceil(dmg*1.5)
 	return dmg

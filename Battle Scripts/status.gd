@@ -5,6 +5,7 @@ enum EFFECTS {
 	DECAY,
 	EMPOWER,
 	EMPOWER_NEXT,
+	EMPOWER_PLAYED,
 	HASTE,
 	SLOW,
 	SUSPEND,
@@ -16,7 +17,8 @@ enum EFFECTS {
 	BARRIER,
 	REGEN,
 	BECOME_RECKLESS,
-	RECKLESS
+	RECKLESS,
+	STRONGARM
 }
 var X: int = 0
 var Y: int = 0
@@ -49,7 +51,9 @@ func rawToString() -> String:
 		EFFECTS.EMPOWER:
 			return "Empower"
 		EFFECTS.EMPOWER_NEXT:
-			return "Empower (Next)"
+			return "Empower (Next Drawn)"
+		EFFECTS.EMPOWER_PLAYED:
+			return "Empower (Next Played)"
 		EFFECTS.HASTE:
 			return "Haste"
 		EFFECTS.SLOW:
@@ -74,6 +78,8 @@ func rawToString() -> String:
 			return "Becoming Reckless"
 		EFFECTS.RECKLESS:
 			return "Reckless"
+		EFFECTS.STRONGARM:
+			return "Strongarm"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -123,4 +129,6 @@ func newTurn() -> void:
 			X -= 1
 			return
 		EFFECTS.REGEN:
+			return
+		EFFECTS.STRONGARM:
 			return

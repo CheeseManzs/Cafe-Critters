@@ -36,6 +36,15 @@ func enemyShouldSwitch():
 				shouldSwich = true
 	return shouldSwich
 
+func enemyShelfed(count: int) -> Array[BattleMonster]:
+	var choices: Array[BattleMonster] = []
+	#choose shelfed mons
+	for mon in battleController.enemyTeam:
+		#make sure mon isnt the active mon
+		if len(choices) < count && mon != battleController.getActiveEnemyMon() && !mon.isKO():
+			choices.push_back(mon)
+	return choices
+
 func choiceEnemy(removeChoice = false):
 	
 	#get current enemy mp

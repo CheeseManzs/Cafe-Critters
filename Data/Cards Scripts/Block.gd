@@ -9,14 +9,14 @@ func _init() -> void:
 	name = "Block"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = attacker.defense
+	var shield = attacker.getDefense()
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		shield = ceil(shield*1.5)
 	attacker.addShield(shield)
 	return shield
 
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = attacker.defense
+	var shield = attacker.getDefense()
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		shield = ceil(shield*1.5)
 	return shield

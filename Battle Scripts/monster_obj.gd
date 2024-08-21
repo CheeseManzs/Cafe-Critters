@@ -26,6 +26,7 @@ var faintAnimated = false
 var lockToIntendedPosition = true
 var lastDelta = 0
 
+
 # Reloads monster from metadata
 func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")

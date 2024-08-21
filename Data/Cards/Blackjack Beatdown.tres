@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://km2q7uarlhg2"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Blackjack Beatdown.gd" id="1_300vr"]
+
+[resource]
+script = ExtResource("1_300vr")

@@ -5,22 +5,19 @@ func _init() -> void:
 	priority = 1
 	alignment = ALIGNMENT.Default
 	role = ROLE.Unique
-	description = "Gain 1 mp. Gain Barrier 5."
+	description = "30% Defend, Empowered: Draw 1"
 	name = "Affogato"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#idk what barrier is ngl but remember to apply empower to it
-	var shieldGiven = ceil(0.3*attacker.defense)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shieldGiven = ceil(shieldGiven*1.5)
+	var shieldGiven = ceil(0.3*attacker.getDefense())
 	attacker.addShield(shieldGiven)
-	var mpGiven = 1
-	#add mp
-	attacker.addMP(mpGiven)
-	return mpGiven
+	#if empowered, draw 1 card
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		attacker.drawCards(1)
+	
+	return shieldGiven
 
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shieldGiven = 5
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shieldGiven = ceil(shieldGiven*1.5)
+	var shieldGiven = ceil(0.3*attacker.getDefense())
 	return shieldGiven

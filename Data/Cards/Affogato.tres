@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dgoby5qn3o4st"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Affogato.gd" id="1_d4401"]
+
+[resource]
+script = ExtResource("1_d4401")

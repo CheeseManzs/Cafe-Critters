@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cb06un47xr505"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Boiling Point.gd" id="1_20mws"]
+
+[resource]
+script = ExtResource("1_20mws")

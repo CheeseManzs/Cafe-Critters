@@ -13,7 +13,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var slowStatus = Status.new(Status.EFFECTS.SLOW, 2)
 	#apply empower
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		slowStatus.X *= 1.5
+		slowStatus.X = ceil(slowStatus.X*1.5)
 	#apply to target
 	defender.addStatusCondition(slowStatus, true)
 	return 0

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bi61w1ojs0g06"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Breakneck Barrage.gd" id="1_ny37s"]
+
+[resource]
+script = ExtResource("1_ny37s")

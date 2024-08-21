@@ -1,3 +1,4 @@
+class_name CardChoiceUI
 extends Button
 
 @export var choiceID: int

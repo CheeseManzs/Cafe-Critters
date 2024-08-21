@@ -1,20 +1,22 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=12 format=3 uid="uid://ba7mef873ynqu"]
+[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://ba7mef873ynqu"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_55mkf"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_qrph6"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_rhr5u"]
-[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="3_tpeb4"]
+[ext_resource type="Resource" uid="uid://km2q7uarlhg2" path="res://Data/Cards/Blackjack Beatdown.tres" id="3_n7swt"]
 [ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="4_xbjbj"]
+[ext_resource type="Resource" uid="uid://bi61w1ojs0g06" path="res://Data/Cards/Breakneck Barrage.tres" id="5_5an3s"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="5_k2mk4"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="6_y7f2q"]
+[ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="6_yesfu"]
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_k0vok"]
-[ext_resource type="Resource" uid="uid://ogu20egwfgss" path="res://Data/Cards/Prepare.tres" id="8_bdqbi"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="10_h0u1j"]
+[ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="10_wjjoa"]
 
 [sub_resource type="Resource" id="Resource_0uwxn"]
 script = ExtResource("1_55mkf")
 name = "Deck"
-storedCards = Array[ExtResource("2_rhr5u")]([ExtResource("3_tpeb4"), ExtResource("4_xbjbj"), ExtResource("5_k2mk4"), ExtResource("6_y7f2q"), ExtResource("7_k0vok"), ExtResource("8_bdqbi")])
+storedCards = Array[ExtResource("2_rhr5u")]([ExtResource("3_n7swt"), ExtResource("5_k2mk4"), ExtResource("5_5an3s"), ExtResource("6_yesfu"), ExtResource("7_k0vok"), ExtResource("6_y7f2q"), ExtResource("4_xbjbj"), ExtResource("10_wjjoa")])
 
 [resource]
 script = ExtResource("1_qrph6")

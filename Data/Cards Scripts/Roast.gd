@@ -6,7 +6,10 @@ func _init() -> void:
 	alignment = ALIGNMENT.Default
 	role = ROLE.Unique
 	description = "Take damage equal to your Attack. Empower the next card played."
-	name = "Self Motivation"
+	name = "Roast"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var dmg: int = attacker.getAttack()
+	attacker.receiveDamage(dmg, attacker)
+	attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	return 0

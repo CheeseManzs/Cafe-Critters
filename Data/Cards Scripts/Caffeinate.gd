@@ -10,7 +10,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
-	var empStatus = Status.new(Status.EFFECTS.EMPOWER_NEXT)
+	var empStatus = Status.new(Status.EFFECTS.EMPOWER_PLAYED)
 	#apply to target
 	attacker.addStatusCondition(empStatus, false)
 	return 0

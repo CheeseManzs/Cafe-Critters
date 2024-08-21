@@ -9,14 +9,14 @@ func _init() -> void:
 	name = "Strike"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = attacker.attack
+	var dmg = attacker.getAttack()
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		dmg = ceil(dmg*1.5)
 	var trueDmg = defender.receiveDamage(dmg, attacker)
 	return trueDmg
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = attacker.attack
+	var dmg = attacker.getAttack()
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		dmg = ceil(dmg*1.5)
 	return dmg
