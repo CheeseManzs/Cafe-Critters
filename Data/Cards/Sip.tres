@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cl7isl07pcxby"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Sip.gd" id="1_e7mj8"]
+
+[resource]
+script = ExtResource("1_e7mj8")

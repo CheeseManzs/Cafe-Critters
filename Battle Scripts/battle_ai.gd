@@ -36,6 +36,17 @@ func enemyShouldSwitch():
 				shouldSwich = true
 	return shouldSwich
 
+#choose cards from hand
+func enemyChooseHand(count: int, requirement: Callable = func(x): return true) -> Array[Card]:
+	var mon: BattleMonster = battleController.getActiveEnemyMon()
+	var cards: Array[Card] = mon.currentHand.storedCards
+	var chosen: Array[Card] = []
+	for card in cards:
+		if len(chosen) < count && requirement.call(card):
+			chosen.push_back(card)
+	return chosen
+		
+
 func enemyShelfed(count: int) -> Array[BattleMonster]:
 	var choices: Array[BattleMonster] = []
 	#choose shelfed mons

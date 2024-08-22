@@ -6,7 +6,7 @@ func _init() -> void:
 	alignment = ALIGNMENT.Jacks
 	role = ROLE.Unique
 	description = "Reckless. 125% Attack."
-	name = "Oops!"
+	name = "Savage Stab"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power

@@ -170,8 +170,7 @@ func addArrayToGraveyard(cards: Array[Card]):
 	for card in cards:
 		addToGraveyard(card)
 
-func chooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
-	
+func playerChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
 	playerChoiceUI.show()
 	setCardSelection(getActivePlayerMon(), true)
 	for shelfUI in shelfedMonUI:
@@ -205,9 +204,31 @@ func chooseCards(count: int, requirement: Callable = func(x): return true ) -> A
 			uiButton.setTextColor(Color.WHITE)
 	return cardsChosen
 
+
+func enemyChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
+	var cardsChosen: Array[Card] = []
+	cardsChosen = enemyAI.enemyChooseHand(count, requirement)
+	return cardsChosen
+
+
+func chooseCards(count: int, playerControlled: bool = true, requirement: Callable = func(x): return true ) -> Array[Card]:
+	var cardsChosen: Array[Card] = []
+	if playerControlled:
+		cardsChosen = await playerChooseCards(count, requirement)
+	else:
+		cardsChosen = await enemyChooseCards(count, requirement)
+	return cardsChosen
+
+#return enemy
 func enemyChooseShelfedMon(count: int) -> Array[BattleMonster]:
 	return enemyAI.enemyShelfed(count)
-	
+
+#returns active opposing mon
+func getOpposingMon(playerControlled: bool) -> BattleMonster:
+	if playerControlled:
+		return getActiveEnemyMon()
+	else:
+		return getActivePlayerMon()
 
 func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[BattleMonster]:
 	print("Choosing mons!")

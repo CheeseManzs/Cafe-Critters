@@ -39,6 +39,7 @@ script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
 cardbuttonContiner = NodePath("../Control/Panel/ScrollContainer/Card Buttons")
 cardbuttonPrefab = ExtResource("6_5l1w1")
+currentTurn = null
 debugTeamA = [ExtResource("3_i2ofm"), ExtResource("2_4d2cp"), ExtResource("4_2xc6c")]
 debugTeamB = [ExtResource("4_2xc6c"), ExtResource("2_4d2cp"), ExtResource("3_i2ofm")]
 playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]

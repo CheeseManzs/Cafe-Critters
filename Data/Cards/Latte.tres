@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c2kl8c0g243dl"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/Latte.gd" id="1_up556"]
+
+[resource]
+script = ExtResource("1_up556")

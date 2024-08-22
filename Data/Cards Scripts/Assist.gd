@@ -10,10 +10,10 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#idk what barrier is ngl but remember to apply empower to it
-	var shieldGiven = 5
+	var barrierGiven = 5
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shieldGiven = ceil(shieldGiven*1.5)
-	attacker.addShield(shieldGiven)
+		barrierGiven = ceil(barrierGiven*1.5)
+	attacker.addStatusCondition(Status.new(Status.EFFECTS.BARRIER, barrierGiven), true)
 	var mpGiven = 1
 	#add mp
 	attacker.addMP(mpGiven)

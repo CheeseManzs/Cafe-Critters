@@ -176,38 +176,25 @@ func addStatusCondition(status: Status, broadcast = false):
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
 	#if effect is suspend then it occurs immediately
-	if playerControlled && status.effect == Status.EFFECTS.SUSPEND:
-		var toBanish = await battleController.chooseCards(status.X)
-		
-		battleController.banishArray(toBanish)
-		currentHand.removeCards(toBanish)
-		
-		var graveAction: ConditionalAction = ConditionalAction.new(
-			battleController,
-			battleController.addArrayToGraveyard,
-			checkStatusForArray0,
-			toBanish,
-			[self]
-		)
-		battleController.conditionalActions.push_back(graveAction)
-	#enemy suspension
-	if !playerControlled && status.effect == Status.EFFECTS.SUSPEND:
-		var toBanish: Array[Card] = []
-		for index in min(status.X, len(currentHand.storedCards)):
-			var cardChosen = currentHand.bulkDraw(1)
-			toBanish.push_back(cardChosen)
+	match status.effect:
+		Status.EFFECTS.SUSPEND:
+			var toBanish = await battleController.chooseCards(status.X,playerControlled)
 			
-		battleController.banishEnemyArray(toBanish)
-		currentHand.removeCards(toBanish)
-		
-		var graveAction: ConditionalAction = ConditionalAction.new(
-			battleController,
-			battleController.addArrayToGraveyard,
-			checkStatusForArray0,
-			toBanish,
-			[self]
-		)
-		battleController.conditionalActions.push_back(graveAction)
+			battleController.banishArray(toBanish)
+			currentHand.removeCards(toBanish)
+			
+			var graveAction: ConditionalAction = ConditionalAction.new(
+				battleController,
+				battleController.addArrayToGraveyard,
+				checkStatusForArray0,
+				toBanish,
+				[self]
+			)
+			battleController.conditionalActions.push_back(graveAction)
+		Status.EFFECTS.STRONGARM:
+			await battleController.getOpposingMon(playerControlled).discardRandomCard()
+			return
+	#enemy instant effects
 	
 	statusConditions.push_back(status)
 	
@@ -271,6 +258,15 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+	#apply barrier
+	if hasStatus(Status.EFFECTS.BARRIER):
+		var status = getStatus(Status.EFFECTS.BARRIER)
+		BattleLog.log("Damage to " + rawData.name + " was reduced by " + status.toString())
+		dmg -= status.X
+		if dmg < 0:
+			dmg = 0
+		status.X = 0
+		status.effectDone = true
 	#damage shield and calculate overdamage
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://ba7mef873ynqu"]
+[gd_resource type="Resource" script_class="Monster" load_steps=16 format=3 uid="uid://ba7mef873ynqu"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_55mkf"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_qrph6"]
@@ -10,13 +10,15 @@
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="6_y7f2q"]
 [ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="6_yesfu"]
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_k0vok"]
+[ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="9_hmaky"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="10_h0u1j"]
-[ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="10_wjjoa"]
+[ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="10_ja5pr"]
+[ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="12_inmui"]
 
 [sub_resource type="Resource" id="Resource_0uwxn"]
 script = ExtResource("1_55mkf")
 name = "Deck"
-storedCards = Array[ExtResource("2_rhr5u")]([ExtResource("3_n7swt"), ExtResource("5_k2mk4"), ExtResource("5_5an3s"), ExtResource("6_yesfu"), ExtResource("7_k0vok"), ExtResource("6_y7f2q"), ExtResource("4_xbjbj"), ExtResource("10_wjjoa")])
+storedCards = Array[ExtResource("2_rhr5u")]([ExtResource("3_n7swt"), ExtResource("5_k2mk4"), ExtResource("5_5an3s"), ExtResource("6_yesfu"), ExtResource("7_k0vok"), ExtResource("6_y7f2q"), ExtResource("9_hmaky"), ExtResource("10_ja5pr"), ExtResource("4_xbjbj"), ExtResource("12_inmui")])
 
 [resource]
 script = ExtResource("1_qrph6")
