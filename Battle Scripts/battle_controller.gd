@@ -94,7 +94,9 @@ func createMonster(isPlayer, monObj, tID) -> Node3D:
 	add_child(newObj)
 	return newObj
 
+
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
+	
 	#create monsters on the player's side
 	for index in len(plrTeam):
 		#create battle monster object
