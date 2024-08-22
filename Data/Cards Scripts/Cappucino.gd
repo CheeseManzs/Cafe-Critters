@@ -15,5 +15,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		hasteLevel = 3
 	var hasteStatus = Status.new(Status.EFFECTS.HASTE,hasteLevel)
 	#apply to target
-	attacker.addStatusCondition(hasteStatus, false)
+	attacker.addStatusCondition(hasteStatus, true)
 	return 0

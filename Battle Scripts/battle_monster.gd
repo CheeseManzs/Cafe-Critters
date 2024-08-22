@@ -28,6 +28,7 @@ var statusConditions: Array[Status]
 var extraDraw = 0
 var attackBonus = 0
 var defenseBonus = 0
+static var damagePopupPrefab: PackedScene
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
 	#set raw data
@@ -44,6 +45,9 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	currentDeck = rawData.deck.clone()
 	playerControlled = p_playerControlled
 	hardReset()
+	
+	if damagePopupPrefab == null:
+		damagePopupPrefab = load("res://Prefabs/damage_popup.tscn")
 	
 
 #applies damage to shield and returns overdamage
@@ -230,12 +234,28 @@ func drawCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
 	currentHand.storedCards += card
 
+func getMonsterDisplay() -> MonsterDisplay:
+	if playerControlled:
+		return battleController.playerObjs[battleController.playerTeam.find(self)]
+	else:
+		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
+
 func trueDamage(dmg: int) -> void:
 	#remove damage from hp
 	health -= dmg
 	#run camera shake if damage is done
 	if dmg > 0:
 		BattleCamera.singleton.shake(0.2*dmg/float(maxHP))
+		#add popup text
+		var popup: DamagePopup = damagePopupPrefab.instantiate()
+		
+		popup.setDamage(dmg, 0.5 + 2*dmg/float(maxHP))
+		var obj: MonsterDisplay = getMonsterDisplay()
+		obj.get_parent().add_child(popup)
+		popup.position = obj.position + Vector3(0, 0.5, 0)
+		
+		print('created popup at:',popup.position)
+		print(popup.get_parent().name)
 		
 		
 	BattleLog.singleton.log(rawData.name + " took " + str(dmg) + " damage")

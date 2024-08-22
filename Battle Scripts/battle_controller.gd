@@ -29,6 +29,7 @@ var enemyMonsterObj: MonsterDisplay
 #action buttons
 @export var attackButton: Button
 @export var defendButton: Button
+@export var skipButton: Button
 var cardButtons: Array[Button] = []
 
 
@@ -79,6 +80,8 @@ var banishedEnemyCards: Array[Card] = []
 var futureActions: Array[FutureAction] = []
 # list for conditional actions system
 var conditionalActions: Array[ConditionalAction] = []
+#cache winning player
+var winner: int = 0
 
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -146,7 +149,18 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#initialize AI
 	enemyAI = BattleAI.new(self)
 	
-	
+#check for player loss
+func playerLost():
+	for mon in playerTeam:
+		if !mon.isKO():
+			return false
+	return true
+
+func enemyLost():
+	for mon in enemyTeam:
+		if !mon.isKO():
+			return false
+	return true	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -286,6 +300,7 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 func promptPlayerSwitch() -> void:
 	BattleLog.singleton.log("Choose a switch-in!")
 	playerChoiceUI.hide()
+	skipButton.disabled = true
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 	await gui_choice
@@ -554,6 +569,7 @@ func activeTurn() -> void:
 		
 		print(getActiveEnemyMon().rawData.name)
 		
+		
 		print(getActivePlayerMon().health, ',',getActivePlayerMon().hasStatus(Status.EFFECTS.KO))
 		
 		if endTurn:
@@ -572,7 +588,9 @@ func activeTurn() -> void:
 			#wait for a gui choice to be made
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
 				continue
+			skipButton.disabled = false
 			await gui_choice
+			skipButton.disabled = true
 			for shelfUI in shelfedMonUI:
 				shelfUI.switchButton.disabled = true
 			playerChoiceUI.hide()
@@ -625,7 +643,25 @@ func activeTurn() -> void:
 			break
 		var turnSequence = BattleSequence.new(actions)
 		await turnSequence.runActions(self)
-	inTurn = false
+	
+	#0 = no one, 1 = player, 2 = enemy
+	winner = 0 
+	if playerLost():
+		winner = 2
+	if enemyLost():
+		winner = 1
+	
+	if winner == 0:
+		inTurn = false
+	else:
+		await endBattle(winner)
+	
+func endBattle(winningSide: int):
+	#1 = player, 2 = enemy
+	await get_tree().create_timer(1.3).timeout
+	LoadManager.loadScene("Battle", get_tree().current_scene)
+	
+
 
 func skipTurn():
 	playerCardID = -100

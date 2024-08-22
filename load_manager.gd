@@ -1,20 +1,15 @@
 class_name LoadManager
 
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	
-	pass # Replace with function body.
-
-
+static var activeScene: Node
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-static func loadScene(currentScene:Node, sceneName: String):
+static func loadScene(sceneName: String, currentScene:Node = null):
+	if currentScene == null:
+		currentScene = activeScene
 	var loadingScreenScene: PackedScene = load("res://loading.tscn")
-	var toLoad: PackedScene = load("res://"+sceneName+".tscn")
+	
 	var loading: LoadScreen = loadingScreenScene.instantiate()
 	var parent: Node
 	for child in currentScene.get_children():
@@ -25,6 +20,8 @@ static func loadScene(currentScene:Node, sceneName: String):
 	loading.position = Vector2(1920/4,1080/4)
 	print(loading.position)
 	await loading.canLoad
+	var toLoad: PackedScene = load("res://"+sceneName+".tscn")
+	print(sceneName)
 	var newScene = toLoad.instantiate()
 	parent.remove_child(loading)
 	for child in newScene.get_children():
@@ -35,6 +32,7 @@ static func loadScene(currentScene:Node, sceneName: String):
 	tree.add_child(newScene)
 	loading.release = true
 	currentScene.queue_free()
+	activeScene = newScene
 	
 	
 

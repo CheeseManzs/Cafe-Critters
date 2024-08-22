@@ -49,6 +49,7 @@ func runActions(battleController: Node) -> void:
 			await battleController.get_tree().create_timer(0.75).timeout
 		
 		action.battleMonster.removeMP(action.card.cost)
+		
 		await battleController.get_tree().create_timer(0.75).timeout
 		await action.card.effect(action.battleMonster, action.getTarget())
 		await battleController.addToGraveyard(action.card)

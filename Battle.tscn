@@ -34,7 +34,7 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("cardbuttonContiner", "playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("cardbuttonContiner", "playerUI", "enemyUI", "playerChoiceUI", "shelfedMonUI", "skipButton")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
 cardbuttonContiner = NodePath("../Control/Panel/ScrollContainer/Card Buttons")
@@ -45,6 +45,7 @@ playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Co
 enemyUI = [NodePath("../Control/EnemyHP/Enemy Mon Details"), NodePath("../Control/EnemyHP/Enemy Mon Details2"), NodePath("../Control/EnemyHP/Enemy Mon Details3")]
 playerChoiceUI = NodePath("../Control/Panel")
 shelfedMonUI = [NodePath("../Control/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI3")]
+skipButton = NodePath("../Control/Shelfed Mon View/Skip Button")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -168,9 +169,9 @@ battleController = NodePath("../../../Battle Controller")
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Button" type="Button" parent="Control/Shelfed Mon View"]
+[node name="Skip Button" type="Button" parent="Control/Shelfed Mon View"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Skip"
 
-[connection signal="pressed" from="Control/Shelfed Mon View/Button" to="Battle Controller" method="skipTurn"]
+[connection signal="pressed" from="Control/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]
