@@ -17,7 +17,8 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var attackPower = 0
-	var discardedCard = attacker.discardRandomCard()
+	await EffectFlair.singleton._runFlair("Recklesss")
+	var discardedCard = await attacker.discardRandomCard()
 	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0

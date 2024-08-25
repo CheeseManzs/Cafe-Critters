@@ -1,0 +1,101 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddkls0bkk1r1s"]
+
+[ext_resource type="Script" path="res://Battle Scripts/card_display.gd" id="1_e7irm"]
+[ext_resource type="Texture2D" uid="uid://bijnu2mjsw31f" path="res://Graphics/Misc/Card_Front.png" id="1_k3rom"]
+
+[sub_resource type="Gradient" id="Gradient_f3ps2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vb2cc"]
+gradient = SubResource("Gradient_f3ps2")
+width = 95
+fill_from = Vector2(0.471074, 1)
+fill_to = Vector2(0.509642, 0)
+
+[node name="Card Object" type="Control" node_paths=PackedStringArray("titleLabel", "descLabel", "manaLabel", "artTexture")]
+texture_filter = 4
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1200.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.34, 0.34)
+pivot_offset = Vector2(360, 500)
+script = ExtResource("1_e7irm")
+titleLabel = NodePath("Front/Title")
+descLabel = NodePath("Front/Desc")
+manaLabel = NodePath("Front/Mana")
+artTexture = NodePath("Front/Art")
+
+[node name="Front" type="TextureRect" parent="."]
+texture_filter = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_k3rom")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Art" type="TextureRect" parent="Front"]
+show_behind_parent = true
+texture_filter = 4
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 31.0
+offset_top = 108.0
+offset_right = -33.0
+offset_bottom = 565.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_vb2cc")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Title" type="RichTextLabel" parent="Front"]
+texture_filter = 4
+layout_mode = 0
+offset_left = 111.0
+offset_top = 76.0
+offset_right = 555.0
+offset_bottom = 126.0
+rotation = -0.0174533
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 35
+text = "Card Title"
+scroll_active = false
+
+[node name="Mana" type="RichTextLabel" parent="Front"]
+texture_filter = 4
+layout_mode = 0
+offset_left = 573.0
+offset_top = 49.0
+offset_right = 682.0
+offset_bottom = 115.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 50
+bbcode_enabled = true
+text = "[center][b]1[/b][/center]"
+scroll_active = false
+
+[node name="Desc" type="RichTextLabel" parent="Front"]
+texture_filter = 4
+layout_mode = 0
+offset_left = 63.0
+offset_top = 624.0
+offset_right = 662.0
+offset_bottom = 923.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 40
+text = "Card Description"
+scroll_active = false
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

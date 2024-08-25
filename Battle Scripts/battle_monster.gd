@@ -92,10 +92,37 @@ func setAttack(atk: int):
 	BattleLog.singleton.log(rawData.name + "'s Attack is now " + str(atk))
 #removes random card and returns the removed card
 func discardRandomCard() -> Card:
+	battleController.hidePlayerChoiceUI(true)
+	await battleController.get_tree().create_timer(0.5).timeout
+	battleController.setCardSelection(self,true)
+	for display in battleController.cardButtons:
+		display.raise()
+	await battleController.get_tree().create_timer(1.0).timeout
+	var cardArray = currentHand.storedCards
 	var cards = currentHand.bulkDraw(1)
 	if len(cards) == 0:
 		return null
+	
 	var card = cards[0]
+	
+	var cardID = 0
+	
+	for cardIndex in len(cardArray):
+		if card.name == cardArray[cardIndex].name:
+			cardID = cardIndex
+	
+	var cardDisplay: CardDisplay
+	
+	
+	for display in battleController.cardButtons:
+		if display.choiceID == cardID:
+			print("launching")
+			display.launch()
+	
+	await battleController.get_tree().create_timer(1.0).timeout
+	battleController.hidePlayerChoiceUI(true)		
+	await battleController.get_tree().create_timer(1.0).timeout
+	
 	battleController.addToGraveyard(card)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	return card

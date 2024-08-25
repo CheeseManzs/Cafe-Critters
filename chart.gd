@@ -1,0 +1,20 @@
+class_name Chart
+extends Node2D
+
+var polygonList: PackedVector2Array = []
+var colorList: PackedColorArray = []
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+func _draw() -> void:
+	#canvas.draw_polygon(polyPos,[Color.WHITE])
+	if len(polygonList) != 0 && len(colorList) != 0:
+		draw_polygon(polygonList,colorList)
+	pass

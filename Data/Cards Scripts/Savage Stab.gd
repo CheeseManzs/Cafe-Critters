@@ -11,7 +11,7 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var attackPower = 0
-	var discardedCard = attacker.discardRandomCard()
+	var discardedCard = await attacker.discardRandomCard()
 	if discardedCard == null:
 		BattleLog.singleton.log("No card to discard...")
 		return 0

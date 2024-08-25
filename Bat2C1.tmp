@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=24 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_tjquj"]
@@ -34,10 +34,6 @@ bg_color = Color(0.258824, 0.356863, 1, 0.341176)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ifipm"]
 bg_color = Color(0.923849, 0.426807, 0.349598, 1)
-
-[sub_resource type="Curve" id="Curve_hwsx7"]
-_data = [Vector2(0, 0.0349693), 0.0, 0.0, 0, 0]
-point_count = 1
 
 [node name="Battle" type="Node3D"]
 
@@ -242,7 +238,6 @@ panelBG = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Control/Special Flair"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -263,30 +258,13 @@ mouse_filter = 2
 alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/Special Flair/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(1920, 70)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 50
 bbcode_enabled = true
-text = "[center][b]Reckless[/b][/center]"
+text = "[b]Reckless[/b]"
 scroll_active = false
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Control/Special Flair/Panel"]
-position = Vector2(-20, 50)
-amount = 200
-lifetime = 5.0
-emission_shape = 3
-emission_rect_extents = Vector2(0, 100)
-spread = 0.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 800.0
-initial_velocity_max = 1600.0
-scale_amount_min = 100.0
-scale_amount_max = 100.0
-split_scale = true
-scale_curve_x = null
-scale_curve_y = SubResource("Curve_hwsx7")
-color = Color(1, 1, 1, 0.533333)
 
 [connection signal="pressed" from="Control/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

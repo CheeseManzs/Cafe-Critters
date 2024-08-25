@@ -8,6 +8,8 @@ signal gui_choice
 @export var monsterObject: PackedScene
 @export var cardbuttonContiner: Node
 @export var cardbuttonPrefab: PackedScene
+@export var detailsPanel: DetailsPanel
+var showingDetails = false
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int
 #node that corrosponds to the player monster
@@ -22,15 +24,14 @@ var enemyMonsterObj: MonsterDisplay
 @export var playerUI: Array[MonsterUI]
 #UIs for active enemy monsters
 @export var enemyUI: Array[MonsterUI]
-#UI for choosing player actions
-@export var playerChoiceUI: Control
 #UI for shelfed mons
 @export var shelfedMonUI: Array[ShelfUI]
 #action buttons
 @export var attackButton: Button
 @export var defendButton: Button
 @export var skipButton: Button
-var cardButtons: Array[Button] = []
+@export var cardPrefab: PackedScene
+var cardButtons: Array[CardDisplay] = []
 
 
 #maximum number of monster than can be on the field per side at the same time
@@ -82,7 +83,8 @@ var futureActions: Array[FutureAction] = []
 var conditionalActions: Array[ConditionalAction] = []
 #cache winning player
 var winner: int = 0
-
+#display card used for animations
+var shownCard: CardDisplay
 #instantiates a monster
 func createMonster(isPlayer, monObj, tID) -> Node3D:
 	#instantiate monster node from scene
@@ -187,7 +189,6 @@ func addArrayToGraveyard(cards: Array[Card]):
 		addToGraveyard(card)
 
 func playerChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
-	playerChoiceUI.show()
 	setCardSelection(getActivePlayerMon(), true)
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = true
@@ -204,9 +205,9 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 				uiButton.setTextColor(Color.WHITE)
 			#check for special requirements
 			if !requirement.call(uiCard):
-				uiButton.disabled = true
+				uiButton.isDisabled = true
 			else:
-				uiButton.disabled = false
+				uiButton.isDisabled = false
 			
 		await gui_choice
 		print('card ID:',playerCardID)
@@ -246,12 +247,21 @@ func getOpposingMon(playerControlled: bool) -> BattleMonster:
 	else:
 		return getActivePlayerMon()
 
+func hidePlayerChoiceUI(removeAll = false):
+	for cardButton in cardButtons:
+		if cardButton.choiceID != playerCardID || removeAll:
+			cardButton.hideCard()
+		else:
+			shownCard = cardButton
+			cardButton.selected = true
+			cardButton.raise()
+
 func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[BattleMonster]:
 	print("Choosing mons!")
 	if !playerControlled:
 		return enemyChooseShelfedMon(count)
 	
-	playerChoiceUI.hide()
+	hidePlayerChoiceUI()
 	setCardSelection(getActivePlayerMon(), true)
 	
 	for shelfUI in shelfedMonUI:
@@ -299,7 +309,7 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 
 func promptPlayerSwitch() -> void:
 	BattleLog.singleton.log("Choose a switch-in!")
-	playerChoiceUI.hide()
+	hidePlayerChoiceUI(true)
 	skipButton.disabled = true
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
@@ -427,40 +437,42 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
 	var container = cardbuttonContiner
 	
-	for button in cardbuttonContiner.get_children():
-		if cardButtons.has(button):
+	while len(cardButtons) > 0:
+		for button in cardButtons:
+			print("removing ",button.card.name)
 			cardButtons.remove_at(cardButtons.find(button))
-		button.queue_free()
+			button.queue_free()
 	
 	print("remaining: ",len(cardButtons))
 	var id = 0
 	
 	print("adding ",len(mon.currentHand.storedCards), " buttons")
 	for card in mon.currentHand.storedCards:
-		var newButton: CardChoiceUI = cardbuttonPrefab.instantiate()
-		newButton.choiceID = id
-		newButton.controller = self
+		var newButton: CardDisplay = cardPrefab.instantiate()
+		
+		newButton.setCard(card, id, self)
 		newButton.show()
-		container.add_child(newButton)
+		get_parent().add_child(newButton)
 		cardButtons.push_back(newButton)
 		id += 1
 	
 	print(len(cardButtons))
 	for uiIndex in len(cardButtons):
-		var cardButton: CardChoiceUI = cardButtons[uiIndex]
+		var cardButton: CardDisplay = cardButtons[uiIndex]
 		if cardButton.choiceID >= len(mon.currentHand.storedCards):
 			pass
-			cardButton.hide()
+			cardButton.hideCard()
 		else:
 			var card =  mon.currentHand.storedCards[cardButton.choiceID]
-			cardButton.show()
-			cardButton.text = card.name + " (" + str(card.cost) + " MP)"
-			cardButton.tooltip_text = card.description
+			#cardButton.show()
+			#cardButton.text = card.name + " (" + str(card.cost) + " MP)"
+			#cardButton.tooltip_text = card.description
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-				cardButton.text += " (EMP)"
-			cardButton.disabled = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
-			if allSelectable:
-				cardButton.disabled = false
+				#cardButton.text += " (EMP)"
+				pass
+			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
+			if disableCard && !allSelectable:
+				cardButton.isDisabled = true
 
 #banishes player cards to the graveyard
 func banishPlayerCards(count: int):
@@ -562,7 +574,10 @@ func activeTurn() -> void:
 		skipChoice = false
 		
 		#hide player gui
-		playerChoiceUI.hide()
+		#hidePlayerChoiceUI()
+		for cardButton in cardButtons:
+			cardButton.hideCard()
+		
 		var enemyActions = enemyDeclare()
 	
 		var actions: Array[BattleAction] = []
@@ -577,8 +592,6 @@ func activeTurn() -> void:
 		
 		for i in maxActiveMons:
 			#show player gui
-			
-			playerChoiceUI.show()
 			var mon: BattleMonster = playerTeam[activePlayerMon + i]
 			
 			setCardSelection(mon)
@@ -589,11 +602,13 @@ func activeTurn() -> void:
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
 				continue
 			skipButton.disabled = false
+
 			await gui_choice
 			skipButton.disabled = true
+			toggleDetails()
 			for shelfUI in shelfedMonUI:
 				shelfUI.switchButton.disabled = true
-			playerChoiceUI.hide()
+			hidePlayerChoiceUI()
 			
 			#check for skipped turn
 			if playerCardID == -100: 
@@ -610,6 +625,7 @@ func activeTurn() -> void:
 					self,
 					true
 				)
+				
 			else:
 				await get_tree().create_timer(0.01).timeout
 				#run choices for player and enemy
@@ -643,6 +659,8 @@ func activeTurn() -> void:
 			break
 		var turnSequence = BattleSequence.new(actions)
 		await turnSequence.runActions(self)
+		hidePlayerChoiceUI(true)
+		await get_tree().create_timer(0.5).timeout
 	
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 
@@ -664,6 +682,7 @@ func endBattle(winningSide: int):
 
 
 func skipTurn():
+	print("skipping turn")
 	playerCardID = -100
 	emitGUISignal()
 
@@ -675,9 +694,20 @@ func onHand(index: int) -> void:
 	playerCardID = index
 	print("player card:",index)
 
+func toggleDetails() -> void:
+	print("toggling!")
+	if showingDetails || skipButton.disabled:
+		detailsPanel.hidePanel()
+		showingDetails = false
+	else:
+		showingDetails = true
+		await detailsPanel.setup(getActivePlayerMon())
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#if no turn is started, start the next turn
 	if !inTurn:
 		activeTurn()
+	
+	if Input.is_action_just_pressed("Info"):
+		toggleDetails()
 	pass

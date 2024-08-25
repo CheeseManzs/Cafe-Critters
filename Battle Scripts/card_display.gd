@@ -1,0 +1,126 @@
+class_name CardDisplay
+extends Control
+
+@export var titleLabel: RichTextLabel
+@export var descLabel: RichTextLabel
+@export var manaLabel: RichTextLabel
+@export var artTexture: TextureRect
+
+var controller: BattleController
+var choiceID: int = 0
+var card: Card
+var originalPosition: Vector2 = Vector2.ZERO
+var visiblePosition: Vector2 = Vector2.ZERO
+var targetPosition: Vector2 = Vector2.ZERO
+var angle = 0
+var mouseOn = false
+var isHidden = false
+var isDisabled = false
+var runAnim = false
+var selected = false
+var launched = false
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+func setCard(p_card: Card, cID: int, battleController: BattleController) -> void:
+	runAnim = false
+	card = p_card
+	titleLabel.text = card.name
+	descLabel.text = card.description
+	manaLabel.text = "[center][b]"+str(card.cost)+"[/b][/center]"
+	choiceID = cID
+	controller = battleController
+	size = Vector2(720,1000)
+	
+	var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
+	var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
+	
+	var viewportRect = Vector2(1920, 1080)
+	
+	
+	var firstRot = -PI/12*(totalChoices/5)
+	var secondRot = PI/12*(totalChoices/5)
+	var a = secondRot - firstRot
+	var x = cardWidth/tan(a/totalChoices)
+	var y = x*cos(a/2)
+	print(x,',',y)
+	var totalDivisor = totalChoices
+	var divis = 0
+	
+	if totalDivisor == 1:
+		divis = 1
+		firstRot = 0
+		secondRot = 0
+	else:
+		divis = choiceID/(totalChoices - 1)
+	
+	angle = firstRot + (secondRot - firstRot)*divis
+	
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 150)
+	print(basePos.x)
+	originalPosition = basePos + upVec*0.9*x
+	visiblePosition = basePos + upVec*x
+	
+	print('ogpos: ',originalPosition)
+	position = originalPosition - upVec*(500 + 300*choiceID)
+	targetPosition = originalPosition
+	
+	
+	
+	rotation = angle
+	await controller.get_tree().create_timer(0.1).timeout
+	runAnim = true
+
+func hideCard() -> void:
+	isHidden = true
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	targetPosition = originalPosition - upVec*(400 + 100*choiceID)
+
+func raise():
+	targetPosition = visiblePosition
+
+func launch():
+	launched = true
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	targetPosition = visiblePosition + upVec*1500
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	size = Vector2(720,1000)
+	if launched:
+		launch()
+	if runAnim:
+		position = lerp(position, targetPosition, delta*4)
+	if mouseOn && Input.is_action_just_pressed("Primary"):
+		sendChoice()
+	if isDisabled:
+		setTextColor(Color.FIREBRICK)
+	pass
+
+
+func _on_mouse_entered() -> void:
+	if !isHidden && !isDisabled:
+		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+		raise()
+	mouseOn = true
+	pass # Replace with function body.
+
+
+func _on_mouse_exited() -> void:
+	if !isHidden && !selected:
+		targetPosition = originalPosition
+	mouseOn = false
+	pass # Replace with function body.
+
+func sendChoice():
+	if isDisabled:
+		return
+	controller.onHand(choiceID)
+	controller.emitGUISignal()
+
+func setTextColor(col: Color):
+	print("setting text to ",col)
+	titleLabel.set("theme_override_colors/default_color",col)
+	manaLabel.set("theme_override_colors/default_color",col)

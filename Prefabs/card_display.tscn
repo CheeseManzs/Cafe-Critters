@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://324kcflyuqea"]
+
+[node name="Card Display" type="RichTextLabel"]
+custom_minimum_size = Vector2(0, 20)
+text = "Card 1"
+scroll_active = false
