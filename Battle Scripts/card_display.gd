@@ -19,6 +19,7 @@ var isDisabled = false
 var runAnim = false
 var selected = false
 var launched = false
+var ignoreInput = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -78,8 +79,9 @@ func hideCard() -> void:
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = originalPosition - upVec*(400 + 100*choiceID)
 
-func raise():
-	targetPosition = visiblePosition
+func raise(manualBonus: float = 0):
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	targetPosition = visiblePosition + upVec*100*manualBonus
 
 func launch():
 	launched = true
@@ -101,6 +103,8 @@ func _process(delta: float) -> void:
 
 
 func _on_mouse_entered() -> void:
+	if ignoreInput:
+		return
 	if !isHidden && !isDisabled:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
@@ -109,6 +113,8 @@ func _on_mouse_entered() -> void:
 
 
 func _on_mouse_exited() -> void:
+	if ignoreInput:
+		return
 	if !isHidden && !selected:
 		targetPosition = originalPosition
 	mouseOn = false

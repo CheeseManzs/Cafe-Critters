@@ -45,7 +45,9 @@ func runActions(battleController: Node) -> void:
 		if action.battleMonster.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
 			action.battleMonster.getStatus(Status.EFFECTS.EMPOWER_PLAYED).effectDone = true
 			action.card.statusConditions.push_back(Status.EFFECTS.EMPOWER)
+			await battleController.get_tree().create_timer(0.75).timeout
 			BattleLog.log(action.card.name + " was Empowered!")
+			await EffectFlair.singleton._runFlair("Empowered",Color.LIME_GREEN)
 			await battleController.get_tree().create_timer(0.75).timeout
 		
 		action.battleMonster.removeMP(action.card.cost)

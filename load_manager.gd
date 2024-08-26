@@ -13,7 +13,7 @@ static func loadScene(sceneName: String, currentScene:Node = null):
 	var loading: LoadScreen = loadingScreenScene.instantiate()
 	var parent: Node
 	for child in currentScene.get_children():
-		if child.is_class("Control"):
+		if child.name == "Control UI":
 			parent = child
 			child.add_child(loading)
 	
@@ -25,7 +25,7 @@ static func loadScene(sceneName: String, currentScene:Node = null):
 	var newScene = toLoad.instantiate()
 	parent.remove_child(loading)
 	for child in newScene.get_children():
-		if child.is_class("Control"):
+		if child.name == "Control UI":
 			child.add_child(loading)
 	
 	var tree = currentScene.get_tree().root

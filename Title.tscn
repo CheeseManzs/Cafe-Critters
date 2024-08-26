@@ -5,7 +5,7 @@
 [node name="Title" type="Node2D"]
 script = ExtResource("1_xwq8a")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -30,7 +30,7 @@ bbcode_enabled = true
 text = "[center]Café Critters[/center]
 [center][color=gold]Debug Test[/color][/center]"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,10 +41,10 @@ offset_right = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="Control/VBoxContainer"]
+[node name="Button" type="Button" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Battle"
 
-[connection signal="pressed" from="Control/VBoxContainer/Button" to="." method="loadScene" binds= ["Battle"]]
+[connection signal="pressed" from="Control UI/VBoxContainer/Button" to="." method="loadScene" binds= ["Battle"]]

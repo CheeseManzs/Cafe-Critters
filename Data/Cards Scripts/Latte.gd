@@ -15,5 +15,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		slowLevel = 3
 	var slowStatus = Status.new(Status.EFFECTS.SLOW,slowLevel)
 	#apply to target
-	attacker.addStatusCondition(slowStatus, true)
+	defender.addStatusCondition(slowStatus, true)
 	return 0

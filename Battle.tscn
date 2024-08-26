@@ -55,21 +55,20 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("cardbuttonContiner", "detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton")]
 script = ExtResource("2_0hcab")
 monsterObject = ExtResource("1_6cll2")
-cardbuttonContiner = NodePath("../../../../../../../../../@WindowWrapper@10560/@ScriptEditor@10559/@VBoxContainer@9815/@HSplitContainer@9818/@VBoxContainer@9839/@TabContainer@9841/@ScriptTextEditor@18106/@PopupPanel@124721/@ColorPicker@124787/@MarginContainer@124722/@VBoxContainer@124723/@VBoxContainer@124746/@GridContainer@124747/@SpinBox@124762")
 cardbuttonPrefab = ExtResource("6_5l1w1")
-detailsPanel = NodePath("../Control/Details Panel")
+detailsPanel = NodePath("../Control UI/Details Panel")
 debugTeamA = [ExtResource("4_2xc6c"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
 debugTeamB = [ExtResource("2_4d2cp"), ExtResource("4_2xc6c"), ExtResource("3_i2ofm")]
-playerUI = [NodePath("../Control/Player HP/Player Mon Details"), NodePath("../Control/Player HP/Player Mon Details2"), NodePath("../Control/Player HP/Player Mon Details3")]
-enemyUI = [NodePath("../Control/EnemyHP/Enemy Mon Details"), NodePath("../Control/EnemyHP/Enemy Mon Details2"), NodePath("../Control/EnemyHP/Enemy Mon Details3")]
-shelfedMonUI = [NodePath("../Control/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control/Shelfed Mon View/Shelfed Mon UI3")]
-skipButton = NodePath("../Control/Shelfed Mon View/Skip Button")
+playerUI = [NodePath("../Control UI/Player HP/Player Mon Details"), NodePath("../Control UI/Player HP/Player Mon Details2"), NodePath("../Control UI/Player HP/Player Mon Details3")]
+enemyUI = [NodePath("../Control UI/EnemyHP/Enemy Mon Details"), NodePath("../Control UI/EnemyHP/Enemy Mon Details2"), NodePath("../Control UI/EnemyHP/Enemy Mon Details3")]
+shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
+skipButton = NodePath("../Control UI/Shelfed Mon View/Skip Button")
 cardPrefab = ExtResource("8_vy7en")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -77,7 +76,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Battle Log" type="VBoxContainer" parent="Control"]
+[node name="Battle Log" type="VBoxContainer" parent="Control UI"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -89,7 +88,7 @@ grow_horizontal = 0
 script = ExtResource("9_6owi0")
 logPrefab = ExtResource("10_8ijj2")
 
-[node name="Player MP" parent="Control" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
+[node name="Player MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 40.0
@@ -98,7 +97,7 @@ offset_bottom = 84.0
 battleController = NodePath("../../Battle Controller")
 player = true
 
-[node name="Enemy MP" parent="Control" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
+[node name="Enemy MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -110,23 +109,23 @@ offset_bottom = 84.0
 grow_horizontal = 0
 battleController = NodePath("../../Battle Controller")
 
-[node name="Player HP" type="HBoxContainer" parent="Control"]
+[node name="Player HP" type="HBoxContainer" parent="Control UI"]
 layout_mode = 1
 offset_left = 100.0
 offset_top = 85.0
 offset_right = 708.0
 offset_bottom = 143.355
 
-[node name="Player Mon Details" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="Player Mon Details2" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details2" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="Player Mon Details3" parent="Control/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details3" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="EnemyHP" type="HBoxContainer" parent="Control"]
+[node name="EnemyHP" type="HBoxContainer" parent="Control UI"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -138,40 +137,40 @@ offset_bottom = 143.0
 grow_horizontal = 0
 alignment = 2
 
-[node name="Enemy Mon Details2" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details2" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="Enemy Mon Details3" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details3" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="Enemy Mon Details" parent="Control/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
 layout_mode = 2
 
-[node name="Shelfed Mon View" type="VBoxContainer" parent="Control"]
+[node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI"]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 144.0
 offset_right = 400.0
 offset_bottom = 344.0
 
-[node name="Shelfed Mon UI" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI2" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI3" parent="Control/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Skip Button" type="Button" parent="Control/Shelfed Mon View"]
+[node name="Skip Button" type="Button" parent="Control UI/Shelfed Mon View"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Skip"
 
-[node name="Details Panel" type="Panel" parent="Control" node_paths=PackedStringArray("titleLabel", "canvasContainer", "displayContainer")]
+[node name="Details Panel" type="Panel" parent="Control UI" node_paths=PackedStringArray("titleLabel", "canvasContainer", "displayContainer")]
 clip_contents = true
 layout_mode = 1
 offset_left = 560.0
@@ -185,7 +184,7 @@ canvasContainer = NodePath("VBoxContainer/HBoxContainer/Control")
 cardDiplay = ExtResource("14_2bqm1")
 displayContainer = NodePath("VBoxContainer/HBoxContainer/VBoxContainer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Details Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,12 +195,12 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Control/Details Panel/VBoxContainer"]
+[node name="Panel" type="Panel" parent="Control UI/Details Panel/VBoxContainer"]
 custom_minimum_size = Vector2(800, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6xl4r")
 
-[node name="Title" type="RichTextLabel" parent="Control/Details Panel/VBoxContainer/Panel"]
+[node name="Title" type="RichTextLabel" parent="Control UI/Details Panel/VBoxContainer/Panel"]
 clip_contents = false
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
@@ -212,21 +211,21 @@ theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[center]Koraidon[/center]"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/Details Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control UI/Details Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/Details Panel/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(300, 400)
 layout_mode = 2
 script = ExtResource("14_p1bgb")
 textObj = ExtResource("15_be8id")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Details Panel/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 
-[node name="Special Flair" type="Control" parent="Control" node_paths=PackedStringArray("label", "panelBG")]
+[node name="Special Flair" type="Control" parent="Control UI" node_paths=PackedStringArray("label", "panelBG")]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 14
@@ -240,7 +239,7 @@ script = ExtResource("18_c3f6e")
 label = NodePath("Panel/VBoxContainer/RichTextLabel")
 panelBG = NodePath("Panel")
 
-[node name="Panel" type="Panel" parent="Control/Special Flair"]
+[node name="Panel" type="Panel" parent="Control UI/Special Flair"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
@@ -252,7 +251,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ifipm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Special Flair/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Special Flair/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -262,7 +261,7 @@ grow_vertical = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/Special Flair/Panel/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI/Special Flair/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(1920, 70)
 layout_mode = 2
 mouse_filter = 2
@@ -272,7 +271,7 @@ bbcode_enabled = true
 text = "[center][b]Reckless[/b][/center]"
 scroll_active = false
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Control/Special Flair/Panel"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Control UI/Special Flair/Panel"]
 position = Vector2(-20, 50)
 amount = 200
 lifetime = 5.0
@@ -289,4 +288,4 @@ scale_curve_x = null
 scale_curve_y = SubResource("Curve_hwsx7")
 color = Color(1, 1, 1, 0.533333)
 
-[connection signal="pressed" from="Control/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]
+[connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]
