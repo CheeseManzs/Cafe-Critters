@@ -1,23 +1,23 @@
 [gd_scene load_steps=25 format=3 uid="uid://ndn4xwrerfcs"]
 
-[ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="1_6cll2"]
-[ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_tjquj"]
-[ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_0hcab"]
-[ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="2_4d2cp"]
-[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_i2ofm"]
-[ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="4_2xc6c"]
-[ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="6_5l1w1"]
-[ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="7_yuiyn"]
-[ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_vy7en"]
-[ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_6owi0"]
-[ext_resource type="PackedScene" uid="uid://rgsl5d282v0i" path="res://Prefabs/mp_bar.tscn" id="9_ftoux"]
-[ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_8ijj2"]
-[ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="10_dfc7v"]
-[ext_resource type="Script" path="res://Battle Scripts/details_panel.gd" id="13_8ke67"]
-[ext_resource type="PackedScene" uid="uid://324kcflyuqea" path="res://Prefabs/card_display.tscn" id="14_2bqm1"]
-[ext_resource type="Script" path="res://control_chart.gd" id="14_p1bgb"]
-[ext_resource type="PackedScene" uid="uid://dl3pok1yw4gn6" path="res://Prefabs/canvas_text.tscn" id="15_be8id"]
-[ext_resource type="Script" path="res://Battle Scripts/effect_flair.gd" id="18_c3f6e"]
+[ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
+[ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
+[ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="3_p5icm"]
+[ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="4_x5jj8"]
+[ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="5_802du"]
+[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="6_omsk4"]
+[ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="7_lndx6"]
+[ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
+[ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
+[ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
+[ext_resource type="PackedScene" uid="uid://rgsl5d282v0i" path="res://Prefabs/mp_bar.tscn" id="11_6sp1y"]
+[ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="12_7i88x"]
+[ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="13_dhyla"]
+[ext_resource type="Script" path="res://Battle Scripts/details_panel.gd" id="14_vbwqc"]
+[ext_resource type="PackedScene" uid="uid://324kcflyuqea" path="res://Prefabs/card_display.tscn" id="15_jwwdp"]
+[ext_resource type="Script" path="res://Battle Scripts/control_chart.gd" id="16_l5g38"]
+[ext_resource type="PackedScene" uid="uid://dl3pok1yw4gn6" path="res://Prefabs/canvas_text.tscn" id="17_pjlun"]
+[ext_resource type="Script" path="res://Battle Scripts/effect_flair.gd" id="18_bnklp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -48,7 +48,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
-script = ExtResource("1_tjquj")
+script = ExtResource("1_2fux1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
@@ -56,17 +56,17 @@ shadow_enabled = true
 shadow_blur = 0.0
 
 [node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton")]
-script = ExtResource("2_0hcab")
-monsterObject = ExtResource("1_6cll2")
-cardbuttonPrefab = ExtResource("6_5l1w1")
+script = ExtResource("2_q8xso")
+monsterObject = ExtResource("3_p5icm")
+cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
-debugTeamA = [ExtResource("4_2xc6c"), ExtResource("3_i2ofm"), ExtResource("2_4d2cp")]
-debugTeamB = [ExtResource("2_4d2cp"), ExtResource("4_2xc6c"), ExtResource("3_i2ofm")]
+debugTeamA = [ExtResource("5_802du"), ExtResource("6_omsk4"), ExtResource("7_lndx6")]
+debugTeamB = [ExtResource("7_lndx6"), ExtResource("5_802du"), ExtResource("6_omsk4")]
 playerUI = [NodePath("../Control UI/Player HP/Player Mon Details"), NodePath("../Control UI/Player HP/Player Mon Details2"), NodePath("../Control UI/Player HP/Player Mon Details3")]
 enemyUI = [NodePath("../Control UI/EnemyHP/Enemy Mon Details"), NodePath("../Control UI/EnemyHP/Enemy Mon Details2"), NodePath("../Control UI/EnemyHP/Enemy Mon Details3")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
 skipButton = NodePath("../Control UI/Shelfed Mon View/Skip Button")
-cardPrefab = ExtResource("8_vy7en")
+cardPrefab = ExtResource("8_8v3xb")
 
 [node name="Control UI" type="Control" parent="."]
 layout_mode = 3
@@ -85,10 +85,10 @@ offset_left = -238.0
 offset_top = 181.0
 offset_bottom = 564.0
 grow_horizontal = 0
-script = ExtResource("9_6owi0")
-logPrefab = ExtResource("10_8ijj2")
+script = ExtResource("9_hlkm1")
+logPrefab = ExtResource("10_lhlt3")
 
-[node name="Player MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
+[node name="Player MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("11_6sp1y")]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 40.0
@@ -97,7 +97,7 @@ offset_bottom = 84.0
 battleController = NodePath("../../Battle Controller")
 player = true
 
-[node name="Enemy MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("9_ftoux")]
+[node name="Enemy MP" parent="Control UI" node_paths=PackedStringArray("battleController") instance=ExtResource("11_6sp1y")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -116,13 +116,13 @@ offset_top = 85.0
 offset_right = 708.0
 offset_bottom = 143.355
 
-[node name="Player Mon Details" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details" parent="Control UI/Player HP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
-[node name="Player Mon Details2" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details2" parent="Control UI/Player HP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
-[node name="Player Mon Details3" parent="Control UI/Player HP" instance=ExtResource("7_yuiyn")]
+[node name="Player Mon Details3" parent="Control UI/Player HP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
 [node name="EnemyHP" type="HBoxContainer" parent="Control UI"]
@@ -137,13 +137,13 @@ offset_bottom = 143.0
 grow_horizontal = 0
 alignment = 2
 
-[node name="Enemy Mon Details2" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details2" parent="Control UI/EnemyHP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
-[node name="Enemy Mon Details3" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details3" parent="Control UI/EnemyHP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
-[node name="Enemy Mon Details" parent="Control UI/EnemyHP" instance=ExtResource("7_yuiyn")]
+[node name="Enemy Mon Details" parent="Control UI/EnemyHP" instance=ExtResource("12_7i88x")]
 layout_mode = 2
 
 [node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI"]
@@ -153,15 +153,15 @@ offset_top = 144.0
 offset_right = 400.0
 offset_bottom = 344.0
 
-[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("10_dfc7v")]
+[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
@@ -178,10 +178,10 @@ offset_top = -503.0
 offset_right = 1360.0
 offset_bottom = -3.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qslj5")
-script = ExtResource("13_8ke67")
+script = ExtResource("14_vbwqc")
 titleLabel = NodePath("VBoxContainer/Panel/Title")
 canvasContainer = NodePath("VBoxContainer/HBoxContainer/Control")
-cardDiplay = ExtResource("14_2bqm1")
+cardDiplay = ExtResource("15_jwwdp")
 displayContainer = NodePath("VBoxContainer/HBoxContainer/VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel"]
@@ -218,8 +218,8 @@ layout_mode = 2
 clip_contents = true
 custom_minimum_size = Vector2(300, 400)
 layout_mode = 2
-script = ExtResource("14_p1bgb")
-textObj = ExtResource("15_be8id")
+script = ExtResource("16_l5g38")
+textObj = ExtResource("17_pjlun")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(450, 0)
@@ -235,7 +235,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("18_c3f6e")
+script = ExtResource("18_bnklp")
 label = NodePath("Panel/VBoxContainer/RichTextLabel")
 panelBG = NodePath("Panel")
 
