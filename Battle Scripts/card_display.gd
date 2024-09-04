@@ -20,6 +20,7 @@ var runAnim = false
 var selected = false
 var launched = false
 var ignoreInput = false
+var straight = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -35,6 +36,7 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 	size = Vector2(720,1000)
 	
 	var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
+	var rawWidth = size.x*scale.x
 	var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
 	
 	var viewportRect = Vector2(1920, 1080)
@@ -45,7 +47,6 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 	var a = secondRot - firstRot
 	var x = cardWidth/tan(a/totalChoices)
 	var y = x*cos(a/2)
-	print(x,',',y)
 	var totalDivisor = totalChoices
 	var divis = 0
 	
@@ -58,13 +59,20 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 	
 	angle = firstRot + (secondRot - firstRot)*divis
 	
+	
+		
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
-	var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 150)
-	print(basePos.x)
+	var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 200)
+	if straight:
+		upVec = Vector2(0, -1)
+		angle = 0
+		print(divis)
+		var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1), 0)
+		basePos += baseDelta
+	
 	originalPosition = basePos + upVec*0.9*x
 	visiblePosition = basePos + upVec*x
 	
-	print('ogpos: ',originalPosition)
 	position = originalPosition - upVec*(500 + 300*choiceID)
 	targetPosition = originalPosition
 	
@@ -127,6 +135,5 @@ func sendChoice():
 	controller.emitGUISignal()
 
 func setTextColor(col: Color):
-	print("setting text to ",col)
 	titleLabel.set("theme_override_colors/default_color",col)
 	manaLabel.set("theme_override_colors/default_color",col)

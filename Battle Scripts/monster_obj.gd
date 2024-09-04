@@ -36,7 +36,6 @@ func reloadMonster() -> void:
 func faintAnimation(delta: float):
 	if faintAnimated:
 		return
-	print("running faint anim")
 	faintAnimated = true	
 	var elapsed: float = 0
 	var timeMax: float = 1
@@ -93,7 +92,6 @@ func jumpToPosition(pos: Vector3, delta) -> void:
 	var initial: Vector3 = position
 	var elapsed = 0
 	var timeMax = ceil((pos - initial).length())/15
-	print(timeMax)
 	var yVertex = 1
 	while elapsed < timeMax:
 		var progress = elapsed/timeMax

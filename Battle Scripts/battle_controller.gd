@@ -198,7 +198,6 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 		for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
 			var uiButton = cardButtons[uiIndex]
 			var uiCard = getActivePlayerMon().currentHand.storedCards[uiIndex]
-			print(uiCard.name,' ',uiIndex)
 			if cardsChosen.has(uiCard):
 				uiButton.setTextColor(Color.GOLD)
 			else:
@@ -210,7 +209,6 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 				uiButton.isDisabled = false
 			
 		await gui_choice
-		print('card ID:',playerCardID)
 		var card = getActivePlayerMon().currentHand.storedCards[playerCardID]
 		if !cardsChosen.has(card):
 			cardsChosen.push_back(card)
@@ -257,7 +255,6 @@ func hidePlayerChoiceUI(removeAll = false):
 			cardButton.raise()
 
 func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[BattleMonster]:
-	print("Choosing mons!")
 	if !playerControlled:
 		return enemyChooseShelfedMon(count)
 	
@@ -287,7 +284,6 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 		#ignore skips
 		if playerCardID == -100:
 			continue
-		print('card ID:',playerCardID)
 		var mon = playerTeam[playerSwitchID]
 		if !chosenMons.has(mon):
 			chosenMons.push_back(mon)
@@ -439,14 +435,11 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
 	while len(cardButtons) > 0:
 		for button in cardButtons:
-			print("removing ",button.card.name)
 			cardButtons.remove_at(cardButtons.find(button))
 			button.queue_free()
 	
-	print("remaining: ",len(cardButtons))
 	var id = 0
-	
-	print("adding ",len(mon.currentHand.storedCards), " buttons")
+
 	for card in mon.currentHand.storedCards:
 		var newButton: CardDisplay = cardPrefab.instantiate()
 		
@@ -456,7 +449,6 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		cardButtons.push_back(newButton)
 		id += 1
 	
-	print(len(cardButtons))
 	for uiIndex in len(cardButtons):
 		var cardButton: CardDisplay = cardButtons[uiIndex]
 		if cardButton.choiceID >= len(mon.currentHand.storedCards):
@@ -582,11 +574,6 @@ func activeTurn() -> void:
 	
 		var actions: Array[BattleAction] = []
 		
-		print(getActiveEnemyMon().rawData.name)
-		
-		
-		print(getActivePlayerMon().health, ',',getActivePlayerMon().hasStatus(Status.EFFECTS.KO))
-		
 		if endTurn:
 			break
 		
@@ -632,7 +619,6 @@ func activeTurn() -> void:
 				var chosenTargetID = -1
 				var targSelf = false
 				var chosenPriority = 0
-				print(playerCardID)
 				var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
 			
 			#add to action queue
@@ -682,7 +668,6 @@ func endBattle(winningSide: int):
 
 
 func skipTurn():
-	print("skipping turn")
 	playerCardID = -100
 	emitGUISignal()
 
@@ -690,12 +675,9 @@ func emitGUISignal() -> void:
 	gui_choice.emit()
 
 func onHand(index: int) -> void:
-	print("hand index ",index)
 	playerCardID = index
-	print("player card:",index)
 
 func toggleDetails() -> void:
-	print("toggling!")
 	if showingDetails || skipButton.disabled:
 		detailsPanel.hidePanel()
 		showingDetails = false

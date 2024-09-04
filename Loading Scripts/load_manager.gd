@@ -18,7 +18,6 @@ static func loadScene(sceneName: String, currentScene:Node = null):
 			child.add_child(loading)
 	
 	loading.position = Vector2(1920/4,1080/4)
-	print(loading.position)
 	await loading.canLoad
 	var toLoad: PackedScene = load("res://Scenes/"+sceneName+".tscn")
 	print(sceneName)

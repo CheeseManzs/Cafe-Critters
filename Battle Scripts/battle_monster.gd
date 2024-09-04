@@ -108,7 +108,6 @@ func discardAnimation(card: Card) -> void:
 	
 	for display in battleController.cardButtons:
 		if display.card.name == card.name:
-			print("raising")
 			display.raise(2)
 			await battleController.get_tree().create_timer(1.0).timeout
 			display.launch()
@@ -293,8 +292,6 @@ func trueDamage(dmg: int) -> void:
 		obj.get_parent().add_child(popup)
 		popup.position = obj.position + Vector3(0, 0.5, 0)
 		
-		print('created popup at:',popup.position)
-		print(popup.get_parent().name)
 		
 		
 	BattleLog.singleton.log(rawData.name + " took " + str(dmg) + " damage")

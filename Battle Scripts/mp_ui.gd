@@ -21,11 +21,10 @@ func _process(delta: float) -> void:
 	var normalDT: float = dt/abs(dt)
 	mpFill.value += normalDT*delta
 
-	if abs(mpFill.value - battleController.playerMP) < delta*2:
+	if abs(mpFill.value - battleController.playerMP) < delta*6:
 		mpFill.value = battleController.playerMP
 	else:
-		print("filling: ",normalDT*delta)
-		mpFill.value += normalDT*delta
+		mpFill.value += normalDT*delta*3
 	
 	if oldMP != battleController.playerMP:
 		oldMP = battleController.playerMP

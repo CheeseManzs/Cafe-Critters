@@ -39,7 +39,6 @@ func _process(delta: float) -> void:
 	var goalValue = 100*float(connectedMon.health)/float(connectedMon.maxHP)
 	#rate at which the hp bar decreases
 	var reductionRate = delta*100
-	print(reductionRate)
 	#check for acceptable error
 	#print(abs(connectedBar.value - goalValue), " : ",reductionRate)
 	var withinError = abs(connectedBar.value - goalValue) < reductionRate

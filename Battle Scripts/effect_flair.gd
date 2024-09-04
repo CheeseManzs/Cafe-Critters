@@ -21,7 +21,6 @@ func easeOut(x, power = 3):
 func _runFlair(title: String, col: Color = Color(239/255.0, 109/255.0, 89/255.0, 1)) -> void:
 	label.text = "[center][shake level=15 rate=100][b]"+title+"[/b][/shake][/center]"
 	var styleBox: StyleBoxFlat = panelBG.get_theme_stylebox("panel")
-	print(col)
 	styleBox.bg_color = col
 	var t = 0
 	var maxTime: float = 0.2

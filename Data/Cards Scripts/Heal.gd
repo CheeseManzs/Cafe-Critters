@@ -10,7 +10,6 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#get critters
-	print("healing!")
 	var targetCritters = await attacker.battleController.chooseShelfedMon(1, attacker.playerControlled)
 	if len(targetCritters) > 0:
 		var target = targetCritters[0]

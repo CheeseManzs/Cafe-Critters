@@ -36,7 +36,6 @@ func setup(battleMonster: BattleMonster):
 	
 	await get_tree().create_timer(0.01).timeout
 	canvasContainer.reset()
-	print("showing!")
 	targetPos = Vector2(position.x,-3)
 
 
