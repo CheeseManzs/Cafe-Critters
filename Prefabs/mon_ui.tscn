@@ -1,55 +1,78 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcw4ey42763fd"]
+[gd_scene load_steps=6 format=3 uid="uid://bcw4ey42763fd"]
 
 [ext_resource type="Script" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
+[ext_resource type="Texture2D" uid="uid://qp17wcy3m1n1" path="res://Graphics/UI/hd circle.png" id="2_pxn4j"]
+[ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="3_jlxyx"]
+[ext_resource type="Texture2D" uid="uid://bjxvyrvwnteey" path="res://Graphics/UI/hd bar.png" id="4_13ff7"]
 
-[node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("connectedLabel", "connectedBar", "hpText")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_te42r"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("monsterFace", "detailContainer", "connectedBar")]
 custom_minimum_size = Vector2(200, 58.355)
 offset_left = 10.0
-offset_top = 10.0
-offset_right = 210.0
-offset_bottom = 68.355
+offset_top = 9.0
+offset_right = 510.0
+offset_bottom = 113.25
+pivot_offset = Vector2(40, 50)
+theme_override_styles/panel = SubResource("StyleBoxFlat_te42r")
 script = ExtResource("1_2qbiv")
-connectedLabel = NodePath("RichTextLabel")
-connectedBar = NodePath("ProgressBar")
-hpText = NodePath("ProgressBar/RichTextLabel")
+monsterFace = NodePath("Face Container/Face Holder/TextureRect")
+detailContainer = NodePath("Details")
+connectedBar = NodePath("Details/TextureProgressBar")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 10.0
-offset_right = -10.0
-offset_bottom = 23.0
-grow_horizontal = 2
-text = "Mon"
-fit_content = true
-scroll_active = false
+[node name="Face Container" type="Control" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = 0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 92.0
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="Face Holder" type="TextureRect" parent="Face Container"]
+self_modulate = Color(0.462291, 0.462291, 0.462291, 1)
+clip_children = 2
+z_index = 1
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+texture = ExtResource("2_pxn4j")
+expand_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Face Container/Face Holder"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -37.355
-offset_right = -10.0
-offset_bottom = -10.355
-grow_horizontal = 2
-grow_vertical = 0
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ProgressBar"]
-custom_minimum_size = Vector2(0, 20.56)
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = 3.0
+offset_right = -5.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
-bbcode_enabled = true
-text = "[center]10/10[/center]"
-scroll_active = false
+texture = ExtResource("3_jlxyx")
+expand_mode = 1
+flip_h = true
+
+[node name="Details" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Details"]
+texture_filter = 4
+custom_minimum_size = Vector2(125, 14)
+layout_mode = 0
+offset_left = 61.0
+offset_top = 22.0
+offset_right = 511.0
+offset_bottom = 82.0
+size_flags_vertical = 4
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_13ff7")
+texture_progress = ExtResource("4_13ff7")
+tint_under = Color(0, 0, 0, 0.556863)

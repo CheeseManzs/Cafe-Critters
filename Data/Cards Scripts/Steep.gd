@@ -12,7 +12,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var regenLevel = 0
 	if attacker.hasStatus(Status.EFFECTS.BARRIER):
-		var barStatus = attacker.getStatus(Status.EFFECTS.REGEN)
+		var barStatus = attacker.getStatus(Status.EFFECTS.BARRIER)
 		regenLevel += barStatus.X
 		barStatus.X = 0
 		barStatus.effectDone = true

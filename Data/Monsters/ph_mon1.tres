@@ -11,17 +11,17 @@
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="7_6mmx6"]
 [ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="9_dp62w"]
 [ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="10_dc40c"]
-[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="10_ychg7"]
 [ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="11_ifnmo"]
 [ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="13_m3j3t"]
 [ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="14_rqrfd"]
 [ext_resource type="Resource" uid="uid://cl7isl07pcxby" path="res://Data/Cards/Sip.tres" id="15_1tidg"]
 [ext_resource type="Resource" uid="uid://yvsi5wefmqxk" path="res://Data/Cards/Steep.tres" id="15_h0k5c"]
+[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="15_pdim1"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
 name = "Deck"
-storedCards = Array[ExtResource("2_tklcb")]([ExtResource("4_7tlbj"), ExtResource("3_a2rj5"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("10_dc40c"), ExtResource("5_jiryu"), ExtResource("9_dp62w"), ExtResource("13_m3j3t"), ExtResource("11_ifnmo"), ExtResource("10_ychg7"), ExtResource("15_1tidg"), ExtResource("14_rqrfd"), ExtResource("15_h0k5c")])
+storedCards = Array[ExtResource("2_tklcb")]([ExtResource("4_7tlbj"), ExtResource("3_a2rj5"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("10_dc40c"), ExtResource("5_jiryu"), ExtResource("9_dp62w"), ExtResource("13_m3j3t"), ExtResource("11_ifnmo"), ExtResource("15_1tidg"), ExtResource("14_rqrfd"), ExtResource("15_h0k5c"), ExtResource("15_pdim1")])
 
 [resource]
 script = ExtResource("1_clwfr")

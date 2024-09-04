@@ -42,6 +42,47 @@ func _init(eff: EFFECTS, p_X:int = 0, p_Y:int = 0):
 	X = p_X
 	Y = p_Y
 
+func toMini() -> String:
+	match effect:
+		EFFECTS.KO:
+			return "KO"
+		EFFECTS.DECAY:
+			return "DEC"
+		EFFECTS.EMPOWER:
+			return "EMP"
+		EFFECTS.EMPOWER_NEXT:
+			return "EMP+"
+		EFFECTS.EMPOWER_PLAYED:
+			return "EMP+"
+		EFFECTS.HASTE:
+			return "HST"
+		EFFECTS.SLOW:
+			return "SLW"
+		EFFECTS.SUSPEND:
+			return "SSP"
+		EFFECTS.DREDGE:
+			return "DRG"
+		EFFECTS.FLOTSAM:
+			return "FLT"
+		EFFECTS.SALVAGE:
+			return "SLV"
+		EFFECTS.PITCH:
+			return "PIT"
+		EFFECTS.KNOWLEDGE:
+			return "KNW"
+		EFFECTS.BARRIER:
+			return "BAR"
+		EFFECTS.REGEN:
+			return "RGN"
+		EFFECTS.BECOME_RECKLESS:
+			return "REK+"
+		EFFECTS.RECKLESS:
+			return "REK"
+		EFFECTS.STRONGARM:
+			return "STR"
+	return "N/A"
+	
+
 func rawToString() -> String:
 	match effect:
 		EFFECTS.KO:

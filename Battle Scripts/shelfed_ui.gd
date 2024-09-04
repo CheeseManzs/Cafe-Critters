@@ -1,8 +1,8 @@
 class_name ShelfUI
 extends Panel
-@export var hpBar: ProgressBar
+@export var hpBar: TextureProgressBar
 @export var faceTexture: TextureRect
-@export var nameText: RichTextLabel
+#@export var nameText: RichTextLabel
 var connectedMon: BattleMonster
 @export var battleController: BattleController
 @export var switchButton: Button
@@ -12,7 +12,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func reprocess() -> void:
-	nameText.text = "[center]"+connectedMon.rawData.name+"[/center]"
+	#nameText.text = "[center]"+connectedMon.rawData.name+"[/center]"
 	faceTexture.texture = connectedMon.rawData.sprite
 	
 

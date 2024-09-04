@@ -4,10 +4,11 @@ extends Panel
 #connected monster object
 var connectedMon: BattleMonster
 #object's text label for the monster's name
-@export var connectedLabel: RichTextLabel
+@export var monsterFace: TextureRect
 #object's progress bar
-@export var connectedBar: ProgressBar
-@export var hpText: RichTextLabel
+@export var detailContainer: Control
+@export var connectedBar: TextureProgressBar
+@export var enemy = false
 
 func setConnectedMon(mon):
 	connectedMon = mon
@@ -15,11 +16,14 @@ func setConnectedMon(mon):
 func reloadUI() -> void:
 	if connectedMon == null:
 		return
-	connectedLabel.text = connectedMon.rawData.name
+	monsterFace.texture = connectedMon.rawData.sprite
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reloadUI()
+	if enemy:
+		self.scale = Vector2(-1, 1)
 	pass # Replace with function body.
 
 
@@ -29,10 +33,13 @@ func _process(delta: float) -> void:
 		hide()
 		return
 	show()
+	if enemy:
+		self.scale = Vector2(-1, 1)
 	#target value from hp bar
 	var goalValue = 100*float(connectedMon.health)/float(connectedMon.maxHP)
 	#rate at which the hp bar decreases
 	var reductionRate = delta*100
+	print(reductionRate)
 	#check for acceptable error
 	#print(abs(connectedBar.value - goalValue), " : ",reductionRate)
 	var withinError = abs(connectedBar.value - goalValue) < reductionRate
@@ -49,5 +56,4 @@ func _process(delta: float) -> void:
 		connectedBar.value += reductionRate
 	#set text to resemble bar
 	var barHP = connectedMon.maxHP*connectedBar.value/100.0
-	hpText.text = "[center]"+str(round(barHP))+"/"+str(connectedMon.maxHP)+"[/center]"
 	pass

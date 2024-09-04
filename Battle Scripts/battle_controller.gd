@@ -398,7 +398,7 @@ func playerSwap(newID) -> void:
 	playerUI[0].reloadUI()
 	
 	#setup new mon
-	newMon.hardReset()
+	await newMon.hardReset()
 	
 	activePlayerMon = newID
 	
@@ -425,7 +425,7 @@ func enemySwap(newID) -> void:
 	enemyUI[0].reloadUI()
 	
 	#setup new mon
-	newMon.hardReset()
+	await newMon.hardReset()
 	
 	activeEnemyMon = newID
 	
@@ -545,7 +545,7 @@ func activeTurn() -> void:
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:
 		if !mon.isKO():
-			mon.reset()
+			await mon.reset()
 	 
 	
 	

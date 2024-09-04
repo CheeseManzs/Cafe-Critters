@@ -8,7 +8,7 @@ func _process(delta: float) -> void:
 static func loadScene(sceneName: String, currentScene:Node = null):
 	if currentScene == null:
 		currentScene = activeScene
-	var loadingScreenScene: PackedScene = load("res://loading.tscn")
+	var loadingScreenScene: PackedScene = load("res://Prefabs/loading.tscn")
 	
 	var loading: LoadScreen = loadingScreenScene.instantiate()
 	var parent: Node
@@ -20,7 +20,7 @@ static func loadScene(sceneName: String, currentScene:Node = null):
 	loading.position = Vector2(1920/4,1080/4)
 	print(loading.position)
 	await loading.canLoad
-	var toLoad: PackedScene = load("res://"+sceneName+".tscn")
+	var toLoad: PackedScene = load("res://Scenes/"+sceneName+".tscn")
 	print(sceneName)
 	var newScene = toLoad.instantiate()
 	parent.remove_child(loading)

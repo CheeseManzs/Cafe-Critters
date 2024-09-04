@@ -1,14 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://41n3lcbxvppv"]
+[gd_scene load_steps=6 format=3 uid="uid://41n3lcbxvppv"]
 
 [ext_resource type="Script" path="res://Battle Scripts/shelfed_ui.gd" id="1_xwuo6"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="1_yyvxt"]
+[ext_resource type="Texture2D" uid="uid://qp17wcy3m1n1" path="res://Graphics/UI/hd circle.png" id="2_203kc"]
+[ext_resource type="Texture2D" uid="uid://bjxvyrvwnteey" path="res://Graphics/UI/hd bar.png" id="4_efbia"]
 
-[node name="Shelfed Mon UI" type="Panel" node_paths=PackedStringArray("hpBar", "faceTexture", "nameText", "switchButton")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_korkn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+draw_center = false
+
+[node name="Shelfed Mon UI" type="Panel" node_paths=PackedStringArray("hpBar", "faceTexture", "switchButton")]
 custom_minimum_size = Vector2(300, 50)
+offset_right = 300.0
+offset_bottom = 84.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_korkn")
 script = ExtResource("1_xwuo6")
-hpBar = NodePath("VBoxContainer/HBoxContainer/ProgressBar")
-faceTexture = NodePath("Face Container/TextureRect")
-nameText = NodePath("VBoxContainer/Name Container/RichTextLabel")
+hpBar = NodePath("TextureProgressBar")
+faceTexture = NodePath("Face Container/Face Holder/TextureRect")
 switchButton = NodePath("Button")
 
 [node name="Face Container" type="Control" parent="."]
@@ -19,7 +27,17 @@ anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Face Container"]
+[node name="Face Holder" type="TextureRect" parent="Face Container"]
+self_modulate = Color(0.462291, 0.462291, 0.462291, 1)
+clip_children = 2
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_203kc")
+expand_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Face Container/Face Holder"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,46 +51,31 @@ texture = ExtResource("1_yyvxt")
 expand_mode = 1
 flip_h = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Name Container" type="VBoxContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-alignment = 1
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Name Container"]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 12
-bbcode_enabled = true
-text = "[center]Koraidon[/center]"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 10
-value = 100.0
-
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -60.0
-offset_bottom = 22.0
+offset_left = -365.0
+offset_top = 10.0
+offset_right = -305.0
+offset_bottom = 32.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 10
 text = "Switch In"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(125, 14)
+layout_mode = 2
+offset_left = 32.0
+offset_top = 4.0
+offset_right = 236.0
+offset_bottom = 37.0
+size_flags_vertical = 4
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_efbia")
+texture_progress = ExtResource("4_efbia")
+tint_under = Color(0, 0, 0, 0.556863)
 
 [connection signal="pressed" from="Button" to="." method="swapIn"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq42dd6ajqm8a"]
+[gd_scene load_steps=3 format=3 uid="uid://cq42dd6ajqm8a"]
 
 [ext_resource type="Script" path="res://Battle Scripts/damage_popup.gd" id="1_mfjme"]
+[ext_resource type="FontFile" uid="uid://pbgdxpuuxshx" path="res://Fonts/edo.ttf" id="2_ucun1"]
 
 [node name="Damage Popup" type="Node3D" node_paths=PackedStringArray("label")]
 script = ExtResource("1_mfjme")
@@ -12,4 +13,5 @@ billboard = 1
 modulate = Color(0.75699, 0.639802, 3.85046e-07, 1)
 outline_modulate = Color(0.752941, 0.435294, 0, 0)
 text = "10"
+font = ExtResource("2_ucun1")
 font_size = 320

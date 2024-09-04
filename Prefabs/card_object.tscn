@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddkls0bkk1r1s"]
+[gd_scene load_steps=6 format=3 uid="uid://ddkls0bkk1r1s"]
 
 [ext_resource type="Script" path="res://Battle Scripts/card_display.gd" id="1_e7irm"]
 [ext_resource type="Texture2D" uid="uid://bijnu2mjsw31f" path="res://Graphics/Misc/Card_Front.png" id="1_k3rom"]
+[ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="3_t0b2p"]
 
 [sub_resource type="Gradient" id="Gradient_f3ps2"]
 
@@ -61,13 +62,16 @@ stretch_mode = 4
 [node name="Title" type="RichTextLabel" parent="Front"]
 texture_filter = 4
 layout_mode = 0
-offset_left = 111.0
-offset_top = 76.0
-offset_right = 555.0
-offset_bottom = 126.0
+offset_left = 96.2941
+offset_top = 67.1763
+offset_right = 540.294
+offset_bottom = 117.176
 rotation = -0.0174533
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 35
+theme_override_fonts/normal_font = ExtResource("3_t0b2p")
+theme_override_fonts/bold_font = ExtResource("3_t0b2p")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
 text = "Card Title"
 scroll_active = false
 
@@ -79,6 +83,8 @@ offset_top = 49.0
 offset_right = 682.0
 offset_bottom = 115.0
 mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_t0b2p")
+theme_override_fonts/bold_font = ExtResource("3_t0b2p")
 theme_override_font_sizes/normal_font_size = 50
 theme_override_font_sizes/bold_font_size = 50
 bbcode_enabled = true
@@ -93,7 +99,7 @@ offset_top = 624.0
 offset_right = 662.0
 offset_bottom = 923.0
 mouse_filter = 2
-theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/normal_font_size = 30
 text = "Card Description"
 scroll_active = false
 
