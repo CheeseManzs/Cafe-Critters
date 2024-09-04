@@ -41,10 +41,17 @@ offset_right = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="Control UI/VBoxContainer"]
+[node name="Battle Button" type="Button" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Battle"
 
-[connection signal="pressed" from="Control UI/VBoxContainer/Button" to="." method="loadScene" binds= ["Battle"]]
+[node name="Overworld Button" type="Button" parent="Control UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Overworld"
+
+[connection signal="pressed" from="Control UI/VBoxContainer/Battle Button" to="." method="loadScene" binds= ["Battle"]]
+[connection signal="pressed" from="Control UI/VBoxContainer/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
