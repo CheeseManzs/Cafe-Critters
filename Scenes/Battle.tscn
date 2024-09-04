@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=29 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -16,10 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://324kcflyuqea" path="res://Prefabs/card_display.tscn" id="15_jwwdp"]
 [ext_resource type="Script" path="res://Battle Scripts/control_chart.gd" id="16_l5g38"]
 [ext_resource type="PackedScene" uid="uid://dl3pok1yw4gn6" path="res://Prefabs/canvas_text.tscn" id="17_pjlun"]
+[ext_resource type="Texture2D" uid="uid://l4y1pinur220" path="res://Graphics/UI/Template.PNG" id="18_8s1nw"]
 [ext_resource type="Script" path="res://Battle Scripts/effect_flair.gd" id="18_bnklp"]
 [ext_resource type="FontFile" uid="uid://pbgdxpuuxshx" path="res://Fonts/edo.ttf" id="19_28emu"]
 [ext_resource type="Script" path="res://Battle Scripts/mp_ui.gd" id="20_feqrg"]
-[ext_resource type="Texture2D" uid="uid://cxupvh602trvu" path="res://Graphics/UI/battle_back.png" id="20_yw10q"]
+[ext_resource type="Texture2D" uid="uid://38eyf0cel2vo" path="res://Graphics/UI/WhiteDiamond.png" id="20_u32s6"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="21_nisc0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
@@ -257,7 +258,7 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
-texture = ExtResource("20_yw10q")
+texture = ExtResource("18_8s1nw")
 expand_mode = 2
 stretch_mode = 5
 
@@ -278,7 +279,28 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
 script = ExtResource("1_2fux1")
 
-[node name="MP Container" type="VBoxContainer" parent="Control UI" node_paths=PackedStringArray("battleController", "mpText")]
+[node name="MP Fill" type="Control" parent="Control UI"]
+anchors_preset = 0
+offset_left = 738.0
+offset_top = 512.0
+offset_right = 1184.0
+offset_bottom = 851.0
+scale = Vector2(0.343, 0.343)
+pivot_offset = Vector2(223, 169)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control UI/MP Fill"]
+layout_mode = 2
+offset_left = 3.44824
+offset_right = 449.448
+offset_bottom = 339.0
+max_value = 6.0
+step = -1.0
+value = 1.0
+fill_mode = 3
+texture_progress = ExtResource("20_u32s6")
+tint_progress = Color(0, 0, 0.368627, 0.619608)
+
+[node name="MP Container" type="VBoxContainer" parent="Control UI" node_paths=PackedStringArray("battleController", "mpFill", "mpText")]
 layout_mode = 0
 offset_left = 913.0
 offset_top = 630.0
@@ -288,6 +310,7 @@ pivot_offset = Vector2(50, 50)
 alignment = 1
 script = ExtResource("20_feqrg")
 battleController = NodePath("../../Battle Controller")
+mpFill = NodePath("../MP Fill/TextureProgressBar")
 mpText = NodePath("MP Text")
 player = true
 
