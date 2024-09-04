@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvh8p2llv8wm6"]
+
+[ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
+[ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
+[ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yai33"]
+size = Vector3(6, 1, 6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efsyt"]
+albedo_texture = ExtResource("2_k2bt7")
+texture_filter = 0
+point_size = 114.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_8w3rj"]
+size = Vector3(6, 1, 6)
+
+[node name="Overworld" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_d1eak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0175, -0.656157, -1.0222)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_yai33")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = SubResource("StandardMaterial3D_efsyt")
+mesh = SubResource("BoxMesh_8w3rj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.436582, 0)
+omni_range = 1.1827
+
+[node name="NPC" parent="." instance=ExtResource("4_0u6w4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0, -2.48072)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2249, 0.974382, 0, -0.974382, 0.2249, 0, 8.40298, 0)
