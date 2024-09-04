@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=30 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://Battle Scripts/mp_ui.gd" id="20_feqrg"]
 [ext_resource type="Texture2D" uid="uid://38eyf0cel2vo" path="res://Graphics/UI/WhiteDiamond.png" id="20_u32s6"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="21_nisc0"]
+[ext_resource type="Script" path="res://Scenes/turn_ui.gd" id="23_qnbl5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -319,6 +320,31 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.148602, 0.376505, 0.97244, 1)
 theme_override_constants/outline_size = 20
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("21_nisc0")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]6[/center]"
+scroll_active = false
+
+[node name="Turn Text Container" type="VBoxContainer" parent="Control UI" node_paths=PackedStringArray("battleController", "label")]
+layout_mode = 0
+offset_left = 909.0
+offset_top = 9.0
+offset_right = 1009.0
+offset_bottom = 109.0
+pivot_offset = Vector2(50, 50)
+alignment = 1
+script = ExtResource("23_qnbl5")
+battleController = NodePath("../../Battle Controller")
+label = NodePath("Turn Text")
+
+[node name="Turn Text" type="RichTextLabel" parent="Control UI/Turn Text Container"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.270172, 0.152513, 0.0106439, 1)
+theme_override_colors/font_outline_color = Color(0.67451, 0.529412, 0.0941176, 1)
+theme_override_constants/outline_size = 10
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/normal_font = ExtResource("21_nisc0")
 theme_override_font_sizes/normal_font_size = 50
