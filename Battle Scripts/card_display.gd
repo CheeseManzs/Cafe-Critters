@@ -67,7 +67,10 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 		upVec = Vector2(0, -1)
 		angle = 0
 		print(divis)
-		var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1), 0)
+		var scaler = 1
+		if totalChoices >= 5:
+			scaler = 0.8
+		var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1)*scaler, 0)
 		basePos += baseDelta
 	
 	originalPosition = basePos + upVec*0.9*x
