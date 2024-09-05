@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=8 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
+[ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="4_uaaio"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yai33"]
 size = Vector3(6, 1, 6)
@@ -42,3 +43,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0, -2.48072)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.2249, 0.974382, 0, -0.974382, 0.2249, 0, 8.40298, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -422.0
+offset_right = 1920.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(48.0022, 10.5562)
+text = "Alone on a friday night? Pathetic"
+fit_content = true
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+z_index = -1
+layout_mode = 0
+offset_left = -358.0
+offset_right = 722.0
+offset_bottom = 1080.0
+texture = ExtResource("4_uaaio")

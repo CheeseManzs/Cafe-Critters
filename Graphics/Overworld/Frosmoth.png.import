@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl8fqgl8iuq4v"
-valid=false
+uid="uid://cwc0cakh6t54i"
+path="res://.godot/imported/Frosmoth.png-00cb4c13b6141210dff170507e0cc2f1.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://Graphics/Loading Logos/BlockSprite_dirt.png"
+source_file="res://Graphics/Overworld/Frosmoth.png"
+dest_files=["res://.godot/imported/Frosmoth.png-00cb4c13b6141210dff170507e0cc2f1.ctex"]
 
 [params]
 
