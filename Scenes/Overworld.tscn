@@ -44,32 +44,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0, -2.48072)
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.2249, 0.974382, 0, -0.974382, 0.2249, 0, 8.40298, 0)
 
-[node name="Control" type="Control" parent="."]
+[node name="Control UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Control UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 1.0
+anchor_top = 0.6
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -422.0
-offset_right = 1920.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(48.0022, 10.5562)
-text = "Alone on a friday night? Pathetic"
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "🚨🚨🗣HEY🗣🚨🚨YOU LGBTQIA+ 🙇🙇‍♂️🙇‍♀️ HOES 😳😩💦💦💦🥴🔞 may 🗓🗓 is OVER😤😤😳🫡🫡 that means it is now‼️‼️🏳️‍⚧️🏳️‍🌈PRIDE MONTH🏳️‍🌈🏳️‍⚧️ ANYONE CAUGHT🚔🚔😤😐 being str**ght👩‍❤️‍👨👩‍❤️‍👨👫🤢🤢🤮 will have to pay💸💸💸A FINE💰💵💰💵😳 of $69,000 ♋️🫣🫣😤💯💯 to EVERY girl 🙋‍♀️🤷‍♀️💃 gay🏳️‍🌈👩‍❤️‍💋‍👩👨‍❤️‍💋‍👨 and they🧍🧍🧍if you receive this it means you are 🍒🍓🍇🍎🍉🍑🍊🍋🍍🍌🥑🍏🍈🍐🥝🥭🥥🍅🫐FRUITIER🫐🍅🥥🥭🥝🍐🍈🍏🥑🍌🍍🍋🍊🍑🍉🍎🍇🍓🍒 than an orchard 🌳🍎🌳🍎 and you need to GET DOWN👇👅✌️👅✌️🥴 ON SOME THUSSY 🥴😩😩🤯😳😳🥵🫡 (they/them 🧍🫄🙇 pussy🦪🌮😼💢) this JUNE🗓🏳️‍🌈🏳️‍⚧️ or else the BABADOOK🕴🏳️‍🌈🕴WILL CUM😩💦 INTO YOUR BEDROOM🛌🛌🫣 and FORCE 🫣😤 YOU TO CONFRONT YOUR GRIEF😔🙍‍♀️🙍🙍‍♂️⚰️⚱️SEND THIS TO 🔟 of your SLUTTIEST 😳👅😩💦🥵🥵👁🫦👁 QUEERS🏳️‍🌈🏳️‍⚧️🫃🫄🤰👩‍❤️‍💋‍👩💏👨‍❤️‍💋‍👨 or CHILLEST 😎🙌🥶🤧❄️ ACE 🏴‍☠️👽🦷😈 HOMIES🤠🤡👽👹 or you will ONLY USE 3️⃣-in-1️⃣ SHAMPOO💆‍♂️💆‍♂️🧴🧴until your FINAL DIRT NAP🕳🪦😴 (after a LONG🫣🍆😩 and HAPPY😊😎🥳🤩 life)"
 fit_content = true
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="TextureRect" type="TextureRect" parent="Control UI"]
 z_index = -1
-layout_mode = 0
-offset_left = -358.0
-offset_right = 722.0
-offset_bottom = 1080.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.3
+anchor_right = 0.3
+anchor_bottom = 1.0
 texture = ExtResource("4_uaaio")
+expand_mode = 2
