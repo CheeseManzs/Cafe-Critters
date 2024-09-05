@@ -359,7 +359,7 @@ animations = [{
 }]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cxw1l"]
-radius = 0.282751
+radius = 0.238283
 
 [node name="Player" type="Node3D"]
 
