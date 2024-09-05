@@ -508,6 +508,7 @@ func banishArray(cards: Array[Card], isPlayer = true):
 			banishedPlayerCards.push_back(card)
 
 func activeTurn() -> void:
+	currentTurn += 1
 	inTurn = true
 	skipChoice = false
 	playerMP += playerMPGain + playerMPTempGain
