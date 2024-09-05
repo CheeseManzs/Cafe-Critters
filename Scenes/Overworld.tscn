@@ -66,6 +66,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
 text = "🚨🚨🗣HEY🗣🚨🚨YOU LGBTQIA+ 🙇🙇‍♂️🙇‍♀️ HOES 😳😩💦💦💦🥴🔞 may 🗓🗓 is OVER😤😤😳🫡🫡 that means it is now‼️‼️🏳️‍⚧️🏳️‍🌈PRIDE MONTH🏳️‍🌈🏳️‍⚧️ ANYONE CAUGHT🚔🚔😤😐 being str**ght👩‍❤️‍👨👩‍❤️‍👨👫🤢🤢🤮 will have to pay💸💸💸A FINE💰💵💰💵😳 of $69,000 ♋️🫣🫣😤💯💯 to EVERY girl 🙋‍♀️🤷‍♀️💃 gay🏳️‍🌈👩‍❤️‍💋‍👩👨‍❤️‍💋‍👨 and they🧍🧍🧍if you receive this it means you are 🍒🍓🍇🍎🍉🍑🍊🍋🍍🍌🥑🍏🍈🍐🥝🥭🥥🍅🫐FRUITIER🫐🍅🥥🥭🥝🍐🍈🍏🥑🍌🍍🍋🍊🍑🍉🍎🍇🍓🍒 than an orchard 🌳🍎🌳🍎 and you need to GET DOWN👇👅✌️👅✌️🥴 ON SOME THUSSY 🥴😩😩🤯😳😳🥵🫡 (they/them 🧍🫄🙇 pussy🦪🌮😼💢) this JUNE🗓🏳️‍🌈🏳️‍⚧️ or else the BABADOOK🕴🏳️‍🌈🕴WILL CUM😩💦 INTO YOUR BEDROOM🛌🛌🫣 and FORCE 🫣😤 YOU TO CONFRONT YOUR GRIEF😔🙍‍♀️🙍🙍‍♂️⚰️⚱️SEND THIS TO 🔟 of your SLUTTIEST 😳👅😩💦🥵🥵👁🫦👁 QUEERS🏳️‍🌈🏳️‍⚧️🫃🫄🤰👩‍❤️‍💋‍👩💏👨‍❤️‍💋‍👨 or CHILLEST 😎🙌🥶🤧❄️ ACE 🏴‍☠️👽🦷😈 HOMIES🤠🤡👽👹 or you will ONLY USE 3️⃣-in-1️⃣ SHAMPOO💆‍♂️💆‍♂️🧴🧴until your FINAL DIRT NAP🕳🪦😴 (after a LONG🫣🍆😩 and HAPPY😊😎🥳🤩 life)"
 fit_content = true
 
@@ -78,3 +82,6 @@ anchor_right = 0.3
 anchor_bottom = 1.0
 texture = ExtResource("4_uaaio")
 expand_mode = 2
+
+[node name="NPC2" parent="." instance=ExtResource("4_0u6w4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82451, 0, -2.37624)

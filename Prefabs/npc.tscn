@@ -1,9 +1,8 @@
-[gd_scene load_steps=52 format=3 uid="uid://bu4gn85pmp7u6"]
+[gd_scene load_steps=51 format=3 uid="uid://bu4gn85pmp7u6"]
 
 [ext_resource type="Texture2D" uid="uid://dq8krg0quf564" path="res://Graphics/Overworld/Idle-Anim.png" id="2_gvo3h"]
-[ext_resource type="Script" path="res://Overworld Scripts/npc.gd" id="3_crjjc"]
+[ext_resource type="Script" path="res://Overworld Scripts/npc_collide_area.gd" id="3_crjjc"]
 [ext_resource type="Texture2D" uid="uid://n78qq5lmbq40" path="res://Graphics/Overworld/Walk-Anim.png" id="3_tmvkj"]
-[ext_resource type="PackedScene" uid="uid://cibt4ci40lsi7" path="res://Prefabs/bubble.tscn" id="4_bv1lv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l5pic"]
 size = Vector3(0.33, 0.26, 0.26)
@@ -380,7 +379,6 @@ animation = &"idle_back"
 
 [node name="Area3D" type="Area3D" parent="."]
 script = ExtResource("3_crjjc")
-speechBubble = ExtResource("4_bv1lv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

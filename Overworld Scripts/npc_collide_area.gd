@@ -2,7 +2,7 @@ extends Area3D
 
 var target_velocity = Vector3.ZERO
 var stored_dir = 0
-@export var speechBubble: PackedScene
+@export var speechBubble: PackedScene = load("res://Prefabs/bubble.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
