@@ -1,5 +1,6 @@
-[gd_scene load_steps=51 format=3 uid="uid://bu4gn85pmp7u6"]
+[gd_scene load_steps=52 format=3 uid="uid://bu4gn85pmp7u6"]
 
+[ext_resource type="Script" path="res://Overworld Scripts/npc.gd" id="1_7wnty"]
 [ext_resource type="Texture2D" uid="uid://dq8krg0quf564" path="res://Graphics/Overworld/Idle-Anim.png" id="2_gvo3h"]
 [ext_resource type="Script" path="res://Overworld Scripts/npc_collide_area.gd" id="3_crjjc"]
 [ext_resource type="Texture2D" uid="uid://n78qq5lmbq40" path="res://Graphics/Overworld/Walk-Anim.png" id="3_tmvkj"]
@@ -362,6 +363,7 @@ animations = [{
 radius = 0.244424
 
 [node name="NPC" type="Node3D"]
+script = ExtResource("1_7wnty")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 
