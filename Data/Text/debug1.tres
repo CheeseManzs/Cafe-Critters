@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ZText" load_steps=2 format=3 uid="uid://cer35didxcsso"]
+
+[ext_resource type="Script" path="res://Data/Source Code/zayin_text.gd" id="1_hem3n"]
+
+[resource]
+script = ExtResource("1_hem3n")
+id = ""
+rawText = "y'know, i've always felt an affinity for pissing on my chair."

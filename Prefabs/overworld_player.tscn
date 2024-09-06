@@ -710,9 +710,9 @@ animations = [{
 radius = 0.238283
 
 [node name="Player" type="Node3D"]
+script = ExtResource("1_018uf")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-script = ExtResource("1_018uf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
@@ -731,5 +731,5 @@ animation = &"move_up"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/CollisionShape3D/Area3D"]
 shape = SubResource("SphereShape3D_cxw1l")
 
-[connection signal="area_entered" from="CharacterBody3D/CollisionShape3D/Area3D" to="CharacterBody3D" method="_on_area_3d_area_entered"]
-[connection signal="area_exited" from="CharacterBody3D/CollisionShape3D/Area3D" to="CharacterBody3D" method="_on_area_3d_area_exited"]
+[connection signal="area_entered" from="CharacterBody3D/CollisionShape3D/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="CharacterBody3D/CollisionShape3D/Area3D" to="." method="_on_area_3d_area_exited"]

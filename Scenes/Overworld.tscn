@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=11 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
+[ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="4_uaaio"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_portrait.gd" id="6_oxydj"]
@@ -42,6 +43,7 @@ omni_range = 1.1827
 
 [node name="NPC" parent="." instance=ExtResource("4_0u6w4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0, -2.48072)
+storedSpeech = ExtResource("4_iydnk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.2249, 0.974382, 0, -0.974382, 0.2249, 0, 8.40298, 0)
@@ -73,16 +75,31 @@ offset_left = 15.0
 offset_top = 15.0
 offset_right = -15.0
 offset_bottom = -15.0
-text = "🚨🚨🗣HEY🗣🚨🚨YOU LGBTQIA+ 🙇🙇‍♂️🙇‍♀️ HOES 😳😩💦💦💦🥴🔞 may 🗓🗓 is OVER😤😤😳🫡🫡 that means it is now‼️‼️🏳️‍⚧️🏳️‍🌈PRIDE MONTH🏳️‍🌈🏳️‍⚧️ ANYONE CAUGHT🚔🚔😤😐 being str**ght👩‍❤️‍👨👩‍❤️‍👨👫🤢🤢🤮 will have to pay💸💸💸A FINE💰💵💰💵😳 of $69,000 ♋️🫣🫣😤💯💯 to EVERY girl 🙋‍♀️🤷‍♀️💃 gay🏳️‍🌈👩‍❤️‍💋‍👩👨‍❤️‍💋‍👨 and they🧍🧍🧍if you receive this it means you are 🍒🍓🍇🍎🍉🍑🍊🍋🍍🍌🥑🍏🍈🍐🥝🥭🥥🍅🫐FRUITIER🫐🍅🥥🥭🥝🍐🍈🍏🥑🍌🍍🍋🍊🍑🍉🍎🍇🍓🍒 than an orchard 🌳🍎🌳🍎 and you need to GET DOWN👇👅✌️👅✌️🥴 ON SOME THUSSY 🥴😩😩🤯😳😳🥵🫡 (they/them 🧍🫄🙇 pussy🦪🌮😼💢) this JUNE🗓🏳️‍🌈🏳️‍⚧️ or else the BABADOOK🕴🏳️‍🌈🕴WILL CUM😩💦 INTO YOUR BEDROOM🛌🛌🫣 and FORCE 🫣😤 YOU TO CONFRONT YOUR GRIEF😔🙍‍♀️🙍🙍‍♂️⚰️⚱️SEND THIS TO 🔟 of your SLUTTIEST 😳👅😩💦🥵🥵👁🫦👁 QUEERS🏳️‍🌈🏳️‍⚧️🫃🫄🤰👩‍❤️‍💋‍👩💏👨‍❤️‍💋‍👨 or CHILLEST 😎🙌🥶🤧❄️ ACE 🏴‍☠️👽🦷😈 HOMIES🤠🤡👽👹 or you will ONLY USE 3️⃣-in-1️⃣ SHAMPOO💆‍♂️💆‍♂️🧴🧴until your FINAL DIRT NAP🕳🪦😴 (after a LONG🫣🍆😩 and HAPPY😊😎🥳🤩 life)"
+text = "like these text boxes are fucking massive. really really massive. granted, i haven't figured out how to resize this text yet but that's besides the point. orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+
+Where does it come from?
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
+
+Where can I get some?
+There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
 fit_content = true
 
 [node name="TextureRect" type="TextureRect" parent="Control UI"]
 z_index = -1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.3
-anchor_right = 0.3
+anchor_left = -0.5
+anchor_right = 0.5
 anchor_bottom = 1.0
 texture = ExtResource("4_uaaio")
-expand_mode = 2
+stretch_mode = 5
 script = ExtResource("6_oxydj")
+
+[connection signal="dialogue_opened" from="Player" to="Control UI/Panel" method="_on_player_dialogue_opened"]
+[connection signal="dialogue_opened" from="Player" to="Control UI/TextureRect" method="_on_player_dialogue_opened"]

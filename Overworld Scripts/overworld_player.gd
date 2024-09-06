@@ -1,17 +1,32 @@
-extends CharacterBody3D
-var target_velocity = Vector3.ZERO
+extends Node3D
+
+signal dialogue_opened
+
+# final player velocity. used in case i make gravity use a persistent value
+var targetVelocity = Vector3.ZERO
+
+# tracking values to store the player's facing direction. used for animation selection
 var directionLR = "none"
 var directionUD = "down"
 var prevDirLR = directionLR
 var prevDirUD = directionUD
+
+# timer that artificially slows how quickly the player can change facing directions.
 var buffer = 0
 var bufferTime = 0.125
+
+# physics constants.
 var speed = 3
 var fall_accel = 0.1
+
+# stores the NPC you've approached most recently, as well as their pop-up speech bubble and its script.
+# needs to be reworked so that it can track the NPC you're closest to.
 var targetNPC = null
 var npcBubble
 var npcBubbleNode
-@onready var spriteNode = $CollisionShape3D/Sprite3D
+
+@onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
+@onready var characterNode = $CharacterBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,21 +35,27 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+	if Input.is_action_just_pressed("control_primary") && targetNPC != null:
+		print("SHIT")
+		dialogue_opened.emit()
 	pass
 
+# called every physics frame
 func _physics_process(delta: float) -> void:
 	doMovement(delta)
-	print(prevDirLR)
-	print(prevDirUD)
-	#jesus christ i'm putting this in its own function this is a nightmare
+	pass
 	
 
 func doMovement(delta: float) -> void:
+	# movement direction tracking
 	var direction = Vector3.ZERO
-	var sprite = $CollisionShape3D/Sprite3D
+	
 	var bufferChange = false
 	buffer += delta
+	
+	# tracks the most recent direction the player moved in that isn't "no direction"
+	# buffer ensures this value doesn't update too frequently so it can capture
+	# diagonal movements (players can't release both movement keys in <1 physics frame)
 	if (directionLR != "none" or directionUD != "none") and buffer > bufferTime: 
 		prevDirLR = directionLR
 		bufferChange = true
@@ -44,6 +65,9 @@ func doMovement(delta: float) -> void:
 	if bufferChange: buffer = 0
 	directionLR = "none"
 	directionUD = "none"
+	
+	# tracks movement keys and ensures the game knows which way they're facing and which direction 
+	# they should be moving
 	if Input.is_action_pressed("ui_right"):
 		directionLR = "right"
 		direction.x += 1
@@ -57,25 +81,27 @@ func doMovement(delta: float) -> void:
 		directionUD = "up"
 		direction.z -= 1
 
+	# turns direction vector into a unit vector.
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 		
-	sprite.play(setAnimation(directionLR, directionUD, direction == Vector3.ZERO, false))
+	# changes player's animation dependent on whether or not they're moving and which way they're facing
+	spriteNode.play(setAnimation(directionLR, directionUD, direction == Vector3.ZERO, false))
 
 	# Ground Velocity
-	target_velocity.x = direction.x * speed
-	target_velocity.z = direction.z * speed
+	targetVelocity.x = direction.x * speed
+	targetVelocity.z = direction.z * speed
 
 	# Vertical Velocity
-	if not is_on_floor(): # If in the air, fall towards the floor. Literally gravity
-		target_velocity.y = -(fall_accel * delta)
+	if not characterNode.is_on_floor(): # If in the air, fall towards the floor. Literally gravity
+		targetVelocity.y = -(fall_accel * delta)
 		fall_accel *= 1.1
 	else:
 		fall_accel = 0.1
 
 	# Moving the Character
-	velocity = target_velocity
-	move_and_slide()
+	characterNode.velocity = targetVelocity
+	characterNode.move_and_slide()
 
 func setAnimation(facingLR: String, facingUD: String, isMoving: bool, inRecursion: bool) -> String:
 	match facingUD:
@@ -129,26 +155,37 @@ func setAnimation(facingLR: String, facingUD: String, isMoving: bool, inRecursio
 					if inRecursion:
 						pass
 					else:
+						# animation fallback when the player isn't moving at all
+						# uses the last direction they moved in to determine facing direction
 						return setAnimation(prevDirLR, prevDirUD, isMoving, true)
 						pass
 						
+	#code never touches this point
 	return "idle_down"
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
+	# custom "areaName" property on area script allows for customized behaviour when interacting
+	# with player. protects from unintended crashing and you don't need to check if_exists(get_node) each time
 	if "areaName" in area:
 		match area.areaName:
 			"NPC":
+				# causes "speech bubble" to pop up when approaching an NPC and stores it to memory
 				npcBubbleNode = area.speechBubble.instantiate()
 				targetNPC = area.get_parent_node_3d()
 				npcBubble = npcBubbleNode.get_node("Sprite3D")
+				
+				# plays bubble spwaning animation and adds it to the scene
 				npcBubble.spawnAnim(area.position + Vector3(0, 0.5,0))
 				area.add_child(npcBubbleNode)
 	pass # Replace with function body.
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
+	# custom "areaName" property on area script allows for customized behaviour when interacting
+	# with player. protects from unintended crashing and you don't need to check if_exists(get_node) each time
 	if "areaName" in area:
 		match area.areaName:
 			"NPC":
+				# causes "speech bubble" to disappear
 				npcBubble.despawnAnim()
 				targetNPC = null
 	pass # Replace with function body.
