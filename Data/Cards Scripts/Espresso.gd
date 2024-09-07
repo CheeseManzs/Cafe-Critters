@@ -13,6 +13,12 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var attackPower : int = ceil(0.4*attacker.getAttack())
 	defender.receiveDamage(attackPower,attacker)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
+		await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	
 	return 0
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	if attacker.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		return Status.new(Status.EFFECTS.EMPOWER_PLAYED)
+	return null

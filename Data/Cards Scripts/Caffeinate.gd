@@ -12,5 +12,8 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
 	var empStatus = Status.new(Status.EFFECTS.EMPOWER_PLAYED)
 	#apply to target
-	attacker.addStatusCondition(empStatus, false)
+	await attacker.addStatusCondition(empStatus, false)
 	return 0
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.EMPOWER_PLAYED)

@@ -300,14 +300,14 @@ func trueDamage(dmg: int) -> void:
 		health = 0
 		#add knocked out status
 		BattleLog.log(rawData.name + " has been KO'd")
-		addStatusCondition(Status.new(Status.EFFECTS.KO), false)
+		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
 	elif dmg > 0:
 		dmgAnim()
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):
 	if !hasStatus(eff):
-		addStatusCondition(Status.new(eff,0,0), true)
+		await addStatusCondition(Status.new(eff,0,0), true)
 	var status: Status = getStatus(eff)
 	status.X += x
 	status.Y += y

@@ -4,7 +4,7 @@ extends Node3D
 #total "time elapsed" tracker
 var t = 0.0
 #link to monster data structure
-var monsterData: Resource
+var monsterData: Monster
 #bool to check if monster is controlled by player
 var playerControlled
 #id of the monster relative to its team (player or opponent)
@@ -81,7 +81,7 @@ func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
 	var positionIndex = ceil(teamID/2.0)
 	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex
-	var pos = Vector3(-2 - positionIndex*1.5 + deltaZ/1.3, 0.953, 0.25 + deltaZ)
+	var pos = Vector3(-2 - positionIndex*1.5 + deltaZ/1.3, 0, 0.25 + deltaZ)
 	if !playerControlled:
 		#flip the position across the origin if its an enemy monster
 		pos.x *= -1
@@ -136,6 +136,10 @@ func _process(delta: float) -> void:
 	#change the scale of the sprite to simulate bobbing
 	$Sprite3D.scale = bobMultiplier*Vector3(1, (1 - idleStrength) + bobDelta,  1)
 	#to anchor it at the bottom, add (delta - max)/2 to the position of the **sprite** (not actual monster)
-	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + 0.5*(bobMultiplier - 1), 0)
+	var img: Texture2D = $Sprite3D.texture 
+	var h = img.get_height()*$Sprite3D.pixel_size
+
+	$Sprite3D.offset = monsterData.battleOffset
+	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + h/2, 0)
 	#update the total time by adding the delta time to the tracker
 	t += delta

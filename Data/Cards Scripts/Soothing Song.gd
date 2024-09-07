@@ -14,5 +14,12 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		regStatus.X = ceil(regStatus.X*1.5)
 	#apply to target
-	attacker.addStatusCondition(regStatus, true)
+	await attacker.addStatusCondition(regStatus, true)
 	return 0
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	var regStatus = Status.new(Status.EFFECTS.REGEN, 3)
+	if attacker.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		regStatus.X = ceil(regStatus.X*1.5)
+	return regStatus

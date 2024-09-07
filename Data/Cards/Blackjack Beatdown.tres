@@ -1,6 +1,15 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://km2q7uarlhg2"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://km2q7uarlhg2"]
 
+[ext_resource type="Script" path="res://Battle Scripts/ai_info.gd" id="1_7nkw6"]
 [ext_resource type="Script" path="res://Data/Cards Scripts/Blackjack Beatdown.gd" id="1_300vr"]
+
+[sub_resource type="Resource" id="Resource_thy4m"]
+script = ExtResource("1_7nkw6")
+givesStatus = true
+statusGiven = 17
+statusLevel = 0
+empoweredStatusLevel = 0
 
 [resource]
 script = ExtResource("1_300vr")
+aiDetails = SubResource("Resource_thy4m")

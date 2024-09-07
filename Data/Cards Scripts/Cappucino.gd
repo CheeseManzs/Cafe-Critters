@@ -15,5 +15,17 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		hasteLevel = 3
 	var hasteStatus = Status.new(Status.EFFECTS.HASTE,hasteLevel)
 	#apply to target
-	attacker.addStatusCondition(hasteStatus, true)
+	await attacker.addStatusCondition(hasteStatus, true)
 	return 0
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	var hasteLevel = 1
+	if attacker.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		hasteLevel = 3
+	var hasteStatus = Status.new(Status.EFFECTS.HASTE,hasteLevel)
+	return hasteStatus
+
+#checks what status will be inflicted on the defender
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return null

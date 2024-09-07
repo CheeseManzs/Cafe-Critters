@@ -30,3 +30,4 @@ deck = SubResource("Resource_j0mjt")
 statHealth = 12
 statDefense = 3
 statAttack = 2
+battleOffset = Vector2(0, 0)

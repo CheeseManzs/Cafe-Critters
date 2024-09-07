@@ -20,3 +20,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#draw cards
 	attacker.drawCards(toDraw)
 	return toDraw
+
+#checks what status will be removed from the user
+func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status.EFFECTS:
+	return Status.EFFECTS.REGEN

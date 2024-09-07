@@ -13,7 +13,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var barrierGiven = 5
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		barrierGiven = ceil(barrierGiven*1.5)
-	attacker.addStatusCondition(Status.new(Status.EFFECTS.BARRIER, barrierGiven), true)
+	await attacker.addStatusCondition(Status.new(Status.EFFECTS.BARRIER, barrierGiven), true)
 	var mpGiven = 1
 	#add mp
 	attacker.addMP(mpGiven)
@@ -24,3 +24,10 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		shieldGiven = ceil(shieldGiven*1.5)
 	return shieldGiven
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	var barrierGiven = 5
+	if attacker.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		barrierGiven = ceil(barrierGiven*1.5)
+	return Status.new(Status.EFFECTS.BARRIER, barrierGiven)
