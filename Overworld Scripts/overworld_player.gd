@@ -1,6 +1,8 @@
 extends Node3D
 
 signal dialogue_opened
+signal dialogue_passed
+signal dialogue_closed
 
 # final player velocity. used in case i make gravity use a persistent value
 var targetVelocity = Vector3.ZERO
@@ -25,6 +27,9 @@ var targetNPC = null
 var npcBubble
 var npcBubbleNode
 
+# game controls change slightly while dialog is showing so this tracks that
+var inDialog = false
+
 @onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
 @onready var characterNode = $CharacterBody3D
 
@@ -35,14 +40,27 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# detects when z is pressed in range of an NPC. action changes depending on player state
 	if Input.is_action_just_pressed("control_primary") && targetNPC != null:
+		if inDialog:
+			# checks to see if dialog is still rendering and fastforwards if it is
+			# checks if npc has more to say, renders it if it does and closes dialog if it doesn't
+			dialogue_passed.emit()
+			pass
+		else:
+			# opens a dialog and freezes the player
+			# also queries the target npc for what dialog should be opened
+			var curText = targetNPC.interactSpeak()
+			if curText != null:
+				dialogue_opened.emit(curText)
+				inDialog = true
 		print("SHIT")
-		dialogue_opened.emit()
 	pass
 
 # called every physics frame
 func _physics_process(delta: float) -> void:
-	doMovement(delta)
+	if !inDialog:
+		doMovement(delta)
 	pass
 	
 
@@ -188,4 +206,9 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 				# causes "speech bubble" to disappear
 				npcBubble.despawnAnim()
 				targetNPC = null
+	pass # Replace with function body.
+
+
+func _on_panel_close_dialog() -> void:
+	inDialog = false
 	pass # Replace with function body.

@@ -66,7 +66,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("4_jqs3p")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control UI/Panel"]
+[node name="MainText" type="RichTextLabel" parent="Control UI/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -101,5 +101,10 @@ texture = ExtResource("4_uaaio")
 stretch_mode = 5
 script = ExtResource("6_oxydj")
 
+[connection signal="dialogue_closed" from="Player" to="Control UI/Panel" method="_on_player_dialogue_closed"]
+[connection signal="dialogue_closed" from="Player" to="Control UI/TextureRect" method="_on_player_dialogue_closed"]
 [connection signal="dialogue_opened" from="Player" to="Control UI/Panel" method="_on_player_dialogue_opened"]
 [connection signal="dialogue_opened" from="Player" to="Control UI/TextureRect" method="_on_player_dialogue_opened"]
+[connection signal="dialogue_passed" from="Player" to="Control UI/Panel" method="_on_player_dialogue_passed"]
+[connection signal="dialogue_passed" from="Player" to="Control UI/TextureRect" method="_on_player_dialogue_passed"]
+[connection signal="closeDialog" from="Control UI/Panel" to="Player" method="_on_panel_close_dialog"]

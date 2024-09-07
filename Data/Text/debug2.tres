@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ZDialog" load_steps=5 format=3 uid="uid://bvukhld3krhpq"]
+
+[ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_kiem3"]
+[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_oe66b"]
+
+[sub_resource type="Resource" id="Resource_ls68a"]
+script = ExtResource("2_oe66b")
+text = "hey! check out this cool feature!"
+speakerName = "John Cena"
+
+[sub_resource type="Resource" id="Resource_yhk3b"]
+script = ExtResource("2_oe66b")
+text = "We can write these by hand! This honestly just kinda feels tedious but it's probably fine(?)"
+speakerName = "John Cena"
+
+[resource]
+script = ExtResource("1_kiem3")
+texts = Array[ExtResource("2_oe66b")]([SubResource("Resource_ls68a"), SubResource("Resource_yhk3b")])
