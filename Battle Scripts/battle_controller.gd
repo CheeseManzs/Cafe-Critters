@@ -611,6 +611,9 @@ func activeTurn() -> void:
 			setCardSelection(mon)
 			
 			for shelfUI in shelfedMonUI:
+				if shelfUI.connectedMon == null:
+					shelfUI.switchButton.disabled = true
+					continue
 				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
 			#wait for a gui choice to be made
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
@@ -689,8 +692,9 @@ func activeTurn() -> void:
 	
 func endBattle(winningSide: int):
 	#1 = player, 2 = enemy
-	await get_tree().create_timer(1.3).timeout
-	LoadManager.loadScene("Battle", get_tree().current_scene)
+	await get_tree().create_timer(0.8).timeout
+	#LoadManager.loadScene("Battle", get_tree().current_scene)
+	LoadManager.restoreTemp()
 	
 
 

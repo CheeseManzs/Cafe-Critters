@@ -6,7 +6,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	if LoadManager.activeScene == null:
+		LoadManager.activeScene = get_tree().current_scene
 	pass # Replace with function body.
 
 
@@ -18,8 +19,7 @@ func _process(delta: float) -> void:
 
 func loadScene(sceneName: String) -> void:
 	if sceneName == "Battle":
-		LoadManager.activeScene = get_tree().current_scene
 		BattleController.startBattle(debugTeamA, debugTeamB, debugPersonality)
 		return
-	LoadManager.loadScene(sceneName, get_tree().current_scene)
+	LoadManager.loadScene(sceneName)
 	pass # Replace with function body.
