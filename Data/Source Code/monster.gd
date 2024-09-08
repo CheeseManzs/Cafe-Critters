@@ -9,6 +9,7 @@ extends Resource
 @export var statHealth: int
 @export var statDefense: int
 @export var statAttack: int
+@export var battleOffset: Vector2
 
 func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_startingCardPool = null, 
 			p_statHealth = 0, p_statDefense = 0, p_statAttack = 0):

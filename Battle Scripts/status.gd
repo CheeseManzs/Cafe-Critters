@@ -1,6 +1,7 @@
 class_name Status
 #enum of status effects
 enum EFFECTS {
+	NONE,
 	KO, #mon hp is 0
 	DECAY,
 	EMPOWER,

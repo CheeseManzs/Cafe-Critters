@@ -23,7 +23,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
 
-	attacker.addStatusCondition(Status.new(Status.EFFECTS.STRONGARM),true)
+	await attacker.addStatusCondition(Status.new(Status.EFFECTS.STRONGARM),true)
 	attackPower = 2*attacker.getAttack()
 	
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
@@ -38,3 +38,7 @@ func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
 	return attackPower
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.STRONGARM)

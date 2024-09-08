@@ -38,3 +38,7 @@ func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
 	return attackPower
+
+#checks what status will be removed from the user
+func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status.EFFECTS:
+	return Status.EFFECTS.REGEN

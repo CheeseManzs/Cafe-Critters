@@ -6,7 +6,6 @@ signal gui_choice
 
 #monster object prefab
 @export var monsterObject: PackedScene
-@export var cardbuttonContiner: Node
 @export var cardbuttonPrefab: PackedScene
 @export var detailsPanel: DetailsPanel
 var showingDetails = false
@@ -17,8 +16,10 @@ var playerMonsterObj: MonsterDisplay
 #node that corrosponds to the enemy monster
 var enemyMonsterObj: MonsterDisplay
 
-@export var debugTeamA: Array
-@export var debugTeamB: Array
+
+static var playerBattleTeam: Array[Monster]
+static var enemyBattleTeam: Array[Monster]
+static var enemyPersonality: AIPersonality
 
 #UIs for active player monsters
 @export var playerUI: Array[MonsterUI]
@@ -27,8 +28,6 @@ var enemyMonsterObj: MonsterDisplay
 #UI for shelfed mons
 @export var shelfedMonUI: Array[ShelfUI]
 #action buttons
-@export var attackButton: Button
-@export var defendButton: Button
 @export var skipButton: Button
 @export var cardPrefab: PackedScene
 var cardButtons: Array[CardDisplay] = []
@@ -101,7 +100,7 @@ func createMonster(isPlayer, monObj, tID) -> Node3D:
 
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
-	
+	print("staring battle!")
 	#create monsters on the player's side
 	for index in len(plrTeam):
 		#create battle monster object
@@ -149,7 +148,9 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#assign ui to enemy mon
 	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
-	enemyAI = BattleAI.new(self)
+	enemyPersonality = AIPersonality.new(10,1,2,15)
+	print(enemyPersonality)
+	enemyAI = BattleAI.new(self, enemyPersonality)
 	
 #check for player loss
 func playerLost():
@@ -166,8 +167,9 @@ func enemyLost():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("ready!")
 	#debug initialization
-	initialize(debugTeamA, debugTeamB)
+	initialize(playerBattleTeam, enemyBattleTeam)
 	pass # Replace with function body.
 
 # Check if a monster swap is valid
@@ -318,8 +320,10 @@ func promptPlayerSwitch() -> void:
 func enemyDeclare() -> Array[BattleAction]:
 	#initialize list of possible actions
 	var actions: Array[BattleAction] = []
+	
 	#loop through active mons (currently only supports 1 active mon so it doesnt really matter)
 	for i in maxActiveMons:
+		var trySwitch = false
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		
 		if !enemyAI.enemyShouldSwitch() && !mon.hasStatus(Status.EFFECTS.KO) && len(getActiveEnemyMon().playableCards()) > 0:
@@ -331,21 +335,27 @@ func enemyDeclare() -> Array[BattleAction]:
 			var chosenTargetID = -1
 			var targSelf = false
 			var chosenCard: Card = enemyAI.choiceEnemy(true)
-			BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
-			#add chosen card logic here
 			
-			#add to action queue
-			var battleAction: BattleAction = BattleAction.new(
-				mon,
-				false,
-				chosenCard.priority,
-				chosenTargetID,
-				targSelf,
-				chosenCard,
-				self
-			)
-			actions.push_back(battleAction)
+			if chosenCard == null:
+				trySwitch = true
+			
+			if !trySwitch:
+				BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
+				#add chosen card logic here
+				
+				#add to action queue
+				var battleAction: BattleAction = BattleAction.new(
+					mon,
+					false,
+					chosenCard.priority,
+					chosenTargetID,
+					targSelf,
+					chosenCard,
+					self
+				)
+				actions.push_back(battleAction)
 		elif enemyMP > 0:
+			trySwitch = false
 			var switchID: int = enemyAI.enemySwitch()
 			if switchID == -1:
 				continue
@@ -363,7 +373,25 @@ func enemyDeclare() -> Array[BattleAction]:
 			actions.push_back(battleAction)
 			#swap enemy
 			pass
-			
+		
+		if trySwitch && enemyMP > 0:
+			var switchID: int = enemyAI.enemyPossibleSwitch()
+			if switchID == -1:
+				continue
+			var battleAction: BattleAction = BattleAction.new(
+				mon,
+				false,
+				100,
+				switchID,
+				false,
+				null,
+				self,
+				true
+			)
+			BattleLog.singleton.log(mon.rawData.name + " is going to swap to " + enemyTeam[switchID].rawData.name)
+			actions.push_back(battleAction)
+		
+	
 	return actions
 	#await get_tree().create_timer(1.0).timeout
 
@@ -430,8 +458,6 @@ func enemySwap(newID) -> void:
 	
 #set card selection ui to specific mon
 func setCardSelection(mon: BattleMonster, allSelectable = false):
-	
-	var container = cardbuttonContiner
 	
 	while len(cardButtons) > 0:
 		for button in cardButtons:
@@ -585,6 +611,9 @@ func activeTurn() -> void:
 			setCardSelection(mon)
 			
 			for shelfUI in shelfedMonUI:
+				if shelfUI.connectedMon == null:
+					shelfUI.switchButton.disabled = true
+					continue
 				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
 			#wait for a gui choice to be made
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
@@ -663,8 +692,9 @@ func activeTurn() -> void:
 	
 func endBattle(winningSide: int):
 	#1 = player, 2 = enemy
-	await get_tree().create_timer(1.3).timeout
-	LoadManager.loadScene("Battle", get_tree().current_scene)
+	await get_tree().create_timer(0.8).timeout
+	#LoadManager.loadScene("Battle", get_tree().current_scene)
+	LoadManager.restoreTemp()
 	
 
 
@@ -693,4 +723,16 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Info"):
 		toggleDetails()
+	pass
+
+
+
+static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality) -> void:
+	
+	
+	playerBattleTeam = p_playerTeam
+	enemyBattleTeam = p_enemyTeam
+	enemyPersonality = p_enemyPersonality
+	
+	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass

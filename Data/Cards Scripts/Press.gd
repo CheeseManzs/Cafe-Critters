@@ -10,8 +10,12 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	attacker.setAttack(0)
-	attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
+	await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	return 0
 
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 1
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.EMPOWER_PLAYED)

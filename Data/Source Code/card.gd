@@ -37,6 +37,8 @@ var name: String
 
 var statusConditions: Array[Status.EFFECTS] = []
 
+@export var aiDetails: AIInfo
+
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
 
@@ -51,6 +53,18 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
 #for ai damage calculations
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return null
+
+#checks what status will be inflicted on the defender
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return null
+
+#checks what status will be removed from the user
+func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status.EFFECTS:
+	return Status.EFFECTS.NONE
 
 func clone():
 	var newCard: Card = get_script().new()
