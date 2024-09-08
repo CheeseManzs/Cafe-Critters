@@ -22,8 +22,8 @@ func _process(delta: float) -> void:
 		if timer < 0: timer = 0
 	
 	var processVal = sin(PI * timer / 2)
-	anchor_left = -1.5 + timer
-	anchor_right = -0.5 + timer
+	anchor_left = -1.5 + processVal
+	anchor_right = -0.5 + processVal
 	
 	pass
 
