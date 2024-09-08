@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=33 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="5_802du"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="6_omsk4"]
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="7_lndx6"]
+[ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="8_2pvtk"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
@@ -29,6 +30,13 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1guf"]
 albedo_color = Color(0.277118, 0.159207, 0.0452019, 1)
+
+[sub_resource type="Resource" id="Resource_r8vsb"]
+script = ExtResource("8_2pvtk")
+aggression = 0.0
+caution = 0.0
+mechanics = 5.0
+standards = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]
 bg_color = Color(0, 0, 0, 0.423529)
@@ -64,6 +72,7 @@ cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
 debugTeamA = [ExtResource("4_bweo7"), ExtResource("5_802du"), ExtResource("7_lndx6")]
 debugTeamB = [ExtResource("6_omsk4"), ExtResource("5_802du"), ExtResource("7_lndx6")]
+enemyPersonality = SubResource("Resource_r8vsb")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]

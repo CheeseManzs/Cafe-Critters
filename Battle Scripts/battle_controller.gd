@@ -19,6 +19,7 @@ var enemyMonsterObj: MonsterDisplay
 
 @export var debugTeamA: Array
 @export var debugTeamB: Array
+@export var enemyPersonality: AIPersonality
 
 #UIs for active player monsters
 @export var playerUI: Array[MonsterUI]
@@ -149,7 +150,9 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#assign ui to enemy mon
 	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
-	enemyAI = BattleAI.new(self)
+	enemyPersonality = AIPersonality.new(10,1,2,15)
+	print(enemyPersonality)
+	enemyAI = BattleAI.new(self, enemyPersonality)
 	
 #check for player loss
 func playerLost():

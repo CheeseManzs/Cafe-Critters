@@ -2,8 +2,12 @@ class_name BattleAI
 
 var battleController: BattleController
 
-func _init(controller: BattleController) -> void:
+var personality: AIPersonality
+
+
+func _init(controller: BattleController, p_person: AIPersonality) -> void:
 	battleController = controller
+	personality = p_person.clone()
 
 func maxDamage(mon: BattleMonster, target: BattleMonster):
 	var dmgs = [0]
@@ -35,6 +39,8 @@ func scoreStatus(status: Status, mon: BattleMonster) -> float:
 		Status.EFFECTS.EMPOWER_NEXT:
 			return 0
 		Status.EFFECTS.EMPOWER_PLAYED:
+			if mon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+				return 0
 			return 3
 		Status.EFFECTS.HASTE:
 			return status.X
@@ -71,19 +77,23 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var monDamage = card.calcDamage(mon, target)
 	var targDamage = maxDamage(target, mon)
 	
-	score += min(monDamage,target.health + target.shield)
-	score += card.calcShield(mon,target)*targDamage
+	var cardDMG = min(monDamage,target.health + target.shield)
+	var cardDEF = card.calcShield(mon,target)*targDamage
 	
 	var statusGiven: Status = card.calcStatusGiven(mon, target)
 	var statusInflicted: Status = card.calcStatusInflicted(mon, target)
 	var statusCured: Status.EFFECTS = card.calcStatusCured(mon, target)
 	
+	#add scores
+	score += cardDMG*personality.aggression
+	score += cardDEF*personality.caution
+	
 	if statusGiven != null:
-		score += scoreStatus(statusGiven, mon)
+		score += scoreStatus(statusGiven, mon)*personality.mechanics
 	if statusInflicted != null:
-		score += -scoreStatus(statusInflicted, target)
+		score += -scoreStatus(statusInflicted, target)*personality.mechanics
 	if statusCured != Status.EFFECTS.NONE:
-		score += -scoreStatus(Status.new(statusCured), mon)
+		score += -scoreStatus(Status.new(statusCured), mon)*personality.mechanics
 	
 	return score
 
@@ -98,7 +108,7 @@ func enemyPossibleSwitch():
 				bestIndex = battleController.enemyTeam.find(mon)
 				bestScore = score
 	
-	return -1
+	return bestIndex
 
 func enemySwitch():
 	#run advanced check
@@ -192,7 +202,8 @@ func choiceEnemy(removeChoice = false):
 	var bestCard: Card = choice[0]
 	print(bestCard.name)
 	#return best card
-	if choice[1] <= 0:
+	print(choice[1], " ", personality.standards)
+	if choice[1] <= personality.standards:
 		return null
 	
 	if removeChoice:
