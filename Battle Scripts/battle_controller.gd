@@ -6,7 +6,6 @@ signal gui_choice
 
 #monster object prefab
 @export var monsterObject: PackedScene
-@export var cardbuttonContiner: Node
 @export var cardbuttonPrefab: PackedScene
 @export var detailsPanel: DetailsPanel
 var showingDetails = false
@@ -17,9 +16,10 @@ var playerMonsterObj: MonsterDisplay
 #node that corrosponds to the enemy monster
 var enemyMonsterObj: MonsterDisplay
 
-@export var debugTeamA: Array
-@export var debugTeamB: Array
-@export var enemyPersonality: AIPersonality
+
+static var playerBattleTeam: Array[Monster]
+static var enemyBattleTeam: Array[Monster]
+static var enemyPersonality: AIPersonality
 
 #UIs for active player monsters
 @export var playerUI: Array[MonsterUI]
@@ -28,8 +28,6 @@ var enemyMonsterObj: MonsterDisplay
 #UI for shelfed mons
 @export var shelfedMonUI: Array[ShelfUI]
 #action buttons
-@export var attackButton: Button
-@export var defendButton: Button
 @export var skipButton: Button
 @export var cardPrefab: PackedScene
 var cardButtons: Array[CardDisplay] = []
@@ -102,7 +100,7 @@ func createMonster(isPlayer, monObj, tID) -> Node3D:
 
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
-	
+	print("staring battle!")
 	#create monsters on the player's side
 	for index in len(plrTeam):
 		#create battle monster object
@@ -169,8 +167,9 @@ func enemyLost():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("ready!")
 	#debug initialization
-	initialize(debugTeamA, debugTeamB)
+	initialize(playerBattleTeam, enemyBattleTeam)
 	pass # Replace with function body.
 
 # Check if a monster swap is valid
@@ -460,8 +459,6 @@ func enemySwap(newID) -> void:
 #set card selection ui to specific mon
 func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
-	var container = cardbuttonContiner
-	
 	while len(cardButtons) > 0:
 		for button in cardButtons:
 			cardButtons.remove_at(cardButtons.find(button))
@@ -722,4 +719,16 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Info"):
 		toggleDetails()
+	pass
+
+
+
+static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality) -> void:
+	
+	
+	playerBattleTeam = p_playerTeam
+	enemyBattleTeam = p_enemyTeam
+	enemyPersonality = p_enemyPersonality
+	
+	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass
