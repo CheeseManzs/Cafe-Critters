@@ -4,11 +4,15 @@ var speed = 3
 var isOpening = false
 var currentScript: ZDialog
 var currentLine = 0
+var loadedChars = 0
+var makeAChoice = false
+var choiceButtons = []
 
 signal closeDialog
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#$DialogText.normal_font_size = 12
 	anchor_top = 1
 	pass # Replace with function body.
 
@@ -22,16 +26,46 @@ func _process(delta: float) -> void:
 		timer -= delta * speed
 		if timer < 0: timer = 0
 	
+	loadedChars += 1
+	$DialogText.visible_characters = loadedChars
+	
+	if currentScript != null and isOpening == true and makeAChoice == false:
+		if loadedChars >= currentScript.texts[currentLine].text.length():
+			if currentScript.texts[currentLine].conditionalNames.is_empty() == false:
+				makeAChoice = true
+				activateChoices()
+				%DialogResponses.isOpening = true
+	
+	
 	var processVal = sin(PI * timer / 2)
-	anchor_top = 1 - (0.4 * timer)
+	anchor_top = 1 - (0.4 * processVal)
 	pass
 
+func activateChoices() -> void:
+	for i in range(currentScript.texts[currentLine].conditionalNames.size()):
+		choiceButtons.append(Button.new())
+		choiceButtons[i].text = currentScript.texts[currentLine].conditionalNames[i]
+		choiceButtons[i].set_meta("index", i)
+		choiceButtons[i].pressed.connect(self._button_pressed.bind(choiceButtons[i]))
+		%DialogResponses.add_child(choiceButtons[i])
+		
+	
+func _button_pressed(button):
+	print(button.get_meta("index"))
+		
+
+func doDialog() -> void:
+	$DialogText.text = currentScript.texts[currentLine].text
+	$NamePanel/NameText.text = currentScript.texts[currentLine].speakerName
+	%DialogPortrait.texture = currentScript.texts[currentLine].speakerSprite
 
 func _on_player_dialogue_opened(dLine: ZDialog) -> void:
+	loadedChars = 0
 	currentLine = 0
 	currentScript = dLine
-	$MainText.text = currentScript.texts[0].text
+	doDialog()
 	isOpening = true
+	%DialogPortrait.isOpening = true
 	#anchor_top = 0.6
 	pass # Replace with function body.
 
@@ -41,10 +75,16 @@ func _on_player_dialogue_closed() -> void:
 
 
 func _on_player_dialogue_passed() -> void:
-	currentLine += 1
-	if currentLine < currentScript.texts.size():
-		$MainText.text = currentScript.texts[currentLine].text
-	else:
-		isOpening = false
-		closeDialog.emit()
+	if loadedChars <= currentScript.texts[currentLine].text.length():
+		loadedChars = currentScript.texts[currentLine].text.length()
+	elif makeAChoice == false:
+		currentLine += 1
+		if currentLine < currentScript.texts.size():
+			doDialog()
+		else:
+			isOpening = false
+			%DialogPortrait.isOpening = false
+			closeDialog.emit()
+			return
+		loadedChars = 0
 	pass # Replace with function body.

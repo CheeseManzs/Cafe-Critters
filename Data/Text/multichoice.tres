@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="ZDialog" load_steps=9 format=3 uid="uid://b766tek53g2rb"]
+
+[ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_2tu7o"]
+[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_a0kq5"]
+[ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="3_7fg7e"]
+[ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="4_7h4b8"]
+[ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="5_5r51k"]
+
+[sub_resource type="Resource" id="Resource_rihey"]
+script = ExtResource("2_a0kq5")
+text = "Hey guys! I have a simple question."
+speakerName = "???"
+speakerSprite = ExtResource("3_7fg7e")
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
+
+[sub_resource type="Resource" id="Resource_kaqdc"]
+script = ExtResource("2_a0kq5")
+text = "You like ice cream, right?"
+speakerName = "???"
+speakerSprite = ExtResource("3_7fg7e")
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
+
+[sub_resource type="Resource" id="Resource_i756e"]
+script = ExtResource("2_a0kq5")
+text = "Would you rather have strawberry or vanilla? Yeah sure this is a non-sequitur I don't want to write out more of these resources they're kinda a pain in the ass to make like god these textboxes don't even expand holy shitttt"
+speakerName = "???"
+speakerSprite = ExtResource("3_7fg7e")
+conditionalNames = Array[String](["Strawberry, for sure.", "Vanilla! YummY!"])
+conditionalLines = Array[Resource]([ExtResource("4_7h4b8"), ExtResource("5_5r51k")])
+
+[resource]
+script = ExtResource("1_2tu7o")
+texts = Array[ExtResource("2_a0kq5")]([SubResource("Resource_rihey"), SubResource("Resource_kaqdc"), SubResource("Resource_i756e")])

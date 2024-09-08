@@ -1,17 +1,24 @@
-[gd_resource type="Resource" script_class="ZDialog" load_steps=5 format=3 uid="uid://bvukhld3krhpq"]
+[gd_resource type="Resource" script_class="ZDialog" load_steps=6 format=3 uid="uid://bvukhld3krhpq"]
 
 [ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_kiem3"]
 [ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_oe66b"]
+[ext_resource type="Texture2D" uid="uid://cek3ptk2d5is5" path="res://Graphics/Overworld/Fros Cena.png" id="3_nyaus"]
 
 [sub_resource type="Resource" id="Resource_ls68a"]
 script = ExtResource("2_oe66b")
 text = "hey! check out this cool feature!"
 speakerName = "John Cena"
+speakerSprite = ExtResource("3_nyaus")
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
 
 [sub_resource type="Resource" id="Resource_yhk3b"]
 script = ExtResource("2_oe66b")
 text = "We can write these by hand! This honestly just kinda feels tedious but it's probably fine(?)"
 speakerName = "John Cena"
+speakerSprite = ExtResource("3_nyaus")
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
 
 [resource]
 script = ExtResource("1_kiem3")
