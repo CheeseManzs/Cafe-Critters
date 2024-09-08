@@ -7,8 +7,12 @@
 script = ExtResource("1_7nkw6")
 givesStatus = true
 statusGiven = 17
-statusLevel = 0
-empoweredStatusLevel = 0
+statusGivenLevel = 0
+inflictsStatus = false
+statusInflicted = 0
+statusInflictedLevel = 0
+removesStatus = false
+statusRemoved = 0
 
 [resource]
 script = ExtResource("1_300vr")

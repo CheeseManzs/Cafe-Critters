@@ -7,8 +7,12 @@
 script = ExtResource("1_47dpu")
 givesStatus = false
 statusGiven = 0
-statusLevel = 0
-empoweredStatusLevel = 0
+statusGivenLevel = 0
+inflictsStatus = false
+statusInflicted = 0
+statusInflictedLevel = 0
+removesStatus = false
+statusRemoved = 0
 
 [resource]
 script = ExtResource("1_d4401")
