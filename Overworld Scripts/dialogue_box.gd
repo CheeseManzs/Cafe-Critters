@@ -7,6 +7,7 @@ var currentLine = 0
 var loadedChars = 0
 var makeAChoice = false
 var choiceButtons = []
+var doneFreeing = true
 
 signal closeDialog
 
@@ -36,12 +37,21 @@ func _process(delta: float) -> void:
 				activateChoices()
 				%DialogResponses.isOpening = true
 	
+	if %DialogResponses.isOpening == false and %DialogResponses.timer == 0 and doneFreeing == false:
+		doneFreeing = true
+		for button in choiceButtons:
+			button.queue_free()
+		choiceButtons = []
 	
 	var processVal = sin(PI * timer / 2)
 	anchor_top = 1 - (0.4 * processVal)
 	pass
 
 func activateChoices() -> void:
+	for button in choiceButtons:
+		button.queue_free()
+		doneFreeing = true
+		choiceButtons = []
 	for i in range(currentScript.texts[currentLine].conditionalNames.size()):
 		choiceButtons.append(Button.new())
 		choiceButtons[i].text = currentScript.texts[currentLine].conditionalNames[i]
@@ -51,10 +61,20 @@ func activateChoices() -> void:
 		
 	
 func _button_pressed(button):
-	print(button.get_meta("index"))
+	if makeAChoice == true:
+		print(button.get_meta("index"))
+		makeAChoice = false
+		_on_player_dialogue_opened(currentScript.texts[currentLine].conditionalLines[button.get_meta("index")].toDialog())
+		%DialogResponses.isOpening = false
+		doneFreeing = false
+		
+		
+		
+	
 		
 
 func doDialog() -> void:
+	#currentScript.texts[currentLine].
 	$DialogText.text = currentScript.texts[currentLine].text
 	$NamePanel/NameText.text = currentScript.texts[currentLine].speakerName
 	%DialogPortrait.texture = currentScript.texts[currentLine].speakerSprite
