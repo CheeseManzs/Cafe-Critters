@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 
 func loadScene(sceneName: String) -> void:
 	if sceneName == "Battle":
+		
 		BattleController.startBattle(debugTeamA, debugTeamB, debugPersonality)
 		return
 	LoadManager.loadScene(sceneName)

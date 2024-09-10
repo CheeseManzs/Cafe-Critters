@@ -148,8 +148,7 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#assign ui to enemy mon
 	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
-	enemyPersonality = AIPersonality.new(10,1,2,15)
-	print(enemyPersonality)
+
 	enemyAI = BattleAI.new(self, enemyPersonality)
 	
 #check for player loss
@@ -167,7 +166,7 @@ func enemyLost():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("ready!")
+	print("reading personality: ",enemyPersonality.aggression)
 	#debug initialization
 	initialize(playerBattleTeam, enemyBattleTeam)
 	pass # Replace with function body.
@@ -733,6 +732,6 @@ static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster
 	playerBattleTeam = p_playerTeam
 	enemyBattleTeam = p_enemyTeam
 	enemyPersonality = p_enemyPersonality
-	
+
 	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass

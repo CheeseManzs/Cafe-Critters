@@ -11,6 +11,7 @@ aggression = 1.0
 caution = 1.0
 mechanics = 2.0
 standards = 3.0
+opportunism = 10.0
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")

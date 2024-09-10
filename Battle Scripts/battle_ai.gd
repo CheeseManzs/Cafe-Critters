@@ -92,6 +92,10 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	#get damage from scores
 	var monDamage = card.calcDamage(mon, target)
 	var targDamage = maxDamage(target, mon)
+	#effective hp of target
+	var targEffHP = min(monDamage,target.health + target.shield)
+	if target.hasStatus(Status.EFFECTS.BARRIER):
+		targEffHP += target.getStatus(Status.EFFECTS.BARRIER).X
 	
 	var cardDMG = min(monDamage,target.health + target.shield)
 	var cardDEF = card.calcShield(mon,target)*targDamage
@@ -102,15 +106,19 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var activationChance = getChance(card, mon, target)
 	
 	#add scores
+	print(card.name,": ",cardDMG,", ",personality.aggression,", ",activationChance)
 	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
 	
 	if statusGiven != null:
 		score += scoreStatus(statusGiven, mon)*personality.mechanics
 	if statusInflicted != null:
-		score += -scoreStatus(statusInflicted, target)*personality.mechanics
+		score += -scoreStatus(statusInflicted, target)*personality.mechanics*activationChance
 	if statusCured != Status.EFFECTS.NONE:
 		score += -scoreStatus(Status.new(statusCured), mon)*personality.mechanics
+	
+	if cardDMG >= targEffHP && activationChance >= 1:
+		score += cardDMG*personality.opportunism
 	
 	return score
 
