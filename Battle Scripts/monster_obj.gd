@@ -140,6 +140,6 @@ func _process(delta: float) -> void:
 	var h = img.get_height()*$Sprite3D.pixel_size
 
 	$Sprite3D.offset = monsterData.battleOffset
-	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + h/2, 0)
+	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier*h/2, 0)
 	#update the total time by adding the delta time to the tracker
 	t += delta
