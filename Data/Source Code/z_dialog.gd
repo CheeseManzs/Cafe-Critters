@@ -1,5 +1,7 @@
 class_name ZDialog
 extends Resource
+## ZDialogs are just an array that holds multiple ZTexts.
+
 
 @export var texts: Array[ZText]
 var placeholder: Array[ZText] = []

@@ -43,13 +43,12 @@ func _process(delta: float) -> void:
 	# detects when z is pressed in range of an NPC. action changes depending on player state
 	if Input.is_action_just_pressed("control_primary") && targetNPC != null:
 		if inDialog:
-			# checks to see if dialog is still rendering and fastforwards if it is
-			# checks if npc has more to say, renders it if it does and closes dialog if it doesn't
+			# tells the text handler (dialogue_box.gd) that z was pressed.
+			# dialogue_box.gd handles what actually happens.
 			dialogue_passed.emit()
 			pass
 		else:
-			# opens a dialog and freezes the player
-			# also queries the target npc for what dialog should be opened
+			# queries the NPC to see what text should be spoken then passes it to the text handler
 			var curText = targetNPC.interactSpeak()
 			if curText != null:
 				dialogue_opened.emit(curText)
@@ -59,6 +58,7 @@ func _process(delta: float) -> void:
 
 # called every physics frame
 func _physics_process(delta: float) -> void:
+	# does movement if not speaking. maybe should be split into gravity vs movement?
 	if !inDialog:
 		doMovement(delta)
 	pass

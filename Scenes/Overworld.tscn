@@ -25,13 +25,14 @@ size = Vector3(6, 1, 6)
 [sub_resource type="Theme" id="Theme_g1xb1"]
 default_font_size = 36
 
-[node name="Overworld" type="Node3D"]
+[node name="OverworldTest" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
+visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0175, -0.656157, -1.0222)
