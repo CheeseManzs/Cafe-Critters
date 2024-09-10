@@ -66,6 +66,9 @@ func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> St
 func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status.EFFECTS:
 	return Status.EFFECTS.NONE
 
+func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
+	return true
+
 func clone():
 	var newCard: Card = get_script().new()
 	newCard.cost = cost
