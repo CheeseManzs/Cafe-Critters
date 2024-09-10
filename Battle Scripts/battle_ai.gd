@@ -69,6 +69,22 @@ func scoreStatus(status: Status, mon: BattleMonster) -> float:
 			return len(mon.currentHand.storedCards)
 	return 0
 
+
+#gets the chance that a card will successfully occur
+func getChance(card: Card, attacker: BattleMonster, defender: BattleMonster):
+	var fits: float = 0
+	var total: float = len(attacker.currentHand.storedCards)
+	
+	if attacker.currentHand.storedCards.has(card):
+		total -= 1
+	
+	for other in attacker.currentHand.storedCards:
+		if card != other && card.meetsRequirement(other, attacker, defender):
+			fits += 1
+	
+	var perc = fits/total
+	return perc
+
 func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	#setup scoring
 	var score = 0
@@ -83,9 +99,10 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var statusGiven: Status = card.calcStatusGiven(mon, target)
 	var statusInflicted: Status = card.calcStatusInflicted(mon, target)
 	var statusCured: Status.EFFECTS = card.calcStatusCured(mon, target)
+	var activationChance = getChance(card, mon, target)
 	
 	#add scores
-	score += cardDMG*personality.aggression
+	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
 	
 	if statusGiven != null:
