@@ -2,11 +2,11 @@ extends Node3D
 
 # storedSpeech should ALWAYS be a ZDialog or ZText resource.
 @export var storedSpeech: Resource = Resource.new()
-var currentLine = 0
 var storedSpeech2: ZDialog
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Converts storedSpeech into a ZDialog if its a ZText. Dialog handling only works with ZDialog.
 	if storedSpeech.has_method("toDialog"):
 		storedSpeech2 = storedSpeech.toDialog()
 		print(storedSpeech2)
