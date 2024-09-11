@@ -44,6 +44,7 @@ func getTarget() -> BattleMonster:
 	if (playerControlled && targetSelfTeam) || (!playerControlled && !targetSelfTeam):
 		if tID == -1:
 			tID = battleController.activePlayerMon
+		
 		target = battleController.playerTeam[tID]
 	if (!playerControlled && targetSelfTeam) || (playerControlled && !targetSelfTeam):
 		if tID == -1:
@@ -54,11 +55,13 @@ func getTarget() -> BattleMonster:
 func printAction():
 	
 	#target of action
-	var target: BattleMonster = getTarget()
-		
-	if switching && !target.hasStatus(Status.EFFECTS.KO):
+	if switching:
 		BattleLog.singleton.log(battleMonster.rawData.name + " switched out")
 		return
+	
+	
+	
+	var target: BattleMonster = getTarget()
 		
 	var targName: String = target.rawData.name
 	#user of action

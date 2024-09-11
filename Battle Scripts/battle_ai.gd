@@ -165,10 +165,10 @@ func enemyShouldSwitch():
 	#get active monster
 	var mon = battleController.getActiveEnemyMon()
 	#if monster is at or below 50% hp then switch out
-	var switchScore = scoreMon(mon,battleController.getActivePlayerMon())
+	var switchScore = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
 	
 	for otherMon in battleController.enemyTeam:
-		if scoreMon(otherMon,battleController.getActivePlayerMon()) > switchScore:
+		if scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1] > switchScore:
 			shouldSwich = true
 			break
 	
@@ -193,6 +193,42 @@ func enemyShelfed(count: int) -> Array[BattleMonster]:
 		if len(choices) < count && mon != battleController.getActiveEnemyMon() && !mon.isKO():
 			choices.push_back(mon)
 	return choices
+
+func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
+	var cards: Array[Card] = mon.currentHand.storedCards + mon.currentDeck.storedCards
+	
+	#check for all possible choices
+	var available: Array[Card] = []
+	#keep track of how behind the enemy is in terms of mana production
+	var requiredMP = 0
+	var MP: int = battleController.enemyMP
+	if mon.playerControlled:
+		MP = battleController.playerMP
+	for card in cards:
+		if card.cost <= MP:
+			available.push_back(card)
+		else:
+			requiredMP += card.cost - MP
+	
+	#calculate scores for all possible choices
+	var scores = []
+	var maxScore: int = -999
+	var bestCard: Card = null
+	var avg: float = 0
+	var tot = 0
+	print("--------")
+	for card in available:
+		var score = scoreCard(mon, target, card)
+		avg += score
+		tot += 1
+		print(card.name+": ",score)
+		if score > maxScore:
+			maxScore = score
+			bestCard = card
+	print(bestCard)
+	if tot > 0:
+		avg /= tot
+	return [bestCard, avg]
 
 func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 	var cards: Array[Card] = mon.currentHand.storedCards
