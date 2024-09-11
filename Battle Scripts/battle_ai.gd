@@ -225,9 +225,7 @@ func choiceEnemy(removeChoice = false):
 	
 	var choice = scoreMon(mon, plrMon)
 	var bestCard: Card = choice[0]
-	print(bestCard.name)
 	#return best card
-	print(choice[1], " ", personality.standards)
 	if choice[1] <= personality.standards:
 		return null
 	
