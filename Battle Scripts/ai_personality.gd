@@ -18,13 +18,14 @@ func _init(agg: float = 1, cau: float = 1, mec: float = 1, sta: float = 0, opp: 
 	caution = cau
 	mechanics = mec
 	standards = sta
-	opportunism = 0
+	opportunism = opp
 
 func clone() -> AIPersonality:
 	var newPersonality = AIPersonality.new(
 		aggression, 
 		caution, 
 		mechanics, 
-		standards
+		standards,
+		opportunism
 	)
 	return newPersonality

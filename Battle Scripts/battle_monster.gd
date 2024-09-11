@@ -202,10 +202,13 @@ func reset(active = true) -> void:
 		currentDeck = rawData.deck.clone()
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
+	if !playerControlled:
+		print(active,", ",currentDeck.storedCards)
 	if active && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
 		drawCards(5 + drawBonus + extraDraw)
+		BattleLog.singleton.log(rawData.name + " drawing cards: " + str(playerControlled))
 	extraDraw = 0
 
 func checkStatusForArray0(x) -> bool:

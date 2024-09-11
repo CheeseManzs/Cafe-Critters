@@ -309,14 +309,15 @@ func promptPlayerSwitch() -> void:
 	hidePlayerChoiceUI(true)
 	skipButton.disabled = true
 	for shelfUI in shelfedMonUI:
-		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
+		if shelfUI.connectedMon != null:
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 	await gui_choice
 	playerSwap(playerSwitchID)
 	for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout
 
-func enemyDeclare() -> Array[BattleAction]:
+func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 	#initialize list of possible actions
 	var actions: Array[BattleAction] = []
 	
@@ -335,8 +336,11 @@ func enemyDeclare() -> Array[BattleAction]:
 			var targSelf = false
 			var chosenCard: Card = enemyAI.choiceEnemy(true)
 			
-			if chosenCard == null:
+			
+			if chosenCard == null && canSwitch:
 				trySwitch = true
+			elif chosenCard == null:
+				continue
 			
 			if !trySwitch:
 				BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
@@ -353,7 +357,7 @@ func enemyDeclare() -> Array[BattleAction]:
 					self
 				)
 				actions.push_back(battleAction)
-		elif enemyMP > 0:
+		elif enemyMP > 0 && canSwitch:
 			trySwitch = false
 			var switchID: int = enemyAI.enemySwitch()
 			if switchID == -1:
@@ -532,6 +536,9 @@ func banishArray(cards: Array[Card], isPlayer = true):
 		else:
 			banishedPlayerCards.push_back(card)
 
+
+
+
 func activeTurn() -> void:
 	currentTurn += 1
 	inTurn = true
@@ -560,18 +567,61 @@ func activeTurn() -> void:
 		if await conditionalAction.processTurn():
 			conditionalActions.remove_at(conditionalActions.find(conditionalAction))
 	
+	hidePlayerChoiceUI(true)
+	skipButton.disabled = getActivePlayerMon().hasStatus(Status.EFFECTS.KO)
+	skipButton.text = "Draw"
+	for shelfUI in shelfedMonUI:
+		if shelfUI.connectedMon == null:
+			shelfUI.switchButton.disabled = true
+			continue
+		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
+	
+	var switchActions: Array[BattleAction] = []
+	#get enemy switching
+	if enemyAI.enemyShouldSwitch():
+		var enmAction = enemyAI.enemySwitch()
+		switchActions.append(BattleAction.new(
+			getActiveEnemyMon(),
+			false,
+			100,
+			enmAction,
+			false,
+			null,
+			self,
+			true
+		))
+	
+	
+	await gui_choice
+	
+	if skipChoice:
+		print("skipping")
+		var battleAction = BattleAction.new(
+			getActivePlayerMon(),
+			true,
+			100,
+			playerSwitchID,
+			false,
+			null,
+			self,
+			true
+		)
+		switchActions.append(battleAction)
+	
+	for shelfUI in shelfedMonUI:
+		shelfUI.switchButton.disabled = true
+	
+	skipButton.disabled = true
+	
+	
+	if len(switchActions) > 0:
+		var switchSequence = BattleSequence.new(switchActions)
+		await switchSequence.runActions(self)
+	skipButton.text = "Skip"
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:
-		if !mon.isKO():
+		if !mon.isKO() && [getActivePlayerMon(), getActiveEnemyMon()].has(mon):
 			await mon.reset()
-	 
-	
-	
-	#wait for enemy choice and animations
-	if getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
-			await promptPlayerSwitch()
-			inTurn = false
-			return
 		
 	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
 		enemySwap(enemyAI.enemySwitch())
@@ -609,11 +659,6 @@ func activeTurn() -> void:
 			
 			setCardSelection(mon)
 			
-			for shelfUI in shelfedMonUI:
-				if shelfUI.connectedMon == null:
-					shelfUI.switchButton.disabled = true
-					continue
-				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
 			#wait for a gui choice to be made
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
 				continue
@@ -630,19 +675,7 @@ func activeTurn() -> void:
 			if playerCardID == -100: 
 				continue
 			var battleAction: BattleAction
-			if skipChoice:
-				battleAction = BattleAction.new(
-					mon,
-					true,
-					100,
-					playerSwitchID,
-					false,
-					null,
-					self,
-					true
-				)
-				
-			else:
+			if !skipChoice:
 				await get_tree().create_timer(0.01).timeout
 				#run choices for player and enemy
 				var chosenTargetID = -1

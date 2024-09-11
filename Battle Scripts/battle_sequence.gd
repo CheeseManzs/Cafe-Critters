@@ -28,10 +28,12 @@ func rearrange() -> void:
 func runActions(battleController: Node) -> void:
 	for i in len(actions):
 		var action = actions[i]
-		if action.battleMonster.hasStatus(Status.EFFECTS.KO):
-			if action.battleMonster == battleController.getActivePlayerMon():
-				await battleController.promptPlayerSwitch()
-			continue
+		if action.battleMonster.hasStatus(Status.EFFECTS.KO) && !action.switching:
+			#if action.battleMonster == battleController.getActivePlayerMon():
+			#	await battleController.promptPlayerSwitch()
+			#continue
+			#end turn if monster is fainted and not switching
+			break
 		
 		#run card action
 		action.printAction()

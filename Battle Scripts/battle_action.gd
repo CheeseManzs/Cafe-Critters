@@ -52,12 +52,14 @@ func getTarget() -> BattleMonster:
 	return target
 	
 func printAction():
-	if switching:
-		BattleLog.singleton.log(battleMonster.rawData.name + " switched out")
-		return
+	
 	#target of action
 	var target: BattleMonster = getTarget()
-
+		
+	if switching && !target.hasStatus(Status.EFFECTS.KO):
+		BattleLog.singleton.log(battleMonster.rawData.name + " switched out")
+		return
+		
 	var targName: String = target.rawData.name
 	#user of action
 	var plrName: String = battleMonster.rawData.name

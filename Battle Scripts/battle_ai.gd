@@ -106,7 +106,7 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var activationChance = getChance(card, mon, target)
 	
 	#add scores
-	print(card.name,": ",cardDMG,", ",personality.aggression,", ",activationChance)
+	print(card.name,": ",cardDMG,", ",personality.aggression,", ",activationChance,", ",cardDMG*personality.opportunism)
 	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
 	
@@ -157,15 +157,21 @@ func enemySwitch():
 	return -1
 
 func enemyShouldSwitch():
+	if battleController.getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
+		return true
+	if battleController.getActivePlayerMon() == null || battleController.getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
+		return false
 	var shouldSwich = false
 	#get active monster
 	var mon = battleController.getActiveEnemyMon()
 	#if monster is at or below 50% hp then switch out
-	if float(mon.health)/float(mon.maxHP) <= 0.5:
-		var switchScore = 0
-		for otherMon in battleController.enemyTeam:
-			if otherMon.health > mon.health:
-				shouldSwich = true
+	var switchScore = scoreMon(mon,battleController.getActivePlayerMon())
+	
+	for otherMon in battleController.enemyTeam:
+		if scoreMon(otherMon,battleController.getActivePlayerMon()) > switchScore:
+			shouldSwich = true
+			break
+	
 	return shouldSwich
 
 #choose cards from hand
