@@ -10,3 +10,7 @@ speakerName = "Frosmoth"
 speakerSprite = ExtResource("2_uqgjf")
 conditionalNames = Array[String]([])
 conditionalLines = Array[Resource]([])
+startEffects = Array[int]([])
+startMetadata = []
+endEffects = Array[int]([])
+endMetadata = []

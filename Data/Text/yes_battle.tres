@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ZDialog" load_steps=11 format=3 uid="uid://btmi6n845jq1v"]
+
+[ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_0r624"]
+[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_uyoyy"]
+[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="3_b6kps"]
+[ext_resource type="Texture2D" uid="uid://dnkr1s2y1vv51" path="res://Graphics/Monsters/placeholder.png" id="3_ryyfr"]
+[ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="4_b8f0l"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_twtyr"]
+[ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="6_njep7"]
+
+[sub_resource type="Resource" id="Resource_oqfi5"]
+script = ExtResource("6_njep7")
+aggression = 1.0
+caution = 1.0
+mechanics = 1.0
+standards = 0.0
+opportunism = 1000.0
+
+[sub_resource type="Resource" id="Resource_0xpit"]
+script = ExtResource("2_uyoyy")
+text = "No. No. fuck you. i'm not gonna stand for this fucking vanilla apologist behaviour. no. there is only one way to settle this. with a duel. to the death. fuck you. "
+speakerName = "?!?!?!?!"
+speakerSprite = ExtResource("3_ryyfr")
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
+startEffects = Array[int]([])
+startMetadata = []
+endEffects = Array[int]([0])
+endMetadata = [[[ExtResource("3_b6kps"), ExtResource("4_b8f0l"), ExtResource("5_twtyr")], SubResource("Resource_oqfi5")]]
+
+[sub_resource type="Resource" id="Resource_vcle6"]
+script = ExtResource("2_uyoyy")
+text = ""
+speakerName = ""
+conditionalNames = Array[String]([])
+conditionalLines = Array[Resource]([])
+startEffects = Array[int]([])
+startMetadata = []
+endEffects = Array[int]([])
+endMetadata = []
+
+[resource]
+script = ExtResource("1_0r624")
+texts = Array[ExtResource("2_uyoyy")]([SubResource("Resource_0xpit"), SubResource("Resource_vcle6")])

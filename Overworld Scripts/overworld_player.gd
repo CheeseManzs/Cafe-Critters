@@ -4,6 +4,8 @@ signal dialogue_opened
 signal dialogue_passed
 signal dialogue_closed
 
+@export var playerDeck: Array[Monster]
+
 # final player velocity. used in case i make gravity use a persistent value
 var targetVelocity = Vector3.ZERO
 
@@ -32,6 +34,8 @@ var inDialog = false
 
 @onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
 @onready var characterNode = $CharacterBody3D
+@onready var cameraNode = $Camera3D
+@onready var cameraOffset = $Camera3D.position
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -62,6 +66,9 @@ func _physics_process(delta: float) -> void:
 	if !inDialog:
 		doMovement(delta)
 	pass
+	# move the camera
+	cameraNode.position = cameraNode.position.lerp(characterNode.position + cameraOffset, delta * 5)
+	#cameraNode.position += Vector3(0, 0, 0.001)
 	
 
 func doMovement(delta: float) -> void:
@@ -211,4 +218,9 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 
 func _on_panel_close_dialog() -> void:
 	inDialog = false
+	pass # Replace with function body.
+
+
+func _on_dialog_panel_starting_battle(enemyTeam, enemyAI) -> void:
+	BattleController.startBattle(playerDeck, enemyTeam, enemyAI)
 	pass # Replace with function body.

@@ -5,6 +5,15 @@ extends Resource
 ## Notably, ZTexts are not used by the dialogue system itself.
 ## Rather, ZDialogues are used, which are just arrays of ZTexts.
 
+# list of dialogue effects to activate. can be timed to activate when a dialog is opened or closed.
+# each effect should correspond to a certain metadata
+enum EFFECTS {
+	START_BATTLE, # metadata is an array holding the enemy team and a personality
+	SCREENSHAKE, # metedata is empty
+	FLIP_SPEAKER # metadata is empty
+}
+
+
 
 @export var text: String # The physical text to be displayed.
 @export var speakerName: String # The name to be written out in the name display.
@@ -17,17 +26,20 @@ extends Resource
 @export var conditionalNames: Array[String]
 @export var conditionalLines: Array[Resource]
 
-# temp variables for custom script handling when dialogue is read.
-# not sure how i'll do this yet.
-@export var startScript: Script
-@export var endScript: Script
+# arrays for effects that activate.
+# they get passed to dialogue_box.gd, which interprets the Effect based on the metadata
+@export var startEffects: Array[EFFECTS]
+@export var startMetadata: Array
+@export var endEffects: Array[EFFECTS]
+@export var endMetadata: Array
 
 # placeholder variables.
 var emptyLines: Array[Resource] = []
 var emptyNames: Array[String] = []
+var emptyEffects: Array[EFFECTS] = []
 
 func _init(p_text = "", p_speakerName = "", p_speakerSprite = null, c_names = emptyNames, 
-		c_lines = emptyLines, p_SS = null, p_ES = null):
+		c_lines = emptyLines, p_SS = emptyEffects, p_ES = emptyEffects):
 	text = p_text
 	speakerName = p_speakerName
 	speakerSprite = p_speakerSprite
@@ -35,8 +47,8 @@ func _init(p_text = "", p_speakerName = "", p_speakerSprite = null, c_names = em
 	for item in c_lines:
 		if item.has_method("toDialog"):
 			conditionalLines.append(item.toDialog())
-	startScript = p_SS
-	endScript = p_ES
+	startEffects = p_SS
+	endEffects = p_ES
 	
 # returns a ZDialog that contains a single ZText (this one).
 func toDialog() -> ZDialog:

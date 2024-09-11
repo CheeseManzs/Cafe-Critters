@@ -20,6 +20,7 @@ var doneFreeing = true
 var choiceButtons = []
 
 signal closeDialog
+signal startingBattle
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -95,6 +96,25 @@ func doDialog() -> void:
 	$DialogText.text = currentScript.texts[currentLine].text
 	$NamePanel/NameText.text = currentScript.texts[currentLine].speakerName
 	%DialogPortrait.texture = currentScript.texts[currentLine].speakerSprite
+	for i in range(currentScript.texts[currentLine].startEffects.size()):
+		doEffect(currentScript.texts[currentLine].startEffects[i], currentScript.texts[currentLine].startMetadata[i])
+
+func doEffect(effect, metadata):
+	match effect:
+		0:
+			for item in metadata[0]:
+				print(item.name)
+			var enemyArray: Array[Monster] = []
+			enemyArray.assign(metadata[0])
+			startingBattle.emit(enemyArray, metadata[1])
+			print(metadata[0])
+			#BattleController.startBattle(, metadata[0], metadata[1])
+			pass
+		1:
+			pass
+		2:
+			pass
+	pass
 
 func _on_player_dialogue_opened(dLine: ZDialog) -> void:
 	loadedChars = 0
@@ -116,6 +136,8 @@ func _on_player_dialogue_passed() -> void:
 	if loadedChars <= currentScript.texts[currentLine].text.length():
 		loadedChars = currentScript.texts[currentLine].text.length()
 	elif makeAChoice == false:
+		for i in range(currentScript.texts[currentLine].endEffects.size()):
+			doEffect(currentScript.texts[currentLine].endEffects[i], currentScript.texts[currentLine].endMetadata[i])
 		# otherwise it advances to the next line if there is one and closes the dialog if there isn't
 		currentLine += 1
 		if currentLine < currentScript.texts.size():
