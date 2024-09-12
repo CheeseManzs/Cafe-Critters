@@ -25,6 +25,10 @@ window/size/mode=3
 
 project/assembly_name="TTT"
 
+[gui]
+
+timers/tooltip_delay_sec=0.0
+
 [input]
 
 Info={

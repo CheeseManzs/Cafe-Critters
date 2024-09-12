@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bdl1xdnsi5uh"]
+
+[ext_resource type="Script" path="res://Data/Source Code/inventory_item.gd" id="1_58b5x"]
+[ext_resource type="Texture2D" uid="uid://drvgi8jji3c5n" path="res://Graphics/Items/bad_beans.png" id="2_p0h50"]
+
+[resource]
+script = ExtResource("1_58b5x")
+index = 0.0
+name = "Rotting Coffee Beans"
+sprite = ExtResource("2_p0h50")
+tab = 0

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ZDialog" load_steps=11 format=3 uid="uid://bru483uysg0mq"]
+[gd_resource type="Resource" script_class="ZDialog" load_steps=11 format=3 uid="uid://btmi6n845jq1v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_0r624"]
 [ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_uyoyy"]

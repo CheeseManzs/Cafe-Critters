@@ -4,7 +4,8 @@ signal dialogue_opened
 signal dialogue_passed
 signal dialogue_closed
 
-@export var playerDeck: Array[Monster]
+@export var playerTeam: Array[Monster]
+@export var inventory: Array
 
 # final player velocity. used in case i make gravity use a persistent value
 var targetVelocity = Vector3.ZERO
@@ -222,5 +223,5 @@ func _on_panel_close_dialog() -> void:
 
 
 func _on_dialog_panel_starting_battle(enemyTeam, enemyAI) -> void:
-	BattleController.startBattle(playerDeck, enemyTeam, enemyAI)
+	BattleController.startBattle(playerTeam, enemyTeam, enemyAI)
 	pass # Replace with function body.

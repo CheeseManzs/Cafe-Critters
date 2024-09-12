@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://2r8w0hejknsu"]
+
+[ext_resource type="Script" path="res://Overworld Scripts/inventory_item.gd" id="1_0rr1n"]
+[ext_resource type="Texture2D" uid="uid://drvgi8jji3c5n" path="res://Graphics/Items/bad_beans.png" id="2_tiu50"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryTabs" type="TabBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.15
+current_tab = 0
+tab_count = 3
+tab_0/title = "pee"
+tab_1/title = "poo"
+tab_2/title = "shit"
+
+[node name="InventoryGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 0.9
+anchor_bottom = 0.9
+columns = 5
+
+[node name="InventoryItem" type="Control" parent="InventoryGrid"]
+layout_mode = 2
+script = ExtResource("1_0rr1n")
+
+[node name="TextureRect" type="TextureRect" parent="InventoryGrid/InventoryItem"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(5, 5)
+texture = ExtResource("2_tiu50")
+
+[node name="Label" type="Label" parent="InventoryGrid/InventoryItem/TextureRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "912"
+horizontal_alignment = 2
+
+[node name="Tooltip" type="Panel" parent="InventoryGrid/InventoryItem"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 85.0
+offset_right = 120.0
+offset_bottom = 145.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InventoryGrid/InventoryItem/Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Good Beans"
+
+[connection signal="mouse_entered" from="InventoryGrid/InventoryItem" to="InventoryGrid/InventoryItem" method="_on_mouse_entered"]

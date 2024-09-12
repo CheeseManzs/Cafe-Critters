@@ -1,9 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=15 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_fiim8"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
-[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_w81f6"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
@@ -31,7 +29,6 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
-playerDeck = Array[ExtResource("2_fiim8")]([ExtResource("3_w81f6")])
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)
