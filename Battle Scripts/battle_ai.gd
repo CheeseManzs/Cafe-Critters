@@ -168,7 +168,8 @@ func enemyShouldSwitch():
 	var switchScore = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
 	
 	for otherMon in battleController.enemyTeam:
-		if scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1] > switchScore:
+		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1]
+		if pot > switchScore && pot <= personality.standards:
 			shouldSwich = true
 			break
 	

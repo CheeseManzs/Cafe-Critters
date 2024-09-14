@@ -550,6 +550,23 @@ func banishArray(cards: Array[Card], isPlayer = true):
 ## seems to be the main gameplay loop? looks like it's what calls everything else
 ## running this starts a new turn, and does everything associated with it -a
 func activeTurn() -> void:
+	inTurn = true
+	#manage dead turns before anything else
+	var preEnd = false
+	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
+		enemySwap(enemyAI.enemySwitch())
+		await get_tree().create_timer(1.0).timeout
+		inTurn = false
+		preEnd = true
+	
+	if getActivePlayerMon().isKO():
+		await promptPlayerSwitch()
+		preEnd = true
+	
+	if preEnd:
+		inTurn = false
+		return
+	
 	currentTurn += 1
 	inTurn = true
 	skipChoice = false
@@ -578,66 +595,16 @@ func activeTurn() -> void:
 			conditionalActions.remove_at(conditionalActions.find(conditionalAction))
 	
 	hidePlayerChoiceUI(true)
-	skipButton.disabled = getActivePlayerMon().hasStatus(Status.EFFECTS.KO)
-	skipButton.text = "Draw"
-	for shelfUI in shelfedMonUI:
-		if shelfUI.connectedMon == null:
-			shelfUI.switchButton.disabled = true
-			continue
-		shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
 	
-	var switchActions: Array[BattleAction] = []
-	#get enemy switching
-	if enemyAI.enemyShouldSwitch():
-		var enmAction = enemyAI.enemySwitch()
-		switchActions.append(BattleAction.new(
-			getActiveEnemyMon(),
-			false,
-			100,
-			enmAction,
-			false,
-			null,
-			self,
-			true
-		))
-	
-	
-	await gui_choice
-	
-	if skipChoice:
-		print("skipping")
-		var battleAction = BattleAction.new(
-			getActivePlayerMon(),
-			true,
-			100,
-			playerSwitchID,
-			false,
-			null,
-			self,
-			true
-		)
-		switchActions.append(battleAction)
-	
-	for shelfUI in shelfedMonUI:
-		shelfUI.switchButton.disabled = true
-	
-	skipButton.disabled = true
-	
-	
-	if len(switchActions) > 0:
-		var switchSequence = BattleSequence.new(switchActions)
-		await switchSequence.runActions(self)
-	skipButton.text = "Skip"
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:
 		if !mon.isKO() && [getActivePlayerMon(), getActiveEnemyMon()].has(mon):
 			await mon.reset()
-		
-	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
-		enemySwap(enemyAI.enemySwitch())
-		await get_tree().create_timer(1.0).timeout
-		inTurn = false
-		return
+	
+	
+	
+	
+	
 	
 	var playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
 	var enemyCanPlay = !(len(getActiveEnemyMon().playableCards()) == 0 && enemyMP == 0)
@@ -656,7 +623,7 @@ func activeTurn() -> void:
 		for cardButton in cardButtons:
 			cardButton.hideCard()
 		
-		var enemyActions = enemyDeclare()
+		var enemyActions = enemyDeclare(true)
 	
 		var actions: Array[BattleAction] = []
 		
@@ -673,7 +640,11 @@ func activeTurn() -> void:
 			if len(mon.playableCards()) <= 0 && playerMP == 0:
 				continue
 			skipButton.disabled = false
-
+			for shelfUI in shelfedMonUI:
+				if shelfUI.connectedMon == null:
+					shelfUI.switchButton.disabled = true
+					continue
+				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
 			await gui_choice
 			skipButton.disabled = true
 			toggleDetails()
@@ -703,6 +674,17 @@ func activeTurn() -> void:
 					chosenCard,
 					self,
 					false
+				)
+			else:
+				battleAction = BattleAction.new(
+					mon,
+					true,
+					100,
+					playerSwitchID,
+					false,
+					null,
+					self,
+					true
 				)
 			actions.push_back(battleAction)
 			

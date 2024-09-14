@@ -13,8 +13,9 @@ var card: Card = null
 var battleMonster: BattleMonster
 var battleController: BattleController
 var playerControlled = false
+var costMod = 1
 
-func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targID: int, targSelf: bool, p_card: Card,p_controller: BattleController, p_switching = false) -> void:
+func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targID: int, targSelf: bool, p_card: Card,p_controller: BattleController, p_switching = false, p_costMod = 0) -> void:
 	battleMonster = p_battleMon
 	playerControlled = p_playerControlled
 	priority = prio
@@ -23,6 +24,7 @@ func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targ
 	card = p_card
 	battleController = p_controller
 	switching = p_switching
+	costMod = p_costMod
 
 func getSwitchTarget() -> BattleMonster:
 	var tID: int = targetID
