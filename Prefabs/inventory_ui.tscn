@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://2r8w0hejknsu"]
+[gd_scene load_steps=4 format=3 uid="uid://2r8w0hejknsu"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/inventory_item.gd" id="1_0rr1n"]
 [ext_resource type="Texture2D" uid="uid://drvgi8jji3c5n" path="res://Graphics/Items/bad_beans.png" id="2_tiu50"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
@@ -71,5 +73,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Good Beans"
+
+[node name="Background" type="Panel" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ox2ro")
 
 [connection signal="mouse_entered" from="InventoryGrid/InventoryItem" to="InventoryGrid/InventoryItem" method="_on_mouse_entered"]

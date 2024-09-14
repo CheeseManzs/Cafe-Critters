@@ -189,8 +189,11 @@ func addArrayToGraveyard(cards: Array[Card]):
 	for card in cards:
 		addToGraveyard(card)
 
+## Called when the player gains control of the game.
 func playerChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
+	## Draws the appropriate cards of their current mon.
 	setCardSelection(getActivePlayerMon(), true)
+	
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = true
 	var cardsChosen: Array[Card] = []
@@ -462,6 +465,7 @@ func enemySwap(newID) -> void:
 #set card selection ui to specific mon
 func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
+	## Removes all existing Card UI elements. -A
 	while len(cardButtons) > 0:
 		for button in cardButtons:
 			cardButtons.remove_at(cardButtons.find(button))
@@ -469,6 +473,8 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
 	var id = 0
 
+	## Creates a new Card UI element for each card in the current monster's hand.
+	## Assigns each card ui element a corresponding ID.
 	for card in mon.currentHand.storedCards:
 		var newButton: CardDisplay = cardPrefab.instantiate()
 		
@@ -478,9 +484,11 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		cardButtons.push_back(newButton)
 		id += 1
 	
+	## Modifies card text wherever necessary.
 	for uiIndex in len(cardButtons):
 		var cardButton: CardDisplay = cardButtons[uiIndex]
 		if cardButton.choiceID >= len(mon.currentHand.storedCards):
+			## Hides cards if there's more cards ui elements than cards in hand. -A (?????)
 			pass
 			cardButton.hideCard()
 		else:
@@ -491,6 +499,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 				#cardButton.text += " (EMP)"
 				pass
+			## Disables the card if you can't affortd it.
 			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
@@ -538,7 +547,8 @@ func banishArray(cards: Array[Card], isPlayer = true):
 
 
 
-
+## seems to be the main gameplay loop? looks like it's what calls everything else
+## running this starts a new turn, and does everything associated with it -a
 func activeTurn() -> void:
 	currentTurn += 1
 	inTurn = true

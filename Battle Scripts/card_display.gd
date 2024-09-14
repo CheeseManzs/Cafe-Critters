@@ -1,3 +1,5 @@
+## Physical UI element that displays a card during battle.
+## Likely can be repurposed elsewhere, hopefully. -A
 class_name CardDisplay
 extends Control
 
@@ -25,6 +27,7 @@ var straight = true
 func _ready() -> void:
 	pass # Replace with function body.
 
+## Sets parameters of the card from the given resource. -A
 func setCard(p_card: Card, cID: int, battleController: BattleController) -> void:
 	runAnim = false
 	card = p_card
@@ -35,13 +38,14 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 	controller = battleController
 	size = Vector2(720,1000)
 	
+	## Determines how many cards are in hand and changes card size based on that. -A
 	var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
 	var rawWidth = size.x*scale.x
 	var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
 	
 	var viewportRect = Vector2(1920, 1080)
 	
-	
+	## Determines how much to rotate the card. -A
 	var firstRot = -PI/12*(totalChoices/5)
 	var secondRot = PI/12*(totalChoices/5)
 	var a = secondRot - firstRot
@@ -63,6 +67,8 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 		
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 200)
+	
+	## Rotation only matters if the cards are set to be curved. Otherwise, flattens them out. -A
 	if straight:
 		upVec = Vector2(0, -1)
 		angle = 0
@@ -131,6 +137,7 @@ func _on_mouse_exited() -> void:
 	mouseOn = false
 	pass # Replace with function body.
 
+## Called when clicked on. Tells battle_controller.gd to run the appropriate code.
 func sendChoice():
 	if isDisabled:
 		return
