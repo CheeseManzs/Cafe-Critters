@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=17 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
+[ext_resource type="Script" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
@@ -10,6 +11,10 @@
 [ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="8_2up65"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
 [ext_resource type="Resource" uid="uid://b766tek53g2rb" path="res://Data/Text/multichoice.tres" id="10_cq2ag"]
+
+[sub_resource type="Resource" id="Resource_larmy"]
+script = ExtResource("2_b10y7")
+items = {}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yai33"]
 size = Vector3(6, 1, 6)
@@ -29,6 +34,7 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
+inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.990748, 0.135716, 0, -0.135716, 0.990748, 0, 1.611, 3.5)

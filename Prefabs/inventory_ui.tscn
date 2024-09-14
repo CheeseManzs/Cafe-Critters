@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://2r8w0hejknsu"]
+[gd_scene load_steps=3 format=3 uid="uid://2r8w0hejknsu"]
 
-[ext_resource type="Script" path="res://Overworld Scripts/inventory_item.gd" id="1_0rr1n"]
-[ext_resource type="Texture2D" uid="uid://drvgi8jji3c5n" path="res://Graphics/Items/bad_beans.png" id="2_tiu50"]
+[ext_resource type="Script" path="res://Overworld Scripts/inventory_ui.gd" id="1_2jqrm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -12,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2jqrm")
 
 [node name="InventoryTabs" type="TabBar" parent="."]
 layout_mode = 1
@@ -33,47 +33,6 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 columns = 5
 
-[node name="InventoryItem" type="Control" parent="InventoryGrid"]
-layout_mode = 2
-script = ExtResource("1_0rr1n")
-
-[node name="TextureRect" type="TextureRect" parent="InventoryGrid/InventoryItem"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(5, 5)
-texture = ExtResource("2_tiu50")
-
-[node name="Label" type="Label" parent="InventoryGrid/InventoryItem/TextureRect"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -23.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "912"
-horizontal_alignment = 2
-
-[node name="Tooltip" type="Panel" parent="InventoryGrid/InventoryItem"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 85.0
-offset_right = 120.0
-offset_bottom = 145.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="InventoryGrid/InventoryItem/Tooltip"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Good Beans"
-
 [node name="Background" type="Panel" parent="."]
 z_index = -1
 layout_mode = 1
@@ -83,5 +42,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ox2ro")
-
-[connection signal="mouse_entered" from="InventoryGrid/InventoryItem" to="InventoryGrid/InventoryItem" method="_on_mouse_entered"]

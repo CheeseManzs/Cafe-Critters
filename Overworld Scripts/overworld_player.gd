@@ -5,7 +5,7 @@ signal dialogue_passed
 signal dialogue_closed
 
 @export var playerTeam: Array[Monster]
-@export var inventory: Array
+@export var inventory: Inventory #= Inventory.new()
 
 # final player velocity. used in case i make gravity use a persistent value
 var targetVelocity = Vector3.ZERO
@@ -33,6 +33,10 @@ var npcBubbleNode
 # game controls change slightly while dialog is showing so this tracks that
 var inDialog = false
 
+# holder for the physical inventory ui
+var inventoryUI = load("res://Prefabs/inventory_ui.tscn").instantiate()
+var doingInventory = false
+
 @onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
 @onready var characterNode = $CharacterBody3D
 @onready var cameraNode = $Camera3D
@@ -40,6 +44,8 @@ var inDialog = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	add_child(inventoryUI)
+	inventory.addItems("good_beans", 3)
 	pass # Replace with function body.
 
 
@@ -60,6 +66,16 @@ func _process(delta: float) -> void:
 				inDialog = true
 		print("SHIT")
 	pass
+	if inventoryUI.timer == 0 or inventoryUI.timer == 1:
+		doingInventory = false
+	if Input.is_action_just_pressed("ui_cancel") and doingInventory == false:
+		doingInventory = true
+		inventoryUI.updateItems(inventory)
+		if inventoryUI.isOpening == true:
+			inventoryUI.isOpening = false
+		else:
+			inventoryUI.isOpening = true
+	
 
 # called every physics frame
 func _physics_process(delta: float) -> void:
