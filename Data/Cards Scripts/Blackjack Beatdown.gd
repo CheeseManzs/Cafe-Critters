@@ -17,6 +17,13 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var attackPower = 0
+	attackPower = 2*attacker.getAttack()
+	
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		attackPower = ceil(attackPower*1.5)
+	#deal damage
+	defender.receiveDamage(attackPower, attacker)
+	
 	await EffectFlair.singleton._runFlair("Reckless")
 	var discardedCard = await attacker.discardRandomCard()
 	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
@@ -24,12 +31,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		return 0
 
 	await attacker.addStatusCondition(Status.new(Status.EFFECTS.STRONGARM),true)
-	attackPower = 2*attacker.getAttack()
 	
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	#deal damage
-	defender.receiveDamage(attackPower, attacker)
 	return attackPower
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
