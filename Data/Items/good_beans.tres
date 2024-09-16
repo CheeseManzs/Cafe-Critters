@@ -9,3 +9,5 @@ index = 2.0
 name = "Golden Coffee Beans"
 sprite = ExtResource("2_88c0c")
 tab = 0
+desc = "As expensive as they are useless, coffee made from these beans is completely inedible because of all the gold. Melt them down into coins or something."
+rarity = 2

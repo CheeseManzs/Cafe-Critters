@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://2r8w0hejknsu"]
+[gd_scene load_steps=4 format=3 uid="uid://2r8w0hejknsu"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/inventory_ui.gd" id="1_2jqrm"]
+[ext_resource type="PackedScene" uid="uid://c05us6q6r3o0s" path="res://Prefabs/inventory_item.tscn" id="2_23hta"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -13,26 +14,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2jqrm")
 
-[node name="InventoryTabs" type="TabBar" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.1
-anchor_right = 0.8
-anchor_bottom = 0.15
-current_tab = 0
-tab_count = 3
-tab_0/title = "pee"
-tab_1/title = "poo"
-tab_2/title = "shit"
-
-[node name="InventoryGrid" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.15
-anchor_right = 0.9
-anchor_bottom = 0.9
-columns = 5
-
 [node name="Background" type="Panel" parent="."]
 z_index = -1
 layout_mode = 1
@@ -42,3 +23,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ox2ro")
+
+[node name="InventoryTabs" type="TabBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.15
+current_tab = 0
+tab_count = 3
+tab_0/title = "Ingredients"
+tab_1/title = "Basic Drinks"
+tab_2/title = "Advanced Drinks"
+
+[node name="InventoryGrid" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 0.85
+anchor_bottom = 1.0
+theme_override_constants/h_separation = 200
+theme_override_constants/v_separation = 200
+columns = 5
+
+[node name="InventoryItem" parent="InventoryGrid" instance=ExtResource("2_23hta")]
+layout_mode = 2
+
+[node name="SortButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Sort"
+
+[connection signal="tab_clicked" from="InventoryTabs" to="." method="_on_inventory_tabs_tab_clicked"]

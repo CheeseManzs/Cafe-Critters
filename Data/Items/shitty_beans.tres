@@ -9,3 +9,5 @@ index = 0.0
 name = "Rotting Coffee Beans"
 sprite = ExtResource("2_p0h50")
 tab = 0
+desc = "Way past their expiration date. Could be good for something though. Maybe. Hopefully. Probably not."
+rarity = 0

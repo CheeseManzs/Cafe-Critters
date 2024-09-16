@@ -9,3 +9,5 @@ index = 1.0
 name = "Standard Coffee Beans"
 sprite = ExtResource("2_h3gvl")
 tab = 0
+desc = "Standard, run-of-the-mill coffee beans. Did the beans come here from earth, or does coffee originate from Midea?"
+rarity = 1

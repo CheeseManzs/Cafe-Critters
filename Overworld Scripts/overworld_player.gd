@@ -34,7 +34,7 @@ var npcBubbleNode
 var inDialog = false
 
 # holder for the physical inventory ui
-var inventoryUI = load("res://Prefabs/inventory_ui.tscn").instantiate()
+var inventoryUI# = load("res://Prefabs/inventory_ui.tscn").instantiate()
 var doingInventory = false
 
 @onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
@@ -44,8 +44,12 @@ var doingInventory = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	add_child(inventoryUI)
+	
+	#add_child(inventoryUI)
 	inventory.addItems("good_beans", 3)
+	inventory.addItems("normal_beans", 3)
+	inventory.addItems("shitty_beans", 3)
+	inventory.addItems("coffe")
 	pass # Replace with function body.
 
 
@@ -66,15 +70,19 @@ func _process(delta: float) -> void:
 				inDialog = true
 		print("SHIT")
 	pass
-	if inventoryUI.timer == 0 or inventoryUI.timer == 1:
+	
+	# makes it so you can only change inventory state when the animation is finished
+	if %InventoryUI.timer == 0 or %InventoryUI.timer == 1:
 		doingInventory = false
+	# detects when esc is pressed and toggles the inventory
+	# inventory_ui.gd gets fed the Inventory object, which isn't just a dict lol
 	if Input.is_action_just_pressed("ui_cancel") and doingInventory == false:
 		doingInventory = true
-		inventoryUI.updateItems(inventory)
-		if inventoryUI.isOpening == true:
-			inventoryUI.isOpening = false
+		if %InventoryUI.isOpening == true:
+			%InventoryUI.isOpening = false
 		else:
-			inventoryUI.isOpening = true
+			%InventoryUI.isOpening = true
+			%InventoryUI.updateItems(inventory)
 	
 
 # called every physics frame

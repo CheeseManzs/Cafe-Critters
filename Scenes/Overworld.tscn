@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=18 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="4_uaaio"]
+[ext_resource type="PackedScene" uid="uid://2r8w0hejknsu" path="res://Prefabs/inventory_ui.tscn" id="6_1vjsm"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_portrait.gd" id="6_oxydj"]
 [ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="8_2up65"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
@@ -149,6 +150,9 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 script = ExtResource("8_p6pse")
+
+[node name="InventoryUI" parent="." instance=ExtResource("6_1vjsm")]
+unique_name_in_owner = true
 
 [node name="NPC2" parent="." instance=ExtResource("4_0u6w4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58006, 0, 0)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bnhyfql86iwuw"]
+
+[ext_resource type="Script" path="res://Data/Source Code/inventory_item.gd" id="1_07qgv"]
+[ext_resource type="Texture2D" uid="uid://cghwwlprykvxj" path="res://Graphics/Items/cofe.png" id="2_j03rt"]
+
+[resource]
+script = ExtResource("1_07qgv")
+index = 0.0
+name = "Cawfee"
+sprite = ExtResource("2_j03rt")
+tab = 1
+desc = "Hurts to look at. Doesn't smell like anything. Touching the cup makes your skin crawl. It's cold."
+rarity = 0
