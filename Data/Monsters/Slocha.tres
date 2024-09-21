@@ -11,8 +11,8 @@
 [ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="8_tpt1p"]
 [ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="9_8og6g"]
 [ext_resource type="Resource" uid="uid://dgg6p0tqdt17k" path="res://Data/Cards/Soothing Song.tres" id="10_gvwix"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Minor Strike.tres" id="11_yq0iv"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Minor Block.tres" id="12_aswgq"]
+[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="11_neq14"]
+[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="12_dgmpa"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="13_re3ge"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="14_c6ebl"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="16_jyqkw"]
@@ -20,15 +20,17 @@
 [sub_resource type="Resource" id="Resource_d41sc"]
 script = ExtResource("1_qo6j8")
 name = ""
-storedCards = Array[ExtResource("2_lxcvb")]([ExtResource("3_omahx"), ExtResource("4_1tr8c"), ExtResource("5_12ul0"), ExtResource("6_qlhrh"), ExtResource("7_dt1ir"), ExtResource("8_tpt1p"), ExtResource("9_8og6g"), ExtResource("10_gvwix"), ExtResource("11_yq0iv"), ExtResource("12_aswgq"), ExtResource("13_re3ge"), ExtResource("14_c6ebl")])
+storedCards = Array[ExtResource("2_lxcvb")]([ExtResource("3_omahx"), ExtResource("4_1tr8c"), ExtResource("5_12ul0"), ExtResource("6_qlhrh"), ExtResource("7_dt1ir"), ExtResource("8_tpt1p"), ExtResource("9_8og6g"), ExtResource("10_gvwix"), ExtResource("11_neq14"), ExtResource("12_dgmpa"), ExtResource("13_re3ge"), ExtResource("14_c6ebl")])
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_7umar")
 id = 0
 name = "Slocha"
 sprite = ExtResource("16_jyqkw")
 deck = SubResource("Resource_d41sc")
-statHealth = 15
-statDefense = 4
-statAttack = 1
+statHealth = 40
+statAttack = 12
+statDefense = 15
+level = 0
 battleOffset = Vector2(0, -2)

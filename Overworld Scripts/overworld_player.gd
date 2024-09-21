@@ -5,6 +5,7 @@ signal dialogue_passed
 signal dialogue_closed
 
 @export var playerTeam: Array[Monster]
+@export var playerBox: Array[Monster]
 @export var inventory: Inventory #= Inventory.new()
 
 # final player velocity. used in case i make gravity use a persistent value

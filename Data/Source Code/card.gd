@@ -5,9 +5,9 @@ extends Resource
 enum ALIGNMENT {
 	Default,
 	Mise,
-	Scythanna,
+	Rea,
 	Anvi,
-	Secs,
+	Sec,
 	Eco,
 	Jacks
 }

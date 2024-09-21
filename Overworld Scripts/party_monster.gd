@@ -8,9 +8,9 @@ var quantity = 0
 func _ready() -> void:
 	pass # Replace with function body.
 
-func initiate(itemRes: String, loadQuantity: int):
+func initiate(monsterRes: String, loadQuantity: int):
 	# gets the appropriate inventory item, loads its sprite, name, description, etc
-	refItem = load("res://Data/Items/" + itemRes + ".tres")
+	refItem = load("res://Data/Monsters/" + monsterRes + ".tres")
 	#print(refItem.name)
 	quantity = loadQuantity
 	$TextureRect.set_texture(refItem.sprite)
@@ -21,7 +21,7 @@ func initiate(itemRes: String, loadQuantity: int):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	$Tooltip.position = get_local_mouse_position()
+	#$Tooltip.position = get_local_mouse_position()
 	pass
 
 

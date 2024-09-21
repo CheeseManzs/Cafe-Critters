@@ -6,7 +6,7 @@ func _init() -> void:
 	alignment = ALIGNMENT.Default
 	role = ROLE.Generic
 	description = "50% Attack."
-	name = "Minor Strike"
+	name = "Light Strike"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg = ceil(attacker.getAttack()/2.0)
