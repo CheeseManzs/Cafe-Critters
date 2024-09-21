@@ -168,7 +168,7 @@ func meetsRequirement(requirement: Callable) -> bool:
 			return true
 	return false
 # Resets values for the start of a turn
-func reset(active = true) -> void:
+func reset(active = true, forceDraw = false) -> void:
 	if isKO():
 		return
 	
@@ -197,29 +197,29 @@ func reset(active = true) -> void:
 	#move cards from hand into the deck
 	currentDeck.storedCards += currentHand.bulkDraw(len(currentHand.storedCards))
 	#if there are no cards in the deck, reset the deck
-	if active && len(currentDeck.storedCards) == 0:
-		BattleLog.singleton.log("Ressting cards!")
+	if (active || forceDraw) && len(currentDeck.storedCards) == 0:
 		currentDeck = rawData.deck.clone()
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
-	if !playerControlled:
-		print(active,", ",currentDeck.storedCards)
-	if active && len(currentDeck.storedCards) > 0:
+	if (active || forceDraw) && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
 		drawCards(5 + drawBonus + extraDraw)
-		BattleLog.singleton.log(rawData.name + " drawing cards: " + str(playerControlled))
 	extraDraw = 0
 
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
 
 func addStatusCondition(status: Status, broadcast = false):
+	
+	await getPassive().onStatus(self,battleController)
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
 	#if effect is suspend then it occurs immediately
 	match status.effect:
+		Status.EFFECTS.KO:
+			await getPassive().onSelfKO(self,battleController)
 		Status.EFFECTS.SUSPEND:
 			var toBanish = await battleController.chooseCards(status.X,playerControlled)
 			
@@ -281,7 +281,7 @@ func getMonsterDisplay() -> MonsterDisplay:
 	else:
 		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
 
-func trueDamage(dmg: int) -> void:
+func trueDamage(dmg: int, attacker: BattleMonster = null) -> void:
 	#remove damage from hp
 	health -= dmg
 	#run camera shake if damage is done
@@ -303,6 +303,8 @@ func trueDamage(dmg: int) -> void:
 		health = 0
 		#add knocked out status
 		BattleLog.log(rawData.name + " has been KO'd")
+		if attacker != null:
+			await attacker.getPassive().onOtherKO(attacker,battleController)
 		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
 	elif dmg > 0:
 		dmgAnim()
@@ -317,6 +319,7 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+	await attacker.getPassive().onAttack(attacker,battleController)
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):
 		var status = getStatus(Status.EFFECTS.BARRIER)
@@ -330,6 +333,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg)	
+	await getPassive().onHit(self,battleController)
 	return pureDmg
 
 #get knowledge counter
@@ -376,4 +380,8 @@ func removeMP(mpAmount: int) -> void:
 	#if enemy, remove mp from enemy
 	else:
 		battleController.enemyMP -= mpAmount
+
+#returns monster's current ability
+func getPassive() -> PassiveAbility:
+	return rawData.passive
 	

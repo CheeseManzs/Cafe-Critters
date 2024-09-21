@@ -20,7 +20,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	attackPower = 1.25*attacker.getAttack()	
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
-	defender.receiveDamage(attackPower, attacker)
+	await defender.receiveDamage(attackPower, attacker)
 	
 	await EffectFlair.singleton._runFlair("Reckless")
 	var discardedCard = await attacker.discardRandomCard()

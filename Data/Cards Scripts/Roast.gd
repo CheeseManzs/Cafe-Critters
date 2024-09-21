@@ -10,7 +10,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg: int = attacker.getAttack()
-	attacker.receiveDamage(dmg, attacker)
+	await attacker.receiveDamage(dmg, attacker)
 	await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	return 0
 

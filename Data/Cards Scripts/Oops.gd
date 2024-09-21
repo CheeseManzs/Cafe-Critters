@@ -28,7 +28,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
 	#deal damage
-	defender.receiveDamage(attackPower, attacker)
+	await defender.receiveDamage(attackPower, attacker)
 	return attackPower
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:

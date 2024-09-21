@@ -11,7 +11,7 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
 	var attackPower : int = ceil(0.4*attacker.getAttack())
-	defender.receiveDamage(attackPower,attacker)
+	await defender.receiveDamage(attackPower,attacker)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cqa81xs22tyhm"]
+
+[ext_resource type="Script" path="res://Data/Monster Passive Scripts/unremarkable.gd" id="1_gmvw2"]
+
+[resource]
+script = ExtResource("1_gmvw2")

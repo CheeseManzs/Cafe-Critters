@@ -4,6 +4,7 @@ extends Resource
 @export var id: int
 @export var name: String
 @export var sprite: Texture
+@export var passive: PassiveAbility
 @export var deck: Zone
 @export var startingCardPool: Zone
 @export var statHealth: int

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=15 format=3 uid="uid://b3rp3vvccagnq"]
+[gd_resource type="Resource" script_class="Monster" load_steps=16 format=3 uid="uid://bmx4l8dl5adeu"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
+[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="1_ng66v"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="2_j0ra4"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="3_rwnvh"]
 [ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="4_degly"]
@@ -9,22 +10,24 @@
 [ext_resource type="Resource" uid="uid://bi61w1ojs0g06" path="res://Data/Cards/Breakneck Barrage.tres" id="7_a0no4"]
 [ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="8_d38gr"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="9_fek8i"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="10_skutc"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="11_fyadl"]
+[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="10_pnqd8"]
+[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="11_awhvu"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="12_qyths"]
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="13_jhrcl"]
 
 [sub_resource type="Resource" id="Resource_5u6vm"]
 script = ExtResource("2_j0ra4")
 name = "Starting Deck"
-storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource("4_degly"), ExtResource("5_u53q0"), ExtResource("5_u53q0"), ExtResource("6_knfcj"), ExtResource("7_a0no4"), ExtResource("7_a0no4"), ExtResource("8_d38gr"), ExtResource("8_d38gr"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("10_skutc"), ExtResource("10_skutc"), ExtResource("10_skutc"), ExtResource("11_fyadl"), ExtResource("11_fyadl"), ExtResource("12_qyths"), ExtResource("12_qyths"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl")])
+storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource("4_degly"), ExtResource("5_u53q0"), ExtResource("5_u53q0"), ExtResource("6_knfcj"), ExtResource("7_a0no4"), ExtResource("7_a0no4"), ExtResource("8_d38gr"), ExtResource("8_d38gr"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("11_awhvu"), ExtResource("11_awhvu"), ExtResource("12_qyths"), ExtResource("12_qyths"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl")])
 
 [resource]
 script = ExtResource("1_i2xwq")
 id = 1
 name = "Hooliquen"
+passive = ExtResource("1_ng66v")
 startingCardPool = SubResource("Resource_5u6vm")
 statHealth = 40
 statAttack = 15
 statDefense = 12
+level = 0
 battleOffset = Vector2(0, 0)

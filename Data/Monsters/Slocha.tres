@@ -1,26 +1,15 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=18 format=3 uid="uid://bbmecjegxa3d3"]
+[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://bbmecjegxa3d3"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_7umar"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
-[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="3_omahx"]
-[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="4_1tr8c"]
-[ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="5_12ul0"]
-[ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="6_qlhrh"]
-[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="7_dt1ir"]
-[ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="8_tpt1p"]
-[ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="9_8og6g"]
-[ext_resource type="Resource" uid="uid://dgg6p0tqdt17k" path="res://Data/Cards/Soothing Song.tres" id="10_gvwix"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="11_neq14"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="12_dgmpa"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="13_re3ge"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="14_c6ebl"]
+[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="3_lfkbe"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="16_jyqkw"]
 
 [sub_resource type="Resource" id="Resource_d41sc"]
 script = ExtResource("1_qo6j8")
 name = ""
-storedCards = Array[ExtResource("2_lxcvb")]([ExtResource("3_omahx"), ExtResource("4_1tr8c"), ExtResource("5_12ul0"), ExtResource("6_qlhrh"), ExtResource("7_dt1ir"), ExtResource("8_tpt1p"), ExtResource("9_8og6g"), ExtResource("10_gvwix"), ExtResource("11_neq14"), ExtResource("12_dgmpa"), ExtResource("13_re3ge"), ExtResource("14_c6ebl")])
+storedCards = Array[ExtResource("2_lxcvb")]([])
 
 [resource]
 resource_local_to_scene = true
@@ -28,6 +17,7 @@ script = ExtResource("1_7umar")
 id = 0
 name = "Slocha"
 sprite = ExtResource("16_jyqkw")
+passive = ExtResource("3_lfkbe")
 deck = SubResource("Resource_d41sc")
 statHealth = 40
 statAttack = 12

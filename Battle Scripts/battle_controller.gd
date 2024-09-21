@@ -151,6 +151,11 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 
 	enemyAI = BattleAI.new(self, enemyPersonality)
 	
+	#reset every mon
+	for mon in playerTeam + enemyTeam:
+		if mon != getActivePlayerMon() && mon != getActiveEnemyMon():
+			mon.reset()
+	
 #check for player loss
 func playerLost():
 	for mon in playerTeam:
@@ -598,7 +603,9 @@ func activeTurn() -> void:
 	
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:
+		BattleLog.singleton.log(getActivePlayerMon().rawData.name + ", "  + getActiveEnemyMon().rawData.name)
 		if !mon.isKO() && [getActivePlayerMon(), getActiveEnemyMon()].has(mon):
+			BattleLog.singleton.log("Resetting " + mon.rawData.name)
 			await mon.reset()
 	
 	
@@ -609,6 +616,8 @@ func activeTurn() -> void:
 	var playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
 	var enemyCanPlay = !(len(getActiveEnemyMon().playableCards()) == 0 && enemyMP == 0)
 	var endTurn = false
+	
+	await getActivePlayerMon().getPassive().onTurnStart(getActivePlayerMon(), self)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
@@ -630,9 +639,13 @@ func activeTurn() -> void:
 		if endTurn:
 			break
 		
+		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
+		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
+		
 		for i in maxActiveMons:
 			#show player gui
 			var mon: BattleMonster = playerTeam[activePlayerMon + i]
+			
 			
 			setCardSelection(mon)
 			
@@ -700,7 +713,11 @@ func activeTurn() -> void:
 		var turnSequence = BattleSequence.new(actions)
 		await turnSequence.runActions(self)
 		hidePlayerChoiceUI(true)
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.25).timeout
+		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
+		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
+		await get_tree().create_timer(0.25).timeout
+		
 	
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 
@@ -710,6 +727,7 @@ func activeTurn() -> void:
 		winner = 1
 	
 	if winner == 0:
+		await getActivePlayerMon().getPassive().onTurnEnd(getActivePlayerMon(), self)
 		inTurn = false
 	else:
 		await endBattle(winner)
@@ -757,6 +775,7 @@ static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster
 	playerBattleTeam = p_playerTeam
 	enemyBattleTeam = p_enemyTeam
 	enemyPersonality = p_enemyPersonality
+	print("setting enemy personality: ", enemyPersonality)
 
 	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass

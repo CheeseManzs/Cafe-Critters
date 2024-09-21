@@ -106,7 +106,6 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var activationChance = getChance(card, mon, target)
 	
 	#add scores
-	print(card.name,": ",cardDMG,", ",personality.aggression,", ",activationChance,", ",cardDMG*personality.opportunism)
 	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
 	
@@ -217,16 +216,13 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 	var bestCard: Card = null
 	var avg: float = 0
 	var tot = 0
-	print("--------")
 	for card in available:
 		var score = scoreCard(mon, target, card)
 		avg += score
 		tot += 1
-		print(card.name+": ",score)
 		if score > maxScore:
 			maxScore = score
 			bestCard = card
-	print(bestCard)
 	if tot > 0:
 		avg /= tot
 	return [bestCard, avg]
@@ -251,14 +247,11 @@ func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 	var scores = []
 	var maxScore: int = -999
 	var bestCard: Card = null
-	print("--------")
 	for card in available:
 		var score = scoreCard(mon, target, card)
-		print(card.name+": ",score)
 		if score > maxScore:
 			maxScore = score
 			bestCard = card
-	print(bestCard)
 	return [bestCard, maxScore]
 
 func choiceEnemy(removeChoice = false):

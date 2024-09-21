@@ -1,35 +1,25 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=19 format=3 uid="uid://bepmuf4wv2p6v"]
+[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://bepmuf4wv2p6v"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_clwfr"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="2_343v3"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_tklcb"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="3_a2rj5"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="4_7tlbj"]
-[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="5_jiryu"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="6_q24d2"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="7_6mmx6"]
-[ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="9_dp62w"]
-[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="10_dc40c"]
-[ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="11_ifnmo"]
-[ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="13_m3j3t"]
-[ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="14_rqrfd"]
-[ext_resource type="Resource" uid="uid://cl7isl07pcxby" path="res://Data/Cards/Sip.tres" id="15_1tidg"]
-[ext_resource type="Resource" uid="uid://yvsi5wefmqxk" path="res://Data/Cards/Steep.tres" id="15_h0k5c"]
-[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="15_pdim1"]
+[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="3_h68tp"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
 name = "Deck"
-storedCards = Array[ExtResource("2_tklcb")]([ExtResource("4_7tlbj"), ExtResource("3_a2rj5"), ExtResource("6_q24d2"), ExtResource("7_6mmx6"), ExtResource("10_dc40c"), ExtResource("5_jiryu"), ExtResource("9_dp62w"), ExtResource("13_m3j3t"), ExtResource("11_ifnmo"), ExtResource("15_1tidg"), ExtResource("14_rqrfd"), ExtResource("15_h0k5c"), ExtResource("15_pdim1")])
+storedCards = Array[ExtResource("2_tklcb")]([])
 
 [resource]
 script = ExtResource("1_clwfr")
 id = 0
 name = "Qnibi"
 sprite = ExtResource("2_343v3")
+passive = ExtResource("3_h68tp")
 deck = SubResource("Resource_470u8")
 statHealth = 9
-statDefense = 2
 statAttack = 3
+statDefense = 2
+level = 0
 battleOffset = Vector2(0, 0)

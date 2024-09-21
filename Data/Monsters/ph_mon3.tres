@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://ba7mef873ynqu"]
+[gd_resource type="Resource" script_class="Monster" load_steps=15 format=3 uid="uid://ba7mef873ynqu"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_55mkf"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_qrph6"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="9_hmaky"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="10_h0u1j"]
 [ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="10_ja5pr"]
+[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_q4jv0"]
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="12_inmui"]
 
 [sub_resource type="Resource" id="Resource_0uwxn"]
@@ -23,8 +24,10 @@ script = ExtResource("1_qrph6")
 id = 2
 name = "MZMG"
 sprite = ExtResource("10_h0u1j")
+passive = ExtResource("11_q4jv0")
 deck = SubResource("Resource_0uwxn")
 statHealth = 7
-statDefense = 1
 statAttack = 6
+statDefense = 1
+level = 0
 battleOffset = Vector2(0, 0)
