@@ -36,12 +36,12 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	#set the controller
 	battleController = controller
 	#copy data for raw data
-	level = 1
+	level = rawData.level
 	shield = 0
-	maxHP = rawData.statHealth
+	maxHP = rawData.StatCurves[rawData.rawHealth][level]
 	health = maxHP
-	defense = rawData.statDefense
-	attack = rawData.statAttack
+	defense = rawData.StatCurves[rawData.rawDefense][level]
+	attack = rawData.StatCurves[rawData.rawAttack][level]
 	currentDeck = rawData.deck.clone()
 	playerControlled = p_playerControlled
 	hardReset()
