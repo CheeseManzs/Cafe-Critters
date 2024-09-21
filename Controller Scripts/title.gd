@@ -7,6 +7,8 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print(debugPersonality)
+	#debugTeamA[0].level = 8
+	#debugTeamA[1].level = 8
 	if LoadManager.activeScene == null:
 		LoadManager.activeScene = get_tree().current_scene
 	pass # Replace with function body.

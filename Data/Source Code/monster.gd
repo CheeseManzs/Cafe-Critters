@@ -42,3 +42,12 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	statAttack = p_statAttack
 	level = p_level
 	
+func getHealth(): 
+	return StatCurves[rawHealth][level]
+	
+func getDefense(): 
+	return StatCurves[rawDefense][level]
+	
+func getAttack(): 
+	return StatCurves[rawAttack][level]
+	

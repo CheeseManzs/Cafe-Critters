@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6vcnjoooa12e"]
+[gd_scene load_steps=10 format=3 uid="uid://c6vcnjoooa12e"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/party_ui.gd" id="1_ckaci"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_54lpt"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="3_5bxmr"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_o5oeg"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="4_xy18p"]
+[ext_resource type="Script" path="res://Overworld Scripts/monster_details.gd" id="7_kfcdl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -118,6 +119,7 @@ anchor_left = 0.3
 anchor_top = 0.02
 anchor_right = 0.95
 anchor_bottom = 0.98
+script = ExtResource("7_kfcdl")
 
 [node name="TexturePanel" type="Panel" parent="MainUI"]
 layout_mode = 1
@@ -152,6 +154,15 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.1
 anchor_right = 0.2
+
+[node name="Label" type="Label" parent="MainUI/BodyPanel/NamePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "yes"
 
 [node name="LevelPanel" type="Panel" parent="MainUI/BodyPanel"]
 layout_mode = 1

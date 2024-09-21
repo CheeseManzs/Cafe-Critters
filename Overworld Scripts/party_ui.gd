@@ -14,12 +14,14 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func updateMonsters(playerMonsters):
-	#$InventoryGrid
-	# Resets inventory display to blank slate
+	# resets main display to blank slate
+	# Resets party display to blank slate
 	for mon in $PartyContainer.get_children():
 		mon.initiate(null)
+	# sets the appropriate icons for each party member
 	for i in playerMonsters.size():
 		$PartyContainer.get_child(i).initiate(playerMonsters[i])
+		
 		
 	
 
