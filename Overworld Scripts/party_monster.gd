@@ -1,23 +1,24 @@
 extends Control
-@onready var spriteNode = $TextureRect
-var referentObject: InventoryItem
-var refItem
+var referentObject: Monster
+var refMonster
 var quantity = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
-func initiate(monsterRes: String, loadQuantity: int):
-	# gets the appropriate inventory item, loads its sprite, name, description, etc
-	refItem = load("res://Data/Monsters/" + monsterRes + ".tres")
-	#print(refItem.name)
-	quantity = loadQuantity
-	$TextureRect.set_texture(refItem.sprite)
-	#item.sprite
-	$TextureRect/Label.text = str(quantity)
-	$Tooltip/ItemName.text = "[center]" + refItem.name + "[/center]"
-	$Tooltip/ItemDesc.text = refItem.desc
+func initiate(monster: Monster):
+	# gets the appropriate monster, stores it, and loads its sprite.
+	if monster != null:
+		refMonster = monster
+		$Panel/TextureRect.texture = refMonster.sprite
+		
+	else:
+		refMonster = null
+		$Panel/TextureRect.texture = null
+		
+	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

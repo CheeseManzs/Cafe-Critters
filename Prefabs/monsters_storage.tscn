@@ -1,9 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6vcnjoooa12e"]
+[gd_scene load_steps=9 format=3 uid="uid://c6vcnjoooa12e"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/party_ui.gd" id="1_ckaci"]
+[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_54lpt"]
+[ext_resource type="Script" path="res://Overworld Scripts/party_monster.gd" id="2_njjec"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="3_5bxmr"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_o5oeg"]
+[ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="4_xy18p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fivxq"]
 
 [node name="PartyUI" type="Control"]
 layout_mode = 3
@@ -13,6 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ckaci")
+debugMonsters = Array[ExtResource("2_54lpt")]([ExtResource("3_o5oeg"), ExtResource("4_xy18p")])
 
 [node name="Background" type="Panel" parent="."]
 z_index = -1
@@ -24,64 +31,20 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ox2ro")
 
-[node name="PartyMonster1" type="Control" parent="."]
+[node name="PartyContainer" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.08
+anchor_left = 0.05
 anchor_top = 0.05
-anchor_right = 0.3
-anchor_bottom = 0.35
-
-[node name="Panel" type="Panel" parent="PartyMonster1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="PartyMonster1/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_5bxmr")
-stretch_mode = 5
-
-[node name="PartyMonster2" type="Control" parent="."]
-layout_mode = 1
-anchor_left = 0.08
-anchor_top = 0.35
-anchor_right = 0.3
-anchor_bottom = 0.65
-
-[node name="Panel" type="Panel" parent="PartyMonster2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="PartyMonster2/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_5bxmr")
-stretch_mode = 5
-
-[node name="PartyMonster3" type="Control" parent="."]
-layout_mode = 1
-anchor_left = 0.08
-anchor_top = 0.65
-anchor_right = 0.3
+anchor_right = 0.25
 anchor_bottom = 0.95
 
-[node name="Panel" type="Panel" parent="PartyMonster3"]
+[node name="PartyMonster1" type="Control" parent="PartyContainer"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.3
+script = ExtResource("2_njjec")
+
+[node name="Panel" type="Panel" parent="PartyContainer/PartyMonster1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,7 +52,57 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="PartyMonster3/Panel"]
+[node name="TextureRect" type="TextureRect" parent="PartyContainer/PartyMonster1/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5bxmr")
+stretch_mode = 5
+
+[node name="PartyMonster2" type="Control" parent="PartyContainer"]
+layout_mode = 1
+anchor_top = 0.35
+anchor_right = 1.0
+anchor_bottom = 0.65
+script = ExtResource("2_njjec")
+
+[node name="Panel" type="Panel" parent="PartyContainer/PartyMonster2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="PartyContainer/PartyMonster2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5bxmr")
+stretch_mode = 5
+
+[node name="PartyMonster3" type="Control" parent="PartyContainer"]
+layout_mode = 1
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2_njjec")
+
+[node name="Panel" type="Panel" parent="PartyContainer/PartyMonster3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="PartyContainer/PartyMonster3/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,18 +114,19 @@ stretch_mode = 5
 
 [node name="MainUI" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.35
+anchor_left = 0.3
 anchor_top = 0.02
 anchor_right = 0.95
 anchor_bottom = 0.98
 
 [node name="TexturePanel" type="Panel" parent="MainUI"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fivxq")
 
 [node name="TextureRect" type="TextureRect" parent="MainUI/TexturePanel"]
 layout_mode = 1
@@ -134,11 +148,58 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="NamePanel" type="Panel" parent="MainUI/BodyPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.1
+anchor_right = 0.2
 
 [node name="LevelPanel" type="Panel" parent="MainUI/BodyPanel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_right = 0.2
+anchor_bottom = 0.2
+
+[node name="LevelLabel" type="RichTextLabel" parent="MainUI/BodyPanel/LevelPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+
+[node name="StatLabel" type="RichTextLabel" parent="MainUI/BodyPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.15
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HP: 30
+ATK: 15
+DEF: 12"
+
+[node name="DexEntryLabel" type="RichTextLabel" parent="MainUI/BodyPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.85
+anchor_bottom = 1.0
+text = "Slocha's like a turtle or something idk
+if you drink from its back, you get eternal life. but also you like go to jail forever for murder? so it's like really not worth it since you're just gonna be in jail forever and you can't even die and also everyone who did this went to jail there's like no evidence supporting this rumour anyways? but you should try it still"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUI/BodyPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CheckButton" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
+layout_mode = 2
+text = "View/Edit Deck"
+
+[node name="Button" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
+layout_mode = 2
+text = "Feed"
