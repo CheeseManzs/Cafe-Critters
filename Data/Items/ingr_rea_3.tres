@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://et2bxn76s5qj"]
+
+[ext_resource type="Script" path="res://Data/Source Code/inventory_item.gd" id="1_3wd3j"]
+
+[resource]
+script = ExtResource("1_3wd3j")
+index = 0.0
+name = "Generic"
+tab = 0
+desc = ""
+rarity = 3
+god = 2
+recipe = Array[ExtResource("1_3wd3j")]([])

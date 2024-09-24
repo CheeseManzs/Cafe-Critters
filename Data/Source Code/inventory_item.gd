@@ -12,6 +12,17 @@ enum CATEGORY {
 	KEY_ITEMS
 }
 
+enum ALIGNMENT {
+	Default,
+	Mise,
+	Rea,
+	Anvi,
+	Sec,
+	Eco,
+	Jacks,
+	Blanc
+}
+
 # used to sort the inventory.
 @export var index: float
 
@@ -20,6 +31,8 @@ enum CATEGORY {
 @export var tab: CATEGORY
 @export var desc: String
 @export var rarity: int
+@export var god: ALIGNMENT
+@export var recipe: Array[InventoryItem]
 
 func _init(zInd = 0, p_name = "", p_sprite = null, p_tab = 0, p_desc = "", p_rar = 0):
 	index = zInd
