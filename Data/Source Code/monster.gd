@@ -1,8 +1,28 @@
 class_name Monster
 extends Resource
 
+enum ALIGNMENT {
+	Default,
+	Mise,
+	Rea,
+	Anvi,
+	Sec,
+	Eco,
+	Jacks,
+	Blanc
+}
+
+#list of roles
+enum ROLE {
+	Point,
+	Payoff,
+	Support
+}
+
 @export var id: int
 @export var name: String
+@export var alignment: ALIGNMENT
+@export var role: ROLE
 @export var dexEntry: String
 @export var sprite: Texture
 @export var passive: PassiveAbility

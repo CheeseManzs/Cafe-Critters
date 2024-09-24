@@ -9,7 +9,8 @@ enum ALIGNMENT {
 	Anvi,
 	Sec,
 	Eco,
-	Jacks
+	Jacks,
+	Blanc
 }
 
 #list of roles

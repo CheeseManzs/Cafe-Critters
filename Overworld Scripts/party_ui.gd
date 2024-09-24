@@ -39,3 +39,21 @@ func _process(delta: float) -> void:
 	anchor_top = -1 + (processVal)
 	anchor_bottom = (processVal)
 	pass
+
+
+func _on_party_monster_1_on_click() -> void:
+	if $PartyContainer/PartyMonster1.refMonster != null:
+		$MainUI.initiate($PartyContainer/PartyMonster1.refMonster)
+	pass # Replace with function body.
+
+
+func _on_party_monster_2_on_click() -> void:
+	pass # Replace with function body.
+	if $PartyContainer/PartyMonster2.refMonster != null:
+		$MainUI.initiate($PartyContainer/PartyMonster2.refMonster)
+
+
+func _on_party_monster_3_on_click() -> void:
+	if $PartyContainer/PartyMonster3.refMonster != null:
+		$MainUI.initiate($PartyContainer/PartyMonster3.refMonster)
+	pass # Replace with function body.

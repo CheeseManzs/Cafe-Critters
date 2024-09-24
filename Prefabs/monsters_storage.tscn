@@ -38,12 +38,15 @@ anchor_left = 0.05
 anchor_top = 0.05
 anchor_right = 0.25
 anchor_bottom = 0.95
+mouse_filter = 2
 
 [node name="PartyMonster1" type="Control" parent="PartyContainer"]
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 0.3
+mouse_filter = 1
 script = ExtResource("2_njjec")
+id = 1
 
 [node name="Panel" type="Panel" parent="PartyContainer/PartyMonster1"]
 layout_mode = 1
@@ -68,7 +71,9 @@ layout_mode = 1
 anchor_top = 0.35
 anchor_right = 1.0
 anchor_bottom = 0.65
+mouse_filter = 1
 script = ExtResource("2_njjec")
+id = 2
 
 [node name="Panel" type="Panel" parent="PartyContainer/PartyMonster2"]
 layout_mode = 1
@@ -93,7 +98,9 @@ layout_mode = 1
 anchor_top = 0.7
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource("2_njjec")
+id = 3
 
 [node name="Panel" type="Panel" parent="PartyContainer/PartyMonster3"]
 layout_mode = 1
@@ -214,3 +221,7 @@ text = "View/Edit Deck"
 [node name="Button" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
 layout_mode = 2
 text = "Feed"
+
+[connection signal="onClick" from="PartyContainer/PartyMonster1" to="." method="_on_party_monster_1_on_click"]
+[connection signal="onClick" from="PartyContainer/PartyMonster2" to="." method="_on_party_monster_2_on_click"]
+[connection signal="onClick" from="PartyContainer/PartyMonster3" to="." method="_on_party_monster_3_on_click"]
