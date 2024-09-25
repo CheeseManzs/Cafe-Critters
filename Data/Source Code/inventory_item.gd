@@ -32,7 +32,6 @@ enum ALIGNMENT {
 @export var desc: String
 @export var rarity: int
 @export var god: ALIGNMENT
-@export var recipe: Array[InventoryItem]
 
 func _init(zInd = 0, p_name = "", p_sprite = null, p_tab = 0, p_desc = "", p_rar = 0):
 	index = zInd
