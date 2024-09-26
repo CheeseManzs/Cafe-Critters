@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://f2h85bjsnawe"]
+
+[ext_resource type="Script" path="res://Data/Source Code/inventory_item.gd" id="1_eridb"]
+
+[resource]
+script = ExtResource("1_eridb")
+index = 0.0
+name = "Generic"
+tab = 1
+desc = ""
+rarity = 5
+god = 0

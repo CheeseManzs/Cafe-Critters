@@ -61,3 +61,4 @@ grow_vertical = 0
 text = "Sort"
 
 [connection signal="tab_clicked" from="InventoryTabs" to="." method="_on_inventory_tabs_tab_clicked"]
+[connection signal="button_up" from="SortButton" to="." method="_on_sort_button_button_up"]

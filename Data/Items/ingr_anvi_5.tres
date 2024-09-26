@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=2 format=3 uid="uid://43gloce7euvi"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://43gloce7euvi"]
 
 [ext_resource type="Script" path="res://Data/Source Code/inventory_item.gd" id="1_a018j"]
+[ext_resource type="Texture2D" uid="uid://cdmyu8cbas3yt" path="res://Graphics/Items/good_beans.png" id="2_6oilq"]
 
 [resource]
 script = ExtResource("1_a018j")
-index = 0.0
-name = "Generic"
+index = 14.0
+name = "Anvi Ingredient 5"
+sprite = ExtResource("2_6oilq")
 tab = 0
 desc = ""
 rarity = 1
 god = 3
-recipe = Array[ExtResource("1_a018j")]([])

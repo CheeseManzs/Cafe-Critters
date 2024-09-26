@@ -4,10 +4,9 @@
 
 [resource]
 script = ExtResource("1_ec12w")
-index = 0.0
+index = 5.0
 name = "Generic"
 tab = 0
 desc = ""
 rarity = 1
 god = 6
-recipe = Array[ExtResource("1_ec12w")]([])

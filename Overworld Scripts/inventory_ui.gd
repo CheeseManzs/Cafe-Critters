@@ -4,6 +4,7 @@ extends Control
 var timer = 0
 var speed = 1.5
 var isOpening = false
+var savedInventory
 
 var inventoryItem: PackedScene = load("res://Prefabs/inventory_item.tscn")
 var inventoryItems = [[],[],[],[],[]]
@@ -16,7 +17,7 @@ func _ready() -> void:
 
 # copies the player's inventory into inventoryItems, which are the physical ui nodes
 func updateItems(playerInventory: Inventory, startTab):
-	
+	savedInventory = playerInventory
 	# Resets inventory display to blank slate
 	for cat in inventoryItems:
 		for item in cat:
@@ -44,7 +45,7 @@ func sortItems(playerInventory: Inventory, targetTab: int):
 	# this is to preserve index order
 	var packedArray = []
 	for i in range(playerInventory.itemNames[targetTab].size()):
-		packedArray[i] = playerInventory.itemData[targetTab][i]
+		packedArray.append(playerInventory.itemData[targetTab][i])
 		packedArray[i].append(playerInventory.itemNames[targetTab][i])
 	
 	# [index, quantity, name], sorts by ascending index
@@ -56,9 +57,9 @@ func sortItems(playerInventory: Inventory, targetTab: int):
 	
 	# unpacks the packed array and puts everything back into place
 	for i in range(packedArray.size()):
-		playerInventory.itemData[targetTab][i] = [packedArray[i][0], packedArray[i][1]]
-		playerInventory.itemNames[targetTab][i] = packedArray[i][2]
-
+		playerInventory.itemData[targetTab].append([packedArray[i][0], packedArray[i][1]])
+		playerInventory.itemNames[targetTab].append(packedArray[i][2])
+	updateItems(savedInventory, currentTab)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -86,4 +87,9 @@ func _on_inventory_tabs_tab_clicked(tab: int) -> void:
 	print(inventoryItems[tab])
 	for item in inventoryItems[tab]:
 		$InventoryGrid.add_child(item)
+	pass # Replace with function body.
+
+
+func _on_sort_button_button_up() -> void:
+	sortItems(savedInventory, currentTab)
 	pass # Replace with function body.

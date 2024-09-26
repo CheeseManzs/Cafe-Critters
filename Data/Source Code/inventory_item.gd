@@ -20,7 +20,8 @@ enum ALIGNMENT {
 	Sec,
 	Eco,
 	Jacks,
-	Blanc
+	Blanc,
+	Kress
 }
 
 # used to sort the inventory.

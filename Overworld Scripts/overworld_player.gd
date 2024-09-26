@@ -6,7 +6,7 @@ signal dialogue_closed
 
 @export var playerTeam: Array[Monster]
 @export var playerBox: Array[Monster]
-@export var inventory: Inventory #= Inventory.new()
+@export var inventory: Inventory = Inventory.new()
 
 # final player velocity. used in case i make gravity use a persistent value
 var targetVelocity = Vector3.ZERO
@@ -47,10 +47,8 @@ var doingInventory = false
 func _ready() -> void:
 	
 	#add_child(inventoryUI)
-	inventory.addItems("good_beans", 3)
-	inventory.addItems("normal_beans", 3)
-	inventory.addItems("shitty_beans", 3)
-	inventory.addItems("coffe")
+	inventory.addItems("ingr_anvi_5", 3)
+	inventory.addItems("ingr_anvi_2", 3)
 	pass # Replace with function body.
 
 
@@ -83,7 +81,7 @@ func _process(delta: float) -> void:
 			%InventoryUI.isOpening = false
 		else:
 			%InventoryUI.isOpening = true
-			%InventoryUI.updateItems(inventory)
+			%InventoryUI.updateItems(inventory, 0)
 	
 
 # called every physics frame

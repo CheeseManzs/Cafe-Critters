@@ -34,22 +34,28 @@ script = ExtResource("3_77yj8")
 name = ""
 storedCards = Array[ExtResource("4_6l0ip")]([ExtResource("5_gwbx6"), ExtResource("6_cydpw"), ExtResource("7_o81so"), ExtResource("8_pmc82"), ExtResource("9_21dl5"), ExtResource("10_f2ueb"), ExtResource("11_ov128"), ExtResource("12_605s8"), ExtResource("13_n6g7q"), ExtResource("14_k1upe"), ExtResource("15_rhy08"), ExtResource("16_veu1w")])
 
-[sub_resource type="Resource" id="Resource_gtue5"]
+[sub_resource type="Resource" id="Resource_jwktm"]
 resource_local_to_scene = true
 script = ExtResource("2_fsjqw")
 id = 0
 name = "Slocha"
+alignment = 0
+role = 0
+dexEntry = ""
 sprite = ExtResource("17_hbsnf")
 deck = SubResource("Resource_d41sc")
-statHealth = 40
-statAttack = 12
-statDefense = 15
+levelupCards = Array[ExtResource("3_77yj8")]([])
+rawHealth = ""
+rawAttack = ""
+rawDefense = ""
+statHealth = []
+statAttack = []
+statDefense = []
 level = 0
 battleOffset = Vector2(0, -2)
 
 [sub_resource type="Resource" id="Resource_larmy"]
 script = ExtResource("2_b10y7")
-items = {}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yai33"]
 size = Vector3(6, 1, 6)
@@ -69,7 +75,7 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
-playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_gtue5")])
+playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_jwktm")])
 inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]
