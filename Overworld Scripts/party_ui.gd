@@ -57,3 +57,15 @@ func _on_party_monster_3_on_click() -> void:
 	if $PartyContainer/PartyMonster3.refMonster != null:
 		$MainUI.initiate($PartyContainer/PartyMonster3.refMonster)
 	pass # Replace with function body.
+
+
+func _on_levelup_button_button_up() -> void:
+	$PartyContainer.isOpening = true
+	$LevelupPanel.isOpening = true
+	$LevelupCosts.isOpening = true
+	$MainUI/BodyPanel.isOpening = true
+	pass # Replace with function body.
+
+
+func _on_deck_button_button_up() -> void:
+	pass # Replace with function body.

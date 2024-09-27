@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6vcnjoooa12e"]
+[gd_scene load_steps=16 format=3 uid="uid://c6vcnjoooa12e"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/party_ui.gd" id="1_ckaci"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_54lpt"]
@@ -6,7 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="3_5bxmr"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_o5oeg"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="4_xy18p"]
+[ext_resource type="Script" path="res://Overworld Scripts/party_container.gd" id="5_24l6q"]
 [ext_resource type="Script" path="res://Overworld Scripts/monster_details.gd" id="7_kfcdl"]
+[ext_resource type="Script" path="res://Overworld Scripts/party_monster_main.gd" id="9_faatj"]
+[ext_resource type="Script" path="res://Overworld Scripts/party_text_panel.gd" id="10_si3rs"]
+[ext_resource type="Script" path="res://Overworld Scripts/levelup_panel.gd" id="11_0ja4v"]
+[ext_resource type="Script" path="res://Overworld Scripts/levelup_costs.gd" id="12_4or1e"]
+[ext_resource type="PackedScene" uid="uid://c05us6q6r3o0s" path="res://Prefabs/inventory_item.tscn" id="13_vw5e5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -39,6 +45,7 @@ anchor_top = 0.05
 anchor_right = 0.25
 anchor_bottom = 0.95
 mouse_filter = 2
+script = ExtResource("5_24l6q")
 
 [node name="PartyMonster1" type="Control" parent="PartyContainer"]
 layout_mode = 1
@@ -136,6 +143,7 @@ anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_fivxq")
+script = ExtResource("9_faatj")
 
 [node name="TextureRect" type="TextureRect" parent="MainUI/TexturePanel"]
 layout_mode = 1
@@ -155,6 +163,7 @@ anchors_preset = -1
 anchor_top = 0.65
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource("10_si3rs")
 
 [node name="NamePanel" type="Panel" parent="MainUI/BodyPanel"]
 layout_mode = 1
@@ -214,14 +223,40 @@ anchor_left = 0.85
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="CheckButton" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
+[node name="DeckButton" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
 layout_mode = 2
 text = "View/Edit Deck"
 
-[node name="Button" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
+[node name="LevelupButton" type="Button" parent="MainUI/BodyPanel/VBoxContainer"]
 layout_mode = 2
-text = "Feed"
+text = "Level Up"
+
+[node name="LevelupPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = -0.95
+anchor_right = 0.4
+anchor_bottom = -0.05
+script = ExtResource("11_0ja4v")
+
+[node name="LevelupCosts" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 1.3
+anchor_right = 0.95
+anchor_bottom = 1.7
+script = ExtResource("12_4or1e")
+
+[node name="InventoryItem" parent="LevelupCosts" instance=ExtResource("13_vw5e5")]
+offset_left = 184.0
+offset_top = 60.0
+offset_right = 184.0
+offset_bottom = 60.0
 
 [connection signal="onClick" from="PartyContainer/PartyMonster1" to="." method="_on_party_monster_1_on_click"]
 [connection signal="onClick" from="PartyContainer/PartyMonster2" to="." method="_on_party_monster_2_on_click"]
 [connection signal="onClick" from="PartyContainer/PartyMonster3" to="." method="_on_party_monster_3_on_click"]
+[connection signal="button_up" from="MainUI/BodyPanel/VBoxContainer/DeckButton" to="." method="_on_deck_button_button_up"]
+[connection signal="button_up" from="MainUI/BodyPanel/VBoxContainer/LevelupButton" to="." method="_on_levelup_button_button_up"]
