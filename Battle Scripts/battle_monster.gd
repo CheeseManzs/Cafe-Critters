@@ -38,6 +38,9 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	#copy data for raw data
 	level = rawData.level
 	shield = 0
+	print(rawData.name,": ",playerControlled)
+	print("rawHealth: ",rawData.rawHealth, ", ", rawData.statHealth)
+	print("rawData: ",rawData.StatCurves)
 	maxHP = rawData.StatCurves[rawData.rawHealth][level]
 	health = maxHP
 	defense = rawData.StatCurves[rawData.rawDefense][level]

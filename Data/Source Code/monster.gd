@@ -51,7 +51,7 @@ enum ROLE {
 
 @export var battleOffset: Vector2
 
-var StatCurves = {
+var StatCurves: Dictionary = {
 	"growth40": [40, 46, 52, 58, 65, 71, 79, 86, 93, 100],
 	"growth15": [15, 16, 18, 19, 21, 22, 24, 26, 28, 30],
 	"growth12": [12, 13, 14, 16, 17, 19, 20, 22, 23, 24]
@@ -72,7 +72,7 @@ var LevelCosts = {
 
 func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_startingCardPool = null, 
 			p_statHealth = [1], p_statDefense = [1], p_statAttack = [1],
-			p_level = 0):
+			p_level = 0, rawH = "growth40", rawA = "growth40", rawD = "growth40"):
 	id = p_id
 	name = p_name
 	sprite = p_sprite
@@ -82,6 +82,9 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	statDefense = p_statDefense
 	statAttack = p_statAttack
 	level = p_level
+	rawHealth = rawH
+	rawAttack = rawA
+	rawDefense = rawD
 	
 func getHealth(): 
 	return StatCurves[rawHealth][level]
