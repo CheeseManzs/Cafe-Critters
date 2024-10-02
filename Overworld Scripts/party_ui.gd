@@ -6,7 +6,7 @@ var speed = 1.5
 var isOpening = false
 @export var debugMonsters: Array[Monster]
 
-
+var currentMonster
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -44,6 +44,7 @@ func _process(delta: float) -> void:
 func _on_party_monster_1_on_click() -> void:
 	if $PartyContainer/PartyMonster1.refMonster != null:
 		$MainUI.initiate($PartyContainer/PartyMonster1.refMonster)
+		currentMonster = $PartyContainer/PartyMonster1.refMonster
 	pass # Replace with function body.
 
 
@@ -51,18 +52,22 @@ func _on_party_monster_2_on_click() -> void:
 	pass # Replace with function body.
 	if $PartyContainer/PartyMonster2.refMonster != null:
 		$MainUI.initiate($PartyContainer/PartyMonster2.refMonster)
+		currentMonster = $PartyContainer/PartyMonster2.refMonster
 
 
 func _on_party_monster_3_on_click() -> void:
 	if $PartyContainer/PartyMonster3.refMonster != null:
 		$MainUI.initiate($PartyContainer/PartyMonster3.refMonster)
+		currentMonster = $PartyContainer/PartyMonster3.refMonster
 	pass # Replace with function body.
 
 
 func _on_levelup_button_button_up() -> void:
 	$PartyContainer.isOpening = true
 	$LevelupPanel.isOpening = true
+	$LevelupPanel.initialize(currentMonster)
 	$LevelupCosts.isOpening = true
+	$LevelupCosts.initialize(currentMonster)
 	$MainUI/BodyPanel.isOpening = true
 	pass # Replace with function body.
 

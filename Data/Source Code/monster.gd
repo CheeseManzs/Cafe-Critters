@@ -86,12 +86,12 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	rawAttack = rawA
 	rawDefense = rawD
 	
-func getHealth(): 
-	return StatCurves[rawHealth][level]
+func getHealth(inputLevel = level): 
+	return StatCurves[rawHealth][inputLevel]
 	
-func getDefense(): 
-	return StatCurves[rawDefense][level]
+func getDefense(inputLevel = level): 
+	return StatCurves[rawDefense][inputLevel]
 	
-func getAttack(): 
-	return StatCurves[rawAttack][level]
+func getAttack(inputLevel = level): 
+	return StatCurves[rawAttack][inputLevel]
 	

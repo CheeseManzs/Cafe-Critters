@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c6vcnjoooa12e"]
+[gd_scene load_steps=15 format=3 uid="uid://c6vcnjoooa12e"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/party_ui.gd" id="1_ckaci"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_54lpt"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://Overworld Scripts/party_text_panel.gd" id="10_si3rs"]
 [ext_resource type="Script" path="res://Overworld Scripts/levelup_panel.gd" id="11_0ja4v"]
 [ext_resource type="Script" path="res://Overworld Scripts/levelup_costs.gd" id="12_4or1e"]
-[ext_resource type="PackedScene" uid="uid://c05us6q6r3o0s" path="res://Prefabs/inventory_item.tscn" id="13_vw5e5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -240,6 +239,19 @@ anchor_right = 0.4
 anchor_bottom = -0.05
 script = ExtResource("11_0ja4v")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="LevelupPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 60
+text = "HP: 20 -> 22
+ATK: 15 -> 16
+DEF: 12 -> 13
+New cards:"
+
 [node name="LevelupCosts" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -249,11 +261,15 @@ anchor_right = 0.95
 anchor_bottom = 1.7
 script = ExtResource("12_4or1e")
 
-[node name="InventoryItem" parent="LevelupCosts" instance=ExtResource("13_vw5e5")]
-offset_left = 184.0
-offset_top = 60.0
-offset_right = 184.0
-offset_bottom = 60.0
+[node name="GridContainer" type="GridContainer" parent="LevelupCosts"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 180
+columns = 4
 
 [connection signal="onClick" from="PartyContainer/PartyMonster1" to="." method="_on_party_monster_1_on_click"]
 [connection signal="onClick" from="PartyContainer/PartyMonster2" to="." method="_on_party_monster_2_on_click"]
