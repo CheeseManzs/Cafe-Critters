@@ -9,8 +9,9 @@
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vb2cc"]
 gradient = SubResource("Gradient_f3ps2")
 width = 95
-fill_from = Vector2(0.471074, 1)
-fill_to = Vector2(0.509642, 0)
+fill = 2
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
 
 [node name="Card Object" type="Control" node_paths=PackedStringArray("titleLabel", "descLabel", "manaLabel", "artTexture")]
 texture_filter = 4
@@ -47,25 +48,25 @@ stretch_mode = 4
 show_behind_parent = true
 texture_filter = 4
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 31.0
-offset_top = 108.0
-offset_right = -33.0
-offset_bottom = 565.0
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.1
+anchor_right = 0.97
+anchor_bottom = 0.58
 grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_vb2cc")
-expand_mode = 2
 stretch_mode = 4
 
 [node name="Title" type="RichTextLabel" parent="Front"]
 texture_filter = 4
-layout_mode = 0
-offset_left = 96.2941
-offset_top = 67.1763
-offset_right = 540.294
-offset_bottom = 117.176
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.13
+anchor_top = 0.069
+anchor_right = 0.707
+anchor_bottom = 0.123
 rotation = -0.0174533
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("3_t0b2p")
@@ -77,11 +78,12 @@ scroll_active = false
 
 [node name="Mana" type="RichTextLabel" parent="Front"]
 texture_filter = 4
-layout_mode = 0
-offset_left = 573.0
-offset_top = 49.0
-offset_right = 682.0
-offset_bottom = 115.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.796
+anchor_top = 0.049
+anchor_right = 0.947
+anchor_bottom = 0.112
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("3_t0b2p")
 theme_override_fonts/bold_font = ExtResource("3_t0b2p")
@@ -93,15 +95,30 @@ scroll_active = false
 
 [node name="Desc" type="RichTextLabel" parent="Front"]
 texture_filter = 4
-layout_mode = 0
-offset_left = 63.0
-offset_top = 624.0
-offset_right = 662.0
-offset_bottom = 923.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.087
+anchor_top = 0.625
+anchor_right = 0.919
+anchor_bottom = 0.923
+offset_left = 0.359997
+offset_right = 0.320007
+offset_bottom = -6.10352e-05
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 30
 text = "Card Description"
 scroll_active = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.1
+anchor_bottom = 1.1
+theme_override_font_sizes/normal_font_size = 30
+text = "1x
+"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

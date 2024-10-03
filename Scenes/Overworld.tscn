@@ -1,60 +1,19 @@
-[gd_scene load_steps=36 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=20 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_fsjqw"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="3_77yj8"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_kxkmd"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="4_6l0ip"]
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="4_uaaio"]
-[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="5_gwbx6"]
 [ext_resource type="PackedScene" uid="uid://2r8w0hejknsu" path="res://Prefabs/inventory_ui.tscn" id="6_1vjsm"]
-[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="6_cydpw"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_portrait.gd" id="6_oxydj"]
-[ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="7_o81so"]
 [ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="8_2up65"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
-[ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="8_pmc82"]
-[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="9_21dl5"]
 [ext_resource type="Resource" uid="uid://b766tek53g2rb" path="res://Data/Text/multichoice.tres" id="10_cq2ag"]
-[ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="10_f2ueb"]
-[ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="11_ov128"]
-[ext_resource type="Resource" uid="uid://dgg6p0tqdt17k" path="res://Data/Cards/Soothing Song.tres" id="12_605s8"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="13_n6g7q"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="14_k1upe"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="15_rhy08"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="16_veu1w"]
-[ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="17_hbsnf"]
-
-[sub_resource type="Resource" id="Resource_d41sc"]
-script = ExtResource("3_77yj8")
-name = ""
-storedCards = Array[ExtResource("4_6l0ip")]([ExtResource("5_gwbx6"), ExtResource("6_cydpw"), ExtResource("7_o81so"), ExtResource("8_pmc82"), ExtResource("9_21dl5"), ExtResource("10_f2ueb"), ExtResource("11_ov128"), ExtResource("12_605s8"), ExtResource("13_n6g7q"), ExtResource("14_k1upe"), ExtResource("15_rhy08"), ExtResource("16_veu1w")])
-
-[sub_resource type="Resource" id="Resource_75ux0"]
-resource_local_to_scene = true
-script = ExtResource("2_fsjqw")
-id = 0
-name = "Slocha"
-alignment = 0
-role = 0
-dexEntry = ""
-sprite = ExtResource("17_hbsnf")
-deck = SubResource("Resource_d41sc")
-levelupCards = Array[ExtResource("3_77yj8")]([])
-rawHealth = ""
-rawAttack = ""
-rawDefense = ""
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-level = 0
-battleOffset = Vector2(0, -2)
 
 [sub_resource type="Resource" id="Resource_larmy"]
 script = ExtResource("2_b10y7")
@@ -77,7 +36,7 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
-playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_75ux0")])
+playerTeam = Array[ExtResource("2_fsjqw")]([ExtResource("3_kxkmd")])
 inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]

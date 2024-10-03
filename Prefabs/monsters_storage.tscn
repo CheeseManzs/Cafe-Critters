@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6vcnjoooa12e"]
+[gd_scene load_steps=16 format=3 uid="uid://c6vcnjoooa12e"]
 
 [ext_resource type="Script" path="res://Overworld Scripts/party_ui.gd" id="1_ckaci"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_54lpt"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Overworld Scripts/party_text_panel.gd" id="10_si3rs"]
 [ext_resource type="Script" path="res://Overworld Scripts/levelup_panel.gd" id="11_0ja4v"]
 [ext_resource type="Script" path="res://Overworld Scripts/levelup_costs.gd" id="12_4or1e"]
+[ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="12_20lvv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]
 
@@ -251,6 +252,34 @@ text = "HP: 20 -> 22
 ATK: 15 -> 16
 DEF: 12 -> 13
 New cards:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelupPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.35
+anchor_right = 1.0
+anchor_bottom = 1.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="Panel" type="Panel" parent="LevelupPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card Object" parent="LevelupPanel/ScrollContainer/Panel" instance=ExtResource("12_20lvv")]
+custom_minimum_size = Vector2(720, 1000)
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -872.0
+offset_top = -250.2
+offset_right = -152.0
+offset_bottom = 749.8
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.5, 0.5)
 
 [node name="LevelupCosts" type="Panel" parent="."]
 layout_mode = 1

@@ -23,12 +23,13 @@ var selected = false
 var launched = false
 var ignoreInput = false
 var straight = true
+var displayLocation = "default"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 ## Sets parameters of the card from the given resource. -A
-func setCard(p_card: Card, cID: int, battleController: BattleController) -> void:
+func setCard(p_card: Card, cID: int, battleController: BattleController, context: String = "default") -> void:
 	runAnim = false
 	card = p_card
 	titleLabel.text = card.name
@@ -36,60 +37,61 @@ func setCard(p_card: Card, cID: int, battleController: BattleController) -> void
 	manaLabel.text = "[center][b]"+str(card.cost)+"[/b][/center]"
 	choiceID = cID
 	controller = battleController
-	size = Vector2(720,1000)
 	
-	## Determines how many cards are in hand and changes card size based on that. -A
-	var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
-	var rawWidth = size.x*scale.x
-	var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
-	
-	var viewportRect = Vector2(1920, 1080)
-	
-	## Determines how much to rotate the card. -A
-	var firstRot = -PI/12*(totalChoices/5)
-	var secondRot = PI/12*(totalChoices/5)
-	var a = secondRot - firstRot
-	var x = cardWidth/tan(a/totalChoices)
-	var y = x*cos(a/2)
-	var totalDivisor = totalChoices
-	var divis = 0
-	
-	if totalDivisor == 1:
-		divis = 1
-		firstRot = 0
-		secondRot = 0
-	else:
-		divis = choiceID/(totalChoices - 1)
-	
-	angle = firstRot + (secondRot - firstRot)*divis
-	
-	
+	if context == "default":
+		size = Vector2(720,1000)
+		## Determines how many cards are in hand and changes card size based on that. -A
+		var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
+		var rawWidth = size.x*scale.x
+		var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
 		
-	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
-	var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 200)
-	
-	## Rotation only matters if the cards are set to be curved. Otherwise, flattens them out. -A
-	if straight:
-		upVec = Vector2(0, -1)
-		angle = 0
-		print(divis)
-		var scaler = 1
-		if totalChoices >= 5:
-			scaler = 0.8
-		var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1)*scaler, 0)
-		basePos += baseDelta
-	
-	originalPosition = basePos + upVec*0.9*x
-	visiblePosition = basePos + upVec*x
-	
-	position = originalPosition - upVec*(500 + 300*choiceID)
-	targetPosition = originalPosition
-	
-	
-	
-	rotation = angle
-	await controller.get_tree().create_timer(0.1).timeout
-	runAnim = true
+		var viewportRect = Vector2(1920, 1080)
+		
+		## Determines how much to rotate the card. -A
+		var firstRot = -PI/12*(totalChoices/5)
+		var secondRot = PI/12*(totalChoices/5)
+		var a = secondRot - firstRot
+		var x = cardWidth/tan(a/totalChoices)
+		var y = x*cos(a/2)
+		var totalDivisor = totalChoices
+		var divis = 0
+		
+		if totalDivisor == 1:
+			divis = 1
+			firstRot = 0
+			secondRot = 0
+		else:
+			divis = choiceID/(totalChoices - 1)
+		
+		angle = firstRot + (secondRot - firstRot)*divis
+		
+		
+			
+		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+		var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 200)
+		
+		## Rotation only matters if the cards are set to be curved. Otherwise, flattens them out. -A
+		if straight:
+			upVec = Vector2(0, -1)
+			angle = 0
+			print(divis)
+			var scaler = 1
+			if totalChoices >= 5:
+				scaler = 0.8
+			var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1)*scaler, 0)
+			basePos += baseDelta
+		
+		originalPosition = basePos + upVec*0.9*x
+		visiblePosition = basePos + upVec*x
+		
+		position = originalPosition - upVec*(500 + 300*choiceID)
+		targetPosition = originalPosition
+		
+		
+		
+		rotation = angle
+		await controller.get_tree().create_timer(0.1).timeout
+		runAnim = true
 
 func hideCard() -> void:
 	isHidden = true
@@ -107,13 +109,19 @@ func launch():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	size = Vector2(720,1000)
+	if mouseOn == false:
+		size = Vector2(720,1000)
+		scale = Vector2(0.34,0.34)
 	if launched:
 		launch()
 	if runAnim:
 		position = lerp(position, targetPosition, delta*4)
 	if mouseOn && Input.is_action_just_pressed("Primary"):
-		sendChoice()
+		match displayLocation:
+			"default":
+				sendChoice()
+			"collection":
+				pass
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass
@@ -125,6 +133,8 @@ func _on_mouse_entered() -> void:
 	if !isHidden && !isDisabled:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
+	if displayLocation == "collection":
+		scale = Vector2(0.5, 0.5)
 	mouseOn = true
 	pass # Replace with function body.
 
@@ -134,6 +144,8 @@ func _on_mouse_exited() -> void:
 		return
 	if !isHidden && !selected:
 		targetPosition = originalPosition
+	if displayLocation == "collection":
+		scale = Vector2(0.34, 0.34)
 	mouseOn = false
 	pass # Replace with function body.
 
