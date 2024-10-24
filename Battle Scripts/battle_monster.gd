@@ -203,9 +203,6 @@ func reset(active = true, forceDraw = false) -> void:
 	if (active || forceDraw) && len(currentDeck.storedCards) == 0:
 		currentDeck = rawData.deck.clone()
 	
-	if(BattleLog.singleton != null):
-		BattleLog.singleton.log(rawData.name + ": " + str(len(currentDeck.storedCards)))
-	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
 	if (active || forceDraw) && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0

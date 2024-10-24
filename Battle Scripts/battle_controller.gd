@@ -477,7 +477,9 @@ func displayEnemyCards(mon: BattleMonster):
 			cardDis.queue_free()
 	
 	var index = 0
+	print("displaying " + str(len(mon.currentHand.storedCards)) + " cards")
 	for card in mon.currentHand.storedCards:
+		
 		var newCardDis: CardDisplay = cardPrefab.instantiate()
 		get_parent().add_child(newCardDis)
 		newCardDis.scale *= 0.5
@@ -627,9 +629,7 @@ func activeTurn() -> void:
 	
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:
-		BattleLog.singleton.log(getActivePlayerMon().rawData.name + ", "  + getActiveEnemyMon().rawData.name)
 		if !mon.isKO() && [getActivePlayerMon(), getActiveEnemyMon()].has(mon):
-			BattleLog.singleton.log("Resetting " + mon.rawData.name)
 			await mon.reset()
 	
 	
@@ -656,6 +656,8 @@ func activeTurn() -> void:
 		for cardButton in cardButtons:
 			cardButton.hideCard()
 		
+		displayEnemyCards(getActiveEnemyMon())
+		
 		var enemyActions = enemyDeclare(true)
 	
 		var actions: Array[BattleAction] = []
@@ -664,7 +666,7 @@ func activeTurn() -> void:
 			break
 		
 		
-		displayEnemyCards(getActiveEnemyMon())
+		
 		
 		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
 		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
