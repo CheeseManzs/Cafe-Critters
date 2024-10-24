@@ -31,6 +31,7 @@ static var enemyPersonality: AIPersonality
 @export var skipButton: Button
 @export var cardPrefab: PackedScene
 var cardButtons: Array[CardDisplay] = []
+var enemyCards: Array[CardDisplay] = []
 
 
 #maximum number of monster than can be on the field per side at the same time
@@ -469,6 +470,27 @@ func enemySwap(newID) -> void:
 	emitGUISignal()
 	
 #set card selection ui to specific mon
+
+func displayEnemyCards(mon: BattleMonster):
+	for cardDis in enemyCards:
+		if cardDis != null:
+			cardDis.queue_free()
+	
+	var index = 0
+	for card in mon.currentHand.storedCards:
+		var newCardDis: CardDisplay = cardPrefab.instantiate()
+		get_parent().add_child(newCardDis)
+		newCardDis.scale *= 0.5
+		
+		enemyCards.append(newCardDis)
+		newCardDis.fromSide = true
+		newCardDis.straight = true
+		newCardDis.show()
+		newCardDis.canPress = false
+		newCardDis.setCard(card,index,self)
+		
+		index += 1
+
 func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
 	## Removes all existing Card UI elements. -A
@@ -483,10 +505,11 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 	## Assigns each card ui element a corresponding ID.
 	for card in mon.currentHand.storedCards:
 		var newButton: CardDisplay = cardPrefab.instantiate()
+		get_parent().add_child(newButton)
 		
 		newButton.setCard(card, id, self)
 		newButton.show()
-		get_parent().add_child(newButton)
+		
 		cardButtons.push_back(newButton)
 		id += 1
 	
@@ -640,8 +663,14 @@ func activeTurn() -> void:
 		if endTurn:
 			break
 		
+		
+		displayEnemyCards(getActiveEnemyMon())
+		
 		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
 		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
+		
+
+			
 		
 		for i in maxActiveMons:
 			#show player gui

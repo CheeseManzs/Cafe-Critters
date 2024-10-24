@@ -24,6 +24,8 @@ var launched = false
 var ignoreInput = false
 var straight = true
 var displayLocation = "default"
+var canPress = true
+var fromSide = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -43,9 +45,10 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 		## Determines how many cards are in hand and changes card size based on that. -A
 		var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
 		var rawWidth = size.x*scale.x
+		var rawHeight = size.y*scale.y
 		var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
 		
-		var viewportRect = Vector2(1920, 1080)
+		var viewportRect = Vector2(get_viewport().size.x,get_viewport().size.y)
 		
 		## Determines how much to rotate the card. -A
 		var firstRot = -PI/12*(totalChoices/5)
@@ -70,6 +73,10 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		var basePos = Vector2(viewportRect.x/2 - pivot_offset.x,viewportRect.y + y - pivot_offset.y - 200)
 		
+		#ignore everything else, print it from the side
+		
+		
+		
 		## Rotation only matters if the cards are set to be curved. Otherwise, flattens them out. -A
 		if straight:
 			upVec = Vector2(0, -1)
@@ -80,6 +87,19 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 				scaler = 0.8
 			var baseDelta = Vector2(rawWidth*(divis - 0.5)*(totalChoices-1)*scaler, 0)
 			basePos += baseDelta
+		
+		if fromSide:
+			
+			basePos = Vector2(get_viewport().size.x + rawHeight*2,get_viewport().size.y/2 - rawWidth)
+			
+			var scaler = 1
+			if totalChoices >= 5:
+				scaler = 0.8
+			
+			var baseDelta = Vector2(0, rawWidth*(divis - 0.5)*(totalChoices-1)*scaler)
+			basePos += baseDelta
+			upVec = Vector2(-1, 0)
+			#angle += -PI/2
 		
 		originalPosition = basePos + upVec*0.9*x
 		visiblePosition = basePos + upVec*x
@@ -116,7 +136,7 @@ func _process(delta: float) -> void:
 		launch()
 	if runAnim:
 		position = lerp(position, targetPosition, delta*4)
-	if mouseOn && Input.is_action_just_pressed("Primary"):
+	if canPress && mouseOn && Input.is_action_just_pressed("Primary"):
 		match displayLocation:
 			"default":
 				sendChoice()
