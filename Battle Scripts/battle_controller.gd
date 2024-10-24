@@ -105,7 +105,7 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for index in len(plrTeam):
 		#create battle monster object
 		var newBattleMon = BattleMonster.new(plrTeam[index], self, true)
-		
+		#newBattleMon.reset()
 		shelfedMonUI[index].connectedMon = newBattleMon
 		shelfedMonUI[index].reprocess()
 		#add to player team
@@ -121,6 +121,7 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for index in len(enmTeam):
 		#create battle monster object
 		var newBattleMon = BattleMonster.new(enmTeam[index], self, false)
+		#newBattleMon.reset()
 		#add to enemy team
 		enemyTeam.push_back(newBattleMon)
 	
