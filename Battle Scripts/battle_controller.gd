@@ -157,7 +157,14 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for mon in playerTeam + enemyTeam:
 		if mon != getActivePlayerMon() && mon != getActiveEnemyMon():
 			mon.reset()
-	
+
+func playerUsableMonCount():
+	var count = len(playerTeam)
+	for mon in playerTeam:
+		if !mon.isKO():
+			count -= 1
+	return count
+
 #check for player loss
 func playerLost():
 	for mon in playerTeam:
@@ -177,6 +184,8 @@ func _ready() -> void:
 	#debug initialization
 	initialize(playerBattleTeam, enemyBattleTeam)
 	pass # Replace with function body.
+
+
 
 # Check if a monster swap is valid
 func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
@@ -482,7 +491,7 @@ func displayEnemyCards(mon: BattleMonster):
 		
 		var newCardDis: CardDisplay = cardPrefab.instantiate()
 		get_parent().add_child(newCardDis)
-		newCardDis.scale *= 0.5
+		newCardDis.scaleFactor = 0.75
 		
 		enemyCards.append(newCardDis)
 		newCardDis.fromSide = true
@@ -682,7 +691,7 @@ func activeTurn() -> void:
 			setCardSelection(mon)
 			
 			#wait for a gui choice to be made
-			if len(mon.playableCards()) <= 0 && playerMP == 0:
+			if len(mon.playableCards()) <= 0 && (playerMP == 0 || playerUsableMonCount() <= 1):
 				continue
 			skipButton.disabled = false
 			for shelfUI in shelfedMonUI:

@@ -8,6 +8,7 @@ extends Control
 @export var manaLabel: RichTextLabel
 @export var artTexture: TextureRect
 
+var scaleFactor = 1
 var controller: BattleController
 var choiceID: int = 0
 var card: Card
@@ -28,6 +29,7 @@ var canPress = true
 var fromSide = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	scale = Vector2(0.34,0.34)*scaleFactor
 	pass # Replace with function body.
 
 ## Sets parameters of the card from the given resource. -A
@@ -89,14 +91,18 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 			basePos += baseDelta
 		
 		if fromSide:
-			
-			basePos = Vector2(get_viewport().size.x + rawHeight*2,get_viewport().size.y/2 - rawWidth)
+			print("rawHeight: ", rawHeight)
+			basePos = Vector2(get_viewport().size.x + rawHeight*2*scaleFactor,get_viewport().size.y/2 - rawHeight*2*scaleFactor)
 			
 			var scaler = 1
 			if totalChoices >= 5:
 				scaler = 0.8
 			
-			var baseDelta = Vector2(0, rawWidth*(divis - 0.5)*(totalChoices-1)*scaler)
+			print("before: ",x)
+			x = rawWidth*5.5*scaleFactor
+			print("after: ",x)
+			
+			var baseDelta = Vector2(0, rawWidth*(divis - 0.5)*(totalChoices-1)*scaler*(0.3*scaleFactor))
 			basePos += baseDelta
 			upVec = Vector2(-1, 0)
 			#angle += -PI/2
@@ -131,7 +137,7 @@ func launch():
 func _process(delta: float) -> void:
 	if mouseOn == false:
 		size = Vector2(720,1000)
-		scale = Vector2(0.34,0.34)
+		scale = Vector2(0.34,0.34)*scaleFactor
 	if launched:
 		launch()
 	if runAnim:
@@ -154,7 +160,7 @@ func _on_mouse_entered() -> void:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
 	if displayLocation == "collection":
-		scale = Vector2(0.5, 0.5)
+		scale = Vector2(0.5, 0.5)*scaleFactor
 	mouseOn = true
 	pass # Replace with function body.
 
@@ -165,7 +171,7 @@ func _on_mouse_exited() -> void:
 	if !isHidden && !selected:
 		targetPosition = originalPosition
 	if displayLocation == "collection":
-		scale = Vector2(0.34, 0.34)
+		scale = Vector2(0.34, 0.34)*scaleFactor
 	mouseOn = false
 	pass # Replace with function body.
 
