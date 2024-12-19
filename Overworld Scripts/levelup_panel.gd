@@ -28,9 +28,9 @@ func initialize(monster):
 		temp.displayLocation = "collection"
 		temp.setCard(card, 1, null, "collection")
 		storedCards.append(temp)
-		$ScrollContainer/Panel.add_child(temp)
-		var xlen = ($ScrollContainer/Panel.size.x) / 3
-		temp.position = Vector2(xlen * (1 + (index % 2)) - 360, (180 + 360 * floor(index / 2)) - 400)
+		$ScrollContainer/GridContainer.add_child(temp)
+		#var xlen = ($ScrollContainer/GridC.size.x) / 3
+		#temp.position = Vector2(xlen * (1 + (index % 2)) - 360, (180 + 360 * floor(index / 2)) - 400)
 		
 		index += 1
 		

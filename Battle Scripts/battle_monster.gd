@@ -45,6 +45,8 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	health = maxHP
 	defense = rawData.StatCurves[rawData.rawDefense][level]
 	attack = rawData.StatCurves[rawData.rawAttack][level]
+	if rawData.deck.storedCards.size() == 0:
+		rawData.deck = rawData.startingCardPool.clone()
 	currentDeck = rawData.deck.clone()
 	playerControlled = p_playerControlled
 	hardReset()

@@ -85,6 +85,8 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	rawHealth = rawH
 	rawAttack = rawA
 	rawDefense = rawD
+	#if deck.storedCards.size() == 0:
+	#	deck.storedCards = startingCardPool.storedCards;
 	
 func getHealth(inputLevel = level): 
 	return StatCurves[rawHealth][inputLevel]
