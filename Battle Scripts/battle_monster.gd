@@ -279,6 +279,8 @@ func dmgAnim() -> void:
 func drawCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
 	currentHand.storedCards += card
+	if playerControlled and len(battleController.playerTeam) > 0 and battleController.getActivePlayerMon() == self:
+		battleController.deckController.updateDeckDisplay(len(currentDeck.storedCards))
 
 func getMonsterDisplay() -> MonsterDisplay:
 	if playerControlled:

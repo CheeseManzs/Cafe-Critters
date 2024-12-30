@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=29 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="3_p5icm"]
 [ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="4_x5jj8"]
+[ext_resource type="PackedScene" uid="uid://3pag10s0w2dh" path="res://Prefabs/card_back.tscn" id="5_1cnu7"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
@@ -19,6 +20,7 @@
 [ext_resource type="Script" path="res://Battle Scripts/mp_ui.gd" id="20_feqrg"]
 [ext_resource type="Texture2D" uid="uid://38eyf0cel2vo" path="res://Graphics/UI/WhiteDiamond.png" id="20_u32s6"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="21_nisc0"]
+[ext_resource type="Script" path="res://Battle Scripts/deck_controller.gd" id="22_wgwlo"]
 [ext_resource type="Script" path="res://Battle Scripts/turn_ui.gd" id="23_qnbl5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
@@ -53,7 +55,7 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
 monsterObject = ExtResource("3_p5icm")
 cardbuttonPrefab = ExtResource("4_x5jj8")
@@ -63,6 +65,7 @@ enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
 skipButton = NodePath("../Control UI/Shelfed Mon View/Skip Button")
 cardPrefab = ExtResource("8_8v3xb")
+deckController = NodePath("../Control UI/Deck Pivot")
 
 [node name="Control UI" type="Control" parent="."]
 layout_mode = 3
@@ -346,5 +349,18 @@ theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "[center]6[/center]"
 scroll_active = false
+
+[node name="Deck Pivot" type="Control" parent="Control UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 168.0
+offset_top = -182.0
+offset_right = 208.0
+offset_bottom = -142.0
+grow_vertical = 0
+script = ExtResource("22_wgwlo")
+cardBackPrefab = ExtResource("5_1cnu7")
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

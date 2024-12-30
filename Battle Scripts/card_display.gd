@@ -83,7 +83,6 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 		if straight:
 			upVec = Vector2(0, -1)
 			angle = 0
-			print(divis)
 			var scaler = 1
 			if totalChoices >= 5:
 				scaler = 0.8
@@ -91,16 +90,13 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 			basePos += baseDelta
 		
 		if fromSide:
-			print("rawHeight: ", rawHeight)
 			basePos = Vector2(get_viewport().size.x + rawHeight*2*scaleFactor,get_viewport().size.y/2 - rawHeight*2*scaleFactor)
 			
 			var scaler = 1
 			if totalChoices >= 5:
 				scaler = 0.8
 			
-			print("before: ",x)
 			x = rawWidth*5.5*scaleFactor
-			print("after: ",x)
 			
 			var baseDelta = Vector2(0, rawWidth*(divis - 0.5)*(totalChoices-1)*scaler*(0.3*scaleFactor))
 			basePos += baseDelta

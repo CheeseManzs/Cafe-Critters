@@ -30,6 +30,8 @@ static var enemyPersonality: AIPersonality
 #action buttons
 @export var skipButton: Button
 @export var cardPrefab: PackedScene
+@export var deckController: DeckController
+
 var cardButtons: Array[CardDisplay] = []
 var enemyCards: Array[CardDisplay] = []
 
@@ -653,7 +655,7 @@ func activeTurn() -> void:
 	await getActivePlayerMon().getPassive().onTurnStart(getActivePlayerMon(), self)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
-		
+		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
 		enemyCanPlay = !(len(getActiveEnemyMon().playableCards()) == 0 && enemyMP == 0)
 		playerAction = null
@@ -787,6 +789,10 @@ func skipTurn():
 
 func emitGUISignal() -> void:
 	gui_choice.emit()
+
+func createDeckDisplay() -> void:
+	deckController.updateDeckDisplay(len(getActivePlayerMon().currentDeck.storedCards))
+	
 
 func onHand(index: int) -> void:
 	playerCardID = index

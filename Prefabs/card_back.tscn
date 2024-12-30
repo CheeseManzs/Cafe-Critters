@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://3pag10s0w2dh"]
+
+[ext_resource type="Script" path="res://Battle Scripts/card_back.gd" id="1_38lsm"]
+[ext_resource type="Texture2D" uid="uid://dh3elalr22ux0" path="res://Graphics/Misc/Card_Back.png" id="2_4gvjk"]
+
+[node name="Card Back" type="Control"]
+texture_filter = 4
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -500.0
+offset_right = -1560.0
+offset_bottom = -580.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.34, 0.34)
+pivot_offset = Vector2(360, 500)
+script = ExtResource("1_38lsm")
+
+[node name="Back" type="TextureRect" parent="."]
+texture_filter = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_4gvjk")
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
