@@ -19,7 +19,8 @@ enum EFFECTS {
 	REGEN,
 	BECOME_RECKLESS,
 	RECKLESS,
-	STRONGARM
+	STRONGARM,
+	TAGGED
 }
 var X: int = 0
 var Y: int = 0
@@ -81,6 +82,8 @@ func toMini() -> String:
 			return "REK"
 		EFFECTS.STRONGARM:
 			return "STR"
+		EFFECTS.TAGGED:
+			return "TAG"
 	return "N/A"
 	
 
