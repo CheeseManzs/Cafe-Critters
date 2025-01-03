@@ -20,7 +20,7 @@ pivot_offset = Vector2(360, 500)
 script = ExtResource("1_38lsm")
 
 [node name="Back" type="TextureRect" parent="."]
-texture_filter = 4
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

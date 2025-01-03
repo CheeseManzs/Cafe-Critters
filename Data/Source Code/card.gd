@@ -23,6 +23,14 @@ enum ROLE {
 	Token
 }
 
+enum RARITY {
+	Common,
+	Uncommon,
+	Rare,
+	Epic,
+	Legendary
+}
+
 #cost of card
 var cost: int
 #priority of card
@@ -35,6 +43,8 @@ var role: ROLE
 var description: String
 #card name
 var name: String
+#card rarity
+var rarity: RARITY
 
 var statusConditions: Array[Status.EFFECTS] = []
 
