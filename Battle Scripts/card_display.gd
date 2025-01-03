@@ -30,6 +30,8 @@ var fromSide = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	scale = Vector2(0.34,0.34)*scaleFactor
+	if displayLocation == "collection":
+		position = position - size/2
 	pass # Replace with function body.
 
 ## Sets parameters of the card from the given resource. -A
@@ -41,6 +43,7 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 	manaLabel.text = "[center][b]"+str(card.cost)+"[/b][/center]"
 	choiceID = cID
 	controller = battleController
+	
 	
 	if context == "default":
 		size = Vector2(720,1000)
@@ -131,6 +134,7 @@ func launch():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	if mouseOn == false:
 		size = Vector2(720,1000)
 		scale = Vector2(0.34,0.34)*scaleFactor

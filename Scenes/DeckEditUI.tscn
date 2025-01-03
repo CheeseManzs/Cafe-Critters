@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://bilfuichpxj00"]
+[gd_scene load_steps=5 format=3 uid="uid://bilfuichpxj00"]
+
+[ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="1_oxwwi"]
+[ext_resource type="Script" path="res://Overworld Scripts/deck_edit_ui.gd" id="1_tbx7c"]
+[ext_resource type="Script" path="res://Data/Source Code/card_inventory.gd" id="2_aiymk"]
+
+[sub_resource type="Resource" id="Resource_tw7un"]
+script = ExtResource("2_aiymk")
 
 [node name="DeckEditUI" type="Control"]
 layout_mode = 3
@@ -7,3 +14,135 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tbx7c")
+storedCards = SubResource("Resource_tw7un")
+
+[node name="CardGridHSplit" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 1000
+
+[node name="LeftScrollContainer" type="ScrollContainer" parent="CardGridHSplit"]
+layout_mode = 2
+vertical_scroll_mode = 2
+
+[node name="LeftGridContainer" type="GridContainer" parent="CardGridHSplit/LeftScrollContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 240
+theme_override_constants/v_separation = 240
+
+[node name="Control" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control2" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control2" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control3" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control3" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control4" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control4" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control5" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control5" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control6" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control6" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control7" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control7" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control8" type="Control" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/LeftScrollContainer/LeftGridContainer/Control8" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="CardGridHSplit"]
+layout_mode = 2
+
+[node name="GridContainer2" type="GridContainer" parent="CardGridHSplit/ScrollContainer2"]
+layout_mode = 2
+theme_override_constants/h_separation = 250
+columns = 4
+
+[node name="Control" type="Control" parent="CardGridHSplit/ScrollContainer2/GridContainer2"]
+layout_mode = 2
+
+[node name="Card Object2" parent="CardGridHSplit/ScrollContainer2/GridContainer2/Control" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control2" type="Control" parent="CardGridHSplit/ScrollContainer2/GridContainer2"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/ScrollContainer2/GridContainer2/Control2" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="Control3" type="Control" parent="CardGridHSplit/ScrollContainer2/GridContainer2"]
+layout_mode = 2
+
+[node name="Card Object" parent="CardGridHSplit/ScrollContainer2/GridContainer2/Control3" instance=ExtResource("1_oxwwi")]
+layout_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.85
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Control" type="Control" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="ScrollContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="ScrollContainer/Control/Panel"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 74.0
+offset_right = 119.0
+offset_bottom = 105.0
+text = "monster 1"
+
+[node name="Button2" type="Button" parent="ScrollContainer/Control/Panel"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 74.0
+offset_right = 298.0
+offset_bottom = 105.0
+text = "button 2"

@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://bijnu2mjsw31f" path="res://Graphics/Misc/Card_Front.png" id="1_k3rom"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="3_t0b2p"]
 
-[sub_resource type="Gradient" id="Gradient_f3ps2"]
+[sub_resource type="Gradient" id="Gradient_pmrry"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vb2cc"]
-gradient = SubResource("Gradient_f3ps2")
+gradient = SubResource("Gradient_pmrry")
 width = 95
 fill = 2
 fill_from = Vector2(0, 1)
@@ -16,11 +16,14 @@ fill_to = Vector2(1, 1)
 [node name="Card Object" type="Control" node_paths=PackedStringArray("titleLabel", "descLabel", "manaLabel", "artTexture")]
 texture_filter = 4
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1200.0
-offset_bottom = -80.0
+anchor_left = 0.124
+anchor_top = 0.306
+anchor_right = 0.251
+anchor_bottom = 0.62
+offset_left = -238.08
+offset_top = -330.48
+offset_right = 238.08
+offset_bottom = 330.4
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.34, 0.34)
@@ -42,7 +45,6 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("1_k3rom")
 expand_mode = 1
-stretch_mode = 4
 
 [node name="Art" type="TextureRect" parent="Front"]
 show_behind_parent = true

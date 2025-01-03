@@ -25,10 +25,12 @@ func initialize(monster):
 	# gonna go on a whaling trip lemme know if you need anything
 	for card in monster.levelupCards[monster.level].storedCards:
 		var temp = cardObject.instantiate()
+		var cParent = Control.new()
 		temp.displayLocation = "collection"
 		temp.setCard(card, 1, null, "collection")
-		storedCards.append(temp)
-		$ScrollContainer/GridContainer.add_child(temp)
+		cParent.add_child(temp)
+		storedCards.append(cParent)
+		$ScrollContainer/GridContainer.add_child(cParent)
 		#var xlen = ($ScrollContainer/GridC.size.x) / 3
 		#temp.position = Vector2(xlen * (1 + (index % 2)) - 360, (180 + 360 * floor(index / 2)) - 400)
 		

@@ -45,7 +45,7 @@ script = ExtResource("3_m6ofj")
 name = "Starting Deck"
 storedCards = Array[ExtResource("4_k4lkc")]([ExtResource("7_wxxws"), ExtResource("7_wxxws"), ExtResource("7_wxxws"), ExtResource("8_lw3nf"), ExtResource("8_lw3nf"), ExtResource("8_lw3nf"), ExtResource("9_fwyt3"), ExtResource("9_fwyt3"), ExtResource("10_yoleg"), ExtResource("11_lecd7"), ExtResource("11_lecd7"), ExtResource("11_lecd7"), ExtResource("12_gcyia"), ExtResource("12_gcyia"), ExtResource("13_dusa6"), ExtResource("13_dusa6"), ExtResource("14_b8krm"), ExtResource("15_3fp3k"), ExtResource("15_3fp3k"), ExtResource("16_fvh5a"), ExtResource("16_fvh5a"), ExtResource("16_fvh5a"), ExtResource("17_oeww4"), ExtResource("17_oeww4"), ExtResource("17_oeww4"), ExtResource("18_qlb5u"), ExtResource("18_qlb5u"), ExtResource("18_qlb5u"), ExtResource("19_l1st6"), ExtResource("19_l1st6"), ExtResource("20_f6tip"), ExtResource("20_f6tip"), ExtResource("20_f6tip"), ExtResource("21_1od05"), ExtResource("21_1od05"), ExtResource("22_4x6om"), ExtResource("22_4x6om"), ExtResource("23_gh0xu")])
 
-[sub_resource type="Resource" id="Resource_sy42a"]
+[sub_resource type="Resource" id="Resource_2ytw3"]
 resource_local_to_scene = true
 script = ExtResource("2_fsjqw")
 id = 0
@@ -90,7 +90,7 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
-playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_sy42a")])
+playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_2ytw3")])
 inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]
