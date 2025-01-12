@@ -488,7 +488,6 @@ func displayEnemyCards(mon: BattleMonster):
 			cardDis.queue_free()
 	
 	var index = 0
-	print("displaying " + str(len(mon.currentHand.storedCards)) + " cards")
 	for card in mon.currentHand.storedCards:
 		
 		var newCardDis: CardDisplay = cardPrefab.instantiate()

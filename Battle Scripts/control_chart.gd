@@ -19,7 +19,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var polyPos: PackedVector2Array = []
 	var chartCenter: Vector2 = size/2
-	print("data:",data)
 	for i in len(data):
 		var angle = i*2*PI/float(len(data))
 		var vec = chartCenter + data[i]*10.0*Vector2(cos(angle),sin(angle))
@@ -51,7 +50,6 @@ func _draw() -> void:
 	for statIndex in len(data):
 		if statIndex >= len(barSizes):
 			barSizes.append(0)
-		print(statIndex,data[statIndex])
 		var length = 4*data[statIndex]/30.0
 		if statIndex == 2: #HP
 			length = 4*data[statIndex]/100.0

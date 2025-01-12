@@ -31,7 +31,6 @@ func removeCard():
 
 func updateDeckDisplay(count: int) -> void:
 	var delta = count - cardsInDeck
-	print("delta: " + str(delta) + " (" + str(cardsInDeck) + " -> " + str(count) + ")")
 	cardsInDeck = count
 	if abs(delta) < 10:
 		if delta > 0:
@@ -39,7 +38,6 @@ func updateDeckDisplay(count: int) -> void:
 				await addCard()
 		if delta < 0:
 			for cardindex in range(-delta):
-				print("removing: ", cardindex) 
 				await removeCard()
 	else:
 		if delta > 0:
@@ -47,6 +45,5 @@ func updateDeckDisplay(count: int) -> void:
 				addCard()
 		if delta < 0:
 			for cardindex in range(-delta):
-				print("removing: ", cardindex) 
 				removeCard()
 		
