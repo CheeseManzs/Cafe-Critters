@@ -15,9 +15,9 @@ func _ready() -> void:
 func setup(battleMonster: BattleMonster):
 	titleLabel.text = "[center]"+battleMonster.rawData.name+"[/center]"
 	canvasContainer.data = [
-		battleMonster.rawData.statAttack,
-		battleMonster.rawData.statDefense,
-		battleMonster.rawData.statHealth
+		battleMonster.getAttack(),
+		battleMonster.getDefense(),
+		battleMonster.maxHP
 	]
 	canvasContainer.dataLabels = [
 		"ATK",
