@@ -48,7 +48,7 @@ expand_mode = 1
 
 [node name="Art" type="TextureRect" parent="Front"]
 show_behind_parent = true
-texture_filter = 4
+texture_filter = 6
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03
@@ -59,6 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_vb2cc")
+expand_mode = 2
 stretch_mode = 4
 
 [node name="Title" type="RichTextLabel" parent="Front"]

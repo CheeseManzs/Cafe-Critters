@@ -43,6 +43,8 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 	manaLabel.text = "[center][b]"+str(card.cost)+"[/b][/center]"
 	choiceID = cID
 	controller = battleController
+	if card.art != null:
+		artTexture.texture = card.art
 	
 	
 	if context == "default":

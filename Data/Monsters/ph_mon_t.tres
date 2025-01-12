@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://dc4d16vxlrivo"]
+
+[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
+[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_irfdf"]
+[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="10_o8t8i"]
+[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_l1o5y"]
+[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="12_ippfy"]
+[ext_resource type="Texture2D" uid="uid://ccicpc4xaeayw" path="res://Graphics/Monsters/132.png" id="13_jsoku"]
+
+[sub_resource type="Resource" id="Resource_0uwxn"]
+script = ExtResource("1_ukx36")
+name = "Deck"
+storedCards = Array[ExtResource("2_irfdf")]([ExtResource("10_o8t8i"), ExtResource("10_o8t8i"), ExtResource("10_o8t8i"), ExtResource("10_o8t8i"), ExtResource("10_o8t8i"), ExtResource("10_o8t8i")])
+
+[resource]
+script = ExtResource("12_ippfy")
+id = 3
+name = "MZMG"
+alignment = 7
+role = 0
+dexEntry = ""
+sprite = ExtResource("13_jsoku")
+passive = ExtResource("11_l1o5y")
+deck = SubResource("Resource_0uwxn")
+levelupCards = Array[ExtResource("1_ukx36")]([])
+rawHealth = "growth40"
+rawAttack = "growth15"
+rawDefense = "growth15"
+levelingType = ""
+levelingItems = Array[String]([])
+statHealth = []
+statAttack = []
+statDefense = []
+level = 0
+battleOffset = Vector2(0, 0)

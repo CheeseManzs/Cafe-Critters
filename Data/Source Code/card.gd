@@ -31,6 +31,7 @@ enum RARITY {
 	Legendary
 }
 
+
 #cost of card
 var cost: int
 #priority of card
@@ -49,6 +50,7 @@ var rarity: RARITY
 var statusConditions: Array[Status.EFFECTS] = []
 
 @export var aiDetails: AIInfo
+@export var art: Texture2D
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
@@ -82,6 +84,7 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 
 func clone():
 	var newCard: Card = get_script().new()
+	newCard.art = art
 	newCard.cost = cost
 	newCard.priority = priority
 	newCard.alignment = alignment
