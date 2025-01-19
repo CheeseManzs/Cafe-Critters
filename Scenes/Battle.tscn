@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=34 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -43,6 +43,34 @@ bg_color = Color(0.923849, 0.426807, 0.349598, 1)
 _data = [Vector2(0, 0.0349693), 0.0, 0.0, 0, 0]
 point_count = 1
 
+[sub_resource type="Curve" id="Curve_b5efj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497512, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.25183, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_o8nxf"]
+curve = SubResource("Curve_b5efj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bd3ru"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 0.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_o8nxf")
+turbulence_noise_scale = 0.01
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myw15"]
+transparency = 1
+vertex_color_use_as_albedo = true
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_o1je0"]
+material = SubResource("StandardMaterial3D_myw15")
+size = Vector2(0.1, 0.005)
+
 [node name="Battle" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -55,8 +83,9 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
+dashParticles = NodePath("../DashParticles")
 monsterObject = ExtResource("3_p5icm")
 cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
@@ -362,5 +391,13 @@ offset_bottom = -142.0
 grow_vertical = 0
 script = ExtResource("22_wgwlo")
 cardBackPrefab = ExtResource("5_1cnu7")
+
+[node name="DashParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 180
+lifetime = 0.3
+preprocess = 0.5
+process_material = SubResource("ParticleProcessMaterial_bd3ru")
+draw_pass_1 = SubResource("QuadMesh_o1je0")
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

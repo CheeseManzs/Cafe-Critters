@@ -5,6 +5,7 @@ extends Node
 signal gui_choice
 
 #monster object prefab
+@export var dashParticles: GPUParticles3D
 @export var monsterObject: PackedScene
 @export var cardbuttonPrefab: PackedScene
 @export var detailsPanel: DetailsPanel

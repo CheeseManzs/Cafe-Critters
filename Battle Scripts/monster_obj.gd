@@ -59,6 +59,56 @@ func hitAnimation() -> void:
 		await get_tree().create_timer(lastDelta).timeout
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
+
+func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
+	var elapsed = 0
+	await get_tree().create_timer(0.2).timeout
+	while elapsed < timeMax/2:
+		var a_progress: float = elapsed/(timeMax/2.0)
+		var progress: float = (1 - dashFraction) + dashFraction*elapsed/(timeMax/2.0)
+		position = originalPos + deltaPos*pow(1 - progress, 3)
+		$Sprite3D.modulate.a = (a_progress)
+		print(a_progress)
+		elapsed += lastDelta
+		await get_tree().create_timer(lastDelta).timeout
+	#$Sprite3D.modulate.a = 1
+	await get_tree().create_timer(0.1).timeout
+	lockToIntendedPosition = true
+	
+
+func contactAnimation() -> void:
+	lockToIntendedPosition = false
+	var elapsed: float = 0
+	var timeMax: float = 0.3
+	var distance: float = 1.8*abs(getMonsterPosition().x)
+	print("dist:",distance)
+	var dashFraction = 0.5
+	var back: int = 1
+	if playerControlled:
+		back = -1
+	
+	var originalPos = position
+	var deltaPos = Vector3(-distance*back, 0, 0)
+	elapsed = 0
+	connectedMon.battleController.dashParticles.process_material.direction.x = -back
+	connectedMon.battleController.dashParticles.position = originalPos
+	connectedMon.battleController.dashParticles.emitting = true
+	while elapsed < timeMax/2:
+		var a_progress: float = elapsed/(timeMax/2.0)
+		var progress: float = dashFraction*elapsed/(timeMax/2.0)
+		position = originalPos + deltaPos*progress
+		$Sprite3D.modulate.a = (1 - a_progress)
+		
+		elapsed += lastDelta
+		await get_tree().create_timer(lastDelta).timeout
+	connectedMon.battleController.dashParticles.emitting = false
+	print("final pos:",originalPos + deltaPos*1)
+	
+	$Sprite3D.modulate.a = 0
+	elapsed = 0
+	connectedMon.battleController.dashParticles.position = originalPos + deltaPos*(1 - dashFraction)
+	await get_tree().create_timer(0.05).timeout
+	contactReturn(timeMax, originalPos, deltaPos, dashFraction)
 	
 
 

@@ -273,6 +273,14 @@ func dmgAnim() -> void:
 		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
 	obj.hitAnimation()
 
+func atkAnim() -> void:
+	var obj: MonsterDisplay
+	if playerControlled:
+		obj = battleController.playerObjs[battleController.playerTeam.find(self)]
+	else:
+		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
+	await obj.contactAnimation()
+
 #draw cards from deck	
 func drawCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
@@ -324,6 +332,8 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+	if attacker != self && attacker != null:
+		await attacker.atkAnim()
 	await attacker.getPassive().onAttack(attacker,battleController)
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):
@@ -338,6 +348,8 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg)	
+	
+		
 	await getPassive().onHit(self,battleController)
 	return pureDmg
 

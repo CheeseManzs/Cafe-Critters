@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddw7raemmtnam"]
+
+[sub_resource type="Curve" id="Curve_i0u2n"]
+_data = [Vector2(0, 0), 0.0, 7.04121, 0, 0, Vector2(0.506438, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.1166, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmxoy"]
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_y6015"]
+material = SubResource("StandardMaterial3D_wmxoy")
+shape = 0
+curve = SubResource("Curve_i0u2n")
+
+[sub_resource type="Curve" id="Curve_ct1nv"]
+_data = [Vector2(0, 0.054945), 0.0, -1.60005, 0, 0, Vector2(0.157676, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0389466, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_2ns7v"]
+_data = [Vector2(0, 0.978022), 0.0, -1.30661, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_p2u3q"]
+curve = SubResource("Curve_2ns7v")
+
+[sub_resource type="Curve" id="Curve_8iwqf"]
+max_value = 3.0
+_data = [Vector2(0, 0), 0.0, -0.135232, 0, 0, Vector2(1, 1), 2.31654, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ve4bx"]
+curve = SubResource("Curve_8iwqf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mlc1a"]
+particle_flag_align_y = true
+emission_shape_scale = Vector3(1, 0, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+spread = 180.0
+flatness = 1.0
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 9.49949e-08
+radial_velocity_min = 9.99998
+radial_velocity_max = 9.99998
+radial_velocity_curve = SubResource("CurveTexture_p2u3q")
+gravity = Vector3(0, 0, 0)
+scale_over_velocity_curve = SubResource("CurveTexture_ve4bx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffu2k"]
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_7fo8d"]
+material = SubResource("StandardMaterial3D_ffu2k")
+shape = 0
+size = 0.1
+section_length = 0.02
+
+[node name="Impact" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -0.0838692, -0.996477, 0, 0.996477, -0.0838692, 0, 0, 0)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 50
+explosiveness = 1.0
+mesh = SubResource("RibbonTrailMesh_y6015")
+emission_shape = 1
+emission_sphere_radius = 0.01
+particle_flag_align_y = true
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+scale_amount_curve = SubResource("Curve_ct1nv")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+visible = false
+explosiveness = 1.0
+collision_base_size = 0.0
+trail_enabled = true
+trail_lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_mlc1a")
+draw_pass_1 = SubResource("RibbonTrailMesh_7fo8d")
