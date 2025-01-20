@@ -15,11 +15,11 @@ func sortAction(a:BattleAction, b:BattleAction):
 		return true
 	if a.priority < b.priority:
 		return false
-	if a.playerControlled && !b.playerControlled:
+	if a.battleMonster.speed > b.battleMonster.speed:
 		return true
-	if b.playerControlled && !a.playerControlled:
+	if a.battleMonster.speed < b.battleMonster.speed:
 		return false
-	if a.priority == b.priority:
+	if a.priority == b.priority && a.battleMonster.speed == b.battleMonster.speed:
 		return randomBool()
 
 func rearrange() -> void:

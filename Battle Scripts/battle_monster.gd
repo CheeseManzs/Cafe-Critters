@@ -16,6 +16,8 @@ class_name BattleMonster
 @export var defense: int
 #monster's current attack stat
 @export var attack: int
+#monster's current speed stat
+@export var speed: int
 #monster's current shield
 @export var shield: int
 #battle controller that instantiated the monster
@@ -39,10 +41,12 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	level = rawData.level
 	shield = 0
 
-	maxHP = rawData.StatCurves[rawData.rawHealth][level]
+	maxHP = rawData.getHealth()
 	health = maxHP
-	defense = rawData.StatCurves[rawData.rawDefense][level]
-	attack = rawData.StatCurves[rawData.rawAttack][level]
+	defense = rawData.getDefense()
+	attack = rawData.getAttack()
+	speed = rawData.getSpeed()
+	
 	if rawData.deck.storedCards.size() == 0:
 		rawData.deck = rawData.startingCardPool.clone()
 	currentDeck = rawData.deck.clone()
@@ -245,6 +249,9 @@ func addStatusCondition(status: Status, broadcast = false):
 	#enemy instant effects
 	
 	statusConditions.push_back(status)
+	
+func getSpeed():
+	return speed
 	
 func getAttack():
 	return attack*(1 + attackBonus)

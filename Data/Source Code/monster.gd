@@ -38,6 +38,8 @@ enum ROLE {
 @export var rawHealth: String
 @export var rawAttack: String
 @export var rawDefense: String
+@export var rawSpeed: String
+
 @export var levelingType: String
 @export var levelingItems: Array[String]
 
@@ -45,6 +47,7 @@ enum ROLE {
 @export var statHealth: Array
 @export var statAttack: Array
 @export var statDefense: Array
+@export var statSpeed: Array
 
 # level
 @export var level: int
@@ -75,8 +78,8 @@ var LevelCosts = {
 }
 
 func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_startingCardPool = null, 
-			p_statHealth = [1], p_statDefense = [1], p_statAttack = [1],
-			p_level = 0, rawH = "growth40", rawA = "growth40", rawD = "growth40"):
+			p_statHealth = [1], p_statDefense = [1], p_statAttack = [1], p_statSpeed = [1],
+			p_level = 0, rawH = "growth40", rawA = "growth40", rawD = "growth40", rawS = "growth40"):
 	id = p_id
 	name = p_name
 	sprite = p_sprite
@@ -85,10 +88,13 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	statHealth = p_statHealth
 	statDefense = p_statDefense
 	statAttack = p_statAttack
+	statSpeed = p_statSpeed
+	
 	level = p_level
 	rawHealth = rawH
 	rawAttack = rawA
 	rawDefense = rawD
+	rawSpeed = rawS
 	#if deck.storedCards.size() == 0:
 	#	deck.storedCards = startingCardPool.storedCards;
 	
@@ -100,4 +106,7 @@ func getDefense(inputLevel = level):
 	
 func getAttack(inputLevel = level): 
 	return StatCurves[rawAttack][inputLevel]
+
+func getSpeed(inputLevel = level):
+	return StatCurves[rawSpeed][inputLevel]
 	
