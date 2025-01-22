@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://drnufv0aoq0lj"
+
+[deps]
+
+files=["res://Data/Cards Scripts/Legends of Coffeeland - Master List.Card Name.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.God.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Rarity.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Class.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Role.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Cost.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Card Description.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.WIP Status.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Implemented.translation"]
+
+source_file="res://Data/Cards Scripts/Legends of Coffeeland - Master List.csv"
+dest_files=["res://Data/Cards Scripts/Legends of Coffeeland - Master List.Card Name.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.God.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Rarity.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Class.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Role.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Cost.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Card Description.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.WIP Status.translation", "res://Data/Cards Scripts/Legends of Coffeeland - Master List.Implemented.translation"]
+
+[params]
+
+compress=true
+delimiter=0

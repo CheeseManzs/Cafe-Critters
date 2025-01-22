@@ -39,7 +39,7 @@ var priority: int
 #god alignment of card
 var alignment: ALIGNMENT
 #role of card
-var role: ROLE
+var role
 #card desc
 var description: String
 #card name
