@@ -457,6 +457,7 @@ func playerSwap(newID) -> void:
 	
 	#setup new mon
 	await newMon.hardReset()
+	await currentMon.carryStatusConditions(newMon)
 	
 	activePlayerMon = newID
 	

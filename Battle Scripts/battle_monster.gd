@@ -259,6 +259,15 @@ func getAttack():
 func getDefense():
 	return defense*(1 + defenseBonus)
 
+#carries status
+func carryStatusConditions(target: BattleMonster) -> void:
+	print("carrying status")
+	for status in statusConditions:
+		print(status.toString(), status.carriesOverOnSwitch())
+		if status.carriesOverOnSwitch():
+			statusConditions.remove_at(statusConditions.find(status))
+			target.statusConditions.push_back(status)
+
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
 	shield += shieldAmount

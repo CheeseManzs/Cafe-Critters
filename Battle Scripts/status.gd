@@ -139,6 +139,22 @@ func toString() -> String:
 	
 	return string
 
+func carriesOverOnSwitch() -> bool:
+	match effect:
+		EFFECTS.EMPOWER_PLAYED:
+			return true
+		EFFECTS.HASTE:
+			return true
+		EFFECTS.SLOW:
+			return true
+		EFFECTS.KNOWLEDGE:
+			return true
+		EFFECTS.BARRIER:
+			return true
+		EFFECTS.REGEN:
+			return true
+	return false
+
 func newTurn() -> void:
 	#check effect
 	match effect:
