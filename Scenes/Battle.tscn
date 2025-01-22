@@ -1,8 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=35 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
 [ext_resource type="PackedScene" uid="uid://dnrf07o2xqjni" path="res://Prefabs/monster.tscn" id="3_p5icm"]
+[ext_resource type="PackedScene" uid="uid://ddw7raemmtnam" path="res://Prefabs/VFX/impact.tscn" id="4_x5ddw"]
 [ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="4_x5jj8"]
 [ext_resource type="PackedScene" uid="uid://3pag10s0w2dh" path="res://Prefabs/card_back.tscn" id="5_1cnu7"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
@@ -89,6 +90,7 @@ dashParticles = NodePath("../DashParticles")
 monsterObject = ExtResource("3_p5icm")
 cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
+impactEffect = ExtResource("4_x5ddw")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]

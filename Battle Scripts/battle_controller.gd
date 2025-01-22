@@ -9,6 +9,7 @@ signal gui_choice
 @export var monsterObject: PackedScene
 @export var cardbuttonPrefab: PackedScene
 @export var detailsPanel: DetailsPanel
+@export var impactEffect: PackedScene
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int
@@ -89,6 +90,7 @@ var winner: int = 0
 #display card used for animations
 var shownCard: CardDisplay
 #instantiates a monster
+
 func createMonster(isPlayer, monObj, tID) -> Node3D:
 	#instantiate monster node from scene
 	var newObj: Node3D = monsterObject.instantiate()
@@ -160,6 +162,13 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for mon in playerTeam + enemyTeam:
 		if mon != getActivePlayerMon() && mon != getActiveEnemyMon():
 			mon.reset()
+
+
+func createImpact(pos):
+	var impactNode: GameVFX = impactEffect.instantiate()
+	add_child(impactNode)
+	impactNode.global_position = pos
+	impactNode.particleEmitter.emitting = true
 
 func playerUsableMonCount():
 	var count = len(playerTeam)

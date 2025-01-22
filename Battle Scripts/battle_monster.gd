@@ -301,12 +301,15 @@ func getMonsterDisplay() -> MonsterDisplay:
 	else:
 		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
 
-func trueDamage(dmg: int, attacker: BattleMonster = null) -> void:
+func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> void:
 	#remove damage from hp
 	health -= dmg
 	#run camera shake if damage is done
 	if dmg > 0:
-		BattleCamera.singleton.shake(0.2*dmg/float(maxHP))
+		var cameraMag = 0.6
+		if shielded:
+			cameraMag = 0.2
+		BattleCamera.singleton.shake(cameraMag*dmg/float(maxHP))
 		#add popup text
 		var popup: DamagePopup = damagePopupPrefab.instantiate()
 		
@@ -352,9 +355,10 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 		status.X = 0
 		status.effectDone = true
 	#damage shield and calculate overdamage
+	var shielded = (shield > 0)
 	var pureDmg = damageShield(dmg)
 	#apply overdamage to monster as true damage
-	trueDamage(pureDmg)	
+	trueDamage(pureDmg, null, shielded)
 	
 		
 	await getPassive().onHit(self,battleController)

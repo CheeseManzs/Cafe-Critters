@@ -52,6 +52,7 @@ func hitAnimation() -> void:
 	var back: int = 1
 	if playerControlled:
 		back = -1
+	
 	while elapsed < timeMax:
 		var progress: float = elapsed/timeMax
 		position += Vector3(2*lastDelta*back*(1 - progress), 0, 0)
@@ -104,10 +105,13 @@ func contactAnimation() -> void:
 	connectedMon.battleController.dashParticles.emitting = false
 	print("final pos:",originalPos + deltaPos*1)
 	
+	
+	
 	$Sprite3D.modulate.a = 0
 	elapsed = 0
 	connectedMon.battleController.dashParticles.position = originalPos + deltaPos*(1 - dashFraction)
 	await get_tree().create_timer(0.05).timeout
+	connectedMon.battleController.createImpact(originalPos + Vector3(-back*(distance + 0.2), 0.5, 0.1))
 	contactReturn(timeMax, originalPos, deltaPos, dashFraction)
 	
 
