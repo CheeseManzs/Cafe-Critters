@@ -5,7 +5,7 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Jacks
 	role = ROLE.Unique
-	description = "Reckless > 100% Attack. If Reckless, draw a card. Attack 125%"
+	description = "If you were Reckless this turn, draw 2 cards. Attack 25%."
 	name = "Non-Pointy End"
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
@@ -17,7 +17,7 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var attackPower = 0
-	attackPower = 1.25*attacker.getAttack()	
+	attackPower = 0.25*attacker.getAttack()	
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
 	await defender.receiveDamage(attackPower, attacker)
@@ -36,7 +36,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var attackPower = 0
-	attackPower = 1.25*attacker.getAttack()
+	attackPower = 0.25*attacker.getAttack()
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		attackPower = ceil(attackPower*1.5)
 	return attackPower
