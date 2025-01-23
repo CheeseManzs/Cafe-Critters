@@ -22,11 +22,9 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		attackPower = ceil(attackPower*1.5)
 	await defender.receiveDamage(attackPower, attacker)
 	
-	await EffectFlair.singleton._runFlair("Reckless")
-	var discardedCard = await attacker.discardRandomCard()
-	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
-		BattleLog.singleton.log("Card does not meet requirements...")
-		return 0
+	if !attacker.hasStatus(Status.EFFECTS.RECKLESS):
+		BattleLog.singleton.log(attacker.rawData.name + " was not Reckless this turn...")
+		return attackPower
 
 	
 	#deal damage

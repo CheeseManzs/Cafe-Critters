@@ -193,3 +193,6 @@ func newTurn() -> void:
 			return
 		EFFECTS.STRONGARM:
 			return
+		EFFECTS.RECKLESS:
+			effectDone = true
+			return

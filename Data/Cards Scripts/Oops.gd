@@ -18,6 +18,10 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power
 	var attackPower = 0
 	await EffectFlair.singleton._runFlair("Reckless")
+	#add reckless status
+	var recklessStatus: Status = Status.new(Status.EFFECTS.RECKLESS,1,0)
+	attacker.addStatusCondition(recklessStatus)
+	
 	var discardedCard = await attacker.discardRandomCard()
 	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
 		BattleLog.singleton.log("Card does not meet requirements...")
