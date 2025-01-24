@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://cmopm77ihw1bq"]
 
-[ext_resource type="Script" path="res://Data/Cards Scripts/Minor Block.gd" id="1_topui"]
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DB-004.gd" id="1_topui"]
 
 [resource]
 script = ExtResource("1_topui")

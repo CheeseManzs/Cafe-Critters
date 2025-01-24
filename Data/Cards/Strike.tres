@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://24xkm0mry784"]
 
-[ext_resource type="Script" path="res://Data/Cards Scripts/Strike.gd" id="1_6h0q0"]
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DB-001.gd" id="1_6h0q0"]
 [ext_resource type="Texture2D" uid="uid://b2rjweskrg7cm" path="res://Data/Card Art/STRIKE.jpg" id="1_j34ov"]
 
 [resource]

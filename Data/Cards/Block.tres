@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://duleufd5ra7w0"]
 
-[ext_resource type="Script" path="res://Data/Cards Scripts/Block.gd" id="1_jqsar"]
 [ext_resource type="Script" path="res://Battle Scripts/ai_info.gd" id="1_udnoe"]
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DB-002.gd" id="2_7dsrm"]
 
 [sub_resource type="Resource" id="Resource_uuk1e"]
 script = ExtResource("1_udnoe")
@@ -15,5 +15,5 @@ removesStatus = false
 statusRemoved = 0
 
 [resource]
-script = ExtResource("1_jqsar")
+script = ExtResource("2_7dsrm")
 aiDetails = SubResource("Resource_uuk1e")
