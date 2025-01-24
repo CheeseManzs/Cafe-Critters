@@ -28,7 +28,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 
 	
 	#deal damage
-	attacker.drawCards(1)
+	attacker.drawCards(2)
 	
 	return attackPower
 
