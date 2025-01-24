@@ -24,8 +24,8 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
 import csv
 import os.path
 
-def gen_program(cost, prio, align, role, desc, name):
-    filename = name.replace("&","")+".gd"
+def gen_program(cost, prio, align, role, desc, name, code):
+    filename = code+".gd"
     make = not os.path.isfile(filename)
     filetext = f'''extends Card
 
@@ -62,7 +62,7 @@ for card in cards:
     desc = card[7]
     if name == "Card Name":
         continue
-    gen_program(cost, prio, align, role, desc, name)
+    gen_program(cost, prio, align, role, desc, name, code)
     
 
 
