@@ -240,6 +240,7 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 			else:
 				uiButton.isDisabled = false
 			
+			
 		await gui_choice
 		var card = getActivePlayerMon().currentHand.storedCards[playerCardID]
 		if !cardsChosen.has(card):
@@ -249,6 +250,7 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 	for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
 			var uiButton = cardButtons[uiIndex]
 			uiButton.setTextColor(Color.WHITE)
+		
 	return cardsChosen
 
 
@@ -556,7 +558,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 				#cardButton.text += " (EMP)"
 				pass
 			## Disables the card if you can't affortd it.
-			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO)
+			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 

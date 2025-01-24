@@ -9,7 +9,10 @@ func _init() -> void:
 	name = "Last Stand"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+	var dmg = attacker.getAttack()
+	await defender.receiveDamage(dmg, attacker)
+	attacker.addStatusCondition(Status.new(Status.EFFECTS.CANT_PLAY))
+	return dmg
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
+	return attacker.getAttack()

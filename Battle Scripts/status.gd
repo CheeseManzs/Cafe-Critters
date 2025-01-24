@@ -21,7 +21,8 @@ enum EFFECTS {
 	RECKLESS,
 	STRONGARM,
 	TAGGED,
-	PRIORITY
+	PRIORITY,
+	CANT_PLAY
 }
 var X: int = 0
 var Y: int = 0
@@ -87,6 +88,8 @@ func toMini() -> String:
 			return "TAG"
 		EFFECTS.PRIORITY:
 			return "PTY"
+		EFFECTS.CANT_PLAY:
+			return "CNT"
 	return "N/A"
 	
 
@@ -130,6 +133,8 @@ func rawToString() -> String:
 			return "Strongarm"
 		EFFECTS.PRIORITY:
 			return "Priority"
+		EFFECTS.CANT_PLAY:
+			return "Can't Play"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -157,6 +162,8 @@ func carriesOverOnSwitch() -> bool:
 		EFFECTS.BARRIER:
 			return true
 		EFFECTS.REGEN:
+			return true
+		EFFECTS.CANT_PLAY:
 			return true
 	return false
 
@@ -202,5 +209,8 @@ func newTurn() -> void:
 			effectDone = true
 			return
 		EFFECTS.PRIORITY:
+			effectDone = true
+			return
+		EFFECTS.CANT_PLAY:
 			effectDone = true
 			return

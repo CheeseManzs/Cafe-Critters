@@ -18,7 +18,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		switchedIn = attacker.battleController.getActiveEnemyMon()
 	
 	var dmg = ceil(switchedIn.getAttack()*0.65)
-	defender.receiveDamage(dmg,switchedIn)
+	await defender.receiveDamage(dmg,switchedIn)
 	return dmg
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
