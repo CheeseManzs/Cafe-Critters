@@ -348,6 +348,10 @@ func promptPlayerSwitch() -> void:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout
 
+func promptEnemySwitch() -> void:
+	enemySwap(enemyAI.enemySwitch())
+	await get_tree().create_timer(1.0).timeout
+
 func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 	#initialize list of possible actions
 	var actions: Array[BattleAction] = []
@@ -606,8 +610,7 @@ func activeTurn() -> void:
 	#manage dead turns before anything else
 	var preEnd = false
 	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
-		enemySwap(enemyAI.enemySwitch())
-		await get_tree().create_timer(1.0).timeout
+		await promptEnemySwitch()
 		inTurn = false
 		preEnd = true
 	

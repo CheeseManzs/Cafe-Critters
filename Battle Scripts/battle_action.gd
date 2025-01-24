@@ -25,6 +25,9 @@ func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targ
 	battleController = p_controller
 	switching = p_switching
 	costMod = p_costMod
+	
+	if p_battleMon.hasStatus(Status.EFFECTS.PRIORITY):
+		priority += p_battleMon.getStatus(Status.EFFECTS.PRIORITY).X
 
 func getSwitchTarget() -> BattleMonster:
 	var tID: int = targetID

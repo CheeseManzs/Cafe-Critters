@@ -20,7 +20,8 @@ enum EFFECTS {
 	BECOME_RECKLESS,
 	RECKLESS,
 	STRONGARM,
-	TAGGED
+	TAGGED,
+	PRIORITY
 }
 var X: int = 0
 var Y: int = 0
@@ -84,6 +85,8 @@ func toMini() -> String:
 			return "STR"
 		EFFECTS.TAGGED:
 			return "TAG"
+		EFFECTS.PRIORITY:
+			return "PTY"
 	return "N/A"
 	
 
@@ -125,6 +128,8 @@ func rawToString() -> String:
 			return "Reckless"
 		EFFECTS.STRONGARM:
 			return "Strongarm"
+		EFFECTS.PRIORITY:
+			return "Priority"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -194,5 +199,8 @@ func newTurn() -> void:
 		EFFECTS.STRONGARM:
 			return
 		EFFECTS.RECKLESS:
+			effectDone = true
+			return
+		EFFECTS.PRIORITY:
 			effectDone = true
 			return

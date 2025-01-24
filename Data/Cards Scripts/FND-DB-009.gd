@@ -9,7 +9,6 @@ func _init() -> void:
 	name = "Speed Up"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+	var prioStatus = Status.new(Status.EFFECTS.PRIORITY,1)
+	attacker.addStatusCondition(prioStatus,true)
+	return 0
