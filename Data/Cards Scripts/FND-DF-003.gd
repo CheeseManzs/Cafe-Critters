@@ -10,9 +10,18 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg = attacker.getAttack()
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		dmg = ceil(dmg*1.5)
 	await defender.receiveDamage(dmg, attacker)
 	attacker.addStatusCondition(Status.new(Status.EFFECTS.CANT_PLAY))
 	return dmg
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return attacker.getAttack()
+	var dmg = attacker.getAttack()
+	if statusConditions.has(Status.EFFECTS.EMPOWER):
+		dmg = ceil(dmg*1.5)
+	return dmg
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.CANT_PLAY)

@@ -10,14 +10,42 @@ func _init(controller: BattleController, p_person: AIPersonality) -> void:
 	personality = p_person.clone()
 
 func maxDamage(mon: BattleMonster, target: BattleMonster):
+	var currentMP = mon.battleController.enemyMP
+	if mon.playerControlled:
+		currentMP = mon.battleController.playerMP
+	
 	var dmgs = [0]
 	for card in mon.currentHand.storedCards:
 		#calculate damage
-		var dmg = card.calcDamage(mon, target)
+		var dmg = 0
+		
+		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
+		if !ineligible:
+			dmg = card.calcDamage(mon, target)
+		
 		dmgs.append(dmg)
 	
 	#return highest damage number
 	return dmgs.max()
+
+func maxBlock(mon: BattleMonster, target: BattleMonster):
+	var currentMP = mon.battleController.enemyMP
+	if mon.playerControlled:
+		currentMP = mon.battleController.playerMP
+	
+	var blks = [0]
+	for card in mon.currentHand.storedCards:
+		#calculate damage
+		var blk = 0
+		
+		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
+		if !ineligible:
+			blk = card.calcShield(mon, target)
+		
+		blks.append(blk)
+	
+	#return highest damage number
+	return blks.max()
 
 func factorial(x: int) -> int:
 	var n: int = 1
@@ -26,7 +54,7 @@ func factorial(x: int) -> int:
 			n *= i
 	return n
 
-func scoreStatus(status: Status, mon: BattleMonster) -> float:
+func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> float:
 	if status == null:
 		return 0
 	match status.effect:
@@ -59,7 +87,7 @@ func scoreStatus(status: Status, mon: BattleMonster) -> float:
 		Status.EFFECTS.KNOWLEDGE:
 			return status.X
 		Status.EFFECTS.BARRIER:
-			return mon.health
+			return mon.health/10.0
 		Status.EFFECTS.REGEN:
 			var missingHP = mon.maxHP - mon.health
 			return min(missingHP + status.X, factorial(status.X))
@@ -67,6 +95,11 @@ func scoreStatus(status: Status, mon: BattleMonster) -> float:
 			return -1
 		Status.EFFECTS.STRONGARM:
 			return len(mon.currentHand.storedCards)
+		Status.EFFECTS.CANT_PLAY:
+			var oppurtunityCost = 0
+			for potentialCard in mon.currentHand.storedCards:
+				oppurtunityCost += 1
+			return -oppurtunityCost
 	return 0
 
 
@@ -85,7 +118,7 @@ func getChance(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	var perc = fits/total
 	return perc
 
-func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
+func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon: BattleMonster, currentMP = 0, targetMP = 0):
 	#setup scoring
 	var score = 0
 	
@@ -98,6 +131,11 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 		targEffHP += target.getStatus(Status.EFFECTS.BARRIER).X
 	
 	var cardDMG = min(monDamage,target.health + target.shield)
+	
+	#dont use all the strong attacks while the opponent can still block!
+	if maxBlock(target,mon) > 0:
+		cardDMG = maxDamage(mon,target) - cardDMG
+	
 	var cardDEF = card.calcShield(mon,target)*targDamage
 	
 	var statusGiven: Status = card.calcStatusGiven(mon, target)
@@ -105,19 +143,27 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card):
 	var statusCured: Status.EFFECTS = card.calcStatusCured(mon, target)
 	var activationChance = getChance(card, mon, target)
 	
+	if activeMon != null && activeMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		cardDMG *= 1.5
 	#add scores
 	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
 	
+	
+	
 	if statusGiven != null:
-		score += scoreStatus(statusGiven, mon)*personality.mechanics
+		score += 10*scoreStatus(statusGiven, mon, currentMP)*personality.mechanics
 	if statusInflicted != null:
-		score += -scoreStatus(statusInflicted, target)*personality.mechanics*activationChance
+		score += -10*scoreStatus(statusInflicted, target, targetMP)*personality.mechanics*activationChance
 	if statusCured != Status.EFFECTS.NONE:
-		score += -scoreStatus(Status.new(statusCured), mon)*personality.mechanics
+		score += -10*scoreStatus(Status.new(statusCured), mon, currentMP)*personality.mechanics
 	
 	if cardDMG >= targEffHP && activationChance >= 1:
 		score += cardDMG*personality.opportunism
+	
+	#if card.name == "Steady":
+		#print("\n",card.name+": ","\ncardDMG:",+cardDMG,"\nCardDEF:",cardDEF,"\nStatus:",10*(scoreStatus(statusGiven, mon, currentMP)-scoreStatus(statusInflicted, target, targetMP)-scoreStatus(Status.new(statusCured), mon, currentMP)))
+	
 	
 	return score
 
@@ -167,11 +213,14 @@ func enemyShouldSwitch():
 	var switchScore = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
 	
 	for otherMon in battleController.enemyTeam:
+		if !battleController.validSwap(mon, otherMon):
+			continue
 		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1]
-		if pot > switchScore && pot <= personality.standards:
+		print("sw/pot: ",switchScore,"/",pot,"|",100*(1 + personality.standards))
+		if pot > switchScore && pot >= 100*(1 + personality.standards):
+			print("found switch!")
 			shouldSwich = true
 			break
-	
 	return shouldSwich
 
 #choose cards from hand
@@ -196,14 +245,20 @@ func enemyShelfed(count: int) -> Array[BattleMonster]:
 
 func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 	var cards: Array[Card] = mon.currentHand.storedCards + mon.currentDeck.storedCards
-	
+	var activeMon: BattleMonster
 	#check for all possible choices
 	var available: Array[Card] = []
 	#keep track of how behind the enemy is in terms of mana production
 	var requiredMP = 0
 	var MP: int = battleController.enemyMP
+	var targetMP: int = battleController.playerMP
+	
 	if mon.playerControlled:
 		MP = battleController.playerMP
+		targetMP = battleController.enemyMP
+		activeMon = mon.battleController.getActivePlayerMon()
+	else:
+		activeMon = mon.battleController.getActiveEnemyMon()
 	for card in cards:
 		if card.cost <= MP:
 			available.push_back(card)
@@ -217,7 +272,7 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 	var avg: float = 0
 	var tot = 0
 	for card in available:
-		var score = scoreCard(mon, target, card)
+		var score = scoreCard(mon, target, card, activeMon)
 		avg += score
 		tot += 1
 		if score > maxScore:
@@ -229,14 +284,22 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 
 func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 	var cards: Array[Card] = mon.currentHand.storedCards
+	var activeMon: BattleMonster
 	
 	#check for all possible choices
 	var available: Array[Card] = []
 	#keep track of how behind the enemy is in terms of mana production
 	var requiredMP = 0
 	var MP: int = battleController.enemyMP
+	var targetMP: int = battleController.playerMP
+	
 	if mon.playerControlled:
 		MP = battleController.playerMP
+		targetMP = battleController.enemyMP
+		activeMon = mon.battleController.getActivePlayerMon()
+	else:
+		activeMon = mon.battleController.getActiveEnemyMon()
+	
 	for card in cards:
 		if card.cost <= MP:
 			available.push_back(card)
@@ -247,8 +310,11 @@ func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 	var scores = []
 	var maxScore: int = -999
 	var bestCard: Card = null
+
 	for card in available:
-		var score = scoreCard(mon, target, card)
+		
+		var score = scoreCard(mon, target, card, activeMon, MP, targetMP)
+		print(card.name+": ", score)
 		if score > maxScore:
 			maxScore = score
 			bestCard = card

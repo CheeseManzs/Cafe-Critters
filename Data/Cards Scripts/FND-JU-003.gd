@@ -9,7 +9,7 @@ func _init() -> void:
 	name = "Non-Pointy End"
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
-	if card.calcDamage(attacker,defender) > attacker.attack:
+	if attacker.hasStatus(Status.EFFECTS.RECKLESS):
 		return true
 	else:
 		return false

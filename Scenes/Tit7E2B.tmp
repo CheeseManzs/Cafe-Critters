@@ -10,10 +10,10 @@
 
 [sub_resource type="Resource" id="Resource_eb42p"]
 script = ExtResource("6_3vadh")
-aggression = 5.0
-caution = 0.0
-mechanics = 5.0
-standards = 0.0
+aggression = 1.0
+caution = 1.0
+mechanics = 2.0
+standards = 3.0
 opportunism = 10.0
 
 [node name="Title" type="Node2D"]

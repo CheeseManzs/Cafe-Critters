@@ -363,7 +363,7 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 		var trySwitch = false
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		
-		if !enemyAI.enemyShouldSwitch() && !mon.hasStatus(Status.EFFECTS.KO) && len(getActiveEnemyMon().playableCards()) > 0:
+		if !(enemyAI.enemyShouldSwitch() || mon.hasStatus(Status.EFFECTS.KO)) && len(getActiveEnemyMon().playableCards()) > 0:
 			#choose card if mon has not fainted
 			if len(mon.playableCards()) == 0:
 				BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
@@ -394,7 +394,7 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 					self
 				)
 				actions.push_back(battleAction)
-		elif enemyMP > 0 && canSwitch:
+		elif enemyMP > 0 && canSwitch && enemyAI.enemyShouldSwitch():
 			trySwitch = false
 			var switchID: int = enemyAI.enemySwitch()
 			if switchID == -1:
@@ -415,6 +415,7 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 			pass
 		
 		if trySwitch && enemyMP > 0:
+			pass
 			var switchID: int = enemyAI.enemyPossibleSwitch()
 			if switchID == -1:
 				continue
