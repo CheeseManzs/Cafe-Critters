@@ -7,8 +7,10 @@ func _init() -> void:
 	role = "Basic"
 	description = "Swap to another Fae, they make a 65% Attack."
 	name = "Sneak Attack"
+	
+	power = 0.65
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
 	var switchedIn: BattleMonster
 	if attacker.playerControlled:
 		await attacker.battleController.promptPlayerSwitch()
@@ -17,14 +19,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		await attacker.battleController.promptEnemySwitch()
 		switchedIn = attacker.battleController.getActiveEnemyMon()
 	
-	var dmg = ceil(switchedIn.getAttack()*0.65)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		dmg = ceil(dmg*1.5)
-	await defender.receiveDamage(dmg,switchedIn)
-	return dmg
-
-func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = ceil(attacker.getAttack()*0.65)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		dmg = ceil(dmg*1.5)
-	return dmg
+	await dealDamage(switchedIn, defender)

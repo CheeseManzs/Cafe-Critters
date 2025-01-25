@@ -7,16 +7,8 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "100% Defend."
 	name = "Block"
+	
+	shieldPower = 1
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = attacker.getDefense()
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shield = ceil(shield*1.5)
-	attacker.addShield(shield)
-	return shield
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = attacker.getDefense()
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shield = ceil(shield*1.5)
-	return shield
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)

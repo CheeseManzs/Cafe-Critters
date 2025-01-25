@@ -7,9 +7,14 @@ func _init() -> void:
 	role = "Guard"
 	description = "125% Defense. Gain Regen 5."
 	name = "Rejuvenate"
+	shieldPower = 1.25
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)
+	await attacker.addStatusCondition(Status.new(Status.EFFECTS.REGEN, 5), true)
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.REGEN, 5)

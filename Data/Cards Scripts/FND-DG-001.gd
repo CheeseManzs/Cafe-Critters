@@ -19,11 +19,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	attacker.addMP(mpGiven)
 	return mpGiven
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shieldGiven = 3
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shieldGiven = ceil(shieldGiven*1.5)
-	return shieldGiven
+
 
 #checks what status will be given to the user
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:

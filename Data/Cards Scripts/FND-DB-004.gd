@@ -8,15 +8,7 @@ func _init() -> void:
 	description = "50% Defend."
 	name = "Light Block"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = ceil(attacker.getDefense()/2.0)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shield = ceil(shield*1.5)
-	attacker.addShield(shield)
-	return shield
+	shieldPower = 0.5
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shield = ceil(attacker.getDefense()/2.0)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		shield = ceil(shield*1.5)
-	return shield
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)

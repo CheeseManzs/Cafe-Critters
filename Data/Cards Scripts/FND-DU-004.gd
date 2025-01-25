@@ -7,11 +7,11 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "40% Attack, Empowered: Empower the next card played."
 	name = "Espresso"
+	power = 0.4
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
-	var attackPower : int = ceil(0.4*attacker.getAttack())
-	await defender.receiveDamage(attackPower,attacker)
+	await dealDamage(attacker, defender, power, false)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
 	

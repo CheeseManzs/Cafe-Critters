@@ -47,21 +47,49 @@ var name: String
 #card rarity
 var rarity: RARITY
 
+var power: float = 0
+var shieldPower: float = 0
+
 var statusConditions: Array[Status.EFFECTS] = []
 
 @export var aiDetails: AIInfo
 @export var art: Texture2D
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
+
+#deal damage
+func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float = power, applyEmpower = true) -> int:
+	var dmg = _calcPower(attacker, defender, _power, applyEmpower)
+	await defender.receiveDamage(dmg, attacker)
+	return dmg
+	
+#give shield
+func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower, applyEmpower = true):
+	var shield = _calcShield(attacker, defender, _sp, applyEmpower)
+	await defender.addShield(shield)
+
+#for dynamic damage calculations
+func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float, applyEmpower = true) -> int:
+	var dmg = ceil(_power*attacker.getAttack())
+	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
+		dmg = ceil(dmg*1.5)
+	return dmg
+
+#for dynamic shield calculations
+func _calcShield(attacker: BattleMonster, defender: BattleMonster, _sp: float, applyEmpower = true) -> int:
+	var shield = ceil(_sp*attacker.getDefense())
+	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
+		shield = ceil(shield*1.5)
+	return shield
 
 #for ai damage calculations
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return 0
+	return _calcPower(attacker, defender, power)
 
 #for ai damage calculations
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return 0
+	return _calcShield(attacker, defender, shieldPower)
 
 #for ai damage calculations
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
@@ -81,6 +109,20 @@ func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	return true
+
+#utility functions
+func applyReckless(attacker: BattleMonster, defender: BattleMonster):
+	await EffectFlair.singleton._runFlair("Reckless")
+	#add reckless status
+	var recklessStatus: Status = Status.new(Status.EFFECTS.RECKLESS,1,0)
+	attacker.addStatusCondition(recklessStatus)
+	
+	var discardedCard = await attacker.discardRandomCard()
+	
+	if discardedCard == null:
+		BattleLog.singleton.log("No card to discard...")
+	
+	return discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
 
 func clone():
 	var newCard: Card = get_script().new()

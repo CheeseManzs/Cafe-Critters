@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://d07fdcyc88i5y"]
+
+[ext_resource type="Script" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
+[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
+[ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="3_7xba4"]
+[ext_resource type="Resource" uid="uid://dc4d16vxlrivo" path="res://Data/Monsters/ph_mon_t.tres" id="3_naqf8"]
+[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="4_uupr4"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_sfi70"]
+[ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
+
+[sub_resource type="Resource" id="Resource_eb42p"]
+script = ExtResource("6_3vadh")
+aggression = 5.0
+caution = 0.0
+mechanics = 5.0
+standards = 0.0
+opportunism = 10.0
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_uu8m1")
+debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_naqf8"), ExtResource("3_7xba4"), ExtResource("5_sfi70")])
+debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("5_sfi70"), ExtResource("4_uupr4"), ExtResource("3_7xba4")])
+debugPersonality = SubResource("Resource_eb42p")
+
+[node name="Control UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_top = 100.0
+offset_right = 960.0
+offset_bottom = 300.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]Café Critters[/center]
+[center][color=gold]Debug Test[/color][/center]"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 300.0
+offset_right = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Battle Button" type="Button" parent="Control UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Battle"
+
+[node name="Overworld Button" type="Button" parent="Control UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Overworld"
+
+[connection signal="pressed" from="Control UI/VBoxContainer/Battle Button" to="." method="loadScene" binds= ["Battle"]]
+[connection signal="pressed" from="Control UI/VBoxContainer/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]

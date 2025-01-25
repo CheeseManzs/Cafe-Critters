@@ -7,16 +7,8 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "50% Attack."
 	name = "Light Strike"
+	
+	power = 0.5
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = ceil(attacker.getAttack()/2.0)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		dmg = ceil(dmg*1.5)
-	var trueDmg = await defender.receiveDamage(dmg, attacker)
-	return trueDmg
-
-func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var dmg = ceil(attacker.getAttack()/2.0)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		dmg = ceil(dmg*1.5)
-	return dmg
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)

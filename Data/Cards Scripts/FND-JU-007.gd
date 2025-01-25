@@ -7,6 +7,8 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Reckless > 100% Attack. If Reckless, gain 2 mp. 125% Attack"
 	name = "Breakneck Barrage"
+	
+	power = 1.25
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	if card.calcDamage(attacker,defender) > attacker.attack:
@@ -14,29 +16,15 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 	else:
 		return false
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#calc attack power
-	var attackPower = 0
-	attackPower = 1.25*attacker.getAttack()
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)
 	
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	#deal damage
-	await defender.receiveDamage(attackPower, attacker)
-	await EffectFlair.singleton._runFlair("Reckless")
-	#add reckless status
-	var recklessStatus: Status = Status.new(Status.EFFECTS.RECKLESS,1,0)
-	attacker.addStatusCondition(recklessStatus)
-	
-	var discardedCard = await attacker.discardRandomCard()
-	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
+	if !(await applyReckless(attacker, defender)):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
-
-	attacker.addMP(2)
-
 	
-	return attackPower
+	attacker.addMP(2)
+	return
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var attackPower = 0

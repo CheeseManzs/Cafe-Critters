@@ -341,20 +341,11 @@ func promptPlayerSwitch() -> void:
 	BattleLog.singleton.log("Choose a switch-in!")
 	hidePlayerChoiceUI(true)
 	skipButton.disabled = true
-	var availableMon = false
 	for shelfUI in shelfedMonUI:
 		if shelfUI.connectedMon != null:
-			var canSwitchIn = shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)
-			shelfUI.switchButton.disabled = canSwitchIn
-			if canSwitchIn:
-				availableMon = true
-	
-	if availableMon:
-		await gui_choice
-		playerSwap(playerSwitchID)
-	else:
-		BattleLog.singleton.log("No switch-in available!")
-		
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
+	await gui_choice
+	playerSwap(playerSwitchID)
 	for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout

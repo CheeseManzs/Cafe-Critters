@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "If you were Reckless this turn, draw 2 cards. Attack 25%."
 	name = "Non-Pointy End"
+	power = 0.25
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	if attacker.hasStatus(Status.EFFECTS.RECKLESS):
@@ -14,27 +15,14 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 	else:
 		return false
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
 	#calc attack power
-	var attackPower = 0
-	attackPower = 0.25*attacker.getAttack()	
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	await defender.receiveDamage(attackPower, attacker)
+	await dealDamage(attacker, defender, power)
 	
 	if !attacker.hasStatus(Status.EFFECTS.RECKLESS):
 		BattleLog.singleton.log(attacker.rawData.name + " was not Reckless this turn...")
-		return attackPower
+		return
 
 	
-	#deal damage
+	#add cards
 	attacker.drawCards(2)
-	
-	return attackPower
-
-func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var attackPower = 0
-	attackPower = 0.25*attacker.getAttack()
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	return attackPower

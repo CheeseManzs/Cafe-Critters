@@ -7,9 +7,10 @@ func _init() -> void:
 	role = "Forward"
 	description = "40% Attack. Then do a 30% Attack to all opponent shelved Faes."
 	name = "Cleave"
+	
+	power = 0.4
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)
+	#DO THE REST HERE
 	pass

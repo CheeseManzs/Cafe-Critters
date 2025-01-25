@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Reckless > 100% Attack. If Reckless, Strongarm. Attack 200%."
 	name = "Blackjack Beatdown"
+	power = 2
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	if card.calcDamage(attacker,defender) > attacker.attack:
@@ -14,36 +15,17 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 	else:
 		return false
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
 	#calc attack power
-	var attackPower = 0
-	attackPower = 2*attacker.getAttack()
+	await dealDamage(attacker, defender)
 	
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	#deal damage
-	await defender.receiveDamage(attackPower, attacker)
-	
-	await EffectFlair.singleton._runFlair("Reckless")
-	#add reckless status
-	var recklessStatus: Status = Status.new(Status.EFFECTS.RECKLESS,1,0)
-	attacker.addStatusCondition(recklessStatus)
-	
-	var discardedCard = await attacker.discardRandomCard()
-	if discardedCard == null || !meetsRequirement(discardedCard, attacker, defender):
+	if !(await applyReckless(attacker, defender)):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
 
 	await attacker.addStatusCondition(Status.new(Status.EFFECTS.STRONGARM),true)
 	
-	return attackPower
-
-func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var attackPower = 0
-	attackPower = 2*attacker.getAttack()
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attackPower = ceil(attackPower*1.5)
-	return attackPower
+	return
 
 #checks what status will be given to the user
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
