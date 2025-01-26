@@ -381,15 +381,24 @@ func getKnowledge() -> int:
 		return getStatus(Status.EFFECTS.KNOWLEDGE).X
 	return 0
 #adds mp to the monster's team
-func addMP(mpAmount: int) -> void:
+func addMP(mpAmount: int, broadcast = true) -> void:
 	#log mp adding
-	BattleLog.singleton.log(rawData.name + "'s team gained " + str(mpAmount) + " MP")
+	if broadcast:
+		BattleLog.singleton.log(rawData.name + "'s team gained " + str(mpAmount) + " MP")
 	#if player, add mp to player variable
 	if playerControlled:
 		battleController.playerMP += mpAmount
 	#if enemy, add mp to enemy variable
 	else:
 		battleController.enemyMP += mpAmount
+
+func getMP() -> int:
+	#if player, add mp to player variable
+	if playerControlled:
+		return battleController.playerMP
+	#if enemy, add mp to enemy variable
+	else:
+		return battleController.enemyMP
 
 #adds to mp gain
 func addMPPerTurn(mpGainAmount: int) -> void:
