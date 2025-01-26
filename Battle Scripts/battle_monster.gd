@@ -29,6 +29,7 @@ var statusConditions: Array[Status]
 #extra cards to draw
 var extraDraw = 0
 var attackBonus = 0
+var temp_attackBonus = 0
 var defenseBonus = 0
 static var damagePopupPrefab: PackedScene
 
@@ -86,8 +87,11 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 			return status
 	return null
 
-func addAttackBonus(mod: float):
-	attackBonus += mod
+func addAttackBonus(mod: float, temporary: bool = false):
+	if temporary:
+		temp_attackBonus += mod
+	else:
+		attackBonus += mod
 	BattleLog.singleton.log(rawData.name + "'s gained " + str(100*mod) + "% Attack")
 
 func addDefenseBonus(mod: float):
@@ -254,7 +258,7 @@ func getSpeed():
 	return speed
 	
 func getAttack():
-	return attack*(1 + attackBonus)
+	return attack*(1 + attackBonus + temp_attackBonus)
 
 func getDefense():
 	return defense*(1 + defenseBonus)
@@ -352,6 +356,7 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	if attacker != self && attacker != null:
+		attacker.temp_attackBonus = 0
 		await attacker.atkAnim()
 	await attacker.getPassive().onAttack(attacker,battleController)
 	#apply barrier
