@@ -6,10 +6,10 @@ func _init() -> void:
 	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Draw 3 cards, then discard 3 cards at random."
-	name = ""
+	name = "Card Replacement Therapy"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await attacker.drawCards(3)
+	for i in range(3):
+		await attacker.discardRandomCard()
+	pass 
