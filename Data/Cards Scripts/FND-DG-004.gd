@@ -7,9 +7,9 @@ func _init() -> void:
 	role = "Guard"
 	description = "30% Defense. if Regenerating, draw 2."
 	name = "Recalibrate"
+	shieldPower = 0.3
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)
+	if attacker.hasStatus(Status.EFFECTS.REGEN):
+		await attacker.drawCards(2)
