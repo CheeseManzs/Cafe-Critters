@@ -8,8 +8,8 @@ func _init() -> void:
 	description = "Your next attack gains +50% if your opponent is Defending. Strongarm. Gain 2 mp."
 	name = "Battering Blow"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	if defender.shield > 0:
+		await attacker.addAttackBonus(0.5)
+		await attacker.addMP(2)
+		await attacker.addStatusCondition(Status.new(Status.EFFECTS.STRONGARM),true)

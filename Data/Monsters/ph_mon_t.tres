@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_irfdf"]
 [ext_resource type="Resource" uid="uid://bxdnh0ci88hdp" path="res://Data/Cards/Last Stand.tres" id="4_m7nla"]
-[ext_resource type="Resource" path="res://Data/Cards/Card Replacement Therapy.tres" id="5_2xldb"]
+[ext_resource type="Resource" uid="uid://dwgx8p6mnd65k" path="res://Data/Cards/Card Replacement Therapy.tres" id="5_2xldb"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="10_o8t8i"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_l1o5y"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="12_ippfy"]

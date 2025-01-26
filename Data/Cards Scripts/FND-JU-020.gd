@@ -9,6 +9,7 @@ func _init() -> void:
 	name = "Shed & Split"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+	
 	pass
 
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:

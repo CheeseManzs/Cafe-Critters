@@ -51,6 +51,7 @@ var power: float = 0
 var shieldPower: float = 0
 
 var statusConditions: Array[Status.EFFECTS] = []
+var tags: Array[String] = []
 
 @export var aiDetails: AIInfo
 @export var art: Texture2D
