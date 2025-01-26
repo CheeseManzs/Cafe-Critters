@@ -5,7 +5,7 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Slocha"
-	description = "he ca"
+	description = "As an additional cost to play this card, exile 12 cards from your graveyard. Empower the next card played."
 	name = "Brew"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:

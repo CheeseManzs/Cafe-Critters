@@ -8,8 +8,8 @@ func _init() -> void:
 	description = "Gain Haste 2. If Hasted, gain Haste 5 instead. "
 	name = "Bolster"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	if attacker.hasStatus(Status.EFFECTS.HASTE):
+		await giveStatus(attacker,Status.EFFECTS.HASTE,5)
+	else:
+		await giveStatus(attacker,Status.EFFECTS.HASTE,2)
