@@ -10,11 +10,12 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
-	var regStatus = Status.new(Status.EFFECTS.REGEN, 3)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		regStatus.X = ceil(regStatus.X*1.5)
+	for statusEffect in attacker.statusConditions:
+		if !statusEffect.isPositive():
+			statusEffect.effectDone = true
+	BattleLog.log("All negative status effects cleared from " + attacker.rawData.name)
 	#apply to target
-	await attacker.addStatusCondition(regStatus, true)
+	await giveStatus(attacker,Status.EFFECTS.REGEN, 3)
 	return 0
 
 #checks what status will be given to the user

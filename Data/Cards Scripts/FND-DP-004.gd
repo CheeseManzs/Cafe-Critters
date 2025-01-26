@@ -9,13 +9,7 @@ func _init() -> void:
 	name = "Hinder"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#create status object
-	var slowStatus = Status.new(Status.EFFECTS.SLOW, 2)
-	#apply empower
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		slowStatus.X = ceil(slowStatus.X*1.5)
-	#apply to target
-	await defender.addStatusCondition(slowStatus, true)
+	await giveStatus(defender,Status.EFFECTS.SLOW,2)
 	return 0
 
 #checks what status will be inflicted on the defender

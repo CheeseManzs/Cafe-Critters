@@ -9,11 +9,7 @@ func _init() -> void:
 	name = "Speed Up"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var prioLevel = 1
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		prioLevel = ceil(prioLevel*1.5)
-	var prioStatus = Status.new(Status.EFFECTS.PRIORITY,prioLevel)
-	attacker.addStatusCondition(prioStatus,true)
+	await giveStatus(attacker,Status.EFFECTS.PRIORITY,1)
 	return 0
 
 #checks what status will be given to the user

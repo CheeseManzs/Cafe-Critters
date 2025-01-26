@@ -80,7 +80,7 @@ func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: 
 	await target.addStatusCondition(Status.new(effect, proc_X, proc_Y),broadcast)
 #quick shortcut
 func giveStatus_noempower(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true):
-	giveStatus(target, effect, X, Y,broadcast, false)
+	await giveStatus(target, effect, X, Y,broadcast, false)
 
 #for dynamic damage calculations
 func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float, applyEmpower = true) -> int:

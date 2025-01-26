@@ -13,9 +13,8 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var hasteLevel = 1
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		hasteLevel = 3
-	var hasteStatus = Status.new(Status.EFFECTS.HASTE,hasteLevel)
 	#apply to target
-	await attacker.addStatusCondition(hasteStatus, true)
+	await giveStatus_noempower(attacker,Status.EFFECTS.HASTE,hasteLevel)
 	return 0
 
 #checks what status will be given to the user

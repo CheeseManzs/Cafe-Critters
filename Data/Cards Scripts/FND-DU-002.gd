@@ -13,9 +13,8 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var slowLevel = 1
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
 		slowLevel = 3
-	var slowStatus = Status.new(Status.EFFECTS.SLOW,slowLevel)
 	#apply to target
-	await defender.addStatusCondition(slowStatus, true)
+	await giveStatus_noempower(defender,Status.EFFECTS.SLOW,slowLevel)
 	return 0
 
 #checks what status will be given to the user

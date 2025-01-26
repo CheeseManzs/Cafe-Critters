@@ -17,8 +17,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		barStatus.X = 0
 		barStatus.effectDone = true
 	
-	#draw cards
-	await attacker.addStatusCondition(Status.new(Status.EFFECTS.REGEN, regenLevel),true)
+	await giveStatus(attacker, Status.EFFECTS.REGEN, regenLevel)
 	return regenLevel
 
 #checks what status will be given to the user

@@ -9,5 +9,4 @@ func _init() -> void:
 	name = "Assist"
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	var statusLevel
-	await attacker.addStatusCondition(Status.new(Status.EFFECTS.HASTE, 2))
+	await giveStatus(attacker,Status.EFFECTS.HASTE, 2)

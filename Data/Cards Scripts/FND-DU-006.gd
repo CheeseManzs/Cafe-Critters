@@ -10,7 +10,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	attacker.setAttack(0)
-	await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
+	await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
 	return 0
 
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:

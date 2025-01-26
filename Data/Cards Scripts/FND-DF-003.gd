@@ -12,7 +12,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
-	attacker.addStatusCondition(Status.new(Status.EFFECTS.CANT_PLAY))
+	await giveStatus(attacker,Status.EFFECTS.CANT_PLAY,0,0,false,false)
 
 #checks what status will be given to the user
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:

@@ -9,10 +9,7 @@ func _init() -> void:
 	name = "Caffeinate"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#create status object
-	var empStatus = Status.new(Status.EFFECTS.EMPOWER_PLAYED)
-	#apply to target
-	await attacker.addStatusCondition(empStatus, false)
+	await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
 	return 0
 
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:

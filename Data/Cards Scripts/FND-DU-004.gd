@@ -13,7 +13,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
 	await dealDamage(attacker, defender, power, false)
 	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
+		await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
 	
 	return 0
 

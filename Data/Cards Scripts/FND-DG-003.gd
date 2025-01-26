@@ -11,7 +11,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)
-	await attacker.addStatusCondition(Status.new(Status.EFFECTS.REGEN, 5), true)
+	await giveStatus_noempower(attacker,Status.EFFECTS.REGEN, 5)
 
 
 

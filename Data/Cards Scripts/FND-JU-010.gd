@@ -23,7 +23,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
 
-	await giveStatus(attacker, Status.EFFECTS.STRONGARM)
+	await giveStatus_noempower(attacker, Status.EFFECTS.STRONGARM)
 	
 	return
 

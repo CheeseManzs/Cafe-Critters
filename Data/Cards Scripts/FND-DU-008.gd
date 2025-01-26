@@ -11,7 +11,7 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg: int = attacker.getAttack()
 	await attacker.receiveDamage(dmg, attacker)
-	await attacker.addStatusCondition(Status.new(Status.EFFECTS.EMPOWER_PLAYED))
+	await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
 	return 0
 
 #checks what status will be given to the user
