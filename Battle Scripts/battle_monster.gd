@@ -293,13 +293,10 @@ func dmgAnim() -> void:
 		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
 	obj.hitAnimation()
 
-func atkAnim() -> void:
-	var obj: MonsterDisplay
-	if playerControlled:
-		obj = battleController.playerObjs[battleController.playerTeam.find(self)]
-	else:
-		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
-	await obj.contactAnimation()
+
+func atkAnim(target: BattleMonster) -> void:
+	var obj: MonsterDisplay = getMonsterDisplay()
+	await obj.contactAnimation(target.getMonsterDisplay())
 
 #draw cards from deck	
 func drawCards(count: int) -> void:
@@ -357,7 +354,7 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	if attacker != self && attacker != null:
 		attacker.temp_attackBonus = 0
-		await attacker.atkAnim()
+		await attacker.atkAnim(self)
 	await attacker.getPassive().onAttack(attacker,battleController)
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):

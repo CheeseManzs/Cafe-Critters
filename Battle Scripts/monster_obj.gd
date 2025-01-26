@@ -75,9 +75,9 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 	#$Sprite3D.modulate.a = 1
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
-	
 
-func contactAnimation() -> void:
+
+func contactAnimation(target: MonsterDisplay) -> void:
 	lockToIntendedPosition = false
 	var elapsed: float = 0
 	var timeMax: float = 0.3
@@ -89,10 +89,12 @@ func contactAnimation() -> void:
 		back = -1
 	
 	var originalPos = position
-	var deltaPos = Vector3(-distance*back, 0, 0)
+	var deltaPos = (target.global_position - global_position)
 	elapsed = 0
 	connectedMon.battleController.dashParticles.process_material.direction.x = -back
 	connectedMon.battleController.dashParticles.position = originalPos
+	var deltaAngle = acos((deltaPos).normalized().x)
+	connectedMon.battleController.dashParticles.rotation_degrees = Vector3(0,0,deltaAngle)
 	connectedMon.battleController.dashParticles.emitting = true
 	while elapsed < timeMax/2:
 		var a_progress: float = elapsed/(timeMax/2.0)
@@ -111,7 +113,7 @@ func contactAnimation() -> void:
 	elapsed = 0
 	connectedMon.battleController.dashParticles.position = originalPos + deltaPos*(1 - dashFraction)
 	await get_tree().create_timer(0.05).timeout
-	connectedMon.battleController.createImpact(originalPos + Vector3(-back*(distance + 0.2), 0.5, 0.1))
+	connectedMon.battleController.createImpact(originalPos + deltaPos + Vector3(0.2, 0.5, 0.1))
 	contactReturn(timeMax, originalPos, deltaPos, dashFraction)
 	
 
