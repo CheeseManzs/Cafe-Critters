@@ -104,6 +104,11 @@ func createMonster(isPlayer, monObj, tID) -> Node3D:
 	add_child(newObj)
 	return newObj
 
+func getTeam(monster: BattleMonster) -> Array[BattleMonster]:
+	if monster.playerControlled:
+		return playerTeam
+	else:
+		return enemyTeam
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	print("staring battle!")
