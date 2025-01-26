@@ -7,9 +7,12 @@ func _init() -> void:
 	role = "Haatea"
 	description = "10% Attack. Gain Regen equal to damage dealt. "
 	name = "Lavender Leech"
+	power = 0.1
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	var dmg = _calcPower(attacker, defender,power)
+	await defender.receiveDamage(power,attacker)
+	await giveStatus_noempower(attacker,Status.EFFECTS.REGEN,dmg)
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.REGEN, _calcPower(attacker, defender,power))
