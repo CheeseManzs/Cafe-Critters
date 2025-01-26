@@ -107,9 +107,8 @@ func discardAnimation(card: Card) -> void:
 	
 	await battleController.get_tree().create_timer(1.0).timeout
 	
-	for i in 1:
-		for display in battleController.cardButtons:
-			await battleController.get_tree().create_timer(0.05).timeout
+	for display in battleController.cardButtons:
+		await battleController.get_tree().create_timer(0.05).timeout
 	
 	await battleController.get_tree().create_timer(1.0).timeout
 	
@@ -118,6 +117,7 @@ func discardAnimation(card: Card) -> void:
 			display.raise(2)
 			await battleController.get_tree().create_timer(1.0).timeout
 			display.launch()
+			break
 	
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
