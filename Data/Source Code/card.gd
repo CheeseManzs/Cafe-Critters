@@ -64,11 +64,23 @@ func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float 
 	var dmg = _calcPower(attacker, defender, _power, applyEmpower)
 	await defender.receiveDamage(dmg, attacker)
 	return dmg
-	
+
 #give shield
 func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower, applyEmpower = true):
 	var shield = _calcShield(attacker, defender, _sp, applyEmpower)
 	await defender.addShield(shield)
+
+#give status
+func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true, applyEmpower = true):
+	var proc_X = X
+	var proc_Y = Y
+	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
+		proc_X = ceil(proc_X*1.5)
+		proc_Y = ceil(proc_Y*1.5)
+	await target.addStatusCondition(Status.new(effect, proc_X, proc_Y),broadcast)
+#quick shortcut
+func giveStatus_noempower(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true):
+	giveStatus(target, effect, X, Y,broadcast, false)
 
 #for dynamic damage calculations
 func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float, applyEmpower = true) -> int:

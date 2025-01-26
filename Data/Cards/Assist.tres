@@ -1,19 +1,6 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dqtq4dx1gk8nh"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dqtq4dx1gk8nh"]
 
-[ext_resource type="Script" path="res://Battle Scripts/ai_info.gd" id="1_1wede"]
-[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DG-001.gd" id="2_x6ji6"]
-
-[sub_resource type="Resource" id="Resource_t61fu"]
-script = ExtResource("1_1wede")
-givesStatus = true
-statusGiven = 5
-statusGivenLevel = 2
-inflictsStatus = false
-statusInflicted = 0
-statusInflictedLevel = 0
-removesStatus = false
-statusRemoved = 0
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DP-002.gd" id="1_74tmf"]
 
 [resource]
-script = ExtResource("2_x6ji6")
-aiDetails = SubResource("Resource_t61fu")
+script = ExtResource("1_74tmf")

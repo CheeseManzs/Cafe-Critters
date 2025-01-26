@@ -8,8 +8,9 @@ func _init() -> void:
 	description = "Clear all enemy positive effects. Apply Slow 1 to enemy."
 	name = "Rinse"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	for statusEffect in defender.statusConditions:
+		if statusEffect.isPositive():
+			statusEffect.effectDone = true
+	BattleLog.singleton.log("All positive effects cleared from " + defender.rawData.name)
+	await giveStatus(defender, Status.EFFECTS.SLOW,1)

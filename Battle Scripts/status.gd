@@ -149,6 +149,28 @@ func toString() -> String:
 	
 	return string
 
+func isPositive() -> bool:
+	match effect:
+		EFFECTS.EMPOWER:
+			return true
+		EFFECTS.EMPOWER_NEXT:
+			return true
+		EFFECTS.EMPOWER_PLAYED:
+			return true
+		EFFECTS.HASTE:
+			return true
+		EFFECTS.KNOWLEDGE:
+			return true
+		EFFECTS.BARRIER:
+			return true
+		EFFECTS.REGEN:
+			return true
+		EFFECTS.STRONGARM:
+			return true
+		EFFECTS.PRIORITY:
+			return true
+	return false
+
 func carriesOverOnSwitch() -> bool:
 	match effect:
 		EFFECTS.EMPOWER_PLAYED:

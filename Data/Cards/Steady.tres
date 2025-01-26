@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cad3v1s1pss5v"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-DG-001.gd" id="1_rpkb6"]
+
+[resource]
+script = ExtResource("1_rpkb6")
