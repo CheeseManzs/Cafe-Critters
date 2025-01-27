@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbgwin8c5hk12"]
+
+[ext_resource type="PackedScene" uid="uid://dh7b1k868hudm" path="res://Prefabs/Dice/placeholder dice/Dice06.fbx" id="1_ln28d"]
+[ext_resource type="Script" path="res://Battle Scripts/dice_color.gd" id="2_5ucmf"]
+[ext_resource type="Material" uid="uid://g406n076613j" path="res://Prefabs/Dice/placeholder dice/DiceWhite.tres" id="2_740nd"]
+[ext_resource type="Material" uid="uid://sihptjc76e6f" path="res://Prefabs/Dice/placeholder dice/DiceBlack.tres" id="3_2hhaj"]
+
+[node name="Dice06" node_paths=PackedStringArray("meshObj") instance=ExtResource("1_ln28d")]
+script = ExtResource("2_5ucmf")
+meshObj = NodePath("Cube")
+
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_740nd")
+surface_material_override/1 = ExtResource("3_2hhaj")
+surface_material_override/2 = ExtResource("3_2hhaj")

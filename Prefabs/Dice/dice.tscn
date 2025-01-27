@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://hs512cq25euv"]
+
+[ext_resource type="Script" path="res://Battle Scripts/dice.gd" id="1_q8408"]
+[ext_resource type="PackedScene" uid="uid://cbgwin8c5hk12" path="res://Prefabs/Dice/placeholder dice/dice_06.tscn" id="2_hby3g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_spco3"]
+
+[node name="Dice" type="RigidBody3D" node_paths=PackedStringArray("rigidbody", "diceColor")]
+transform = Transform3D(0.853796, 0.353489, -0.382201, -2.27565e-08, 0.734145, 0.678993, 0.520607, -0.579722, 0.62681, 0, 5.59033e-07, -12.7892)
+script = ExtResource("1_q8408")
+rigidbody = NodePath(".")
+diceColor = NodePath("Dice06")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_spco3")
+
+[node name="Dice06" parent="." instance=ExtResource("2_hby3g")]

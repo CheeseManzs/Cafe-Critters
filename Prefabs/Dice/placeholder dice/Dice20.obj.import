@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bt5hfy4xtqet"
+path="res://.godot/imported/Dice20.obj-8094c310cd91fa5233421127be9fd370.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Dice20.obj-8094c310cd91fa5233421127be9fd370.mesh"]
+
+source_file="res://Prefabs/Dice/placeholder dice/Dice20.obj"
+dest_files=["res://.godot/imported/Dice20.obj-8094c310cd91fa5233421127be9fd370.mesh", "res://.godot/imported/Dice20.obj-8094c310cd91fa5233421127be9fd370.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
