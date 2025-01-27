@@ -10,6 +10,7 @@ enum EFFECTS {
 	HASTE,
 	SLOW,
 	SUSPEND,
+	BOIL,
 	DREDGE,
 	FLOTSAM,
 	SALVAGE,
@@ -64,6 +65,8 @@ func toMini() -> String:
 			return "SLW"
 		EFFECTS.SUSPEND:
 			return "SSP"
+		EFFECTS.BOIL:
+			return "BOL"
 		EFFECTS.DREDGE:
 			return "DRG"
 		EFFECTS.FLOTSAM:
@@ -111,6 +114,8 @@ func rawToString() -> String:
 			return "Slow"
 		EFFECTS.SUSPEND:
 			return "Suspend"
+		EFFECTS.BOIL:
+			return "Boil"
 		EFFECTS.DREDGE:
 			return "Dredge"
 		EFFECTS.FLOTSAM:
@@ -159,6 +164,8 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.HASTE:
 			return true
+		EFFECTS.BOIL:
+			return true
 		EFFECTS.KNOWLEDGE:
 			return true
 		EFFECTS.BARRIER:
@@ -178,6 +185,8 @@ func carriesOverOnSwitch() -> bool:
 		EFFECTS.HASTE:
 			return true
 		EFFECTS.SLOW:
+			return true
+		EFFECTS.BOIL:
 			return true
 		EFFECTS.KNOWLEDGE:
 			return true
@@ -204,6 +213,8 @@ func newTurn() -> void:
 			if X <= 0:
 				effectDone = true
 			return
+		EFFECTS.BOIL:
+			effectDone = true
 		EFFECTS.SLOW:
 			if X <= 0:
 				effectDone = true

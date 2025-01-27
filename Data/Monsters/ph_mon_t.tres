@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_irfdf"]
 [ext_resource type="Resource" uid="uid://cb4rdms84gvuh" path="res://Data/Cards/Trunk Shot.tres" id="3_80ppw"]
-[ext_resource type="Resource" uid="uid://dwgx8p6mnd65k" path="res://Data/Cards/Card Replacement Therapy.tres" id="5_2xldb"]
+[ext_resource type="Resource" uid="uid://bybe3ph1v1ud2" path="res://Data/Cards/Boil.tres" id="4_en5e1"]
 [ext_resource type="Resource" uid="uid://dvteihkyuvwkv" path="res://Data/Cards/Cleave.tres" id="6_4n2ws"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_l1o5y"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="12_ippfy"]
@@ -12,7 +12,7 @@
 [sub_resource type="Resource" id="Resource_0uwxn"]
 script = ExtResource("1_ukx36")
 name = "Deck"
-storedCards = Array[ExtResource("2_irfdf")]([ExtResource("3_80ppw"), ExtResource("3_80ppw"), ExtResource("3_80ppw"), ExtResource("5_2xldb"), ExtResource("6_4n2ws"), ExtResource("6_4n2ws"), ExtResource("6_4n2ws"), ExtResource("6_4n2ws")])
+storedCards = Array[ExtResource("2_irfdf")]([ExtResource("3_80ppw"), ExtResource("3_80ppw"), ExtResource("3_80ppw"), ExtResource("4_en5e1"), ExtResource("6_4n2ws"), ExtResource("4_en5e1"), ExtResource("6_4n2ws"), ExtResource("4_en5e1")])
 
 [resource]
 script = ExtResource("12_ippfy")

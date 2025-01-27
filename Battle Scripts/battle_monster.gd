@@ -227,7 +227,7 @@ func addStatusCondition(status: Status, broadcast = false):
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
-	#if effect is suspend then it occurs immediately
+	#if effect is ko, suspend or strongarm then it occurs immediately
 	match status.effect:
 		Status.EFFECTS.KO:
 			await getPassive().onSelfKO(self,battleController)
@@ -251,8 +251,11 @@ func addStatusCondition(status: Status, broadcast = false):
 				await battleController.getOpposingMon(playerControlled).discardRandomCard()
 				return
 	#enemy instant effects
-	
-	statusConditions.push_back(status)
+	if hasStatus(status.effect):
+		getStatus(status.effect).X += status.X
+		getStatus(status.effect).Y += status.Y
+	else:
+		statusConditions.push_back(status)
 	
 func getSpeed():
 	return speed

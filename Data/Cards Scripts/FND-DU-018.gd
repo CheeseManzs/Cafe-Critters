@@ -8,8 +8,9 @@ func _init() -> void:
 	description = "Whenever your opponent plays a card this turn, gain Regen 1. "
 	name = "Boil"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveStatus(attacker,Status.EFFECTS.BOIL)
 	pass
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.BOIL)

@@ -8,8 +8,14 @@ func _init() -> void:
 	description = "Consume all Barrier. Gain Regen per Barrier consumed. "
 	name = "Barrier Absorption "
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	if attacker.hasStatus(Status.EFFECTS.BARRIER):
+		var barrierStatus = attacker.getStatus(Status.EFFECTS.BARRIER)
+		await giveStatus(attacker,Status.EFFECTS.REGEN,barrierStatus.X)
+		barrierStatus.effectDone
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	if attacker.hasStatus(Status.EFFECTS.BARRIER):
+		var barrierStatus = attacker.getStatus(Status.EFFECTS.BARRIER)
+		return Status.new(Status.EFFECTS.REGEN, barrierStatus.X)
+	return null

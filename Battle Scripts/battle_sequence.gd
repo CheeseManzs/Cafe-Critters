@@ -50,6 +50,15 @@ func runActions(battleController: Node) -> void:
 			await battleController.get_tree().create_timer(0.75).timeout
 			BattleLog.log(action.card.name + " was Empowered!")
 			await EffectFlair.singleton._runFlair("Empowered",Color.LIME_GREEN)
+		#if opponent has boil, give MP
+		var opposingMon: BattleMonster = action.battleController.getOpposingMon(action.battleMonster.playerControlled)
+		if opposingMon != null && opposingMon.hasStatus(Status.EFFECTS.BOIL) && !opposingMon.getStatus(Status.EFFECTS.BOIL).effectDone:
+			await battleController.get_tree().create_timer(0.25).timeout
+			await EffectFlair.singleton._runFlair("Boil",Color.BURLYWOOD)
+			var regenLevel = 0
+			#if opposingMon.hasStatus(Status.EFFECTS.REGEN):
+				#regenLevel = opposingMon.getStatus(Status.EFFECTS.REGEN).X
+			opposingMon.addStatusCondition(Status.new(Status.EFFECTS.REGEN,regenLevel+1),true)
 			#await battleController.get_tree().create_timer(0.75).timeout
 		
 		action.battleMonster.removeMP(action.card.cost)
