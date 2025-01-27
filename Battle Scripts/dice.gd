@@ -27,11 +27,9 @@ func roll():
 	while detectSide:
 		await get_tree().process_frame
 	var num = getNumber()
-	print(global_transform.basis.y,num)
 	var t = 0
 	var oldColor: Color = Color.BLACK
 	var newColor: Color = Color.RED
-	print("rolling!")
 	while t < 1:
 		var progress = 2*(1-pow(1-0.5*t,3))
 		diceColor.indentColor = lerp(oldColor, newColor, 0.8*progress)
@@ -46,7 +44,6 @@ func roll():
 	return num  
 
 func resetRoll():
-	print("roll!")
 	rigidbody.freeze = false
 	diceColor.indentColor = Color.BLACK
 	global_position = ogPos

@@ -273,6 +273,7 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 	var tot = 0
 	for card in available:
 		var score = scoreCard(mon, target, card, activeMon)
+		print("potential " + card.name+": ",score)
 		avg += score
 		tot += 1
 		if score > maxScore:

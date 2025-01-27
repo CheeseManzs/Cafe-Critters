@@ -69,7 +69,6 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 		var progress: float = (1 - dashFraction) + dashFraction*elapsed/(timeMax/2.0)
 		position = originalPos + deltaPos*pow(1 - progress, 3)
 		$Sprite3D.modulate.a = (a_progress)
-		print(a_progress)
 		elapsed += lastDelta
 		await get_tree().create_timer(lastDelta).timeout
 	#$Sprite3D.modulate.a = 1
@@ -82,7 +81,6 @@ func contactAnimation(target: MonsterDisplay) -> void:
 	var elapsed: float = 0
 	var timeMax: float = 0.3
 	var distance: float = 1.8*abs(getMonsterPosition().x)
-	print("dist:",distance)
 	var dashFraction = 0.5
 	var back: int = 1
 	if playerControlled:
@@ -105,7 +103,6 @@ func contactAnimation(target: MonsterDisplay) -> void:
 		elapsed += lastDelta
 		await get_tree().create_timer(lastDelta).timeout
 	connectedMon.battleController.dashParticles.emitting = false
-	print("final pos:",originalPos + deltaPos*1)
 	
 	
 	
