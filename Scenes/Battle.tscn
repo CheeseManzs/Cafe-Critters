@@ -141,33 +141,6 @@ offset_right = 2294.0
 offset_bottom = 120.0
 enemy = true
 
-[node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI"]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 175.0
-offset_right = 428.0
-offset_bottom = 435.0
-
-[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
-custom_minimum_size = Vector2(300, 66.655)
-layout_mode = 2
-battleController = NodePath("../../../Battle Controller")
-
-[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
-custom_minimum_size = Vector2(300, 66.655)
-layout_mode = 2
-battleController = NodePath("../../../Battle Controller")
-
-[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
-custom_minimum_size = Vector2(300, 66.655)
-layout_mode = 2
-battleController = NodePath("../../../Battle Controller")
-
-[node name="Skip Button" type="Button" parent="Control UI/Shelfed Mon View"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Skip"
-
 [node name="Details Panel" type="Panel" parent="Control UI" node_paths=PackedStringArray("titleLabel", "canvasContainer", "displayContainer")]
 clip_contents = true
 layout_mode = 1
@@ -387,23 +360,10 @@ bbcode_enabled = true
 text = "[center]6[/center]"
 scroll_active = false
 
-[node name="Deck Pivot" type="Control" parent="Control UI"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 168.0
-offset_top = -182.0
-offset_right = 208.0
-offset_bottom = -142.0
-grow_vertical = 0
-script = ExtResource("22_wgwlo")
-cardBackPrefab = ExtResource("5_1cnu7")
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="SubViewport" type="SubViewport" parent="Control UI/SubViewportContainer"]
 transparent_bg = true
@@ -416,6 +376,7 @@ render_target_update_mode = 4
 [node name="Dice Camera" type="Camera3D" parent="Control UI/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 100, -14.134, 0)
 environment = SubResource("Environment_7estt")
+size = 10.0
 
 [node name="SubWorld" type="Node3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.81097e-07, -6.43075)
@@ -431,6 +392,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40759e-07, 3.22019)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld/Node3D/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.531113, -1.8763, -6.20004)
 shape = SubResource("BoxShape3D_e7phk")
+
+[node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI"]
+z_index = 1
+layout_mode = 0
+offset_left = 128.0
+offset_top = 175.0
+offset_right = 428.0
+offset_bottom = 435.0
+
+[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+custom_minimum_size = Vector2(300, 66.655)
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
+
+[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+custom_minimum_size = Vector2(300, 66.655)
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
+
+[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+custom_minimum_size = Vector2(300, 66.655)
+layout_mode = 2
+battleController = NodePath("../../../Battle Controller")
+
+[node name="Skip Button" type="Button" parent="Control UI/Shelfed Mon View"]
+z_index = 40
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Skip"
+
+[node name="Deck Pivot" type="Control" parent="Control UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 168.0
+offset_top = -182.0
+offset_right = 208.0
+offset_bottom = -142.0
+grow_vertical = 0
+script = ExtResource("22_wgwlo")
+cardBackPrefab = ExtResource("5_1cnu7")
 
 [node name="DashParticles" type="GPUParticles3D" parent="."]
 emitting = false

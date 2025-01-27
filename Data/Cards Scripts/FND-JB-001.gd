@@ -2,7 +2,7 @@ extends Card
 
 func _init() -> void:
 	cost = 1
-	priority = 0
+	priority = 2
 	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Roll two 6-sided die. (Number rolled x 5)% Defend."
