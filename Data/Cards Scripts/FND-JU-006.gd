@@ -8,8 +8,7 @@ func _init() -> void:
 	description = "Reckless. Your next attack gains +100%. Gain 1 mp"
 	name = "Stack The Deck"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await applyReckless(attacker, defender)
+	await attacker.addAttackBonus(1)
+	await attacker.addMP(1)

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=19 format=3 uid="uid://b3rp3vvccagnq"]
+[gd_resource type="Resource" script_class="Monster" load_steps=21 format=3 uid="uid://b3rp3vvccagnq"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="1_ng66v"]
@@ -15,6 +15,8 @@
 [ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="11_awhvu"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="12_qyths"]
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="13_jhrcl"]
+[ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="16_58exb"]
+[ext_resource type="Resource" uid="uid://c8uuewegmowut" path="res://Data/Cards/Stack The Deck.tres" id="17_j3lww"]
 
 [sub_resource type="Resource" id="Resource_y5cq6"]
 script = ExtResource("2_j0ra4")
@@ -29,7 +31,7 @@ storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("6_knfcj"), ExtResource
 [sub_resource type="Resource" id="Resource_5u6vm"]
 script = ExtResource("2_j0ra4")
 name = "Starting Deck"
-storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource("4_degly"), ExtResource("5_u53q0"), ExtResource("5_u53q0"), ExtResource("6_knfcj"), ExtResource("7_a0no4"), ExtResource("7_a0no4"), ExtResource("8_d38gr"), ExtResource("8_d38gr"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("11_awhvu"), ExtResource("11_awhvu"), ExtResource("12_qyths"), ExtResource("12_qyths"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl")])
+storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource("4_degly"), ExtResource("5_u53q0"), ExtResource("5_u53q0"), ExtResource("6_knfcj"), ExtResource("7_a0no4"), ExtResource("7_a0no4"), ExtResource("8_d38gr"), ExtResource("8_d38gr"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("11_awhvu"), ExtResource("11_awhvu"), ExtResource("12_qyths"), ExtResource("12_qyths"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("16_58exb"), ExtResource("17_j3lww")])
 
 [resource]
 script = ExtResource("1_i2xwq")
