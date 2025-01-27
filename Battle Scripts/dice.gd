@@ -71,10 +71,10 @@ func getNumber() -> int:
 	#indeex 0 = 1, index 5 = 6
 	var numKey = [
 		global_transform.basis.x,
-		global_transform.basis.z,
+		-global_transform.basis.z,
 		global_transform.basis.y,
 		-global_transform.basis.y,
-		-global_transform.basis.z,
+		global_transform.basis.z,
 		-global_transform.basis.x
 	]
 	for i in range(len(numKey)):
