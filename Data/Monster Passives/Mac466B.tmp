@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://omxc075hyt7"]
+
+[ext_resource type="Script" path="res://Data/Monster Passive Scripts/machine.gd" id="1_r11m2"]
+[ext_resource type="PackedScene" uid="uid://mlpij3jshlch" path="res://Prefabs/heat_bar.tscn" id="1_wai20"]
+
+[resource]
+script = ExtResource("1_r11m2")
+heatGaugePrefab = ExtResource("1_wai20")

@@ -3,14 +3,21 @@ extends Resource
 
 var name = ""
 var desc = ""
+var initialized = false
 
 func _init() -> void:
 	name = "Undefined"
 	desc = "N/A"
 
 
+
+func initPassive(mon: BattleMonster, battle: BattleController):
+	if !initialized:
+		initialized = true
+		await activateAbility(mon, battle)
+
 #runs whenever the ability is activated (should be implemented into every overridden function)
-func activateAbility() -> void:
+func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 	return
 
 #ability events:

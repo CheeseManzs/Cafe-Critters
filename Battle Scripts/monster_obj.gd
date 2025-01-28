@@ -32,6 +32,7 @@ func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")
 	#set sprite to the monster this object represents
 	$Sprite3D.texture = monsterData.sprite
+	$Sprite3D.pixel_size *= monsterData.spriteScale
 
 func faintAnimation(delta: float):
 	if faintAnimated:

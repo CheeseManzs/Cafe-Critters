@@ -9,6 +9,7 @@ var connectedMon: BattleMonster
 @export var detailContainer: Control
 @export var connectedBar: TextureProgressBar
 @export var enemy = false
+@export var externalGaugeContainer: VBoxContainer
 
 func setConnectedMon(mon):
 	connectedMon = mon

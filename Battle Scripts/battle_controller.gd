@@ -167,6 +167,8 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	for mon in playerTeam + enemyTeam:
 		if mon != getActivePlayerMon() && mon != getActiveEnemyMon():
 			mon.reset()
+	
+	
 
 
 func createImpact(pos):
@@ -658,6 +660,12 @@ func activeTurn() -> void:
 			conditionalActions.remove_at(conditionalActions.find(conditionalAction))
 	
 	hidePlayerChoiceUI(true)
+	
+	#check abilities
+	#post reset actions
+	for mon in playerTeam+enemyTeam:
+		await mon.getPassive().initPassive(mon,self)
+	
 	
 	#reset temporary values
 	for mon in playerTeam + enemyTeam:

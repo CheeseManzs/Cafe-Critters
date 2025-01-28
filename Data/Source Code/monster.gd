@@ -27,6 +27,7 @@ enum ROLE {
 @export var role: ROLE
 @export var dexEntry: String
 @export var sprite: Texture
+@export var spriteScale: float = 1
 @export var passive: PassiveAbility
 @export var deck: Zone
 
@@ -53,6 +54,7 @@ enum ROLE {
 @export var level: int
 
 @export var battleOffset: Vector2
+
 
 var StatCurves: Dictionary = {
 	"growth40": [40, 46, 52, 58, 65, 71, 79, 86, 93, 100],

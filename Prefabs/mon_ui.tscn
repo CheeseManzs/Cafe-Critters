@@ -8,7 +8,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_te42r"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("monsterFace", "detailContainer", "connectedBar")]
+[node name="Player Mon Details" type="Panel" node_paths=PackedStringArray("monsterFace", "detailContainer", "connectedBar", "externalGaugeContainer")]
 custom_minimum_size = Vector2(200, 58.355)
 offset_left = 10.0
 offset_top = 9.0
@@ -20,6 +20,7 @@ script = ExtResource("1_2qbiv")
 monsterFace = NodePath("Face Container/Face Holder/TextureRect")
 detailContainer = NodePath("Details")
 connectedBar = NodePath("Details/TextureProgressBar")
+externalGaugeContainer = NodePath("External Gauge Container/EGC_VBox")
 
 [node name="Face Container" type="Control" parent="."]
 clip_contents = true
@@ -76,3 +77,20 @@ nine_patch_stretch = true
 texture_under = ExtResource("4_13ff7")
 texture_progress = ExtResource("4_13ff7")
 tint_under = Color(0, 0, 0, 0.556863)
+
+[node name="External Gauge Container" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 54.0
+offset_top = 82.0
+offset_right = 572.0
+offset_bottom = 185.0
+
+[node name="EGC_VBox" type="VBoxContainer" parent="External Gauge Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -118.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2

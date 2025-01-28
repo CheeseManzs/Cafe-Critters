@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://mlpij3jshlch"]
+
+[ext_resource type="Script" path="res://Battle Scripts/heat_gauge_bar.gd" id="2_a6mnl"]
+[ext_resource type="Texture2D" uid="uid://bcyoeytkhkj3d" path="res://Graphics/UI/GuagePointer.png" id="3_45qgy"]
+
+[sub_resource type="Gradient" id="Gradient_gm3bs"]
+colors = PackedColorArray(0.41824, 0.601976, 1, 1, 0.977116, 0.183408, 5.77569e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yk450"]
+gradient = SubResource("Gradient_gm3bs")
+
+[node name="Heat Gauge" type="TextureRect" node_paths=PackedStringArray("gaugePivot")]
+custom_minimum_size = Vector2(0, 20)
+texture = SubResource("GradientTexture1D_yk450")
+script = ExtResource("2_a6mnl")
+gaugePivot = NodePath("Gauge Pointer")
+
+[node name="Gauge Pointer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(20, 40)
+
+[node name="TextureRect" type="TextureRect" parent="Gauge Pointer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 1.0
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -10.5
+offset_top = -16.0
+offset_right = -5.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(2.5, 20)
+texture = ExtResource("3_45qgy")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
