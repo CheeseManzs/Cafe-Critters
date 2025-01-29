@@ -41,6 +41,7 @@ alignment = 6
 role = 1
 dexEntry = "stabs people with its spear. objectively evil. if you meet one on the street, run away and don't look back."
 sprite = ExtResource("2_1jaoc")
+spriteScale = 1.0
 passive = ExtResource("1_ng66v")
 deck = SubResource("Resource_y5cq6")
 startingCardPool = SubResource("Resource_5u6vm")

@@ -20,6 +20,7 @@ class_name BattleMonster
 @export var speed: int
 #monster's current shield
 @export var shield: int
+@export var passive: PassiveAbility
 #battle controller that instantiated the monster
 var battleController: BattleController
 #is monster owned by player
@@ -47,6 +48,7 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	defense = rawData.getDefense()
 	attack = rawData.getAttack()
 	speed = rawData.getSpeed()
+	passive = rawData.passive.duplicate()
 	
 	if rawData.deck.storedCards.size() == 0:
 		rawData.deck = rawData.startingCardPool.clone()
@@ -102,6 +104,20 @@ func setAttack(atk: int):
 	attack = atk
 	BattleLog.singleton.log(rawData.name + "'s Attack is now " + str(atk))
 #removes random card and returns the removed card
+
+func raiseAnimation():
+	for display in battleController.cardButtons:
+		display.raise()
+		display.ignoreInput = true
+	await battleController.get_tree().create_timer(0.5).timeout
+
+func quick_discardAnimation(card: Card) -> void:
+	for display in battleController.cardButtons:
+		if display.card.name == card.name:
+			display.launch()
+			await battleController.get_tree().create_timer(0.2).timeout
+			break
+
 func discardAnimation(card: Card) -> void:
 	
 
@@ -126,6 +142,7 @@ func discardAnimation(card: Card) -> void:
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
 	
+
 func discardRandomCard() -> Card:
 	if playerControlled:
 		battleController.hidePlayerChoiceUI(true)
@@ -261,10 +278,10 @@ func getSpeed():
 	return speed
 	
 func getAttack():
-	return attack*(1 + attackBonus + temp_attackBonus)
+	return attack*(1 + attackBonus + temp_attackBonus + getPassive().attackBonus(self,battleController))
 
 func getDefense():
-	return defense*(1 + defenseBonus)
+	return defense*(1 + defenseBonus + getPassive().defenseBonus(self,battleController))
 
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
@@ -358,7 +375,6 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	if attacker != self && attacker != null:
 		attacker.temp_attackBonus = 0
 		await attacker.atkAnim(self)
-	await attacker.getPassive().onAttack(attacker,battleController)
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):
 		var status = getStatus(Status.EFFECTS.BARRIER)
@@ -376,6 +392,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	
 		
 	await getPassive().onHit(self,battleController)
+	await attacker.getPassive().onAttack(attacker,battleController)
 	return pureDmg
 
 #get knowledge counter
@@ -434,5 +451,5 @@ func removeMP(mpAmount: int) -> void:
 
 #returns monster's current ability
 func getPassive() -> PassiveAbility:
-	return rawData.passive
+	return passive
 	

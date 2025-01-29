@@ -3,7 +3,7 @@ extends TextureRect
 
 @export var progress: float = 0
 @export var gaugePivot: Control
-
+var flipped = false
 var minAngle = 80
 
 # Called when the node enters the scene tree for the first time.

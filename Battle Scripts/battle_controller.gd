@@ -225,13 +225,19 @@ func addArrayToGraveyard(cards: Array[Card]):
 		addToGraveyard(card)
 
 ## Called when the player gains control of the game.
-func playerChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
+func playerChooseCards(count: int, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
 	## Draws the appropriate cards of their current mon.
 	setCardSelection(getActivePlayerMon(), true)
+	if endable:
+		skipButton.text = "Done"
+		skipButton.disabled = false
 	
 	for shelfUI in shelfedMonUI:
 		shelfUI.switchButton.disabled = true
+		
+	
 	var cardsChosen: Array[Card] = []
+
 	while len(cardsChosen) < count && len(getActivePlayerMon().currentHand.storedCards) - len(cardsChosen) > 0:
 		#check for chosen cards
 		for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
@@ -249,6 +255,8 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 			
 			
 		await gui_choice
+		if endable && playerCardID == -100:
+			break
 		var card = getActivePlayerMon().currentHand.storedCards[playerCardID]
 		if !cardsChosen.has(card):
 			cardsChosen.push_back(card)
@@ -258,6 +266,10 @@ func playerChooseCards(count: int, requirement: Callable = func(x): return true 
 			var uiButton = cardButtons[uiIndex]
 			uiButton.setTextColor(Color.WHITE)
 		
+	if endable:
+		skipButton.text = "Skip"
+		skipButton.disabled = true	
+	
 	return cardsChosen
 
 
@@ -265,12 +277,13 @@ func enemyChooseCards(count: int, requirement: Callable = func(x): return true )
 	var cardsChosen: Array[Card] = []
 	cardsChosen = enemyAI.enemyChooseHand(count, requirement)
 	return cardsChosen
+	
 
 
-func chooseCards(count: int, playerControlled: bool = true, requirement: Callable = func(x): return true ) -> Array[Card]:
+func chooseCards(count: int, playerControlled: bool = true, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
 	var cardsChosen: Array[Card] = []
 	if playerControlled:
-		cardsChosen = await playerChooseCards(count, requirement)
+		cardsChosen = await playerChooseCards(count, endable, requirement)
 	else:
 		cardsChosen = await enemyChooseCards(count, requirement)
 	return cardsChosen
@@ -352,13 +365,13 @@ func promptPlayerSwitch() -> void:
 		if shelfUI.connectedMon != null:
 			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 	await gui_choice
-	playerSwap(playerSwitchID)
+	await playerSwap(playerSwitchID)
 	for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout
 
 func promptEnemySwitch() -> void:
-	enemySwap(enemyAI.enemySwitch())
+	await enemySwap(enemyAI.enemySwitch())
 	await get_tree().create_timer(1.0).timeout
 
 func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
@@ -449,6 +462,16 @@ func getActivePlayerMon() -> BattleMonster:
 func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
+func universalSwap(oldMon, newMon):
+	var container: VBoxContainer
+	if oldMon.playerControlled:
+		container = playerUI[0].externalGaugeContainer
+	else:
+		container = enemyUI[0].externalGaugeContainer 
+	while container.get_child_count() > 0:
+		container.get_child(0).free()
+	await newMon.getPassive().customUI(newMon, self)
+
 #swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:
 	
@@ -469,9 +492,12 @@ func playerSwap(newID) -> void:
 	playerUI[0].connectedMon = newMon
 	playerUI[0].reloadUI()
 	
+	
 	#setup new mon
 	await newMon.hardReset()
 	await currentMon.carryStatusConditions(newMon)
+	
+	await universalSwap(currentMon, newMon)
 	
 	activePlayerMon = newID
 	
@@ -501,7 +527,7 @@ func enemySwap(newID) -> void:
 	await newMon.hardReset()
 	
 	activeEnemyMon = newID
-	
+	await universalSwap(currentMon, newMon)
 	#emit signal
 	emitGUISignal()
 	

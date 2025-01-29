@@ -39,7 +39,7 @@ func runActions(battleController: Node) -> void:
 		action.printAction()
 		if action.switching:
 			action.battleMonster.removeMP(1)
-			action.runSwitch()
+			await action.runSwitch()
 			await battleController.get_tree().create_timer(1.0).timeout
 			continue
 		
@@ -63,6 +63,7 @@ func runActions(battleController: Node) -> void:
 		
 		action.battleMonster.removeMP(action.card.cost)
 		
+		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
 		await action.card.effect(action.battleMonster, action.getTarget())
 		await battleController.addToGraveyard(action.card)

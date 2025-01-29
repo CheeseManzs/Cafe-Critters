@@ -1,48 +1,104 @@
+class_name MachineAbility
 extends PassiveAbility
 
 var heat = 3
-var minHeat = 1
+var minHeat = 0
 var maxHeat = 5
+var bonusScale = 0
 var heatGauge: HeatGauge
+var resetHeat = false
+
 @export var heatGaugePrefab: PackedScene
 
 func _init() -> void:
 	name = "Machine"
 	desc = "Heat Guage" 
 
+func heatProgress():
+	return (heat - minHeat)/(maxHeat - minHeat + 0.0)
+
 func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 	if newHeat > heat:
-		BattleLog.singleton.log(mon.rawData.name + "'s heat raised to " + str(newHeat))
-	else:
-		BattleLog.singleton.log(mon.rawData.name + "'s heat dropped to " + str(newHeat))
+		BattleLog.singleton.log(mon.rawData.name + "'s heat raised to " + str(min(maxHeat, newHeat)))
+	if newHeat < heat:
+		BattleLog.singleton.log(mon.rawData.name + "'s heat dropped to " + str(max(minHeat,newHeat)))
 	heat = newHeat
 	if heat < minHeat:
 		heat = minHeat
 	if heat > maxHeat:
 		heat = maxHeat
-	heatGauge.progress = (heat - minHeat)/(maxHeat - minHeat + 0.0)
-	await battle.get_tree().create_timer(1.0).timeout
+		resetHeat = true
+		mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
+	
+	if heatGauge != null:
+		heatGauge.progress = heatProgress()
+		await battle.get_tree().create_timer(1.0).timeout
+
 
 func createGuage(mon: BattleMonster, battle: BattleController):
-	var container: VBoxContainer
-	if mon.playerControlled:
-		container = battle.playerUI[0].externalGaugeContainer
-	else:
-		container = battle.enemyUI[0].externalGaugeContainer 
-	
-	heatGauge = heatGaugePrefab.instantiate()
-	container.add_child(heatGauge)
+	heatGauge = await createUI(mon, battle, heatGaugePrefab)
+	heatGauge.flipped = !mon.playerControlled
 
-func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
+func customUI(mon: BattleMonster, battle: BattleController):
+	await battle.get_tree().create_timer(1.0).timeout
+	#await EffectFlair.singleton._runFlair("Machine",Color.WEB_GRAY)
 	BattleLog.singleton.log(mon.rawData.name+"'s engine bursts to life!")
 	await createGuage(mon, battle)
-	await setHeat(5, mon, battle)
+	heatGauge.progress = heatProgress()
+	
+func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
+	#await customUI(mon, battle)
+	await setHeat(3, mon, battle)
+	return
+	
+func overHeatBonus(mon: BattleMonster, battle: BattleController):
+	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		return 0.25
+	else:
+		return 0
+
+func heatBoost(mon: BattleMonster, battle: BattleController):
+	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		return 0
+	if heat < 5:
+		return 0.05*heat
+	elif heat >= 5:
+		return 0.5
+
+func attackBonus(mon: BattleMonster, battle: BattleController) -> float:
+	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*bonusScale
+	
+func defenseBonus(mon: BattleMonster, battle: BattleController) -> float:
+	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*bonusScale
+
+func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> void:
+	if !mon.hasStatus(Status.EFFECTS.OVERHEAT) && (card.power > 0 || card.shieldPower > 0):
+		bonusScale = 1
+		BattleLog.log(mon.rawData.name + "'s " + card.name + " is heating up!")
+		await setHeat(heat - 1, mon, battle)
+	else:
+		bonusScale = 0
 	return
 
-func onSubTurnStart(mon: BattleMonster, battle: BattleController) -> void:
-	await setHeat(heat - 1, mon, battle)
-	return
-
-func onHit(mon: BattleMonster, battle: BattleController) -> void:
-	await setHeat(5, mon, battle)
+func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
+	#temporary
+	if mon.isKO():
+		return
+	
+	if resetHeat:
+		resetHeat = false
+		await setHeat(0, mon, battle)
+		return
+	
+	await EffectFlair.singleton._runFlair("Machine",Color.WEB_GRAY)
+	var discardCards = mon.currentHand.storedCards
+	await mon.raiseAnimation()
+	var cardCount = len(discardCards)
+	for i in range(len(discardCards)):
+		await mon.quick_discardAnimation(discardCards[i])
+	
+	
+	mon.currentHand.removeCards(discardCards)
+	await battle.get_tree().create_timer(1.0).timeout
+	await setHeat(heat + cardCount, mon, battle)
 	return

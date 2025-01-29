@@ -23,7 +23,8 @@ enum EFFECTS {
 	STRONGARM,
 	TAGGED,
 	PRIORITY,
-	CANT_PLAY
+	CANT_PLAY,
+	OVERHEAT
 }
 var X: int = 0
 var Y: int = 0
@@ -93,6 +94,8 @@ func toMini() -> String:
 			return "PTY"
 		EFFECTS.CANT_PLAY:
 			return "CNT"
+		EFFECTS.OVERHEAT:
+			return "OVH"
 	return "N/A"
 	
 
@@ -140,6 +143,8 @@ func rawToString() -> String:
 			return "Priority"
 		EFFECTS.CANT_PLAY:
 			return "Can't Play"
+		EFFECTS.OVERHEAT:
+			return "Overheat"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -245,5 +250,8 @@ func newTurn() -> void:
 			effectDone = true
 			return
 		EFFECTS.CANT_PLAY:
+			effectDone = true
+			return
+		EFFECTS.OVERHEAT:
 			effectDone = true
 			return

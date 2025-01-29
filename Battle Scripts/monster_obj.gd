@@ -135,7 +135,10 @@ func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
 	var positionIndex = ceil(teamID/2.0)
 	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex
-	var pos = Vector3(-2 - positionIndex*1.5 + deltaZ/1.3, 0, 0.25 + deltaZ)
+	var evenBonus = 0
+	if teamID%2 == 0:
+		evenBonus = 0.3
+	var pos = Vector3(-2 - positionIndex*(1.5 + evenBonus) + deltaZ/1.3, 0, 0.25 + deltaZ)
 	if !playerControlled:
 		#flip the position across the origin if its an enemy monster
 		pos.x *= -1

@@ -38,9 +38,9 @@ func getSwitchTarget() -> BattleMonster:
 
 func runSwitch() -> void:
 	if playerControlled:
-		battleController.playerSwap(targetID)
+		await battleController.playerSwap(targetID)
 	else:
-		battleController.enemySwap(targetID)
+		await battleController.enemySwap(targetID)
 
 # Gets live target
 func getTarget() -> BattleMonster:

@@ -42,6 +42,7 @@ alignment = 0
 role = 2
 dexEntry = "the coffee on its back is rumoured to cause immortality. these rumours have never once been substantiated."
 sprite = ExtResource("16_jyqkw")
+spriteScale = 1.0
 passive = ExtResource("3_lfkbe")
 deck = SubResource("Resource_jeqqs")
 startingCardPool = SubResource("Resource_7k3sr")
