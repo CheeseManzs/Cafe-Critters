@@ -51,12 +51,15 @@ func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 	#await customUI(mon, battle)
 	await setHeat(3, mon, battle)
 	return
-	
-func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
+
+func loseHeat(mon: BattleMonster, battle: BattleController) -> void:
 	if lostHeat:
 		await setHeat(heat - 1, mon, battle)
 		lostHeat = false
 	return
+
+func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
+	await loseHeat(mon, battle)
 	
 func overHeatBonus(mon: BattleMonster, battle: BattleController):
 	if mon.hasStatus(Status.EFFECTS.OVERHEAT):

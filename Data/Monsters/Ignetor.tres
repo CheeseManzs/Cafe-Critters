@@ -9,8 +9,8 @@
 [ext_resource type="Resource" uid="uid://cb4rdms84gvuh" path="res://Data/Cards/Trunk Shot.tres" id="5_2kc7n"]
 [ext_resource type="Resource" uid="uid://bxdnh0ci88hdp" path="res://Data/Cards/Last Stand.tres" id="5_i2dnk"]
 [ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="7_17kso"]
-[ext_resource type="Resource" uid="uid://omxc075hyt7" path="res://Data/Monster Passives/Machine.tres" id="8_nkhxi"]
 [ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="8_v0itr"]
+[ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")
@@ -26,7 +26,7 @@ role = 0
 dexEntry = ""
 sprite = ExtResource("3_ewnrg")
 spriteScale = 0.019
-passive = ExtResource("8_nkhxi")
+passive = ExtResource("9_p6ryl")
 deck = SubResource("Resource_rsf8y")
 levelupCards = Array[ExtResource("1_517cx")]([])
 rawHealth = "growth40"
