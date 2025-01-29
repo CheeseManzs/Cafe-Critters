@@ -408,9 +408,13 @@ func addMP(mpAmount: int, broadcast = true) -> void:
 	#if player, add mp to player variable
 	if playerControlled:
 		battleController.playerMP += mpAmount
+		if battleController.playerMP > 6:
+			battleController.playerMP = 6
 	#if enemy, add mp to enemy variable
 	else:
 		battleController.enemyMP += mpAmount
+		if battleController.enemyMP > 6:
+			battleController.enemyMP = 6
 
 func getMP() -> int:
 	#if player, add mp to player variable

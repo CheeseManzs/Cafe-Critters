@@ -7,6 +7,7 @@ var maxHeat = 5
 var bonusScale = 0
 var heatGauge: HeatGauge
 var resetHeat = false
+var lostHeat = false
 
 @export var heatGaugePrefab: PackedScene
 
@@ -51,6 +52,12 @@ func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 	await setHeat(3, mon, battle)
 	return
 	
+func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
+	if lostHeat:
+		await setHeat(heat - 1, mon, battle)
+		lostHeat = false
+	return
+	
 func overHeatBonus(mon: BattleMonster, battle: BattleController):
 	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
 		return 0.25
@@ -75,7 +82,7 @@ func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> v
 	if !mon.hasStatus(Status.EFFECTS.OVERHEAT) && (card.power > 0 || card.shieldPower > 0):
 		bonusScale = 1
 		BattleLog.log(mon.rawData.name + "'s " + card.name + " is heating up!")
-		await setHeat(heat - 1, mon, battle)
+		lostHeat = true
 	else:
 		bonusScale = 0
 	return

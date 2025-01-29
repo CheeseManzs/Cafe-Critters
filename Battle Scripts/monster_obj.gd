@@ -130,15 +130,21 @@ func posOddNegEven(x) -> int:
 	else:
 		return 1
 
+
+var xScaling = 0.5
 # Returns intended position of monster (using its teamID and designation as a player/enemy monster)
 func getMonsterPosition() -> Vector3:
 	#base position for a player controlled monster
 	var positionIndex = ceil(teamID/2.0)
-	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex
+	var deltaZ = -posOddNegEven(teamID)*0.5*positionIndex*xScaling
 	var evenBonus = 0
+	var backBonus = 0
 	if teamID%2 == 0:
 		evenBonus = 0.3
-	var pos = Vector3(-2 - positionIndex*(1.5 + evenBonus) + deltaZ/1.3, 0, 0.25 + deltaZ)
+	if teamID > 0:
+		backBonus = 1
+	var pos = Vector3(-2 - backBonus - positionIndex*(1.5 + evenBonus) + deltaZ/1.3, 0, 0.25 + deltaZ)
+	pos.x *= xScaling
 	if !playerControlled:
 		#flip the position across the origin if its an enemy monster
 		pos.x *= -1

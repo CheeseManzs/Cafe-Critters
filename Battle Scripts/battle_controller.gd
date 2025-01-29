@@ -708,8 +708,13 @@ func activeTurn() -> void:
 	var endTurn = false
 	
 	await getActivePlayerMon().getPassive().onTurnStart(getActivePlayerMon(), self)
-	
+	var firstSubTurn = true
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
+		
+		if !firstSubTurn:
+			await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
+			await getActiveEnemyMon().getPassive().onSubTurnStart(getActiveEnemyMon(), self)
+		
 		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
 		enemyCanPlay = !(len(getActiveEnemyMon().playableCards()) == 0 && enemyMP == 0)
@@ -734,10 +739,10 @@ func activeTurn() -> void:
 		
 		
 		
-		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
+		await getActivePlayerMon().getPassive().onSubTurnEnd(getActivePlayerMon(), self)
 		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
 		
-
+		firstSubTurn = false
 			
 		
 		for i in maxActiveMons:
