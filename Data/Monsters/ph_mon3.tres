@@ -27,6 +27,7 @@ alignment = 7
 role = 0
 dexEntry = ""
 sprite = ExtResource("10_h0u1j")
+spriteScale = 1.0
 passive = ExtResource("11_q4jv0")
 deck = SubResource("Resource_0uwxn")
 levelupCards = Array[ExtResource("1_55mkf")]([])
