@@ -106,6 +106,7 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	var cardCount = len(discardCards)
 	for i in range(len(discardCards)):
 		await mon.quick_discardAnimation(discardCards[i])
+		await mon.getPassive().onDiscard(mon,battle,discardCards[i])
 	
 	
 	mon.currentHand.removeCards(discardCards)

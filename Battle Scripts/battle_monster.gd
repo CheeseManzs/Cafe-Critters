@@ -142,6 +142,14 @@ func discardAnimation(card: Card) -> void:
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
 	
+func discardCard(card: Card, removeFromHand = true):
+	if playerControlled:
+		await discardAnimation(card)
+	battleController.addToGraveyard(card)
+	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
+	if removeFromHand:
+		currentHand.removeCards([card])
+	await getPassive().onDiscard(self, battleController, card)
 
 func discardRandomCard() -> Card:
 	if playerControlled:
@@ -155,13 +163,8 @@ func discardRandomCard() -> Card:
 		return null
 	
 	var card = cards[0]
+	await discardCard(card, false)
 	
-	if playerControlled:
-		await discardAnimation(card)
-	
-	
-	battleController.addToGraveyard(card)
-	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	return card
 
 func playableCards() -> Array[Card]:
@@ -452,6 +455,7 @@ func removeMP(mpAmount: int) -> void:
 	#if enemy, remove mp from enemy
 	else:
 		battleController.enemyMP -= mpAmount
+	
 
 #returns monster's current ability
 func getPassive() -> PassiveAbility:

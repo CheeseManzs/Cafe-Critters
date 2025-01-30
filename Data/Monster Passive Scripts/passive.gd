@@ -73,6 +73,9 @@ func onSubTurnStart(mon: BattleMonster, battle: BattleController) -> void:
 func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	return
 
+func onDiscard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
+	return
+
 #runs when a mon is KO'd
 func onSelfKO(mon: BattleMonster, battle: BattleController) -> void:
 	return
