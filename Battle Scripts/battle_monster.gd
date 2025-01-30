@@ -242,11 +242,12 @@ func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
 
 func addStatusCondition(status: Status, broadcast = false):
-	
-	await getPassive().onStatus(self,battleController)
+
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
+	
+	await getPassive().onStatus(self,battleController, status)
 	#if effect is ko, suspend or strongarm then it occurs immediately
 	match status.effect:
 		Status.EFFECTS.KO:

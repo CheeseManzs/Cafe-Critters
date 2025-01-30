@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_7umar"]
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
-[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="3_lfkbe"]
+[ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Refreshing Tea.tres" id="3_j28od"]
 [ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="3_omahx"]
 [ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="4_1tr8c"]
 [ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="5_12ul0"]
@@ -43,7 +43,7 @@ role = 2
 dexEntry = "the coffee on its back is rumoured to cause immortality. these rumours have never once been substantiated."
 sprite = ExtResource("16_jyqkw")
 spriteScale = 1.0
-passive = ExtResource("3_lfkbe")
+passive = ExtResource("3_j28od")
 deck = SubResource("Resource_jeqqs")
 startingCardPool = SubResource("Resource_7k3sr")
 levelupCards = Array[ExtResource("1_qo6j8")]([])

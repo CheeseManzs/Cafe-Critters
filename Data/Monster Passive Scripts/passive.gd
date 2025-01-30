@@ -48,7 +48,7 @@ func onAttack(mon: BattleMonster, battle: BattleController) -> void:
 	return
 
 #runs when a monster is afflicted with a status
-func onStatus(mon: BattleMonster, battle: BattleController) -> void:
+func onStatus(mon: BattleMonster, battle: BattleController, status: Status) -> void:
 	return
 
 #runs when a turn starts
@@ -71,6 +71,9 @@ func onSubTurnStart(mon: BattleMonster, battle: BattleController) -> void:
 
 #runs when a sub-turn ends
 func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
+	return
+
+func onHeal(mon: BattleMonster, battle: BattleController, card: Card) -> void:
 	return
 
 func onDiscard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
