@@ -31,7 +31,8 @@ var fromSide = false
 func _ready() -> void:
 	scale = Vector2(0.34,0.34)*scaleFactor
 	if displayLocation == "collection":
-		position = position - size/2
+		position = position * 0.75
+		pass
 	pass # Replace with function body.
 
 ## Sets parameters of the card from the given resource. -A
