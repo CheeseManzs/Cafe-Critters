@@ -41,7 +41,7 @@ func rebuildCards():
 		temp.displayLocation = "collection"
 		temp.setCard(item, 1, null, "collection")
 		cParent.add_child(temp)
-		$CardGridHSplit/RightScrollContainer/RightGridContainer.add_child(cParent)
+		%RightGridContainer.add_child(cParent)
 		
 	#for i in range(storedCards.itemNames.size()):
 	#	for j in range(storedCards.itemNames[i].size()):

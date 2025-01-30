@@ -91,8 +91,18 @@ layout_mode = 1
 [node name="RightScrollContainer" type="ScrollContainer" parent="CardGridHSplit"]
 layout_mode = 2
 
-[node name="RightGridContainer" type="GridContainer" parent="CardGridHSplit/RightScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CardGridHSplit/RightScrollContainer"]
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 550
+
+[node name="RightGridContainer" type="GridContainer" parent="CardGridHSplit/RightScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/h_separation = 250
 theme_override_constants/v_separation = 350
 columns = 4
