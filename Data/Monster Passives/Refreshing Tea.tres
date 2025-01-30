@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cfiru7jf6ek5w"]
+
+[ext_resource type="Script" path="res://Data/Monster Passive Scripts/passive_slocha.gd" id="1_j0tyq"]
+
+[resource]
+script = ExtResource("1_j0tyq")

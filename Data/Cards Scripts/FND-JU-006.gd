@@ -10,5 +10,5 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await applyReckless(attacker, defender)
-	await attacker.addAttackBonus(1)
+	await attacker.addAttackBonus(1,true)
 	await attacker.addMP(1)

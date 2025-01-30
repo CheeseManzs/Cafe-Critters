@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://dhh8e4td6gqo7"]
 
 [ext_resource type="PackedScene" uid="uid://mlpij3jshlch" path="res://Prefabs/heat_bar.tscn" id="1_o2fes"]
-[ext_resource type="Script" path="res://Data/Monster Passive Scripts/combustion engine.gd" id="1_uafoa"]
+[ext_resource type="Script" path="res://Data/Monster Passive Scripts/passive_ignetor.gd" id="1_uafoa"]
 
 [resource]
 script = ExtResource("1_uafoa")
