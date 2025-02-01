@@ -15,6 +15,8 @@ func _init() -> void:
 	name = "Machine"
 	desc = "Heat Guage" 
 
+
+		
 func heatProgress():
 	return (heat - minHeat)/(maxHeat - minHeat + 0.0)
 
@@ -54,7 +56,8 @@ func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 
 func loseHeat(mon: BattleMonster, battle: BattleController) -> void:
 	if lostHeat:
-		await setHeat(heat - 1, mon, battle)
+		if !mon.hasStatus(Status.EFFECTS.OVERHEAT):
+			await setHeat(heat - 1, mon, battle)
 		lostHeat = false
 	return
 

@@ -400,7 +400,6 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 				continue
 			
 			if !trySwitch:
-				BattleLog.singleton.log(mon.rawData.name + " is going to use " + chosenCard.name)
 				#add chosen card logic here
 				
 				#add to action queue
@@ -429,7 +428,6 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 				self,
 				true
 			)
-			BattleLog.singleton.log(mon.rawData.name + " is going to swap to " + enemyTeam[switchID].rawData.name)
 			actions.push_back(battleAction)
 			#swap enemy
 			pass
@@ -449,7 +447,6 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 				self,
 				true
 			)
-			BattleLog.singleton.log(mon.rawData.name + " is going to swap to " + enemyTeam[switchID].rawData.name)
 			actions.push_back(battleAction)
 		
 	
@@ -809,6 +806,8 @@ func activeTurn() -> void:
 		
 		actions += enemyActions
 		#if both sides skip, end turn
+		if len(enemyActions) == 0:
+			BattleLog.singleton.log(getActiveEnemyMon().rawData.name + " skipped!")
 		if len(actions) == 0:
 			BattleLog.singleton.log("Both sides skipped... ending turn")
 			await get_tree().create_timer(0.3).timeout
