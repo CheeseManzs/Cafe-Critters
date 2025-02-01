@@ -30,7 +30,7 @@ var fromSide = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	scale = Vector2(0.34,0.34)*scaleFactor
-	if displayLocation == "collection":
+	if displayLocation == "collection" or displayLocation == "deck edit":
 		position = position * 0.75
 		pass
 	pass # Replace with function body.
@@ -162,8 +162,9 @@ func _on_mouse_entered() -> void:
 	if !isHidden && !isDisabled:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
-	if displayLocation == "collection":
+	if displayLocation == "collection" or displayLocation == "deck edit":
 		scale = Vector2(0.5, 0.5)*scaleFactor
+		z_index = 3
 	mouseOn = true
 	pass # Replace with function body.
 
@@ -173,8 +174,9 @@ func _on_mouse_exited() -> void:
 		return
 	if !isHidden && !selected:
 		targetPosition = originalPosition
-	if displayLocation == "collection":
+	if displayLocation == "collection" or displayLocation == "deck edit":
 		scale = Vector2(0.34, 0.34)*scaleFactor
+		z_index = 1
 	mouseOn = false
 	pass # Replace with function body.
 
