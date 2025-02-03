@@ -182,11 +182,14 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#assign ui to enemy mon
 	enemyUI[0].setConnectedMon(getActiveEnemyMon())
 	#initialize AI
-
+	
+	playerUI[0].reloadUI()
+	enemyUI[0].reloadUI()
 	enemyAI = BattleAI.new(self, enemyPersonality)
 	
 	#reset every mon
 	basicReset(true)
+	multiplayer_loaded_peer = true
 	
 func basicReset(skipKOCheck = false, resetActiveMons = false):
 	var resetOrder = [playerTeam,enemyTeam]
@@ -1002,8 +1005,8 @@ func toggleDetails() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#if no turn is started, start the next turn
-	while (multiplayer_game && !rng_sync) || !multiplayer_loaded_peer:
-			await get_tree().process_frame 
+	while multiplayer_game  && (!rng_sync || !multiplayer_loaded_peer):
+			await get_tree().process_frame
 	
 	if !inTurn:
 		activeTurn()
@@ -1040,7 +1043,6 @@ func set_enemy_team(cacheArray: String):
 	var loadedCache: Array[int]
 	loadedCache.assign(JSON.parse_string(cacheArray))
 	enemyBattleTeam = monsterCache.toMonsterArray(loadedCache)
-	multiplayer_loaded_peer = true
 	synced.emit()
 	pass
 
