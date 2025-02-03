@@ -82,7 +82,7 @@ text = "Debug Join"
 [node name="TextEdit" type="TextEdit" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-text = "127.0.0.1"
+text = "Connecting..."
 
 [node name="Overworld Button" type="Button" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)

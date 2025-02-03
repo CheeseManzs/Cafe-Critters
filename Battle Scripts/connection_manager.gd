@@ -1,6 +1,8 @@
 class_name ConnectionManager
 extends Node
 
+signal foundUPNP
+
 @export var ipDisplay: Button
 @export var ipText: TextEdit
 
@@ -16,8 +18,15 @@ static var host = false
 func _ready() -> void:
 	if singleton == null:
 		singleton = self
-	
-	#upnp.delete_port_mapping(9999, "UDP")
+	Thread.new().start(upnpSetup.bind())
+	await foundUPNP
+	var external_ip = upnp.query_external_address()
+	print("ip: ",external_ip)
+	ipText.text = str(external_ip)
+
+
+func upnpSetup():
+		#upnp.delete_port_mapping(9999, "UDP")
 	#upnp.delete_port_mapping(9999, "TCP")
 	var disc_res = upnp.discover()
 	if disc_res == UPNP.UPNP_RESULT_SUCCESS:
@@ -25,14 +34,14 @@ func _ready() -> void:
 		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
 			var map_udp = upnp.add_port_mapping(9999,9999,"godot_udp","UDP",0)
 			var map_tcp = upnp.add_port_mapping(9999,9999,"godot_tcp","TCP",0)
-			print(map_udp, map_tcp)
+			print("results: ", map_udp, ", ", map_tcp, " of ", UPNP.UPNP_RESULT_SUCCESS)
 			if not map_udp == UPNP.UPNP_RESULT_SUCCESS:
-				upnp.add_port_mapping(9999,9999,"","UDP")
+				map_udp = upnp.add_port_mapping(9999,9999,"","UDP")
+				print.call_deferred.bind("new mapping: ",map_udp)
 			if not map_tcp == UPNP.UPNP_RESULT_SUCCESS:
-				upnp.add_port_mapping(9999,9999,"","TCP")
-	var external_ip = upnp.query_external_address()
-	
-	ipText.text = str(external_ip)
+				map_tcp = upnp.add_port_mapping(9999,9999,"","TCP")
+				print.call_deferred.bind("new mapping: ",map_tcp)
+			foundUPNP.emit.call_deferred()
 
 func hostServer():
 	BattleController.multiplayer_game = true
