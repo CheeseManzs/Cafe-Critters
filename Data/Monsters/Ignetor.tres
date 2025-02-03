@@ -19,7 +19,7 @@ storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("3_vkfmx"), ExtResource
 
 [resource]
 script = ExtResource("2_8ybf3")
-id = 0
+id = 6
 name = "Ignetor"
 alignment = 0
 role = 0

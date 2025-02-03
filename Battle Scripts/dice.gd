@@ -16,6 +16,8 @@ func _ready() -> void:
 	rigidbody.freeze = true
 	global_scale(Vector3(1,1,1)*(0))
 	ogPos = global_position
+	if BattleController.multiplayer_game:
+		rng = BattleController.global_rng
 	pass # Replace with function body.
 
 	

@@ -49,7 +49,8 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 	
 	
 	if context == "default":
-		size = Vector2(720,1000)
+		if anchor_left == anchor_right && anchor_top == anchor_bottom:
+			size = Vector2(720,1000)
 		## Determines how many cards are in hand and changes card size based on that. -A
 		var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
 		var rawWidth = size.x*scale.x

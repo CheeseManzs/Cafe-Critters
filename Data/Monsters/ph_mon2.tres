@@ -56,6 +56,7 @@ alignment = 2
 role = 0
 dexEntry = ""
 sprite = ExtResource("2_dwuog")
+spriteScale = 1.0
 passive = ExtResource("14_eoo0c")
 deck = SubResource("Resource_j0mjt")
 startingCardPool = SubResource("Resource_0ok26")

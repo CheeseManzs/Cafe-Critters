@@ -17,6 +17,10 @@ run/max_fps=165
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[debug]
+
+gdscript/warnings/enable=false
+
 [display]
 
 window/size/viewport_width=1920

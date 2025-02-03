@@ -8,7 +8,9 @@ func _init(actionList: Array[BattleAction]):
 
 func randomBool() -> bool:
 	var boolArr = [true, false]
-	return boolArr.pick_random()
+	if BattleController.multiplayer_game && !ConnectionManager.host:
+		boolArr.reverse()
+	return boolArr[BattleController.global_rng.randi_range(0,1)]
 
 func sortAction(a:BattleAction, b:BattleAction):
 	if a.priority > b.priority:

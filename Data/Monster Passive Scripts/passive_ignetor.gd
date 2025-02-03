@@ -3,7 +3,6 @@ extends MachineAbility
 func _init() -> void:
 	name = "Combustion Engine"
 	desc = "Machine. If Shark has at least 4 units of Heat or is Overheated, gain Priority. Otherwise, remove Priority."
-
 #ability events:
 
 func checkHeat(mon: BattleMonster, battle: BattleController):

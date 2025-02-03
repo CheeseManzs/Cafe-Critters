@@ -3,8 +3,21 @@ extends Node
 
 #signal for gui choice
 signal gui_choice
+signal synced 
 
+
+#multiplayer global variables
+var multiplayer_enemyChose = false
+var multiplayer_enemyActions: Array[BattleAction]
+var multiplayer_playerHand: Array[Card] = []
+var multiplayer_enemyHand: Array[Card] = []
+var multiplayer_choice_buffer: Array[int] = []
+var rng_sync = false
 #monster object prefab
+static var multiplayer_game = false
+static var multiplayer_seed = 0
+static var global_rng = RandomNumberGenerator.new()
+@export var monsterCache: MonsterCache
 @export var dashParticles: GPUParticles3D
 @export var monsterObject: PackedScene
 @export var cardbuttonPrefab: PackedScene
@@ -111,16 +124,7 @@ func getTeam(monster: BattleMonster) -> Array[BattleMonster]:
 		return enemyTeam
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
-	print("staring battle!")
-	#create monsters on the player's side
-	for index in len(plrTeam):
-		#create battle monster object
-		var newBattleMon = BattleMonster.new(plrTeam[index], self, true)
-		#newBattleMon.reset()
-		shelfedMonUI[index].connectedMon = newBattleMon
-		shelfedMonUI[index].reprocess()
-		#add to player team
-		playerTeam.push_back(newBattleMon)
+	
 	#set mp values
 	playerMP = 0
 	enemyMP = 0
@@ -129,12 +133,29 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	
 	
 	#create monsters on the enemy's side
-	for index in len(enmTeam):
-		#create battle monster object
-		var newBattleMon = BattleMonster.new(enmTeam[index], self, false)
-		#newBattleMon.reset()
-		#add to enemy team
-		enemyTeam.push_back(newBattleMon)
+	var creationOrder = [[plrTeam, playerTeam, true], [enmTeam, enemyTeam, false]]
+	if !ConnectionManager.host:
+		creationOrder.reverse()
+	
+	#create monsters on the player's side
+	for orderList in creationOrder:
+		var team = orderList[0]
+		var plrControl = orderList[2]
+		var teamSend = orderList[1]
+		for index in len(team):
+			#create battle monster object
+			var newBattleMon = BattleMonster.new(team[index], self, plrControl)
+			newBattleMon.gameID = index
+			if !plrControl && ConnectionManager.host:
+				newBattleMon.gameID += 3
+			if plrControl && !ConnectionManager.host:
+				newBattleMon.gameID += 3
+			#newBattleMon.reset()
+			if plrControl:
+				shelfedMonUI[index].connectedMon = newBattleMon
+				shelfedMonUI[index].reprocess()
+			#add to corrosponding team
+			teamSend.push_back(newBattleMon)
 	
 	
 	
@@ -164,12 +185,18 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	enemyAI = BattleAI.new(self, enemyPersonality)
 	
 	#reset every mon
-	for mon in playerTeam + enemyTeam:
-		if mon != getActivePlayerMon() && mon != getActiveEnemyMon():
-			mon.reset()
+	basicReset(true)
 	
+func basicReset(skipKOCheck = false, resetActiveMons = false):
+	var resetOrder = [playerTeam,enemyTeam]
+	#sync rng order
+	if multiplayer_game && !ConnectionManager.host:
+		resetOrder = [enemyTeam, playerTeam]
 	
-
+	for team in resetOrder:
+		for mon in team:
+			if (skipKOCheck || !mon.isKO()) && (resetActiveMons || (mon != getActivePlayerMon() && mon != getActiveEnemyMon())):
+				await mon.reset()
 
 func createImpact(pos):
 	var impactNode: GameVFX = impactEffect.instantiate()
@@ -197,10 +224,30 @@ func enemyLost():
 			return false
 	return true	
 
+func getNextChoice():
+	while len(multiplayer_choice_buffer) <= 0:
+		await get_tree().process_frame
+	var multi_choice = multiplayer_choice_buffer[0]
+	multiplayer_choice_buffer.remove_at(0)
+	return multi_choice
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("reading personality: ",enemyPersonality.aggression)
 	#debug initialization
+	global_rng = RandomNumberGenerator.new()
+	if multiplayer_game:
+		var idCache = monsterCache.toCacheArray(playerBattleTeam)
+		rpc("set_enemy_team", JSON.stringify(idCache))
+		await synced
+		if ConnectionManager.host:
+			print("seed setter:",multiplayer.get_unique_id())
+			print("seed sending:",global_rng.seed)
+			rpc("sync_rng", global_rng.seed, global_rng.state)
+			global_rng.seed = global_rng.seed
+		while !rng_sync:
+			await get_tree().process_frame 
+	print("rng_seed:"+str(global_rng.seed))
 	initialize(playerBattleTeam, enemyBattleTeam)
 	pass # Replace with function body.
 
@@ -223,6 +270,44 @@ func addToGraveyard(card: Card):
 func addArrayToGraveyard(cards: Array[Card]):
 	for card in cards:
 		addToGraveyard(card)
+
+func parseBattleAction(mon: BattleMonster, actionID, switchID, switchAction = false, p_playerControlled = true) -> BattleAction:
+	if actionID == -100: 
+		return null
+	var battleAction: BattleAction
+	if !switchAction:
+		await get_tree().create_timer(0.01).timeout
+		#run choices for player and enemy
+		var chosenTargetID = -1
+		var targSelf = false
+		var chosenPriority = 0
+		
+		var chosenCard: Card = mon.currentHand.pullCard(actionID)
+		print(mon.rawData.name, ": pulling ",chosenCard.name," at index ", actionID)
+	
+	#add to action queue
+		battleAction = BattleAction.new(
+			mon,
+			p_playerControlled,
+			chosenCard.priority,
+			chosenTargetID,
+			targSelf,
+			chosenCard,
+			self,
+			false
+		)
+	else:
+		battleAction = BattleAction.new(
+			mon,
+			p_playerControlled,
+			100,
+			switchID,
+			false,
+			null,
+			self,
+			true
+		)
+	return battleAction
 
 ## Called when the player gains control of the game.
 func playerChooseCards(count: int, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
@@ -288,6 +373,15 @@ func chooseCards(count: int, playerControlled: bool = true, endable = false, req
 		cardsChosen = await enemyChooseCards(count, requirement)
 	return cardsChosen
 
+func forceRngSync():
+	rng_sync = false
+	var timer = 3000
+	if ConnectionManager.host:
+		rpc("sync_rng", global_rng.seed, global_rng.state)
+	while !rng_sync && timer > 0:
+		timer -= 1
+		await get_tree().process_frame 
+
 #return enemy
 func enemyChooseShelfedMon(count: int) -> Array[BattleMonster]:
 	return enemyAI.enemyShelfed(count)
@@ -308,20 +402,60 @@ func hidePlayerChoiceUI(removeAll = false):
 			cardButton.selected = true
 			cardButton.raise()
 
+func randomBool() -> bool:
+	print("randomness from ",self.multiplayer.get_unique_id())
+	var boolArr = [true, false]
+	if BattleController.multiplayer_game && !ConnectionManager.host:
+		boolArr.reverse()
+	return boolArr[BattleController.global_rng.randi_range(0,1)]
+
+func getHigherSpeed(a: BattleMonster, b: BattleMonster):
+	if a.speed > b.speed:
+		return true
+	if a.speed < b.speed:
+		return false
+	else:
+		print("higher speed is random! > ",self.multiplayer.get_unique_id())
+		return randomBool()
+
+func getLowerID(a: BattleMonster, b: BattleMonster):
+	if a.gameID > b.gameID:
+		return true
+	if a.gameID < b.gameID:
+		return false
+	else:
+		print("lower id is random! > ",multiplayer.get_unique_id())
+		return randomBool()
+		
+
+func sortedActiveMonList() -> Array:
+	var monArr = [getActivePlayerMon(),getActiveEnemyMon()]
+	if ConnectionManager.host:
+		monArr.reverse()
+	monArr.sort_custom(getLowerID)
+	return monArr
+	
+func sortedMonList() -> Array:
+	var monArr = playerTeam+enemyTeam
+	if ConnectionManager.host:
+		monArr = enemyTeam+playerTeam
+	monArr.sort_custom(getLowerID)
+	return monArr
+
 func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[BattleMonster]:
-	if !playerControlled:
-		return enemyChooseShelfedMon(count)
+	if !playerControlled && !multiplayer_game:
+			return enemyChooseShelfedMon(count)
 	
 	hidePlayerChoiceUI()
 	setCardSelection(getActivePlayerMon(), true)
-	
-	for shelfUI in shelfedMonUI:
-		if shelfUI.connectedMon.isKO():
-			shelfUI.switchButton.disabled = true
-		else:
-			shelfUI.switchButton.disabled = false
-			shelfUI.switchButton.text = "Select"
-			shelfUI.setTextColor(Color.LIME_GREEN)
+	if playerControlled:
+		for shelfUI in shelfedMonUI:
+			if shelfUI.connectedMon.isKO():
+				shelfUI.switchButton.disabled = true
+			else:
+				shelfUI.switchButton.disabled = false
+				shelfUI.switchButton.text = "Select"
+				shelfUI.setTextColor(Color.LIME_GREEN)
 		
 	var chosenMons: Array[BattleMonster] = []
 	
@@ -333,26 +467,38 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 				shelfUI.setTextColor(Color.GOLD)
 			else:
 				shelfUI.setTextColor(Color.LIME_GREEN)
-
-		await gui_choice
+		
+		var chosenMonID = 0
+		if playerControlled:
+			await gui_choice
+			chosenMonID = playerCardID
+		elif multiplayer_game:
+			chosenMonID = await getNextChoice()
 		#ignore skips
-		if playerCardID == -100:
+		if chosenMonID == -100:
 			continue
-		var mon = playerTeam[playerSwitchID]
+		var mon: BattleMonster = null
+		if playerControlled:
+			mon = playerTeam[chosenMonID]
+		elif multiplayer_game:
+			mon = enemyTeam[chosenMonID]
+		
 		if !chosenMons.has(mon):
 			chosenMons.push_back(mon)
 		else:
 			chosenMons.remove_at(chosenMons.find(mon))
 	
-	for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
-			var uiButton = cardButtons[uiIndex]
-			uiButton.setTextColor(Color.WHITE)
+	if playerControlled:
+		for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
+				var uiButton = cardButtons[uiIndex]
+				uiButton.setTextColor(Color.WHITE)
+
 	
-	#set shelf ui back to normal
-	for shelfUI in shelfedMonUI:
-		shelfUI.switchButton.disabled = true
-		shelfUI.switchButton.text = "Switch"
-		shelfUI.setTextColor(Color.WHITE)
+		#set shelf ui back to normal
+		for shelfUI in shelfedMonUI:
+			shelfUI.switchButton.disabled = true
+			shelfUI.switchButton.text = "Switch"
+			shelfUI.setTextColor(Color.WHITE)
 	
 	return chosenMons
 		
@@ -365,13 +511,19 @@ func promptPlayerSwitch() -> void:
 		if shelfUI.connectedMon != null:
 			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
 	await gui_choice
+	rpc("send_choice",playerSwitchID)
 	await playerSwap(playerSwitchID)
 	for shelfUI in shelfedMonUI:
 			shelfUI.switchButton.disabled = true
 	await get_tree().create_timer(1.0).timeout
 
 func promptEnemySwitch() -> void:
-	await enemySwap(enemyAI.enemySwitch())
+	var enmSwapChoice: int
+	if multiplayer_game:
+		enmSwapChoice = await getNextChoice()
+	else:
+		enmSwapChoice = enemyAI.enemySwitch()
+	await enemySwap(enmSwapChoice)
 	await get_tree().create_timer(1.0).timeout
 
 func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
@@ -642,14 +794,13 @@ func activeTurn() -> void:
 	inTurn = true
 	#manage dead turns before anything else
 	var preEnd = false
-	if getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
-		await promptEnemySwitch()
-		inTurn = false
-		preEnd = true
-	
-	if getActivePlayerMon().isKO():
-		await promptPlayerSwitch()
-		preEnd = true
+	for mon in sortedActiveMonList():
+		if mon.isKO():
+			if !mon.playerControlled:
+				await promptEnemySwitch()
+			else:
+				await promptPlayerSwitch()
+			preEnd = true
 	
 	if preEnd:
 		inTurn = false
@@ -686,14 +837,13 @@ func activeTurn() -> void:
 	
 	#check abilities
 	#post reset actions
-	for mon in playerTeam+enemyTeam:
+
+	for mon in sortedMonList():
 		await mon.getPassive().initPassive(mon,self)
 	
 	
 	#reset temporary values
-	for mon in playerTeam + enemyTeam:
-		if !mon.isKO() && [getActivePlayerMon(), getActiveEnemyMon()].has(mon):
-			await mon.reset()
+	basicReset(false,true)
 	
 	
 	
@@ -725,84 +875,67 @@ func activeTurn() -> void:
 			cardButton.hideCard()
 		
 		displayEnemyCards(getActiveEnemyMon())
+		var enemyActions = []
+		if !multiplayer_game:
+			enemyActions = enemyDeclare(true)
 		
-		var enemyActions = enemyDeclare(true)
-	
 		var actions: Array[BattleAction] = []
 		
 		if endTurn:
+			print("ending turn!")
 			break
 		
-		
-		
-		
-		await getActivePlayerMon().getPassive().onSubTurnEnd(getActivePlayerMon(), self)
-		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
+		for sorted_mon in sortedActiveMonList():
+			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
 		
 		firstSubTurn = false
 			
 		
-		for i in maxActiveMons:
-			#show player gui
-			var mon: BattleMonster = playerTeam[activePlayerMon + i]
-			
-			
-			setCardSelection(mon)
-			
-			#wait for a gui choice to be made
-			if len(mon.playableCards()) <= 0 && (playerMP == 0 || playerUsableMonCount() <= 1):
+
+		#show player gui
+		var mon: BattleMonster = getActivePlayerMon()
+		
+		
+		setCardSelection(mon)
+		
+		#wait for a gui choice to be made
+		var skipChoosingPhase = false
+		if len(mon.playableCards()) <= 0 && (playerMP == 0 || playerUsableMonCount() <= 1):
+			skipChoosingPhase = true
+		skipButton.disabled = false
+		for shelfUI in shelfedMonUI:
+			if shelfUI.connectedMon == null:
+				shelfUI.switchButton.disabled = true
 				continue
-			skipButton.disabled = false
-			for shelfUI in shelfedMonUI:
-				if shelfUI.connectedMon == null:
-					shelfUI.switchButton.disabled = true
-					continue
-				shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
+		if !skipChoosingPhase:
 			await gui_choice
+			rpc("set_enemy_choice",playerCardID,playerSwitchID,skipChoice)
+			
 			skipButton.disabled = true
 			toggleDetails()
 			for shelfUI in shelfedMonUI:
 				shelfUI.switchButton.disabled = true
 			hidePlayerChoiceUI()
 			
+			
+			var battleAction: BattleAction = await parseBattleAction(mon, playerCardID, playerSwitchID, skipChoice)
+			
 			#check for skipped turn
-			if playerCardID == -100: 
-				continue
-			var battleAction: BattleAction
-			if !skipChoice:
-				await get_tree().create_timer(0.01).timeout
-				#run choices for player and enemy
-				var chosenTargetID = -1
-				var targSelf = false
-				var chosenPriority = 0
-				var chosenCard: Card = mon.currentHand.pullCard(playerCardID)
-			
-			#add to action queue
-				battleAction = BattleAction.new(
-					mon,
-					true,
-					chosenCard.priority,
-					chosenTargetID,
-					targSelf,
-					chosenCard,
-					self,
-					false
-				)
-			else:
-				battleAction = BattleAction.new(
-					mon,
-					true,
-					100,
-					playerSwitchID,
-					false,
-					null,
-					self,
-					true
-				)
-			actions.push_back(battleAction)
-			
-			#wait a bit for the next monster
-			await get_tree().create_timer(0.3).timeout
+			if battleAction != null:
+				actions.push_back(battleAction)
+		else:
+			skipButton.disabled = true
+			await hidePlayerChoiceUI(true)
+			await get_tree().create_timer(1.0).timeout
+			rpc("set_enemy_choice",-100,-100,true)
+		
+		if multiplayer_game:
+			BattleLog.singleton.log("Waiting for opponent...")
+			while !multiplayer_enemyChose:
+				await get_tree().process_frame
+			enemyActions = multiplayer_enemyActions
+			multiplayer_enemyChose = false
 		
 		actions += enemyActions
 		#if both sides skip, end turn
@@ -816,9 +949,10 @@ func activeTurn() -> void:
 		await turnSequence.runActions(self)
 		hidePlayerChoiceUI(true)
 		await get_tree().create_timer(0.25).timeout
-		await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
-		await getActiveEnemyMon().getPassive().onSubTurnEnd(getActiveEnemyMon(), self)
+		for sorted_mon in sortedActiveMonList():
+			await sorted_mon.getPassive().onSubTurnStart(sorted_mon, self)
 		await get_tree().create_timer(0.25).timeout
+		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		
 	
 	#0 = no one, 1 = player, 2 = enemy
@@ -829,7 +963,8 @@ func activeTurn() -> void:
 		winner = 1
 	
 	if winner == 0:
-		await getActivePlayerMon().getPassive().onTurnEnd(getActivePlayerMon(), self)
+		for mon in sortedActiveMonList():
+			await mon.getPassive().onTurnEnd(mon, self)
 		inTurn = false
 	else:
 		await endBattle(winner)
@@ -866,6 +1001,9 @@ func toggleDetails() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#if no turn is started, start the next turn
+	while multiplayer_game && !rng_sync:
+			await get_tree().process_frame 
+	
 	if !inTurn:
 		activeTurn()
 	
@@ -875,13 +1013,67 @@ func _process(delta: float) -> void:
 
 
 
+
 static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality) -> void:
 	
+
 	
 	playerBattleTeam = p_playerTeam
 	enemyBattleTeam = p_enemyTeam
 	enemyPersonality = p_enemyPersonality
+	
+	if multiplayer_game:
+		print("waiting for connection")
+		await ConnectionManager.singleton.peer.peer_connected
+		
 	print("setting enemy personality: ", enemyPersonality)
 
 	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass
+
+#Multiplayer RPC Functions
+
+@rpc("any_peer")
+func set_enemy_team(cacheArray: String):
+	print(JSON.parse_string(cacheArray))
+	var loadedCache: Array[int]
+	loadedCache.assign(JSON.parse_string(cacheArray))
+	enemyBattleTeam = monsterCache.toMonsterArray(loadedCache)
+	synced.emit()
+	pass
+
+@rpc("any_peer")
+func set_enemy_choice(choiceID: int, switchID: int, switching: bool):
+	multiplayer_enemyActions = []
+	print("player card order: ")
+	for card in getActivePlayerMon().currentHand.storedCards:
+		print(multiplayer.get_unique_id(),">",card.name)
+	print("enemy card order: ")
+	for card in getActiveEnemyMon().currentHand.storedCards:
+		print(multiplayer.get_unique_id(),">",card.name)
+	BattleLog.singleton.log("enemy choice id: " + str(choiceID))
+	var main_action: BattleAction = await parseBattleAction(getActiveEnemyMon(), choiceID, switchID, switching, false)
+	if main_action != null:
+		multiplayer_enemyActions.push_back(main_action)
+		if main_action.card != null:
+			pass
+			#getActiveEnemyMon().currentHand.removeCards([main_action.card])
+	multiplayer_enemyChose = true
+
+@rpc("any_peer")
+func sync_rng(sync_seed: int, sync_state: int):
+	print("seed setting:",global_rng.seed,"->",sync_seed)
+	global_rng.set_seed(sync_seed)
+	if global_rng.state != sync_state:
+		EffectFlair.singleton._runFlair("Desynced", Color.RED)
+	global_rng.state = sync_state
+	rng_sync = true
+	rpc("done_sync")
+	
+@rpc("any_peer")
+func done_sync():
+	rng_sync = true
+
+@rpc("any_peer")
+func send_choice(multi_choice: int):
+	multiplayer_choice_buffer.push_back(multi_choice)

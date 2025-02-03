@@ -15,7 +15,6 @@ func createUI(mon: BattleMonster, battle: BattleController, packedscene: PackedS
 		container = battle.playerUI[0].externalGaugeContainer
 	else:
 		container = battle.enemyUI[0].externalGaugeContainer 
-	print(mon.playerControlled,": ",container.get_parent().name)
 	var newObj = packedscene.instantiate()
 	container.add_child(newObj)
 	return newObj

@@ -13,6 +13,5 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var maxAngle = minAngle
-	print(progress)
 	gaugePivot.rotation_degrees = lerp(gaugePivot.rotation_degrees,  -minAngle + progress*(maxAngle + minAngle), delta*8)
 	pass

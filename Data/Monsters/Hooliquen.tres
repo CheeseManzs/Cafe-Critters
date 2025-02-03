@@ -35,7 +35,7 @@ storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource
 
 [resource]
 script = ExtResource("1_i2xwq")
-id = 1
+id = 4
 name = "Hooliquen"
 alignment = 6
 role = 1

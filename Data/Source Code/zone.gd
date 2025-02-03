@@ -37,6 +37,9 @@ func removeCards(cards: Array[Card]):
 # draws/removes random cards in bulk and returns an array
 func bulkDraw(count: int) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	if BattleController.multiplayer_game:
+		rng = BattleController.global_rng
+		print("using rng: bulk draw")
 	var cards: Array[Card] = []
 	for i in min(count, len(storedCards)):
 		var cardID = rng.randi_range(0, len(storedCards) - 1)
@@ -44,9 +47,13 @@ func bulkDraw(count: int) -> Array[Card]:
 		cards.push_back(card)
 	return cards
 
+
 #bulk draws with respect to status conditions
 func specialDraw(count: int, battleController: BattleController, mon: BattleMonster) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	if BattleController.multiplayer_game:
+		rng = BattleController.global_rng
+
 	var cards: Array[Card] = []
 	for i in min(count, len(storedCards)):
 		var cardID = rng.randi_range(0, len(storedCards) - 1)

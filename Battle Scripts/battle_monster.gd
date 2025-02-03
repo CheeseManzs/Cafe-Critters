@@ -32,6 +32,7 @@ var extraDraw = 0
 var attackBonus = 0
 var temp_attackBonus = 0
 var defenseBonus = 0
+var gameID = 0
 static var damagePopupPrefab: PackedScene
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
@@ -106,6 +107,7 @@ func setAttack(atk: int):
 #removes random card and returns the removed card
 
 func raiseAnimation():
+	battleController.setCardSelection(self, false)
 	for display in battleController.cardButtons:
 		display.raise()
 		display.ignoreInput = true
@@ -143,8 +145,7 @@ func discardAnimation(card: Card) -> void:
 	await battleController.get_tree().create_timer(0.5).timeout
 	
 func discardCard(card: Card, removeFromHand = true):
-	if playerControlled:
-		await discardAnimation(card)
+	await discardAnimation(card)
 	battleController.addToGraveyard(card)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	if removeFromHand:
@@ -152,10 +153,10 @@ func discardCard(card: Card, removeFromHand = true):
 	await getPassive().onDiscard(self, battleController, card)
 
 func discardRandomCard() -> Card:
-	if playerControlled:
-		battleController.hidePlayerChoiceUI(true)
-		await battleController.get_tree().create_timer(0.5).timeout
-		battleController.setCardSelection(self,true)
+	
+	battleController.hidePlayerChoiceUI(true)
+	await battleController.get_tree().create_timer(0.5).timeout
+	battleController.setCardSelection(self,true)
 	
 	var cardArray = currentHand.storedCards
 	var cards = currentHand.bulkDraw(1)
@@ -289,9 +290,7 @@ func getDefense():
 
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
-	print("carrying status")
 	for status in statusConditions:
-		print(status.toString(), status.carriesOverOnSwitch())
 		if status.carriesOverOnSwitch():
 			statusConditions.remove_at(statusConditions.find(status))
 			target.statusConditions.push_back(status)
