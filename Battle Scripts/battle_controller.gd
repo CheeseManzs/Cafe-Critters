@@ -13,6 +13,7 @@ var multiplayer_playerHand: Array[Card] = []
 var multiplayer_enemyHand: Array[Card] = []
 var multiplayer_choice_buffer: Array[int] = []
 var rng_sync = false
+var multiplayer_loaded_peer = false
 #monster object prefab
 static var multiplayer_game = false
 static var multiplayer_seed = 0
@@ -1001,7 +1002,7 @@ func toggleDetails() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#if no turn is started, start the next turn
-	while multiplayer_game && !rng_sync:
+	while multiplayer_game && !rng_sync && !multiplayer_loaded_peer:
 			await get_tree().process_frame 
 	
 	if !inTurn:
@@ -1039,6 +1040,7 @@ func set_enemy_team(cacheArray: String):
 	var loadedCache: Array[int]
 	loadedCache.assign(JSON.parse_string(cacheArray))
 	enemyBattleTeam = monsterCache.toMonsterArray(loadedCache)
+	multiplayer_loaded_peer = true
 	synced.emit()
 	pass
 
