@@ -1002,7 +1002,7 @@ func toggleDetails() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#if no turn is started, start the next turn
-	while multiplayer_game && !rng_sync && !multiplayer_loaded_peer:
+	while (multiplayer_game && !rng_sync) || !multiplayer_loaded_peer:
 			await get_tree().process_frame 
 	
 	if !inTurn:
