@@ -8,9 +8,15 @@ func _init(actionList: Array[BattleAction]):
 
 func randomBool() -> bool:
 	var boolArr = [true, false]
-	if BattleController.multiplayer_game && !ConnectionManager.host:
-		boolArr.reverse()
+	BattleMonster.totalDraws += 1
+	print(BattleController.multiplayer_id,">rng draws (rB):",BattleMonster.totalDraws,"|",BattleController.global_rng.state)
 	return boolArr[BattleController.global_rng.randi_range(0,1)]
+
+func definiteArrangement(a:BattleAction, b:BattleAction):
+	if a.battleMonster.gameID > b.battleMonster.gameID:
+		return true
+	else:
+		return false
 
 func sortAction(a:BattleAction, b:BattleAction):
 	if a.priority > b.priority:
@@ -25,6 +31,7 @@ func sortAction(a:BattleAction, b:BattleAction):
 		return randomBool()
 
 func rearrange() -> void:
+	actions.sort_custom(definiteArrangement) #sort in a definite order first to avoid extra sort action calculations 
 	actions.sort_custom(sortAction)
 
 func runActions(battleController: Node) -> void:

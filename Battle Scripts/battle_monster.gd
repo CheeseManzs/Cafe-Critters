@@ -1,5 +1,6 @@
 class_name BattleMonster
 
+static var totalDraws = 0
 #link to raw monster data
 @export var rawData: Monster
 #current deck of the monster
@@ -159,6 +160,7 @@ func discardRandomCard() -> Card:
 	battleController.setCardSelection(self,true)
 	
 	var cardArray = currentHand.storedCards
+	
 	var cards = currentHand.bulkDraw(1)
 	if len(cards) == 0:
 		return null

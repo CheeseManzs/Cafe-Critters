@@ -12,12 +12,14 @@ var multiplayer_enemyActions: Array[BattleAction]
 var multiplayer_playerHand: Array[Card] = []
 var multiplayer_enemyHand: Array[Card] = []
 var multiplayer_choice_buffer: Array[int] = []
+var multiplayer_options_buffer: Array = []
 var rng_sync = false
 var multiplayer_loaded_peer = false
 #monster object prefab
 static var multiplayer_game = false
 static var multiplayer_seed = 0
 static var global_rng = RandomNumberGenerator.new()
+static var multiplayer_id = 0
 @export var monsterCache: MonsterCache
 @export var dashParticles: GPUParticles3D
 @export var monsterObject: PackedScene
@@ -192,15 +194,11 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	multiplayer_loaded_peer = true
 	
 func basicReset(skipKOCheck = false, resetActiveMons = false):
-	var resetOrder = [playerTeam,enemyTeam]
-	#sync rng order
-	if multiplayer_game && !ConnectionManager.host:
-		resetOrder = [enemyTeam, playerTeam]
+	var resetOrder = sortedMonList()
 	
-	for team in resetOrder:
-		for mon in team:
-			if (skipKOCheck || !mon.isKO()) && (resetActiveMons || (mon != getActivePlayerMon() && mon != getActiveEnemyMon())):
-				await mon.reset()
+	for mon in resetOrder:
+		if (skipKOCheck || !mon.isKO()) && (resetActiveMons || (mon != getActivePlayerMon() && mon != getActiveEnemyMon())):
+			await mon.reset()
 
 func createImpact(pos):
 	var impactNode: GameVFX = impactEffect.instantiate()
@@ -241,6 +239,7 @@ func _ready() -> void:
 	#debug initialization
 	global_rng = RandomNumberGenerator.new()
 	if multiplayer_game:
+		multiplayer_id = multiplayer.get_unique_id()
 		var idCache = monsterCache.toCacheArray(playerBattleTeam)
 		rpc("set_enemy_team", JSON.stringify(idCache))
 		await synced
@@ -936,8 +935,7 @@ func activeTurn() -> void:
 		
 		if multiplayer_game:
 			BattleLog.singleton.log("Waiting for opponent...")
-			while !multiplayer_enemyChose:
-				await get_tree().process_frame
+			var newEnemyActions = await get_enemy_choice()
 			enemyActions = multiplayer_enemyActions
 			multiplayer_enemyChose = false
 		
@@ -1048,6 +1046,15 @@ func set_enemy_team(cacheArray: String):
 
 @rpc("any_peer")
 func set_enemy_choice(choiceID: int, switchID: int, switching: bool):
+	multiplayer_options_buffer.push_back([choiceID, switchID, switching])
+	
+func get_enemy_choice():
+	while len(multiplayer_options_buffer) <= 0:
+			await get_tree().process_frame
+	var choiceID: int = multiplayer_options_buffer[0][0]
+	var switchID: int = multiplayer_options_buffer[0][1]
+	var switching: int = multiplayer_options_buffer[0][2]
+	multiplayer_options_buffer.remove_at(0)
 	multiplayer_enemyActions = []
 	print("player card order: ")
 	for card in getActivePlayerMon().currentHand.storedCards:
@@ -1055,7 +1062,6 @@ func set_enemy_choice(choiceID: int, switchID: int, switching: bool):
 	print("enemy card order: ")
 	for card in getActiveEnemyMon().currentHand.storedCards:
 		print(multiplayer.get_unique_id(),">",card.name)
-	BattleLog.singleton.log("enemy choice id: " + str(choiceID))
 	var main_action: BattleAction = await parseBattleAction(getActiveEnemyMon(), choiceID, switchID, switching, false)
 	if main_action != null:
 		multiplayer_enemyActions.push_back(main_action)
@@ -1063,6 +1069,7 @@ func set_enemy_choice(choiceID: int, switchID: int, switching: bool):
 			pass
 			#getActiveEnemyMon().currentHand.removeCards([main_action.card])
 	multiplayer_enemyChose = true
+	return null
 
 @rpc("any_peer")
 func sync_rng(sync_seed: int, sync_state: int):
