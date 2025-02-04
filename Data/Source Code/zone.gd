@@ -39,11 +39,8 @@ func bulkDraw(count: int) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if BattleController.multiplayer_game:
 		rng = BattleController.global_rng
-		print("using rng: bulk draw")
 	var cards: Array[Card] = []
 	for i in min(count, len(storedCards)):
-		BattleMonster.totalDraws += 1
-		print(BattleController.multiplayer_id,">rng draws (bD):",BattleMonster.totalDraws,"|",BattleController.global_rng.state)
 		var cardID = rng.randi_range(0, len(storedCards) - 1)
 		var card = pullCard(cardID)
 		cards.push_back(card)
@@ -58,8 +55,6 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 
 	var cards: Array[Card] = []
 	for i in min(count, len(storedCards)):
-		BattleMonster.totalDraws += 1
-		print(BattleController.multiplayer_id,">rng draws (sD):",BattleMonster.totalDraws,"|",BattleController.global_rng.state)
 		var oldState = rng.state
 		var cardID = rng.randi_range(0, len(storedCards) - 1)
 		if oldState == rng.state:

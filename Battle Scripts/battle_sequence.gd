@@ -9,7 +9,6 @@ func _init(actionList: Array[BattleAction]):
 func randomBool() -> bool:
 	var boolArr = [true, false]
 	BattleMonster.totalDraws += 1
-	print(BattleController.multiplayer_id,">rng draws (rB):",BattleMonster.totalDraws,"|",BattleController.global_rng.state)
 	return boolArr[BattleController.global_rng.randi_range(0,1)]
 
 func definiteArrangement(a:BattleAction, b:BattleAction):

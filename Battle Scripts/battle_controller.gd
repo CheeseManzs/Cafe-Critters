@@ -406,7 +406,6 @@ func hidePlayerChoiceUI(removeAll = false):
 			cardButton.raise()
 
 func randomBool() -> bool:
-	print("randomness from ",self.multiplayer.get_unique_id())
 	var boolArr = [true, false]
 	if BattleController.multiplayer_game && !ConnectionManager.host:
 		boolArr.reverse()
@@ -465,16 +464,20 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 	while len(chosenMons) < count && len(playerTeam) - len(chosenMons) - 1 > 0:
 		playerCardID = -1
 		#check for chosen cards
-		for shelfUI in shelfedMonUI:
-			if chosenMons.has(shelfUI.connectedMon):
-				shelfUI.setTextColor(Color.GOLD)
-			else:
-				shelfUI.setTextColor(Color.LIME_GREEN)
+		if playerControlled:
+			for shelfUI in shelfedMonUI:
+				if chosenMons.has(shelfUI.connectedMon):
+					shelfUI.setTextColor(Color.GOLD)
+				else:
+					shelfUI.setTextColor(Color.LIME_GREEN)
 		
 		var chosenMonID = 0
 		if playerControlled:
 			await gui_choice
-			chosenMonID = playerCardID
+			BattleLog.singleton.log("player choice: "+str(playerSwitchID))
+			chosenMonID = playerSwitchID
+			if multiplayer_game:
+				rpc("send_choice",playerSwitchID)
 		elif multiplayer_game:
 			chosenMonID = await getNextChoice()
 		#ignore skips
