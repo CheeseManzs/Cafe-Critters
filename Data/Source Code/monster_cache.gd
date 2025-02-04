@@ -9,7 +9,7 @@ func toCacheArray(monArr: Array[Monster]) -> Array[int]:
 		cacheArr.push_back(mon.id)
 	return cacheArr
 	
-func toMonsterArray(cacheArr: Array[int]) -> Array[Monster]:
+func toMonsterArray(cacheArr: Array) -> Array[Monster]:
 	var monArr: Array[Monster] = []
 	for id in cacheArr:
 		monArr.push_back(getMonster(id))

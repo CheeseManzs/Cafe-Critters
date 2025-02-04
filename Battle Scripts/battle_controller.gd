@@ -432,15 +432,11 @@ func getLowerID(a: BattleMonster, b: BattleMonster):
 
 func sortedActiveMonList() -> Array:
 	var monArr = [getActivePlayerMon(),getActiveEnemyMon()]
-	if ConnectionManager.host:
-		monArr.reverse()
 	monArr.sort_custom(getLowerID)
 	return monArr
 	
 func sortedMonList() -> Array:
 	var monArr = playerTeam+enemyTeam
-	if ConnectionManager.host:
-		monArr = enemyTeam+playerTeam
 	monArr.sort_custom(getLowerID)
 	return monArr
 
@@ -845,6 +841,7 @@ func activeTurn() -> void:
 	#post reset actions
 
 	for mon in sortedMonList():
+		print("running passive for ", mon.rawData.name,">",mon.playerControlled,">",multiplayer.get_unique_id())
 		await mon.getPassive().initPassive(mon,self)
 	
 	

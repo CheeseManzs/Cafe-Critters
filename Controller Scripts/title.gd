@@ -1,3 +1,4 @@
+class_name DebugGameManager
 extends Node2D
 
 @export var debugTeamA: Array[Monster]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d07fdcyc88i5y"]
+[gd_scene load_steps=13 format=3 uid="uid://d07fdcyc88i5y"]
 
 [ext_resource type="Script" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="7_3mmaa"]
 [ext_resource type="Script" path="res://Battle Scripts/connection_manager.gd" id="7_co4j3"]
 [ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="8_g3ecd"]
+[ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
 
 [sub_resource type="Resource" id="Resource_eb42p"]
 script = ExtResource("6_3vadh")
@@ -73,13 +74,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Host"
 
+[node name="Team Selection Box" type="TextEdit" parent="Control UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Connecting..."
+
 [node name="Online Battle (Join)" type="Button" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Join"
 
-[node name="TextEdit" type="TextEdit" parent="Control UI/VBoxContainer"]
+[node name="IP Box" type="TextEdit" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 text = "Connecting..."
@@ -90,10 +96,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Overworld"
 
-[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText")]
+[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager")]
 script = ExtResource("7_co4j3")
 ipDisplay = NodePath("../Control UI/VBoxContainer/Online Battle (Host)")
-ipText = NodePath("../Control UI/VBoxContainer/TextEdit")
+ipText = NodePath("../Control UI/VBoxContainer/IP Box")
+teamText = NodePath("../Control UI/VBoxContainer/Team Selection Box")
+teamPacker = ExtResource("11_ji716")
+debugManager = NodePath("..")
 
 [connection signal="pressed" from="Control UI/VBoxContainer/Battle Button" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]

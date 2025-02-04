@@ -26,8 +26,7 @@ func initPassive(mon: BattleMonster, battle: BattleController):
 	if !initialized:
 		initialized = true
 		await activateAbility(mon, battle)
-		if battle.getActivePlayerMon() == mon:
-			await customUI(mon, battle)
+		await customUI(mon, battle)
 
 #runs whenever the ability is activated (should be implemented into every overridden function)
 func activateAbility(mon: BattleMonster, battle: BattleController) -> void:

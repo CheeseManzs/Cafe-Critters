@@ -5,6 +5,9 @@ signal foundUPNP
 
 @export var ipDisplay: Button
 @export var ipText: TextEdit
+@export var teamText: TextEdit
+@export var teamPacker: MonsterCache
+@export var debugManager: DebugGameManager
 
 var peer = ENetMultiplayerPeer.new()
 var upnp = UPNP.new()
@@ -18,12 +21,16 @@ static var host = false
 func _ready() -> void:
 	if singleton == null:
 		singleton = self
+	teamText.text = JSON.stringify(teamPacker.toCacheArray(debugManager.debugTeamA))
 	Thread.new().start(upnpSetup.bind())
 	await foundUPNP
 	var external_ip = upnp.query_external_address()
 	print("ip: ",external_ip)
 	ipText.text = str(external_ip)
+	
 
+func setTeam():
+	debugManager.debugTeamA = teamPacker.toMonsterArray(JSON.parse_string(teamText.text))
 
 func upnpSetup():
 		#upnp.delete_port_mapping(9999, "UDP")
@@ -45,9 +52,6 @@ func upnpSetup():
 
 func hostServer():
 	BattleController.multiplayer_game = true
-	
-	
-	
 	var external_ip = upnp.query_external_address()
 	
 	ipDisplay.text = "Hosted on " + str(external_ip)
@@ -67,8 +71,10 @@ func joinServer():
 
 
 func _on_online_battle_host_pressed() -> void:
+	setTeam()
 	hostServer()
 
 
 func _on_online_battle_join_pressed() -> void:
+	setTeam()
 	joinServer()
