@@ -7,6 +7,8 @@ static var totalDraws = 0
 @export var currentDeck: Zone
 #current hand of the monster/player
 @export var currentHand: Zone
+
+@export var exileZone: Zone
 #current level of the monster
 @export var level: int
 #current health of the monster
@@ -55,6 +57,7 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	if rawData.deck.storedCards.size() == 0:
 		rawData.deck = rawData.startingCardPool.clone()
 	currentDeck = rawData.deck.clone()
+	exileZone = Zone.new()
 	playerControlled = p_playerControlled
 	hardReset()
 	
@@ -64,7 +67,6 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:
-	BattleLog.singleton.log("Dealing: " + str(depletionAmount) + " with " + str(shield) + " block")
 	#remove damage from shield
 	shield -= depletionAmount
 	#if shield takes more damage than it has, it is considered overdamage
@@ -146,6 +148,12 @@ func discardAnimation(card: Card) -> void:
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
 	
+func exileCard(card: Card):
+	await discardAnimation(card)
+	exileZone.storedCards.push_back(card)
+	BattleLog.singleton.log(rawData.name + " exiled " + card.name)
+
+
 func discardCard(card: Card, removeFromHand = true):
 	await discardAnimation(card)
 	battleController.addToGraveyard(card)
@@ -154,8 +162,7 @@ func discardCard(card: Card, removeFromHand = true):
 		currentHand.removeCards([card])
 	await getPassive().onDiscard(self, battleController, card)
 
-func discardRandomCard() -> Card:
-	
+func pickRandomCard() -> Card:
 	battleController.hidePlayerChoiceUI(true)
 	await battleController.get_tree().create_timer(0.5).timeout
 	battleController.setCardSelection(self,true)
@@ -167,9 +174,20 @@ func discardRandomCard() -> Card:
 		return null
 	
 	var card = cards[0]
-	await discardCard(card, false)
-	
 	return card
+
+func discardRandomCard() -> Card:
+	
+	var picked = await pickRandomCard()
+	await discardCard(picked, false)
+	
+	return picked
+	
+func exileRandomCard() -> Card:
+	var picked = await pickRandomCard()
+	await exileCard(picked)
+	
+	return picked
 
 func playableCards() -> Array[Card]:
 	var playable: Array[Card] = []
@@ -235,6 +253,7 @@ func reset(active = true, forceDraw = false) -> void:
 	if (active || forceDraw) && len(currentDeck.storedCards) == 0:
 		currentDeck = rawData.deck.clone()
 	
+	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
 	if (active || forceDraw) && len(currentDeck.storedCards) > 0:
 		var drawBonus = 0
@@ -244,6 +263,21 @@ func reset(active = true, forceDraw = false) -> void:
 
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
+
+func returnStrongarmCard():
+	var exileList = []
+
+	for card in exileZone.storedCards:
+		if card.statusConditions.has(Status.EFFECTS.STRONGARM):
+			exileList.push_back(card)
+	if len(exileList) == 0:
+		return
+	await EffectFlair.singleton._runFlair("Strongarm", Color.ROYAL_BLUE)
+	var rng = BattleController.global_rng
+	var pickedCard: Card = exileList[rng.randi_range(0,len(exileList) - 1)]
+	pickedCard.statusConditions.erase(Status.EFFECTS.STRONGARM)
+	BattleLog.singleton.log(rawData.name + " got " + pickedCard.name + " back!")
+	currentHand.storedCards.push_back(pickedCard)
 
 func addStatusCondition(status: Status, broadcast = false):
 
@@ -273,7 +307,8 @@ func addStatusCondition(status: Status, broadcast = false):
 		Status.EFFECTS.STRONGARM:
 			if health > 0:
 				await EffectFlair.singleton._runFlair("Strongarm", Color.ROYAL_BLUE)
-				await battleController.getOpposingMon(playerControlled).discardRandomCard()
+				var removedCard: Card = await battleController.getOpposingMon(playerControlled).exileRandomCard()
+				removedCard.statusConditions.push_back(Status.EFFECTS.STRONGARM)
 				return
 	#enemy instant effects
 	if hasStatus(status.effect):
@@ -300,8 +335,8 @@ func carryStatusConditions(target: BattleMonster) -> void:
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
+	BattleLog.singleton.log(rawData.name + " gained " + str(shieldAmount) + " block")
 	shield += shieldAmount
-	BattleLog.singleton.log(rawData.name + " gained " + str(shieldAmount) + " shield")
 	if shield < 0:
 		shield = 0
 #does pure damage to the monster

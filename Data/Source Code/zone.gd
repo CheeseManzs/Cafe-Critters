@@ -34,6 +34,13 @@ func removeCards(cards: Array[Card]):
 		if storedCards.has(card):
 			storedCards.remove_at(storedCards.find(card))
 
+func exileCards(cards: Array[Card], mon: BattleMonster):
+	for card in cards:
+		if storedCards.has(card):
+			BattleLog.singleton.log("found card to exile")
+			storedCards.remove_at(storedCards.find(card))
+			mon.exileZone.storedCards.push_back(card)
+
 # draws/removes random cards in bulk and returns an array
 func bulkDraw(count: int) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()

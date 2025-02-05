@@ -51,7 +51,7 @@ func customUI(mon: BattleMonster, battle: BattleController):
 	
 func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 	#await customUI(mon, battle)
-	await setHeat(3, mon, battle)
+	await setHeat(0, mon, battle)
 	return
 
 func loseHeat(mon: BattleMonster, battle: BattleController) -> void:
