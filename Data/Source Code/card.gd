@@ -68,7 +68,7 @@ func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float 
 #give shield
 func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower, applyEmpower = true):
 	var shield = _calcShield(attacker, defender, _sp, applyEmpower)
-	await defender.addShield(shield)
+	await attacker.addShield(shield)
 
 #give status
 func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true, applyEmpower = true):
