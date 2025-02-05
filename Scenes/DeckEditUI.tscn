@@ -36,6 +36,7 @@ layout_mode = 2
 vertical_scroll_mode = 2
 
 [node name="LeftGridContainer" type="GridContainer" parent="CardGridHSplit/LeftScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 240
 theme_override_constants/v_separation = 240
@@ -119,26 +120,37 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="ScrollContainer/Control"]
+[node name="Panel" type="GridContainer" parent="ScrollContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+columns = 6
 
 [node name="Button" type="Button" parent="ScrollContainer/Control/Panel"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 74.0
-offset_right = 119.0
-offset_bottom = 105.0
+layout_mode = 2
 text = "monster 1"
 
 [node name="Button2" type="Button" parent="ScrollContainer/Control/Panel"]
-layout_mode = 0
-offset_left = 224.0
-offset_top = 74.0
-offset_right = 298.0
-offset_bottom = 105.0
+layout_mode = 2
 text = "button 2"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MonsterGridContainer" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 200
+theme_override_constants/v_separation = 40
