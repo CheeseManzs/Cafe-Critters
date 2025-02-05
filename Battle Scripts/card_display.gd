@@ -27,6 +27,8 @@ var straight = true
 var displayLocation = "default"
 var canPress = true
 var fromSide = false
+var deckEditController: Control
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	scale = Vector2(0.34,0.34)*scaleFactor
@@ -151,7 +153,7 @@ func _process(delta: float) -> void:
 			"default":
 				sendChoice()
 			"collection":
-				pass
+				sendToDeckEditor()
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass
@@ -187,6 +189,12 @@ func sendChoice():
 		return
 	controller.onHand(choiceID)
 	controller.emitGUISignal()
+	
+## Called when clicked on in deck edit mode. Tells deck_edit_ui.gd to do a thing.
+func sendToDeckEditor():
+	if isDisabled:
+		return
+	#deckEditController.
 
 func setTextColor(col: Color):
 	titleLabel.set("theme_override_colors/default_color",col)
