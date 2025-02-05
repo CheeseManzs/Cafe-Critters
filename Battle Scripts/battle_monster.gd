@@ -64,6 +64,7 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:
+	BattleLog.singleton.log("Dealing: " + str(depletionAmount))
 	#remove damage from shield
 	shield -= depletionAmount
 	#if shield takes more damage than it has, it is considered overdamage
