@@ -1,7 +1,7 @@
 class_name MachineAbility
 extends PassiveAbility
 
-var heat = 3
+var heat = 0
 var minHeat = 0
 var maxHeat = 5
 var bonusScale = 0
