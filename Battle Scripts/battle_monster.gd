@@ -416,6 +416,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	if attacker != self && attacker != null:
 		attacker.temp_attackBonus = 0
 		await attacker.atkAnim(self)
+	#play audio
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):
 		var status = getStatus(Status.EFFECTS.BARRIER)
@@ -428,6 +429,10 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	#damage shield and calculate overdamage
 	var shielded = (shield > 0)
 	var pureDmg = damageShield(dmg)
+	if pureDmg > 0:
+		battleController.playSound(battleController.hitSound)
+	else:
+		battleController.playSound(battleController.emptyHitSound)
 	#apply overdamage to monster as true damage
 	trueDamage(pureDmg, null, shielded)
 	

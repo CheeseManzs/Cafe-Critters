@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=46 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ddw7raemmtnam" path="res://Prefabs/VFX/impact.tscn" id="4_x5ddw"]
 [ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="4_x5jj8"]
 [ext_resource type="PackedScene" uid="uid://3pag10s0w2dh" path="res://Prefabs/card_back.tscn" id="5_1cnu7"]
+[ext_resource type="AudioStream" uid="uid://7kdbledkls7e" path="res://Audio/8bit-SFX-Library/Collide/explode-5.wav" id="6_545oj"]
+[ext_resource type="AudioStream" uid="uid://cl7e66r56paqi" path="res://Audio/8bit-SFX-Library/Collide/hit-7.wav" id="7_d7iro"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
@@ -45,6 +47,18 @@ bg_color = Color(0.923849, 0.426807, 0.349598, 1)
 [sub_resource type="Curve" id="Curve_hwsx7"]
 _data = [Vector2(0, 0.0349693), 0.0, 0.0, 0, 0]
 point_count = 1
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3ocnu"]
+sky_top_color = Color(0.439474, 0.618985, 0.830536, 1)
+sky_horizon_color = Color(0.859796, 0.580664, 0.413044, 1)
+ground_horizon_color = Color(0.858824, 0.580392, 0.411765, 1)
+
+[sub_resource type="Sky" id="Sky_p7bi2"]
+sky_material = SubResource("ProceduralSkyMaterial_3ocnu")
+
+[sub_resource type="Environment" id="Environment_exjp8"]
+background_mode = 2
+sky = SubResource("Sky_p7bi2")
 
 [sub_resource type="Curve" id="Curve_b5efj"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497512, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.25183, 0.0, 0, 0]
@@ -100,7 +114,7 @@ size = Vector2(0.1, 0.005)
 [node name="Battle" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, -0.5, 0)
+transform = Transform3D(400, 0, 0, 0, 1, 0, 0, 0, 400, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_6m2jc")
 surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
 
@@ -109,7 +123,7 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "audioPlayer", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
 monsterCache = ExtResource("2_ta4pc")
 dashParticles = NodePath("../DashParticles")
@@ -117,6 +131,9 @@ monsterObject = ExtResource("3_p5icm")
 cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
 impactEffect = ExtResource("4_x5ddw")
+audioPlayer = NodePath("../AudioStreamPlayer")
+hitSound = ExtResource("6_545oj")
+emptyHitSound = ExtResource("7_d7iro")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
@@ -306,6 +323,7 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Control UI/Background/SubViewportContainer/SubViewport" node_paths=PackedStringArray("moveParticles")]
 transform = Transform3D(1, 0, 0, 0, 0.996077, 0.0884949, 0, -0.0884949, 0.996077, 0, 0.902906, 2.13112)
+environment = SubResource("Environment_exjp8")
 script = ExtResource("1_2fux1")
 moveParticles = NodePath("CamDashParticles")
 
@@ -473,5 +491,8 @@ lifetime = 0.1
 preprocess = 0.5
 process_material = SubResource("ParticleProcessMaterial_3478b")
 draw_pass_1 = SubResource("QuadMesh_exho7")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

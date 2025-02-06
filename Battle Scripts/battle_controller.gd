@@ -26,6 +26,11 @@ static var multiplayer_id = 0
 @export var cardbuttonPrefab: PackedScene
 @export var detailsPanel: DetailsPanel
 @export var impactEffect: PackedScene
+
+@export var audioPlayer: AudioStreamPlayer
+@export var hitSound: AudioStream
+@export var emptyHitSound: AudioStream
+
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int
@@ -192,7 +197,11 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	#reset every mon
 	basicReset(true)
 	multiplayer_loaded_peer = true
-	
+
+func playSound(clip: AudioStream):
+	audioPlayer.stream = clip
+	audioPlayer.play()
+
 func basicReset(skipKOCheck = false, resetActiveMons = false):
 	var resetOrder = sortedMonList()
 	

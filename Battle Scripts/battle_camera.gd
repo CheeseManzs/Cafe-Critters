@@ -39,7 +39,7 @@ func shake(shakeStrength: float = 0.1) -> void:
 	shaking = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var cutoff = 0.005
+	var cutoff = 0.03
 	if !shaking:
 		position = lerp(position, ogPos,delta*4)
 		moveParticles.amount_ratio = max(0,(position - ogPos).length()/ogDistance-cutoff)
