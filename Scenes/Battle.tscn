@@ -88,7 +88,7 @@ billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_o1je0"]
 material = SubResource("StandardMaterial3D_myw15")
-size = Vector2(0.005, 0.1)
+size = Vector2(0.005, 0.3)
 
 [sub_resource type="Environment" id="Environment_7estt"]
 
