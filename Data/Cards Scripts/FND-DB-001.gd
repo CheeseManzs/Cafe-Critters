@@ -10,5 +10,8 @@ func _init() -> void:
 	
 	power = 1
 
+
+
+	
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)

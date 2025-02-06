@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://cpf4dy38n68y2"]
+[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://cpf4dy38n68y2"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_517cx"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
@@ -11,11 +11,12 @@
 [ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="7_17kso"]
 [ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="8_v0itr"]
 [ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
+[ext_resource type="Resource" uid="uid://d3aqy1d8xrf2q" path="res://Data/Cards/Sneak Attack.tres" id="9_qors6"]
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")
 name = ""
-storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("3_vkfmx"), ExtResource("4_iu8pt"), ExtResource("5_i2dnk"), ExtResource("5_2kc7n"), ExtResource("7_17kso"), ExtResource("8_v0itr")])
+storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("3_vkfmx"), ExtResource("4_iu8pt"), ExtResource("5_i2dnk"), ExtResource("5_2kc7n"), ExtResource("7_17kso"), ExtResource("8_v0itr"), ExtResource("9_qors6"), ExtResource("9_qors6"), ExtResource("9_qors6")])
 
 [resource]
 script = ExtResource("2_8ybf3")

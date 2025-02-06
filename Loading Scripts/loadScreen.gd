@@ -5,6 +5,7 @@ extends Control
 
 var anim = false
 var release = false
+static var freeze = false
 signal canLoad
 var alpha = 0
 # Called when the node enters the scene tree for the first time.
@@ -33,8 +34,9 @@ func _process(delta: float) -> void:
 				alpha += delta*3
 			else:
 				canLoad.emit()
-		elif alpha > 0.1:
-			alpha -= delta*3
+		elif alpha > 0.01:
+			if !freeze:
+				alpha -= delta*2.0
 		else:
 			alpha = 0
 			outerRect.modulate = Color(255, 255, 255, alpha)	

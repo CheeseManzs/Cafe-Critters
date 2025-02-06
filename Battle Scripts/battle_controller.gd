@@ -721,7 +721,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		var newButton: CardDisplay = cardPrefab.instantiate()
 		get_parent().add_child(newButton)
 		
-		newButton.setCard(card, id, self)
+		newButton.setCard(card, id, self,"default",mon,mon.battleController.getOpposingMon(mon.playerControlled))
 		newButton.show()
 		
 		cardButtons.push_back(newButton)

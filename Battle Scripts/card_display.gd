@@ -38,17 +38,18 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 ## Sets parameters of the card from the given resource. -A
-func setCard(p_card: Card, cID: int, battleController: BattleController, context: String = "default") -> void:
+func setCard(p_card: Card, cID: int, battleController: BattleController, context: String = "default", user: BattleMonster = null, target: BattleMonster = null) -> void:
 	runAnim = false
 	card = p_card
 	titleLabel.text = card.name
-	descLabel.text = card.description
 	manaLabel.text = "[center][b]"+str(card.cost)+"[/b][/center]"
 	choiceID = cID
 	controller = battleController
 	if card.art != null:
 		artTexture.texture = card.art
-	
+	if user != null && target != null:
+		card.setDescription(user, target)
+	descLabel.text = card.description
 	
 	if context == "default":
 		if anchor_left == anchor_right && anchor_top == anchor_bottom:

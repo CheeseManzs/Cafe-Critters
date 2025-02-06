@@ -41,6 +41,7 @@ var alignment: ALIGNMENT
 #role of card
 var role
 #card desc
+var baseDescription: String = "null"
 var description: String
 #card name
 var name: String
@@ -55,6 +56,21 @@ var tags: Array[String] = []
 
 @export var aiDetails: AIInfo
 @export var art: Texture2D
+
+
+
+func getSurroundingWord(s: String, index):
+	var left = index
+	var right = index
+	while left > 0 && s[left] != " ":
+		left = left - 1
+	while right < len(s) && s[right] != " ":
+		right = right + 1
+	print("left:",left," right:",right)
+	return s.substr(left, right - left)
+	
+
+
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
@@ -141,6 +157,41 @@ func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 		BattleLog.singleton.log("No card to discard...")
 	
 	return discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
+
+func setDescription(attacker: BattleMonster, defender: BattleMonster):
+	if baseDescription == "null":
+		baseDescription = description
+	description = baseDescription
+	genericDescription(attacker, defender)
+
+func genericDescription(attacker: BattleMonster, defender: BattleMonster):
+	var atkDescInd = description.find("% Attack")
+	var replaceBin = []
+	var replaceList = []
+	while atkDescInd != -1:
+		var atkNum = int(getSurroundingWord(description, atkDescInd))
+		var calc = _calcPower(attacker, defender, atkNum/100.0)
+		var toReplace = str(atkNum) + "% Attack"
+		print("DMG of ",name,":",atkNum," ",toReplace)
+		atkDescInd = description.find("% Attack", atkDescInd+1)
+		if !replaceList.has(toReplace):
+			replaceBin.push_back([toReplace,calc, "Damage"])
+			replaceList.push_back(toReplace)
+	atkDescInd = 0
+	while atkDescInd != -1:
+		var atkNum = int(getSurroundingWord(description, atkDescInd))
+		var calc = _calcShield(attacker, defender, atkNum/100.0)
+		var toReplace = str(atkNum) + "% Defend"
+		print("DMG of ",name,":",atkNum," ",toReplace)
+		atkDescInd = description.find("% Defend", atkDescInd+1)
+		if !replaceList.has(toReplace):
+			replaceBin.push_back([toReplace,calc,"Block"])
+			replaceList.push_back(toReplace)
+	
+	for rpl in replaceBin:
+		var tooltip = "[hint={ratio}][color=7FFFD4]".format({"ratio": rpl[0]})
+		description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
+
 
 func clone():
 	var newCard: Card = get_script().new()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddkls0bkk1r1s"]
+[gd_scene load_steps=6 format=3 uid="uid://ddkls0bkk1r1s"]
 
 [ext_resource type="Script" path="res://Battle Scripts/card_display.gd" id="1_e7irm"]
 [ext_resource type="Texture2D" uid="uid://bijnu2mjsw31f" path="res://Graphics/Misc/Card_Front.png" id="1_k3rom"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="3_t0b2p"]
 [ext_resource type="Texture2D" uid="uid://b2rjweskrg7cm" path="res://Data/Card Art/STRIKE.jpg" id="3_xshkp"]
+[ext_resource type="Theme" uid="uid://psu5hxj6os7a" path="res://Graphics/Themes/CardTheme.tres" id="5_1lyr7"]
 
 [node name="Card Object" type="Control" node_paths=PackedStringArray("titleLabel", "descLabel", "manaLabel", "artTexture")]
 texture_filter = 4
@@ -103,9 +104,12 @@ anchor_bottom = 0.923
 offset_left = 0.359997
 offset_right = 0.320007
 offset_bottom = -6.10352e-05
-mouse_filter = 2
+mouse_filter = 1
+theme = ExtResource("5_1lyr7")
 theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
 text = "Card Description"
+fit_content = true
 scroll_active = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
