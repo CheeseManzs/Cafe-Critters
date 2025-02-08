@@ -717,7 +717,7 @@ func displayEnemyCards(mon: BattleMonster):
 		newCardDis.straight = true
 		newCardDis.show()
 		newCardDis.canPress = false
-		newCardDis.setCard(card,index,self)
+		newCardDis.setCard(card,index,self,"default",mon,getOpposingMon(mon.playerControlled))
 		
 		index += 1
 

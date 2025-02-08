@@ -27,6 +27,7 @@ var ignoreInput = false
 var straight = true
 var displayLocation = "default"
 var canPress = true
+var canDrag = true
 var fromSide = false
 var deckEditController: Control
 var dragging = false
@@ -174,7 +175,7 @@ func _process(delta: float) -> void:
 		if global_position.y < 483 || handSize < 5:
 			z_index = normalZIndex + 5
 
-	if canPress && mouseOn && Input.is_action_just_pressed("Primary"):
+	if canDrag && mouseOn && Input.is_action_just_pressed("Primary"):
 		dragging = true
 		currentlyDragging = true
 	
@@ -183,13 +184,14 @@ func _process(delta: float) -> void:
 		dragging = false
 		z_index = normalZIndex
 		targetPosition = originalPosition
-		match displayLocation:
-			"default":
-				print("gpos:",global_position.y)
-				if global_position.y < 240.0:
-					sendChoice()
-			"collection":
-				sendToDeckEditor()
+		if canPress:
+			match displayLocation:
+				"default":
+					print("gpos:",global_position.y)
+					if global_position.y < 240.0:
+						sendChoice()
+				"collection":
+					sendToDeckEditor()
 	
 	
 	
