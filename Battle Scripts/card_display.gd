@@ -28,6 +28,8 @@ var displayLocation = "default"
 var canPress = true
 var fromSide = false
 var deckEditController: Control
+var dragging = false
+var dragVelocity: Vector2 = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -147,14 +149,41 @@ func _process(delta: float) -> void:
 		scale = Vector2(0.34,0.34)*scaleFactor
 	if launched:
 		launch()
-	if runAnim:
+	if runAnim && !dragging:
 		position = lerp(position, targetPosition, delta*4)
+		rotation = lerp(rotation, 0.0, delta*4)
+	if dragging:
+		var mousePos = get_global_mouse_position()
+		var oldPosition: Vector2 = global_position
+		global_position = lerp(global_position, mousePos - pivot_offset*scale, delta*8)
+		var deltaPos = (global_position - oldPosition)
+		var oldVelocity = dragVelocity
+		dragVelocity = deltaPos/max(0.00000001, delta)
+		var dragAcceleration = (dragVelocity - oldVelocity)/delta
+		var deltaDir = dragVelocity.normalized()
+		print((dragVelocity.length()/1000.0))
+		var targetRot = asin(deltaDir.x)*(dragVelocity.length()/3000.0)
+		targetRot = clamp(targetRot,-0.5, 0.5)
+		rotation = lerp(rotation, targetRot, delta*4)
+
 	if canPress && mouseOn && Input.is_action_just_pressed("Primary"):
+		dragging = true
+	
+	if dragging && Input.is_action_just_released("Primary"):
+		dragging = false
+		targetPosition = originalPosition
 		match displayLocation:
 			"default":
-				sendChoice()
+				print("gpos:",global_position.y)
+				if global_position.y < 240.0:
+					sendChoice()
 			"collection":
 				sendToDeckEditor()
+	
+	
+	
+		
+	
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass

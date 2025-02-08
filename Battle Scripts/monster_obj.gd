@@ -208,7 +208,7 @@ func _process(delta: float) -> void:
 	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier*h/2, 0)
 	
 	#manage shield particles
-	shieldParticles.emitting = connectedMon != null && connectedMon.shield > 0
-	boostParticles.emitting = connectedMon != null && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
+	shieldParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.shield > 0
+	boostParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
 	#update the total time by adding the delta time to the tracker
 	t += delta
