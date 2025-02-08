@@ -8,6 +8,7 @@ extends Control
 @export var manaLabel: RichTextLabel
 @export var artTexture: TextureRect
 
+static var currentlyDragging = false
 var scaleFactor = 1
 var controller: BattleController
 var choiceID: int = 0
@@ -30,9 +31,13 @@ var fromSide = false
 var deckEditController: Control
 var dragging = false
 var dragVelocity: Vector2 = Vector2.ZERO
+var normalZIndex = 0
+var handSize = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	currentlyDragging = false
+	normalZIndex = z_index
 	scale = Vector2(0.34,0.34)*scaleFactor
 	if displayLocation == "collection" or displayLocation == "deck edit":
 		position = position * 0.75
@@ -58,6 +63,7 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 			size = Vector2(720,1000)
 		## Determines how many cards are in hand and changes card size based on that. -A
 		var totalChoices = float(len(controller.getActivePlayerMon().currentHand.storedCards))
+		handSize = totalChoices
 		var rawWidth = size.x*scale.x
 		var rawHeight = size.y*scale.y
 		var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
@@ -165,12 +171,17 @@ func _process(delta: float) -> void:
 		var targetRot = asin(deltaDir.x)*(dragVelocity.length()/3000.0)
 		targetRot = clamp(targetRot,-0.5, 0.5)
 		rotation = lerp(rotation, targetRot, delta*4)
+		if global_position.y < 483 || handSize < 5:
+			z_index = normalZIndex + 5
 
 	if canPress && mouseOn && Input.is_action_just_pressed("Primary"):
 		dragging = true
+		currentlyDragging = true
 	
 	if dragging && Input.is_action_just_released("Primary"):
+		currentlyDragging = false
 		dragging = false
+		z_index = normalZIndex
 		targetPosition = originalPosition
 		match displayLocation:
 			"default":
@@ -192,10 +203,10 @@ func _process(delta: float) -> void:
 func _on_mouse_entered() -> void:
 	if ignoreInput:
 		return
-	if !isHidden && !isDisabled:
+	if !isHidden && !isDisabled && !currentlyDragging:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
-	if displayLocation == "collection" or displayLocation == "deck edit":
+	if (displayLocation == "collection" or displayLocation == "deck edit") && !currentlyDragging:
 		scale = Vector2(0.5, 0.5)*scaleFactor
 		z_index = 3
 	mouseOn = true

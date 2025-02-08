@@ -284,11 +284,13 @@ func addStatusCondition(status: Status, broadcast = false):
 
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
-		BattleLog.log(printText)
+		
 		if status.isPositive():
+			printText = rawData.name + " was embued with " + status.toString()
 			battleController.playSound(battleController.powerUpSound)
 		else:
 			battleController.playSound(battleController.powerDownSound)
+		BattleLog.log(printText)
 	
 	await getPassive().onStatus(self,battleController, status)
 	#if effect is ko, suspend or strongarm then it occurs immediately

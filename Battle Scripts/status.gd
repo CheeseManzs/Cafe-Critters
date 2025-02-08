@@ -108,9 +108,9 @@ func rawToString() -> String:
 		EFFECTS.EMPOWER:
 			return "Empower"
 		EFFECTS.EMPOWER_NEXT:
-			return "Empower (Next Drawn)"
+			return "Drawn Empower"
 		EFFECTS.EMPOWER_PLAYED:
-			return "Empower (Next Played)"
+			return "Empower"
 		EFFECTS.HASTE:
 			return "Haste"
 		EFFECTS.SLOW:
