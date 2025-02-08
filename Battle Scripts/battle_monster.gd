@@ -119,6 +119,7 @@ func raiseAnimation():
 
 func quick_discardAnimation(card: Card) -> void:
 	for display in battleController.cardButtons:
+		print(display.card.name,"=|=", card.name, " > ", display.card.name == card.name)
 		if display.card.name == card.name:
 			display.launch()
 			await battleController.get_tree().create_timer(0.2).timeout
@@ -284,6 +285,10 @@ func addStatusCondition(status: Status, broadcast = false):
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		BattleLog.log(printText)
+		if status.isPositive():
+			battleController.playSound(battleController.powerUpSound)
+		else:
+			battleController.playSound(battleController.powerDownSound)
 	
 	await getPassive().onStatus(self,battleController, status)
 	#if effect is ko, suspend or strongarm then it occurs immediately
@@ -337,12 +342,15 @@ func carryStatusConditions(target: BattleMonster) -> void:
 func addShield(shieldAmount: int) -> void:
 	BattleLog.singleton.log(rawData.name + " gained " + str(shieldAmount) + " block")
 	shield += shieldAmount
+	#play sound
+	battleController.playSound(battleController.powerUpSound)
 	if shield < 0:
 		shield = 0
 #does pure damage to the monster
 func addHP(hp: int):
 	BattleLog.singleton.log(rawData.name + " regenerated " + str(hp) + " HP")
 	health += hp
+	battleController.playSound(battleController.powerUpSound)
 	if health > maxHP:
 		health = maxHP
 
@@ -451,6 +459,7 @@ func addMP(mpAmount: int, broadcast = true) -> void:
 	#log mp adding
 	if broadcast:
 		BattleLog.singleton.log(rawData.name + "'s team gained " + str(mpAmount) + " MP")
+		battleController.playSound(battleController.powerUpSound)
 	#if player, add mp to player variable
 	if playerControlled:
 		battleController.playerMP += mpAmount
@@ -474,6 +483,7 @@ func getMP() -> int:
 func addMPPerTurn(mpGainAmount: int) -> void:
 	#log mp adding
 	BattleLog.singleton.log(rawData.name + "'s MP gain has increased by " + str(mpGainAmount))
+	battleController.playSound(battleController.powerUpSound)
 	#if player, add mp gain to player variable
 	if playerControlled:
 		battleController.playerMPGain += mpGainAmount
@@ -484,6 +494,7 @@ func addMPPerTurn(mpGainAmount: int) -> void:
 func addTempMPPerTurn(mpGainAmount: int) -> void:
 	#log mp adding
 	BattleLog.singleton.log(rawData.name + " will gain " + str(mpGainAmount) + " more MP next turn")
+	battleController.playSound(battleController.powerUpSound)
 	#if player, add mp gain to player variable
 	if playerControlled:
 		battleController.playerMPTempGain += mpGainAmount

@@ -24,6 +24,7 @@ func _process(delta: float) -> void:
 func loadScene(sceneName: String) -> void:
 	if sceneName == "Battle":
 		print("personality: ", debugPersonality)
+		ConnectionManager.singleton.setTeam()
 		BattleController.startBattle(debugTeamA, debugTeamB, debugPersonality)
 		return
 	LoadManager.loadScene(sceneName)

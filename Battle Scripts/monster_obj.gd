@@ -1,6 +1,8 @@
 class_name MonsterDisplay
 extends Node3D
 
+@export var shieldParticles: GPUParticles3D
+@export var boostParticles: GPUParticles3D
 #total "time elapsed" tracker
 var t = 0.0
 #link to monster data structure
@@ -204,5 +206,9 @@ func _process(delta: float) -> void:
 
 	$Sprite3D.offset = monsterData.battleOffset
 	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier*h/2, 0)
+	
+	#manage shield particles
+	shieldParticles.emitting = connectedMon != null && connectedMon.shield > 0
+	boostParticles.emitting = connectedMon != null && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
 	#update the total time by adding the delta time to the tracker
 	t += delta

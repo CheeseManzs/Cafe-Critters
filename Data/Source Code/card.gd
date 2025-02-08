@@ -162,6 +162,7 @@ func setDescription(attacker: BattleMonster, defender: BattleMonster):
 	if baseDescription == "null":
 		baseDescription = description
 	description = baseDescription
+	print("base for ",name,": ",baseDescription)
 	genericDescription(attacker, defender)
 
 func genericDescription(attacker: BattleMonster, defender: BattleMonster):
@@ -200,6 +201,7 @@ func clone():
 	newCard.priority = priority
 	newCard.alignment = alignment
 	newCard.role = role
+	newCard.baseDescription = baseDescription
 	newCard.description = description
 	newCard.name = name
 	newCard.statusConditions = []

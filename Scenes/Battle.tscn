@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=52 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -10,7 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://7kdbledkls7e" path="res://Audio/8bit-SFX-Library/Collide/explode-5.wav" id="6_545oj"]
 [ext_resource type="AudioStream" uid="uid://cl7e66r56paqi" path="res://Audio/8bit-SFX-Library/Collide/hit-7.wav" id="7_d7iro"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
+[ext_resource type="AudioStream" uid="uid://ci4s5kq2dx1rh" path="res://Audio/8bit-SFX-Library/Win/win-3.wav" id="8_bafus"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
+[ext_resource type="AudioStream" uid="uid://c2qa14kufpyd8" path="res://Audio/8bit-SFX-Library/Lose/lose-1.wav" id="9_io5bv"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
 [ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="12_7i88x"]
 [ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="13_dhyla"]
@@ -27,6 +29,10 @@
 [ext_resource type="Script" path="res://Battle Scripts/deck_controller.gd" id="22_wgwlo"]
 [ext_resource type="Script" path="res://Battle Scripts/turn_ui.gd" id="23_qnbl5"]
 [ext_resource type="PackedScene" uid="uid://hs512cq25euv" path="res://Prefabs/Dice/dice.tscn" id="24_wcq6s"]
+[ext_resource type="AudioStream" uid="uid://dc4bi82ompo3e" path="res://Audio/BGM/15. Team Snagem Battle - Colosseum Round 1 Battle.mp3" id="28_r2avy"]
+[ext_resource type="Script" path="res://Battle Scripts/audiolist.gd" id="31_hrdfj"]
+[ext_resource type="AudioStream" uid="uid://b1lliod4ryqq3" path="res://Audio/BGM/14. Neon Colosseum.mp3" id="32_jhibm"]
+[ext_resource type="AudioStream" uid="uid://qqe5p4axl148" path="res://Audio/BGM/16. Crystal Colosseum.mp3" id="33_l0gwg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -123,7 +129,7 @@ transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 
 shadow_enabled = true
 shadow_blur = 0.0
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "audioPlayer", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
+[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "audioPlayers", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
 monsterCache = ExtResource("2_ta4pc")
 dashParticles = NodePath("../DashParticles")
@@ -131,9 +137,11 @@ monsterObject = ExtResource("3_p5icm")
 cardbuttonPrefab = ExtResource("4_x5jj8")
 detailsPanel = NodePath("../Control UI/Details Panel")
 impactEffect = ExtResource("4_x5ddw")
-audioPlayer = NodePath("../AudioStreamPlayer")
+audioPlayers = [NodePath("../SFX1"), NodePath("../SFX2"), NodePath("../SFX3"), NodePath("../SFX4"), NodePath("../SFX5")]
 hitSound = ExtResource("6_545oj")
 emptyHitSound = ExtResource("7_d7iro")
+powerUpSound = ExtResource("8_bafus")
+powerDownSound = ExtResource("9_io5bv")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
@@ -492,7 +500,21 @@ preprocess = 0.5
 process_material = SubResource("ParticleProcessMaterial_3478b")
 draw_pass_1 = SubResource("QuadMesh_exho7")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -3.0
+[node name="BGM Player" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_r2avy")
+volume_db = -9.0
+parameters/looping = true
+script = ExtResource("31_hrdfj")
+audioList = Array[AudioStream]([ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg")])
+
+[node name="SFX1" type="AudioStreamPlayer" parent="."]
+
+[node name="SFX2" type="AudioStreamPlayer" parent="."]
+
+[node name="SFX3" type="AudioStreamPlayer" parent="."]
+
+[node name="SFX4" type="AudioStreamPlayer" parent="."]
+
+[node name="SFX5" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

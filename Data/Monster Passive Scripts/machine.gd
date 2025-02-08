@@ -10,6 +10,7 @@ var resetHeat = false
 var lostHeat = false
 
 @export var heatGaugePrefab: PackedScene
+@export var startUpSound: AudioStream
 
 func _init() -> void:
 	name = "Machine"
@@ -46,6 +47,7 @@ func customUI(mon: BattleMonster, battle: BattleController):
 	await battle.get_tree().create_timer(1.0).timeout
 	#await EffectFlair.singleton._runFlair("Machine",Color.WEB_GRAY)
 	BattleLog.singleton.log(mon.rawData.name+"'s engine bursts to life!")
+	mon.battleController.playSound(startUpSound)
 	await createGuage(mon, battle)
 	heatGauge.progress = heatProgress()
 	

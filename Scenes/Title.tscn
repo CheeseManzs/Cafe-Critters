@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="3_7xba4"]
-[ext_resource type="Resource" uid="uid://dc4d16vxlrivo" path="res://Data/Monsters/ph_mon_t.tres" id="3_gfhe2"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="3_ntvn1"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="3_r1ksc"]
 [ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="6_kb4ab"]
 [ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="7_3mmaa"]
@@ -22,7 +22,7 @@ opportunism = 10.0
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_gfhe2"), ExtResource("3_7xba4"), ExtResource("3_ntvn1")])
+debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_r1ksc"), ExtResource("3_7xba4"), ExtResource("3_ntvn1")])
 debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("6_kb4ab"), ExtResource("7_3mmaa"), ExtResource("8_g3ecd")])
 debugPersonality = SubResource("Resource_eb42p")
 

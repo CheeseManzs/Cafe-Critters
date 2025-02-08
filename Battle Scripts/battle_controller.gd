@@ -27,9 +27,11 @@ static var multiplayer_id = 0
 @export var detailsPanel: DetailsPanel
 @export var impactEffect: PackedScene
 
-@export var audioPlayer: AudioStreamPlayer
+@export var audioPlayers: Array[AudioStreamPlayer]
 @export var hitSound: AudioStream
 @export var emptyHitSound: AudioStream
+@export var powerUpSound: AudioStream
+@export var powerDownSound: AudioStream
 
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy
@@ -198,9 +200,13 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	basicReset(true)
 	multiplayer_loaded_peer = true
 
-func playSound(clip: AudioStream):
-	audioPlayer.stream = clip
-	audioPlayer.play()
+func playSound(clip: AudioStream, layer: int = -1):
+	if layer == -1:
+		layer = 0
+		while audioPlayers[layer].playing:
+			layer += 1
+	audioPlayers[layer].stream = clip
+	audioPlayers[layer].play()
 
 func basicReset(skipKOCheck = false, resetActiveMons = false):
 	var resetOrder = sortedMonList()

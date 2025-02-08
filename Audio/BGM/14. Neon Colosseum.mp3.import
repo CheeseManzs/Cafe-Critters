@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b1lliod4ryqq3"
+path="res://.godot/imported/14. Neon Colosseum.mp3-d0bd51cb8b791b7f91c0d94e7456456f.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/14. Neon Colosseum.mp3"
+dest_files=["res://.godot/imported/14. Neon Colosseum.mp3-d0bd51cb8b791b7f91c0d94e7456456f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
