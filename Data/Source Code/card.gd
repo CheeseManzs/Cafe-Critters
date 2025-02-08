@@ -176,7 +176,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Attack", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc, "Damage"])
+			replaceBin.push_back([toReplace,calc, "Damage", "77130e"])
 			replaceList.push_back(toReplace)
 	atkDescInd = 0
 	while atkDescInd != -1:
@@ -186,11 +186,11 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Defend", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc,"Block"])
+			replaceBin.push_back([toReplace,calc,"Block","7FFFD4"])
 			replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
-		var tooltip = "[hint={ratio}][color=7FFFD4]".format({"ratio": rpl[0]})
+		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[0], "col": rpl[3]})
 		description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
 
 

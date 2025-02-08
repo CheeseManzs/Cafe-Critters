@@ -284,12 +284,14 @@ func addStatusCondition(status: Status, broadcast = false):
 
 	if broadcast:
 		var printText = rawData.name + " was afflicted with " + status.toString()
-		
+		var obj: MonsterDisplay = getMonsterDisplay()
 		if status.isPositive():
 			printText = rawData.name + " was embued with " + status.toString()
 			battleController.playSound(battleController.powerUpSound)
+			obj.boostParticles.emitting = true
 		else:
 			battleController.playSound(battleController.powerDownSound)
+			obj.unboostParticles.emitting = true
 		BattleLog.log(printText)
 	
 	await getPassive().onStatus(self,battleController, status)
@@ -345,7 +347,7 @@ func addShield(shieldAmount: int) -> void:
 	BattleLog.singleton.log(rawData.name + " gained " + str(shieldAmount) + " block")
 	shield += shieldAmount
 	#play sound
-	battleController.playSound(battleController.powerUpSound)
+	battleController.playSound(battleController.shieldSound)
 	if shield < 0:
 		shield = 0
 #does pure damage to the monster

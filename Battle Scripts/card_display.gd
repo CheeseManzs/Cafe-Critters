@@ -161,7 +161,7 @@ func _process(delta: float) -> void:
 	if dragging:
 		var mousePos = get_global_mouse_position()
 		var oldPosition: Vector2 = global_position
-		global_position = lerp(global_position, mousePos - pivot_offset*scale, delta*8)
+		global_position = lerp(global_position, mousePos - pivot_offset*scale, delta*16)
 		var deltaPos = (global_position - oldPosition)
 		var oldVelocity = dragVelocity
 		dragVelocity = deltaPos/max(0.00000001, delta)
@@ -170,7 +170,7 @@ func _process(delta: float) -> void:
 		print((dragVelocity.length()/1000.0))
 		var targetRot = asin(deltaDir.x)*(dragVelocity.length()/3000.0)
 		targetRot = clamp(targetRot,-0.5, 0.5)
-		rotation = lerp(rotation, targetRot, delta*4)
+		rotation = lerp(rotation, targetRot, delta*8)
 		if global_position.y < 483 || handSize < 5:
 			z_index = normalZIndex + 5
 

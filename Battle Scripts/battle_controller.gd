@@ -32,6 +32,7 @@ static var multiplayer_id = 0
 @export var emptyHitSound: AudioStream
 @export var powerUpSound: AudioStream
 @export var powerDownSound: AudioStream
+@export var shieldSound: AudioStream
 
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy

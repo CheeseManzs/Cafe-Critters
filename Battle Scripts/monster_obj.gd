@@ -3,6 +3,8 @@ extends Node3D
 
 @export var shieldParticles: GPUParticles3D
 @export var boostParticles: GPUParticles3D
+@export var unboostParticles: GPUParticles3D
+@export var empowerParticles: GPUParticles3D
 #total "time elapsed" tracker
 var t = 0.0
 #link to monster data structure
@@ -209,6 +211,7 @@ func _process(delta: float) -> void:
 	
 	#manage shield particles
 	shieldParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.shield > 0
-	boostParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
+	shieldParticles.amount_ratio = max(0.15, (1.0*connectedMon.shield)/connectedMon.maxHP); #30 is a good looking amount
+	empowerParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
 	#update the total time by adding the delta time to the tracker
 	t += delta

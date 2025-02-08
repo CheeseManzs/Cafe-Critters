@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=56 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -8,11 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://bop2bwg2fu0hc" path="res://Prefabs/card_button.tscn" id="4_x5jj8"]
 [ext_resource type="PackedScene" uid="uid://3pag10s0w2dh" path="res://Prefabs/card_back.tscn" id="5_1cnu7"]
 [ext_resource type="AudioStream" uid="uid://7kdbledkls7e" path="res://Audio/8bit-SFX-Library/Collide/explode-5.wav" id="6_545oj"]
-[ext_resource type="AudioStream" uid="uid://cl7e66r56paqi" path="res://Audio/8bit-SFX-Library/Collide/hit-7.wav" id="7_d7iro"]
+[ext_resource type="AudioStream" uid="uid://bbas58vca50mc" path="res://Audio/8bit-SFX-Library/Collide/bonk-4.wav" id="7_apln4"]
 [ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="8_8v3xb"]
 [ext_resource type="AudioStream" uid="uid://ci4s5kq2dx1rh" path="res://Audio/8bit-SFX-Library/Win/win-3.wav" id="8_bafus"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_log.gd" id="9_hlkm1"]
 [ext_resource type="AudioStream" uid="uid://c2qa14kufpyd8" path="res://Audio/8bit-SFX-Library/Lose/lose-1.wav" id="9_io5bv"]
+[ext_resource type="AudioStream" uid="uid://dl12ar4q24qju" path="res://Audio/8bit-SFX-Library/Player/jump-1.wav" id="10_6cxts"]
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
 [ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="12_7i88x"]
 [ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="13_dhyla"]
@@ -33,6 +34,9 @@
 [ext_resource type="Script" path="res://Battle Scripts/audiolist.gd" id="31_hrdfj"]
 [ext_resource type="AudioStream" uid="uid://b1lliod4ryqq3" path="res://Audio/BGM/14. Neon Colosseum.mp3" id="32_jhibm"]
 [ext_resource type="AudioStream" uid="uid://qqe5p4axl148" path="res://Audio/BGM/16. Crystal Colosseum.mp3" id="33_l0gwg"]
+[ext_resource type="AudioStream" uid="uid://ck84jjy03efic" path="res://Audio/BGM/08. Magma Colosseum.mp3" id="34_jd5b4"]
+[ext_resource type="AudioStream" uid="uid://brlgy2cm5xpns" path="res://Audio/BGM/10. Sunny Park Colosseum.mp3" id="35_01yby"]
+[ext_resource type="AudioStream" uid="uid://dvi7pnafojkpk" path="res://Audio/BGM/05. Colosseum Leader - Sashay's Theme.mp3" id="36_40yr6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -139,9 +143,10 @@ detailsPanel = NodePath("../Control UI/Details Panel")
 impactEffect = ExtResource("4_x5ddw")
 audioPlayers = [NodePath("../SFX1"), NodePath("../SFX2"), NodePath("../SFX3"), NodePath("../SFX4"), NodePath("../SFX5")]
 hitSound = ExtResource("6_545oj")
-emptyHitSound = ExtResource("7_d7iro")
+emptyHitSound = ExtResource("7_apln4")
 powerUpSound = ExtResource("8_bafus")
 powerDownSound = ExtResource("9_io5bv")
+shieldSound = ExtResource("10_6cxts")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]
@@ -505,7 +510,7 @@ stream = ExtResource("28_r2avy")
 volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg")])
+audioList = Array[AudioStream]([ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6")])
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]
 

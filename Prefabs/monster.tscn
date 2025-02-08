@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dnrf07o2xqjni"]
+[gd_scene load_steps=52 format=3 uid="uid://dnrf07o2xqjni"]
 
 [ext_resource type="Script" path="res://Battle Scripts/monster_obj.gd" id="1_8ie6h"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="2_cy5to"]
@@ -60,7 +60,7 @@ use_particle_trails = true
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_svi53"]
 material = SubResource("StandardMaterial3D_dcqom")
 shape = 0
-size = 0.02
+size = 0.08
 sections = 4
 section_segments = 2
 curve = SubResource("Curve_dclgb")
@@ -154,15 +154,169 @@ use_particle_trails = true
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_m0xty"]
 material = SubResource("StandardMaterial3D_r8eyb")
 shape = 0
-size = 0.01
+size = 0.03
 sections = 4
 section_segments = 2
 curve = SubResource("Curve_qr6wk")
 
-[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles")]
+[sub_resource type="Gradient" id="Gradient_kiwyb"]
+offsets = PackedFloat32Array(0.0982659, 0.624277, 0.83815, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.0448718, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b5sdj"]
+gradient = SubResource("Gradient_kiwyb")
+width = 1024
+
+[sub_resource type="Curve" id="Curve_mpoiw"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.542289, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_31eup"]
+curve = SubResource("Curve_mpoiw")
+
+[sub_resource type="Curve" id="Curve_0kfab"]
+_data = [Vector2(0, 0), 0.0, 6.3196, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7dkjw"]
+curve = SubResource("Curve_0kfab")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4yrva"]
+emission_shape_offset = Vector3(0, 0.25, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.1
+emission_ring_radius = 0.4
+emission_ring_inner_radius = 0.4
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 3.0
+radial_velocity_min = -0.100022
+radial_velocity_max = -0.100022
+gravity = Vector3(0, -3, 0)
+radial_accel_min = -1.0
+radial_accel_max = -1.0
+scale_curve = SubResource("CurveTexture_7dkjw")
+scale_over_velocity_min = 1.0
+scale_over_velocity_max = 1.0
+color = Color(0.639153, 0.933408, 0, 1)
+color_ramp = SubResource("GradientTexture1D_b5sdj")
+emission_curve = SubResource("CurveTexture_31eup")
+turbulence_noise_strength = 0.01
+turbulence_noise_scale = 0.1
+
+[sub_resource type="Curve" id="Curve_4s6q0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.515021, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8jl2"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.52
+emission_operator = 1
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_8ci5b"]
+material = SubResource("StandardMaterial3D_p8jl2")
+shape = 0
+size = 0.03
+sections = 4
+section_segments = 2
+curve = SubResource("Curve_4s6q0")
+
+[sub_resource type="Gradient" id="Gradient_ecv86"]
+offsets = PackedFloat32Array(0.0982659, 0.624277, 0.83815, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.0448718, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yhwh8"]
+gradient = SubResource("Gradient_ecv86")
+width = 1024
+
+[sub_resource type="Curve" id="Curve_foipf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.542289, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ay3n8"]
+curve = SubResource("Curve_foipf")
+
+[sub_resource type="Curve" id="Curve_0or7w"]
+_data = [Vector2(0.208955, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8hx4p"]
+curve = SubResource("Curve_0or7w")
+
+[sub_resource type="Curve" id="Curve_v642g"]
+_data = [Vector2(0, 0), 0.0, 6.3196, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dv6il"]
+curve = SubResource("Curve_v642g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2c1q0"]
+emission_shape_offset = Vector3(0, 1.25, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.1
+emission_ring_radius = 0.4
+emission_ring_inner_radius = 0.4
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = -3.0
+initial_velocity_max = -3.0
+radial_velocity_min = -0.100022
+radial_velocity_max = -0.100022
+gravity = Vector3(0, 3, 0)
+radial_accel_min = 10.0
+radial_accel_max = 10.0
+radial_accel_curve = SubResource("CurveTexture_8hx4p")
+scale_curve = SubResource("CurveTexture_dv6il")
+scale_over_velocity_min = 1.0
+scale_over_velocity_max = 1.0
+color = Color(0.639216, 0.133333, 0, 1)
+color_ramp = SubResource("GradientTexture1D_yhwh8")
+emission_curve = SubResource("CurveTexture_ay3n8")
+turbulence_noise_strength = 0.01
+turbulence_noise_scale = 0.1
+
+[sub_resource type="Curve" id="Curve_bdgis"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.515021, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3gs33"]
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.52
+emission_operator = 1
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_h6eo3"]
+material = SubResource("StandardMaterial3D_3gs33")
+shape = 0
+size = 0.03
+sections = 4
+section_segments = 2
+curve = SubResource("Curve_bdgis")
+
+[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles")]
 script = ExtResource("1_8ie6h")
 shieldParticles = NodePath("Shield Particles")
 boostParticles = NodePath("Boost Particles")
+unboostParticles = NodePath("Unboost Particles")
+empowerParticles = NodePath("Empower Particles")
 metadata/Monster_Data = ExtResource("2_cy5to")
 metadata/playerControlled = true
 
@@ -174,15 +328,16 @@ texture = ExtResource("3_ugrdx")
 [node name="Shield Particles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.340789, 0)
 emitting = false
-amount = 30
+amount = 100
 lifetime = 4.0
 trail_enabled = true
 trail_lifetime = 0.01
 process_material = SubResource("ParticleProcessMaterial_wdg5y")
 draw_pass_1 = SubResource("RibbonTrailMesh_svi53")
 
-[node name="Boost Particles" type="GPUParticles3D" parent="."]
+[node name="Empower Particles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
+emitting = false
 amount = 5
 lifetime = 1.5
 explosiveness = 0.14
@@ -190,3 +345,27 @@ trail_enabled = true
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_40ngf")
 draw_pass_1 = SubResource("RibbonTrailMesh_m0xty")
+
+[node name="Boost Particles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
+emitting = false
+amount = 30
+lifetime = 0.6
+one_shot = true
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_4yrva")
+draw_pass_1 = SubResource("RibbonTrailMesh_8ci5b")
+
+[node name="Unboost Particles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
+emitting = false
+amount = 30
+lifetime = 0.6
+one_shot = true
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_2c1q0")
+draw_pass_1 = SubResource("RibbonTrailMesh_h6eo3")

@@ -5,7 +5,7 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Jacks
 	role = ROLE.Unique
-	description = "Reckless > 100% Attack. If Reckless, Strongarm. Attack 200%."
+	description = "Reckless > 100% Attack. If Reckless, Strongarm. 200% Attack."
 	name = "Blackjack Beatdown"
 	power = 2
 
