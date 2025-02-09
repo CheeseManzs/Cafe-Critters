@@ -171,7 +171,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	var replaceList = []
 	while atkDescInd != -1:
 		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = _calcPower(attacker, defender, atkNum/100.0)
+		var calc = descAttackCalc(attacker, defender, atkNum/100.0)
 		var toReplace = str(atkNum) + "% Attack"
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Attack", atkDescInd+1)
@@ -181,7 +181,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	atkDescInd = 0
 	while atkDescInd != -1:
 		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = _calcShield(attacker, defender, atkNum/100.0)
+		var calc = descShieldCalc(attacker, defender, atkNum/100.0)
 		var toReplace = str(atkNum) + "% Defend"
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Defend", atkDescInd+1)
@@ -193,6 +193,12 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[0], "col": rpl[3]})
 		description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
 
+
+func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return _calcPower(attacker, defender, atkNum/100.0)
+
+func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return _calcShield(attacker, defender, atkNum/100.0)
 
 func clone():
 	var newCard: Card = get_script().new()

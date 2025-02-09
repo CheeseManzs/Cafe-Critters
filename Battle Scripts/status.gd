@@ -24,7 +24,8 @@ enum EFFECTS {
 	TAGGED,
 	PRIORITY,
 	CANT_PLAY,
-	OVERHEAT
+	OVERHEAT,
+	ENDLESS_BLOWS
 }
 var X: int = 0
 var Y: int = 0
@@ -96,6 +97,8 @@ func toMini() -> String:
 			return "CNT"
 		EFFECTS.OVERHEAT:
 			return "OVH"
+		EFFECTS.ENDLESS_BLOWS:
+			return "EDB"
 	return "N/A"
 	
 
@@ -145,6 +148,8 @@ func rawToString() -> String:
 			return "Can't Play"
 		EFFECTS.OVERHEAT:
 			return "Overheat"
+		EFFECTS.ENDLESS_BLOWS:
+			return "Endless Blows"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -200,6 +205,8 @@ func carriesOverOnSwitch() -> bool:
 		EFFECTS.REGEN:
 			return true
 		EFFECTS.CANT_PLAY:
+			return true
+		EFFECTS.ENDLESS_BLOWS:
 			return true
 	return false
 

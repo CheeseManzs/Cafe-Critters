@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://dc4d16vxlrivo"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://dc4d16vxlrivo"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_irfdf"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="3_m60a7"]
+[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="3_4mhww"]
+[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="4_xn8a2"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_l1o5y"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="12_ippfy"]
 [ext_resource type="Texture2D" uid="uid://ccicpc4xaeayw" path="res://Graphics/Monsters/132.png" id="13_jsoku"]
@@ -10,7 +11,7 @@
 [sub_resource type="Resource" id="Resource_0uwxn"]
 script = ExtResource("1_ukx36")
 name = "Deck"
-storedCards = Array[ExtResource("2_irfdf")]([ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7"), ExtResource("3_m60a7")])
+storedCards = Array[ExtResource("2_irfdf")]([ExtResource("3_4mhww"), ExtResource("4_xn8a2"), ExtResource("3_4mhww"), ExtResource("4_xn8a2"), ExtResource("3_4mhww"), ExtResource("4_xn8a2"), ExtResource("3_4mhww"), ExtResource("4_xn8a2")])
 
 [resource]
 script = ExtResource("12_ippfy")
