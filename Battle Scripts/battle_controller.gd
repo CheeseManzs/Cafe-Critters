@@ -712,6 +712,7 @@ func enemySwap(newID) -> void:
 	
 	#setup new mon
 	await newMon.hardReset()
+	await currentMon.carryStatusConditions(newMon)
 	
 	activeEnemyMon = newID
 	await universalSwap(currentMon, newMon)

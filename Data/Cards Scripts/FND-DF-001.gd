@@ -6,7 +6,7 @@ func _init() -> void:
 	alignment = ALIGNMENT.Default
 	role = ROLE.Generic
 	description = "Gain 1 mp. 20% Attack."
-	name = "Last Chance"
+	name = "Warm Up"
 	
 	power = 0.2
 
