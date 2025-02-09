@@ -896,6 +896,8 @@ func activeTurn() -> void:
 	
 	await getActivePlayerMon().getPassive().onTurnStart(getActivePlayerMon(), self)
 	var firstSubTurn = true
+	
+	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
 		if !firstSubTurn:
@@ -941,7 +943,7 @@ func activeTurn() -> void:
 		#wait for a gui choice to be made
 		var skipChoosingPhase = false
 		if len(mon.playableCards()) <= 0 && (playerMP == 0 || playerUsableMonCount() <= 1):
-			skipChoosingPhase = true
+			pass#skipChoosingPhase = true
 		skipButton.disabled = false
 		for shelfUI in shelfedMonUI:
 			if shelfUI.connectedMon == null:
