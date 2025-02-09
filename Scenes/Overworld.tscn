@@ -22,7 +22,7 @@
 [ext_resource type="Resource" uid="uid://b766tek53g2rb" path="res://Data/Text/multichoice.tres" id="10_cq2ag"]
 [ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="10_yoleg"]
 [ext_resource type="Resource" uid="uid://bwaam8s51mxx0" path="res://Data/Cards/Store Power.tres" id="11_lecd7"]
-[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Restock.tres" id="12_gcyia"]
+[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Stock Up.tres" id="12_gcyia"]
 [ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="13_dusa6"]
 [ext_resource type="Resource" uid="uid://cgc5v44kiego7" path="res://Data/Cards/Meditate.tres" id="14_b8krm"]
 [ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="15_3fp3k"]

@@ -22,3 +22,9 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
 	await giveStatus(attacker,Status.EFFECTS.ENDLESS_BLOWS,1,0,false)
 	return
+
+func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var endlessBlows = 0
+	if attacker.hasStatus(Status.EFFECTS.ENDLESS_BLOWS):
+		endlessBlows = attacker.getStatus(Status.EFFECTS.ENDLESS_BLOWS).X
+	return _calcPower(attacker, defender, 0.5 + 0.1*endlessBlows)

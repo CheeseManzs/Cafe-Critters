@@ -31,7 +31,7 @@
 [ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="29_f7r5j"]
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="30_5gbwn"]
 [ext_resource type="Resource" uid="uid://wnwaekj234my" path="res://Data/Cards/Oops.tres" id="31_n2dpb"]
-[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Restock.tres" id="32_48ule"]
+[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Stock Up.tres" id="32_48ule"]
 [ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="33_wdml1"]
 [ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="34_70n4t"]
 [ext_resource type="Resource" uid="uid://cl7isl07pcxby" path="res://Data/Cards/Sip.tres" id="35_obf3g"]

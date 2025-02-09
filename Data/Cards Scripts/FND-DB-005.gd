@@ -1,7 +1,7 @@
 extends Card
 
 func _init() -> void:
-	cost = 1
+	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = ROLE.Generic
