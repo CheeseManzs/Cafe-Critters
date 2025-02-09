@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dy45v7qcndyd0"
+path="res://.godot/imported/2-04 Queen of Rose II.mp3-8bbadfa1bd416ee06b6ec9408550ca44.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/2-04 Queen of Rose II.mp3"
+dest_files=["res://.godot/imported/2-04 Queen of Rose II.mp3-8bbadfa1bd416ee06b6ec9408550ca44.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

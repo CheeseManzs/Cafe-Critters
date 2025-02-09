@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=58 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -36,6 +36,7 @@
 [ext_resource type="AudioStream" uid="uid://b1lliod4ryqq3" path="res://Audio/BGM/14. Neon Colosseum.mp3" id="32_jhibm"]
 [ext_resource type="AudioStream" uid="uid://qqe5p4axl148" path="res://Audio/BGM/16. Crystal Colosseum.mp3" id="33_l0gwg"]
 [ext_resource type="AudioStream" uid="uid://ck84jjy03efic" path="res://Audio/BGM/08. Magma Colosseum.mp3" id="34_jd5b4"]
+[ext_resource type="AudioStream" uid="uid://dy45v7qcndyd0" path="res://Audio/BGM/2-04 Queen of Rose II.mp3" id="34_ua6n4"]
 [ext_resource type="AudioStream" uid="uid://brlgy2cm5xpns" path="res://Audio/BGM/10. Sunny Park Colosseum.mp3" id="35_01yby"]
 [ext_resource type="AudioStream" uid="uid://dvi7pnafojkpk" path="res://Audio/BGM/05. Colosseum Leader - Sashay's Theme.mp3" id="36_40yr6"]
 
@@ -512,7 +513,8 @@ stream = ExtResource("28_r2avy")
 volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6")])
+audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6")])
+autoSet = 0
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]
 

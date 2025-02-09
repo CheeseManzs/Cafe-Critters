@@ -522,9 +522,20 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 		
 
 func promptPlayerSwitch() -> void:
-	BattleLog.singleton.log("Choose a switch-in!")
+	
 	hidePlayerChoiceUI(true)
+	
+	#check if active mon is the only one left on their team
+	var noSwitch = true
+	for mon in playerTeam:
+		if mon != getActivePlayerMon() && !mon.isKO():
+			noSwitch = false
+	if noSwitch:
+		return
+	
+	BattleLog.singleton.log("Choose a switch-in!")
 	skipButton.disabled = true
+			
 	for shelfUI in shelfedMonUI:
 		if shelfUI.connectedMon != null:
 			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
@@ -536,8 +547,17 @@ func promptPlayerSwitch() -> void:
 	await get_tree().create_timer(1.0).timeout
 
 func promptEnemySwitch() -> void:
+	#check if active mon is the only one left on their team
+	var noSwitch = true
+	for mon in enemyTeam:
+		if mon != getActiveEnemyMon() && !mon.isKO():
+			noSwitch = false
+	if noSwitch:
+		return
+	
 	var enmSwapChoice: int
 	if multiplayer_game:
+		BattleLog.singleton.log("Opponent is choosing a switch-in!")
 		enmSwapChoice = await getNextChoice()
 	else:
 		enmSwapChoice = enemyAI.enemySwitch()
