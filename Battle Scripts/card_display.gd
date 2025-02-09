@@ -23,6 +23,7 @@ var isDisabled = false
 var runAnim = false
 var selected = false
 var launched = false
+var noAlign = false
 var ignoreInput = false
 var straight = true
 var displayLocation = "default"
@@ -147,6 +148,12 @@ func launch():
 	launched = true
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = visiblePosition + upVec*1500
+	
+func straightLaunch():
+	launched = true
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	visiblePosition.x = position.x
+	targetPosition = visiblePosition + upVec*1500
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -155,7 +162,7 @@ func _process(delta: float) -> void:
 		size = Vector2(720,1000)
 		scale = Vector2(0.34,0.34)*scaleFactor
 	if launched:
-		launch()
+			launch()
 	if runAnim && !dragging:
 		position = lerp(position, targetPosition, delta*4)
 		rotation = lerp(rotation, 0.0, delta*4)
@@ -183,7 +190,6 @@ func _process(delta: float) -> void:
 		currentlyDragging = false
 		dragging = false
 		z_index = normalZIndex
-		targetPosition = originalPosition
 		if canPress:
 			match displayLocation:
 				"default":
@@ -191,12 +197,7 @@ func _process(delta: float) -> void:
 					if global_position.y < 240.0:
 						sendChoice()
 				"collection":
-					sendToDeckEditor()
-	
-	
-	
-		
-	
+					sendToDeckEditor()	
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass
@@ -230,8 +231,10 @@ func _on_mouse_exited() -> void:
 func sendChoice():
 	if isDisabled:
 		return
+	straightLaunch()
 	controller.onHand(choiceID)
 	controller.emitGUISignal()
+	
 	
 ## Called when clicked on in deck edit mode. Tells deck_edit_ui.gd to do a thing.
 func sendToDeckEditor():

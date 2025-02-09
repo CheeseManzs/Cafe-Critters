@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="9_hmaky"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="10_h0u1j"]
 [ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="10_ja5pr"]
-[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_q4jv0"]
+[ext_resource type="Resource" uid="uid://omxc075hyt7" path="res://Data/Monster Passives/Machine.tres" id="11_gat5t"]
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="12_inmui"]
 
 [sub_resource type="Resource" id="Resource_0uwxn"]
@@ -28,7 +28,7 @@ role = 0
 dexEntry = ""
 sprite = ExtResource("10_h0u1j")
 spriteScale = 1.0
-passive = ExtResource("11_q4jv0")
+passive = ExtResource("11_gat5t")
 deck = SubResource("Resource_0uwxn")
 levelupCards = Array[ExtResource("1_55mkf")]([])
 rawHealth = "growth40"
