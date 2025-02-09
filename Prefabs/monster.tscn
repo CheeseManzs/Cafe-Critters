@@ -311,12 +311,13 @@ sections = 4
 section_segments = 2
 curve = SubResource("Curve_bdgis")
 
-[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles")]
+[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles", "sprite")]
 script = ExtResource("1_8ie6h")
 shieldParticles = NodePath("Shield Particles")
 boostParticles = NodePath("Boost Particles")
 unboostParticles = NodePath("Unboost Particles")
 empowerParticles = NodePath("Empower Particles")
+sprite = NodePath("Sprite3D")
 metadata/Monster_Data = ExtResource("2_cy5to")
 metadata/playerControlled = true
 

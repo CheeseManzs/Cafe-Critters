@@ -33,6 +33,7 @@ static var multiplayer_id = 0
 @export var powerUpSound: AudioStream
 @export var powerDownSound: AudioStream
 @export var shieldSound: AudioStream
+@export var flairSound: AudioStream
 
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy
@@ -135,7 +136,6 @@ func getTeam(monster: BattleMonster) -> Array[BattleMonster]:
 		return enemyTeam
 
 func initialize(plrTeam: Array, enmTeam: Array) -> void:
-	
 	#set mp values
 	playerMP = 0
 	enemyMP = 0
@@ -1018,6 +1018,8 @@ func toggleDetails() -> void:
 		await detailsPanel.setup(getActivePlayerMon())
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if EffectFlair.singleton.battleController == null:
+		EffectFlair.singleton.battleController = self
 	#if no turn is started, start the next turn
 	while multiplayer_game  && (!rng_sync || !multiplayer_loaded_peer):
 			await get_tree().process_frame

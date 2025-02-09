@@ -156,6 +156,8 @@ func exileCard(card: Card):
 
 
 func discardCard(card: Card, removeFromHand = true):
+	if card == null:
+		return
 	await discardAnimation(card)
 	battleController.addToGraveyard(card)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
@@ -283,6 +285,7 @@ func returnStrongarmCard():
 func addStatusCondition(status: Status, broadcast = false):
 
 	if broadcast:
+		await BattleCamera.singleton.focusMonster(self)
 		var printText = rawData.name + " was afflicted with " + status.toString()
 		var obj: MonsterDisplay = getMonsterDisplay()
 		if status.isPositive():
@@ -293,6 +296,10 @@ func addStatusCondition(status: Status, broadcast = false):
 			battleController.playSound(battleController.powerDownSound)
 			obj.unboostParticles.emitting = true
 		BattleLog.log(printText)
+		while obj.boostParticles.emitting || obj.unboostParticles.emitting:
+			await battleController.get_tree().process_frame
+		await battleController.get_tree().create_timer(0.5).timeout
+		BattleCamera.singleton.disableFocus()
 	
 	await getPassive().onStatus(self,battleController, status)
 	#if effect is ko, suspend or strongarm then it occurs immediately

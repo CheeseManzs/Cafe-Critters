@@ -2,6 +2,7 @@ class_name EffectFlair
 extends Control
 
 static var singleton: EffectFlair
+var battleController: BattleController = null
 @export var label: RichTextLabel
 @export var panelBG: Panel
 
@@ -25,6 +26,8 @@ func _runFlair(title: String, col: Color = Color(239/255.0, 109/255.0, 89/255.0,
 	var t = 0
 	var maxTime: float = 0.2
 	size = Vector2(size.x, 0)
+	
+	battleController.playSound(battleController.flairSound)
 	
 	while t < maxTime:
 		var x = t/maxTime

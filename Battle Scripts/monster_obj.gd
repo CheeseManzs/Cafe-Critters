@@ -5,6 +5,7 @@ extends Node3D
 @export var boostParticles: GPUParticles3D
 @export var unboostParticles: GPUParticles3D
 @export var empowerParticles: GPUParticles3D
+@export var sprite: Sprite3D
 #total "time elapsed" tracker
 var t = 0.0
 #link to monster data structure
@@ -31,12 +32,15 @@ var lockToIntendedPosition = true
 var lastDelta = 0
 
 
+func getHeight() -> float:
+	return sprite.texture.get_height()*sprite.pixel_size
+
 # Reloads monster from metadata
 func reloadMonster() -> void:
 	monsterData = get_meta("Monster_Data")
 	#set sprite to the monster this object represents
-	$Sprite3D.texture = monsterData.sprite
-	$Sprite3D.pixel_size *= monsterData.spriteScale
+	sprite.texture = monsterData.sprite
+	sprite.pixel_size *= monsterData.spriteScale
 
 func faintAnimation(delta: float):
 	if faintAnimated:
@@ -73,10 +77,10 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 		var a_progress: float = elapsed/(timeMax/2.0)
 		var progress: float = (1 - dashFraction) + dashFraction*elapsed/(timeMax/2.0)
 		position = originalPos + deltaPos*pow(1 - progress, 3)
-		$Sprite3D.modulate.a = (a_progress)
+		sprite.modulate.a = (a_progress)
 		elapsed += lastDelta
 		await get_tree().create_timer(lastDelta).timeout
-	#$Sprite3D.modulate.a = 1
+	#sprite.modulate.a = 1
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
 
@@ -103,7 +107,7 @@ func contactAnimation(target: MonsterDisplay) -> void:
 		var a_progress: float = elapsed/(timeMax/2.0)
 		var progress: float = dashFraction*elapsed/(timeMax/2.0)
 		position = originalPos + deltaPos*progress
-		$Sprite3D.modulate.a = (1 - a_progress)
+		sprite.modulate.a = (1 - a_progress)
 		
 		elapsed += lastDelta
 		await get_tree().create_timer(lastDelta).timeout
@@ -111,7 +115,7 @@ func contactAnimation(target: MonsterDisplay) -> void:
 	
 	
 	
-	$Sprite3D.modulate.a = 0
+	sprite.modulate.a = 0
 	elapsed = 0
 	connectedMon.battleController.dashParticles.position = originalPos + deltaPos*(1 - dashFraction)
 	await get_tree().create_timer(0.05).timeout
@@ -194,20 +198,20 @@ func _process(delta: float) -> void:
 	
 	if playerControlled:
 		#if monster is player controlled, rotate the sprite 180 degrees
-		$Sprite3D.rotation_degrees = Vector3(0, 180, 0)
+		sprite.rotation_degrees = Vector3(0, 180, 0)
 	else:
 		#if the monster is enemy controlled, no sprite rotation is needed
-		$Sprite3D.rotation_degrees = Vector3(0, 0, 0)
+		sprite.rotation_degrees = Vector3(0, 0, 0)
 	
 	
 	#change the scale of the sprite to simulate bobbing
-	$Sprite3D.scale = bobMultiplier*Vector3(1, (1 - idleStrength) + bobDelta,  1)
+	sprite.scale = bobMultiplier*Vector3(1, (1 - idleStrength) + bobDelta,  1)
 	#to anchor it at the bottom, add (delta - max)/2 to the position of the **sprite** (not actual monster)
-	var img: Texture2D = $Sprite3D.texture 
-	var h = img.get_height()*$Sprite3D.pixel_size
+	var img: Texture2D = sprite.texture 
+	var h = img.get_height()*sprite.pixel_size
 
-	$Sprite3D.offset = monsterData.battleOffset
-	$Sprite3D.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier*h/2, 0)
+	sprite.offset = monsterData.battleOffset
+	sprite.position = Vector3(0, (bobDelta - idleStrength)/2 + bobMultiplier*h/2, 0)
 	
 	#manage shield particles
 	shieldParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.shield > 0
