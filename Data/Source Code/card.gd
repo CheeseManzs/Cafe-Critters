@@ -171,7 +171,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	var replaceList = []
 	while atkDescInd != -1:
 		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = descAttackCalc(attacker, defender, atkNum/100.0)
+		var calc = descAttackCalc(attacker, defender, atkNum)
 		var toReplace = str(atkNum) + "% Attack"
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Attack", atkDescInd+1)
@@ -181,7 +181,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	atkDescInd = 0
 	while atkDescInd != -1:
 		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = descShieldCalc(attacker, defender, atkNum/100.0)
+		var calc = descShieldCalc(attacker, defender, atkNum)
 		var toReplace = str(atkNum) + "% Defend"
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Defend", atkDescInd+1)

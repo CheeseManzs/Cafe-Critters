@@ -212,7 +212,6 @@ func hardReset() -> void:
 	shield = 0
 	currentDeck = rawData.deck.clone()
 	currentHand = Zone.new()
-	drawCards(5)
 
 func removeCard(card: Card):
 	currentHand.removeCards([card])
@@ -346,8 +345,8 @@ func getDefense():
 func carryStatusConditions(target: BattleMonster) -> void:
 	for status in statusConditions:
 		if status.carriesOverOnSwitch():
-			statusConditions.remove_at(statusConditions.find(status))
 			target.statusConditions.push_back(status)
+			statusConditions.remove_at(statusConditions.find(status))
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:
