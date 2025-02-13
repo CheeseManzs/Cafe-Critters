@@ -721,7 +721,7 @@ func enemySwap(newID) -> void:
 	enemyUI[0].reloadUI()
 	
 	#setup new mon
-	await newMon.hardReset()
+	await newMon.standardDraw()
 	await currentMon.carryStatusConditions(newMon)
 	
 	activeEnemyMon = newID
