@@ -23,7 +23,7 @@ func heatProgress():
 
 func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 	if newHeat > heat:
-		BattleLog.singleton.log(mon.rawData.name + "'s heat raised to " + str(min(maxHeat, newHeat)))
+		BattleLog.singleton.log(mon.rawData.name + "'s heat rose to " + str(min(maxHeat, newHeat)))
 	if newHeat < heat:
 		BattleLog.singleton.log(mon.rawData.name + "'s heat dropped to " + str(max(minHeat,newHeat)))
 	heat = newHeat

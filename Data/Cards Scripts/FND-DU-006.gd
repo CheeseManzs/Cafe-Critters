@@ -9,7 +9,7 @@ func _init() -> void:
 	name = "Press"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	attacker.setAttack(0)
+	await attacker.setAttack(0)
 	await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
 	return 0
 

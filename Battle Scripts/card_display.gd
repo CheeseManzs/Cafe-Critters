@@ -194,7 +194,7 @@ func _process(delta: float) -> void:
 			match displayLocation:
 				"default":
 					print("gpos:",global_position.y)
-					if global_position.y < 240.0:
+					if global_position.y < 240.0 || dragVelocity.y < -2000:
 						sendChoice()
 				"collection":
 					sendToDeckEditor()	

@@ -95,20 +95,35 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 			return status
 	return null
 
+func binaryBoostAnim(score, message = ""):
+	var obj: MonsterDisplay = getMonsterDisplay()
+	await BattleCamera.singleton.focusMonster(self)
+	if message != "":
+		BattleLog.singleton.log(message)
+	if score >= 0:
+		battleController.playSound(battleController.powerUpSound)
+		obj.boostParticles.emitting = true
+	else:
+		battleController.playSound(battleController.powerDownSound)
+		obj.unboostParticles.emitting = true
+	await battleController.get_tree().create_timer(0.5).timeout
+	BattleCamera.singleton.disableFocus()
+
 func addAttackBonus(mod: float, temporary: bool = false):
+	await binaryBoostAnim(mod, rawData.name + "'s gained " + str(100*mod) + "% Attack")
 	if temporary:
 		temp_attackBonus += mod
 	else:
 		attackBonus += mod
-	BattleLog.singleton.log(rawData.name + "'s gained " + str(100*mod) + "% Attack")
 
 func addDefenseBonus(mod: float):
+	await binaryBoostAnim(mod, rawData.name + "'s gained " + str(100*mod) + "% Defense")
 	defenseBonus += mod
-	BattleLog.singleton.log(rawData.name + "'s gained " + str(100*mod) + "% Defense")
 
 func setAttack(atk: int):
+	await binaryBoostAnim(atk - attack, rawData.name + "'s Attack is now " + str(atk))
 	attack = atk
-	BattleLog.singleton.log(rawData.name + "'s Attack is now " + str(atk))
+	
 #removes random card and returns the removed card
 
 func raiseAnimation():
@@ -402,6 +417,8 @@ func getMonsterDisplay() -> MonsterDisplay:
 		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
 
 func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> void:
+	if dmg > 0:
+		battleController.playSound(battleController.hitSound)
 	#remove damage from hp
 	health -= dmg
 	#run camera shake if damage is done
@@ -459,7 +476,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	var shielded = (shield > 0)
 	var pureDmg = damageShield(dmg)
 	if pureDmg > 0:
-		battleController.playSound(battleController.hitSound)
+		pass
 	else:
 		battleController.playSound(battleController.emptyHitSound)
 	#apply overdamage to monster as true damage

@@ -17,7 +17,7 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	
-	attacker.addAttackBonus(0.25)
+	await attacker.addAttackBonus(0.25)
 	if !(await applyReckless(attacker, defender)):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
