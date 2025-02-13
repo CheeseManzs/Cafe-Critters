@@ -88,7 +88,7 @@ text = "Debug Join"
 [node name="IP Box" type="TextEdit" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-text = "Connecting..."
+text = "Not Connected"
 
 [node name="Overworld Button" type="Button" parent="Control UI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -96,17 +96,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Overworld"
 
-[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager")]
+[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
 script = ExtResource("7_co4j3")
 ipDisplay = NodePath("../Control UI/VBoxContainer/Online Battle (Host)")
 ipText = NodePath("../Control UI/VBoxContainer/IP Box")
 teamText = NodePath("../Control UI/VBoxContainer/Team Selection Box")
 teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
+lockedButtons = [NodePath("../Control UI/VBoxContainer/Battle Button"), NodePath("../Control UI/VBoxContainer/Online Battle (Host)"), NodePath("../Control UI/VBoxContainer/Online Battle (Join)"), NodePath("../Control UI/VBoxContainer/Overworld Button")]
 
 [connection signal="pressed" from="Control UI/VBoxContainer/Battle Button" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
-[connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Host)" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
-[connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Join)" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/VBoxContainer/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]

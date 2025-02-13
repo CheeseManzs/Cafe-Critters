@@ -166,6 +166,7 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 				shelfedMonUI[index].connectedMon = newBattleMon
 				shelfedMonUI[index].reprocess()
 			#add to corrosponding team
+			newBattleMon.hardReset()
 			teamSend.push_back(newBattleMon)
 	
 	
@@ -215,6 +216,13 @@ func basicReset(skipKOCheck = false, resetActiveMons = false):
 	for mon in resetOrder:
 		if (skipKOCheck || !mon.isKO()) && (resetActiveMons || (mon != getActivePlayerMon() && mon != getActiveEnemyMon())):
 			await mon.reset()
+
+func totalReset(skipKOCheck = false):
+	var resetOrder = sortedMonList()
+	
+	for mon in resetOrder:
+		if (skipKOCheck || !mon.isKO()):
+			await mon.reset(true, true)
 
 func createImpact(pos):
 	var impactNode: GameVFX = impactEffect.instantiate()
@@ -464,7 +472,7 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 	setCardSelection(getActivePlayerMon(), true)
 	if playerControlled:
 		for shelfUI in shelfedMonUI:
-			if shelfUI.connectedMon.isKO():
+			if shelfUI.connectedMon != null && shelfUI.connectedMon.isKO():
 				shelfUI.switchButton.disabled = true
 			else:
 				shelfUI.switchButton.disabled = false
@@ -478,6 +486,8 @@ func chooseShelfedMon(count: int, playerControlled: bool = true) -> Array[Battle
 		#check for chosen cards
 		if playerControlled:
 			for shelfUI in shelfedMonUI:
+				if shelfUI.connectedMon == null:
+					continue
 				if chosenMons.has(shelfUI.connectedMon):
 					shelfUI.setTextColor(Color.GOLD)
 				else:
@@ -681,7 +691,7 @@ func playerSwap(newID) -> void:
 	
 	
 	#setup new mon
-	await newMon.hardReset()
+	await newMon.standardDraw()
 	await currentMon.carryStatusConditions(newMon)
 	
 	await universalSwap(currentMon, newMon)
@@ -883,7 +893,7 @@ func activeTurn() -> void:
 	
 	
 	#reset temporary values
-	basicReset(false,true)
+	totalReset(false)
 	
 	
 	
@@ -900,6 +910,7 @@ func activeTurn() -> void:
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
+		BattleLog.singleton.log("Enemy has " + str(enemyMP) + " MP!")
 		if !firstSubTurn:
 			await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
 			await getActiveEnemyMon().getPassive().onSubTurnStart(getActiveEnemyMon(), self)

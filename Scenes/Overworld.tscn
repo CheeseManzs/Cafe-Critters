@@ -1,76 +1,19 @@
-[gd_scene load_steps=43 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=20 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_fsjqw"]
 [ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="3_m6ofj"]
+[ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="3_gbstl"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="4_k4lkc"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="4_uaaio"]
-[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="5_tasxd"]
 [ext_resource type="PackedScene" uid="uid://2r8w0hejknsu" path="res://Prefabs/inventory_ui.tscn" id="6_1vjsm"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialogue_portrait.gd" id="6_oxydj"]
-[ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="6_ya7q4"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="7_wxxws"]
 [ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="8_2up65"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="8_lw3nf"]
 [ext_resource type="Script" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="9_fwyt3"]
 [ext_resource type="Resource" uid="uid://b766tek53g2rb" path="res://Data/Text/multichoice.tres" id="10_cq2ag"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="10_yoleg"]
-[ext_resource type="Resource" uid="uid://bwaam8s51mxx0" path="res://Data/Cards/Store Power.tres" id="11_lecd7"]
-[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Stock Up.tres" id="12_gcyia"]
-[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="13_dusa6"]
-[ext_resource type="Resource" uid="uid://cgc5v44kiego7" path="res://Data/Cards/Meditate.tres" id="14_b8krm"]
-[ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="15_3fp3k"]
-[ext_resource type="Resource" uid="uid://ogu20egwfgss" path="res://Data/Cards/Prepare.tres" id="16_fvh5a"]
-[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="17_oeww4"]
-[ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="18_qlb5u"]
-[ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="19_l1st6"]
-[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="20_f6tip"]
-[ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="21_1od05"]
-[ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="22_4x6om"]
-[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="23_gh0xu"]
-
-[sub_resource type="Resource" id="Resource_d41sc"]
-script = ExtResource("3_m6ofj")
-name = ""
-storedCards = Array[ExtResource("4_k4lkc")]([])
-
-[sub_resource type="Resource" id="Resource_7k3sr"]
-script = ExtResource("3_m6ofj")
-name = "Starting Deck"
-storedCards = Array[ExtResource("4_k4lkc")]([ExtResource("7_wxxws"), ExtResource("7_wxxws"), ExtResource("7_wxxws"), ExtResource("8_lw3nf"), ExtResource("8_lw3nf"), ExtResource("8_lw3nf"), ExtResource("9_fwyt3"), ExtResource("9_fwyt3"), ExtResource("10_yoleg"), ExtResource("11_lecd7"), ExtResource("11_lecd7"), ExtResource("11_lecd7"), ExtResource("12_gcyia"), ExtResource("12_gcyia"), ExtResource("13_dusa6"), ExtResource("13_dusa6"), ExtResource("14_b8krm"), ExtResource("15_3fp3k"), ExtResource("15_3fp3k"), ExtResource("16_fvh5a"), ExtResource("16_fvh5a"), ExtResource("16_fvh5a"), ExtResource("17_oeww4"), ExtResource("17_oeww4"), ExtResource("17_oeww4"), ExtResource("18_qlb5u"), ExtResource("18_qlb5u"), ExtResource("18_qlb5u"), ExtResource("19_l1st6"), ExtResource("19_l1st6"), ExtResource("20_f6tip"), ExtResource("20_f6tip"), ExtResource("20_f6tip"), ExtResource("21_1od05"), ExtResource("21_1od05"), ExtResource("22_4x6om"), ExtResource("22_4x6om"), ExtResource("23_gh0xu")])
-
-[sub_resource type="Resource" id="Resource_1o7ne"]
-resource_local_to_scene = true
-script = ExtResource("2_fsjqw")
-id = 0
-name = "Slocha"
-alignment = 0
-role = 2
-dexEntry = "the coffee on its back is rumoured to cause immortality. these rumours have never once been substantiated."
-sprite = ExtResource("6_ya7q4")
-spriteScale = 1.0
-passive = ExtResource("5_tasxd")
-deck = SubResource("Resource_d41sc")
-startingCardPool = SubResource("Resource_7k3sr")
-levelupCards = Array[ExtResource("3_m6ofj")]([])
-rawHealth = "growth40"
-rawAttack = "growth12"
-rawDefense = "growth15"
-rawSpeed = ""
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
-level = 0
-battleOffset = Vector2(0, -2)
 
 [sub_resource type="Resource" id="Resource_larmy"]
 script = ExtResource("2_b10y7")
@@ -93,7 +36,7 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
-playerTeam = Array[ExtResource("2_fsjqw")]([SubResource("Resource_1o7ne")])
+playerTeam = Array[ExtResource("2_fsjqw")]([ExtResource("3_gbstl")])
 inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=60 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -39,6 +39,7 @@
 [ext_resource type="AudioStream" uid="uid://dy45v7qcndyd0" path="res://Audio/BGM/2-04 Queen of Rose II.mp3" id="34_ua6n4"]
 [ext_resource type="AudioStream" uid="uid://brlgy2cm5xpns" path="res://Audio/BGM/10. Sunny Park Colosseum.mp3" id="35_01yby"]
 [ext_resource type="AudioStream" uid="uid://dvi7pnafojkpk" path="res://Audio/BGM/05. Colosseum Leader - Sashay's Theme.mp3" id="36_40yr6"]
+[ext_resource type="AudioStream" uid="uid://qi6fn2qcpdnw" path="res://Audio/BGM/2-05 Catus Carnival II.mp3" id="40_2aoel"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -59,6 +60,10 @@ bg_color = Color(0.923849, 0.426807, 0.349598, 1)
 [sub_resource type="Curve" id="Curve_hwsx7"]
 _data = [Vector2(0, 0.0349693), 0.0, 0.0, 0, 0]
 point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_2c5nb"]
+offsets = PackedFloat32Array(0, 0.0516432, 0.173709, 0.361502)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3ocnu"]
 sky_top_color = Color(0.439474, 0.618985, 0.830536, 1)
@@ -258,6 +263,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(960, 50)
 mouse_filter = 2
 script = ExtResource("18_bnklp")
 label = NodePath("Panel/VBoxContainer/RichTextLabel")
@@ -304,18 +310,20 @@ lifetime = 5.0
 emission_shape = 3
 emission_rect_extents = Vector2(0, 100)
 spread = 0.0
-gravity = Vector2(0, 0)
+gravity = Vector2(1000, 0)
 initial_velocity_min = 800.0
 initial_velocity_max = 1600.0
+angular_velocity_max = 0.1
 scale_amount_min = 100.0
 scale_amount_max = 100.0
 split_scale = true
 scale_curve_x = null
 scale_curve_y = SubResource("Curve_hwsx7")
 color = Color(1, 1, 1, 0.533333)
+color_ramp = SubResource("Gradient_2c5nb")
 
 [node name="Background" type="TextureRect" parent="Control UI"]
-z_index = -1
+z_index = -3
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -513,7 +521,8 @@ stream = ExtResource("28_r2avy")
 volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6")])
+audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel")])
+autoSet = 7
 multiplayerGameIndex = 6
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]

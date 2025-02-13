@@ -82,6 +82,7 @@ var LevelCosts = {
 func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_startingCardPool = null, 
 			p_statHealth = [1], p_statDefense = [1], p_statAttack = [1], p_statSpeed = [1],
 			p_level = 0, rawH = "growth40", rawA = "growth40", rawD = "growth40", rawS = "growth40"):
+	print("initializing: ",p_name)
 	id = p_id
 	name = p_name
 	sprite = p_sprite

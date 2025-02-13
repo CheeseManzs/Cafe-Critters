@@ -36,6 +36,7 @@ var attackBonus = 0
 var temp_attackBonus = 0
 var defenseBonus = 0
 var gameID = 0
+var canDraw = true
 static var damagePopupPrefab: PackedScene
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
@@ -150,6 +151,8 @@ func discardAnimation(card: Card) -> void:
 	await battleController.get_tree().create_timer(0.5).timeout
 	
 func exileCard(card: Card):
+	if card == null:
+		return
 	await discardAnimation(card)
 	exileZone.storedCards.push_back(card)
 	BattleLog.singleton.log(rawData.name + " exiled " + card.name)
@@ -226,7 +229,7 @@ func meetsRequirement(requirement: Callable) -> bool:
 func reset(active = true, forceDraw = false) -> void:
 	if isKO():
 		return
-	
+	canDraw = true
 	#reset bonusses
 	shield = 0
 	attackBonus = 0
@@ -258,10 +261,17 @@ func reset(active = true, forceDraw = false) -> void:
 	
 	#if the deck has cards and the hand has less than 5 cards, draw 1 card from the deck to the hand
 	if (active || forceDraw) && len(currentDeck.storedCards) > 0:
+		standardDraw()
+	
+
+func standardDraw():
+	if canDraw:
 		var drawBonus = 0
 		drawBonus += floor(getKnowledge()/3.0)
 		drawCards(5 + drawBonus + extraDraw)
-	extraDraw = 0
+		extraDraw = 0
+		canDraw = false
+
 
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
@@ -323,7 +333,8 @@ func addStatusCondition(status: Status, broadcast = false):
 			if health > 0:
 				await EffectFlair.singleton._runFlair("Strongarm", Color.ROYAL_BLUE)
 				var removedCard: Card = await battleController.getOpposingMon(playerControlled).exileRandomCard()
-				removedCard.statusConditions.push_back(Status.EFFECTS.STRONGARM)
+				if removedCard != null:
+					removedCard.statusConditions.push_back(Status.EFFECTS.STRONGARM)
 				return
 	#enemy instant effects
 	if hasStatus(status.effect):

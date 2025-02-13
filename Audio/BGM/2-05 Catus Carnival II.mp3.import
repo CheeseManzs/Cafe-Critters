@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://qi6fn2qcpdnw"
+path="res://.godot/imported/2-05 Catus Carnival II.mp3-4820f5741a73c3ada71fe24a5c0e83c8.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/2-05 Catus Carnival II.mp3"
+dest_files=["res://.godot/imported/2-05 Catus Carnival II.mp3-4820f5741a73c3ada71fe24a5c0e83c8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

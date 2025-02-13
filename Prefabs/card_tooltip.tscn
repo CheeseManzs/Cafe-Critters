@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj2i811quc5ap"]
+
+[ext_resource type="Script" path="res://Battle Scripts/card_tooltip.gd" id="1_1x5ng"]
+[ext_resource type="Texture2D" uid="uid://0j2hh64ieetj" path="res://Graphics/Misc/Card_Back_9S.png" id="2_hleqo"]
+[ext_resource type="Script" path="res://Prefabs/container_filler.gd" id="3_akvnb"]
+
+[node name="CardTooltip" type="Control" node_paths=PackedStringArray("richtext")]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1820.0
+offset_bottom = -980.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1x5ng")
+richtext = NodePath("NinePatchRect/CenterContainer/RichTextLabel")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hleqo")
+patch_margin_left = 26
+patch_margin_top = 30
+patch_margin_right = 26
+patch_margin_bottom = 30
+
+[node name="CenterContainer" type="CenterContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/CenterContainer" node_paths=PackedStringArray("comparison")]
+z_index = 101
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[center]card tooltip[/center]"
+script = ExtResource("3_akvnb")
+fillSizeOffset = Vector2(30, 30)
+comparison = NodePath("../../..")

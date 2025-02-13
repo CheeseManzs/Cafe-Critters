@@ -176,9 +176,10 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Attack", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc, "Damage", "77130e"])
+			replaceBin.push_back([toReplace,calc, "Damage", "77130e",toReplace])
 			replaceList.push_back(toReplace)
-	atkDescInd = 0
+	
+	atkDescInd = description.find("% Defend")
 	while atkDescInd != -1:
 		var atkNum = int(getSurroundingWord(description, atkDescInd))
 		var calc = descShieldCalc(attacker, defender, atkNum)
@@ -186,12 +187,26 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Defend", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc,"Block","7FFFD4"])
+			replaceBin.push_back([toReplace,calc,"Block","7FFFD4",toReplace])
 			replaceList.push_back(toReplace)
+
+	for keywordString in Keyword.keywords:
+		atkDescInd = description.find(keywordString)
+		while atkDescInd != -1:
+			var toReplace = keywordString
+			var resetInd = atkDescInd
+			print(toReplace,getSurroundingWord(description,resetInd))
+			atkDescInd = description.find(toReplace, atkDescInd+1)
+			if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd).trim_prefix(" ") == toReplace:
+				replaceBin.push_back([toReplace,null,toReplace,"gold",Keyword.getDescription(keywordString)])
+				replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
-		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[0], "col": rpl[3]})
-		description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
+		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[4], "col": rpl[3]})
+		if rpl[1] == null:
+			description = description.replace(rpl[0],tooltip+rpl[2]+"[/color][/hint]")
+		else:
+			description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
 
 
 func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):

@@ -17,7 +17,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		endlessBlows = attacker.getStatus(Status.EFFECTS.ENDLESS_BLOWS).X
 	for blow in range(endlessBlows):
 		await dealDamage(attacker, defender, 0.1)
-		await attacker.battleController.get_tree().create_timer(0.5).timeout
+		await attacker.battleController.get_tree().create_timer(1.0).timeout
 	power = 0.5# + 0.1*endlessBlows
 	await dealDamage(attacker, defender)
 	await giveStatus(attacker,Status.EFFECTS.ENDLESS_BLOWS,1,0,false)
