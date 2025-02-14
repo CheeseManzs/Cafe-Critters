@@ -90,11 +90,9 @@ func _on_online_battle_join_pressed() -> void:
 	setTeam()
 	for button in lockedButtons:
 		button.disabled = true
-	ipText.text = "Connecting..."
 	Thread.new().start(upnpSetup.bind())
 	await foundUPNP
 	var external_ip = upnp.query_external_address()
 	print("ip: ",external_ip)
-	ipText.text = str(external_ip)
 	joinServer()
 	debugManager.loadScene("Battle")
