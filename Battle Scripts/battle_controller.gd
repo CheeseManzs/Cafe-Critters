@@ -660,6 +660,12 @@ func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
 func universalSwap(oldMon, newMon):
+	for statuscond in oldMon.statusConditions:
+		var status: Status = statuscond
+		if status.endsOnSwitch():
+			status.effectDone = true
+	
+	
 	var container: VBoxContainer
 	if oldMon.playerControlled:
 		container = playerUI[0].externalGaugeContainer
@@ -1006,6 +1012,7 @@ func activeTurn() -> void:
 		await get_tree().create_timer(0.25).timeout
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		
+	
 	
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 

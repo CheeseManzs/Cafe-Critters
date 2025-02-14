@@ -77,3 +77,9 @@ func runActions(battleController: Node) -> void:
 		await battleController.addToGraveyard(action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
 		await action.battleMonster.returnStrongarmCard()
+		
+		if action.battleMonster.hasStatus(Status.EFFECTS.POISON):
+			var poisonStatus: Status = action.battleMonster.getStatus(Status.EFFECTS.POISON)
+			await EffectFlair.singleton._runFlair("Poison",Color.MEDIUM_PURPLE)
+			await action.battleMonster.trueDamage(poisonStatus.X)
+			poisonStatus.X -= 1
