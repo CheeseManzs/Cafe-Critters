@@ -55,7 +55,6 @@ enum ROLE {
 
 @export var battleOffset: Vector2
 
-
 var StatCurves: Dictionary = {
 	"growth40": [10, 20, 30, 40, 46, 52, 58, 65, 71, 79, 86, 93, 100],
 	"growth20": [5, 10, 15, 20, 21, 22, 24, 26, 28, 30, 33, 36, 40],
@@ -65,6 +64,9 @@ var StatCurves: Dictionary = {
 	"growthX": [100, 200, 300, 400, 500, 600, 700 ,800, 900, 1000],
 	"growthXX": [1000, 2000, 3000, 4000, 5000, 6000, 7000 ,8000, 9000, 10000]
 }
+
+func generateStatCurve(baseStat, hpStat = false):
+	return baseStat
 
 # Level costs are an array with multiple layers.
 # Layer 1: 9 entries, holds the definitions for each level.
