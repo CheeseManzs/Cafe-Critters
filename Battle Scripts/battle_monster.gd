@@ -106,6 +106,8 @@ func binaryBoostAnim(score, message = ""):
 	else:
 		battleController.playSound(battleController.powerDownSound)
 		obj.unboostParticles.emitting = true
+	while obj.boostParticles.emitting || obj.unboostParticles.emitting:
+			await battleController.get_tree().process_frame
 	await battleController.get_tree().create_timer(0.5).timeout
 	BattleCamera.singleton.disableFocus()
 
