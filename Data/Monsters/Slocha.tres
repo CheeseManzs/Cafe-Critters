@@ -36,7 +36,7 @@ storedCards = Array[ExtResource("2_lxcvb")]([ExtResource("14_c6ebl"), ExtResourc
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_7umar")
-id = 5
+id = 2
 name = "Slocha"
 alignment = 0
 role = 2

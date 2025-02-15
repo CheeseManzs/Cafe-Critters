@@ -1,15 +1,13 @@
-[gd_resource type="Resource" script_class="MonsterCache" load_steps=10 format=3 uid="uid://cjnsk71nyutp"]
+[gd_resource type="Resource" script_class="MonsterCache" load_steps=8 format=3 uid="uid://cjnsk71nyutp"]
 
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_ntfgn"]
 [ext_resource type="Script" path="res://Data/Source Code/monster_cache.gd" id="2_mcreu"]
-[ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="2_u04kt"]
-[ext_resource type="Resource" uid="uid://jf4us7y5q5ot" path="res://Data/Monsters/ph_mon2.tres" id="3_qsrg0"]
-[ext_resource type="Resource" uid="uid://ba7mef873ynqu" path="res://Data/Monsters/ph_mon3.tres" id="4_r12ve"]
 [ext_resource type="Resource" uid="uid://dc4d16vxlrivo" path="res://Data/Monsters/ph_mon_t.tres" id="5_f6c4y"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_sdfuw"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="7_xmuw6"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="8_gbt8i"]
+[ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 
 [resource]
 script = ExtResource("2_mcreu")
-cache = Array[ExtResource("1_ntfgn")]([ExtResource("2_u04kt"), ExtResource("3_qsrg0"), ExtResource("4_r12ve"), ExtResource("5_f6c4y"), ExtResource("6_sdfuw"), ExtResource("7_xmuw6"), ExtResource("8_gbt8i")])
+cache = Array[ExtResource("1_ntfgn")]([ExtResource("5_f6c4y"), ExtResource("6_sdfuw"), ExtResource("7_xmuw6"), ExtResource("8_gbt8i"), ExtResource("9_jpghj")])

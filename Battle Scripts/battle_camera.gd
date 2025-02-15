@@ -28,14 +28,23 @@ func randomOffset(range: float) -> Vector3:
 		0
 	)
 
-func focusMonster(mon: BattleMonster, _zoom = 1.5):
+func focusMonster(mon: BattleMonster, _zoom = 1.5, _yweight = 1.0):
+	await  focusMonsters([mon],_zoom,_yweight)
 	
+func focusMonsters(mons: Array, _zoom = 1.5,_yweight = 1.0):
+	
+	if len(mons) == 0:
+		return
 	focusZoom = _zoom
-	var activeMon = mon.battleController.getActivePlayerMon()
-	var activeOpp = mon.battleController.getActiveEnemyMon()
+	var activeMon = mons[0].battleController.getActivePlayerMon()
+	var activeOpp = mons[0].battleController.getActiveEnemyMon()		
 	if focusOffset == Vector3.ZERO:
 		focusOffset = global_position - (activeMon.getMonsterDisplay().global_position + activeOpp.getMonsterDisplay().global_position)/2.0
-	focusPos = mon.getMonsterDisplay().global_position + Vector3.UP*mon.getMonsterDisplay().getHeight()/4.0
+		
+	var averagePosition: Vector3 = Vector3.ZERO
+	for mon in mons:
+		averagePosition += mon.getMonsterDisplay().global_position + _yweight*Vector3.UP*mon.getMonsterDisplay().getHeight()/4.0
+	focusPos = averagePosition
 	focusTargetPos = focusPos + focusOffset*(1.0/focusZoom)
 	focusing = true
 	while (global_position - focusTargetPos).length() > 0.1:

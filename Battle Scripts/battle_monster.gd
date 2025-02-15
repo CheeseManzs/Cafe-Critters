@@ -403,7 +403,10 @@ func dmgAnim() -> void:
 
 func atkAnim(target: BattleMonster) -> void:
 	var obj: MonsterDisplay = getMonsterDisplay()
+	await BattleCamera.singleton.focusMonsters([self, target], 1.2, 0)
 	await obj.contactAnimation(target.getMonsterDisplay())
+	BattleCamera.singleton.disableFocus()
+	
 
 #draw cards from deck	
 func drawCards(count: int) -> void:
