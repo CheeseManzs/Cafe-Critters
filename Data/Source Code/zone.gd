@@ -92,3 +92,10 @@ func transfer(target: Zone, cardID = 0) -> void:
 	target.storedCards.push_back(card)
 	storedCards.remove_at(cardID)
 	pass
+	
+static func getTaggedCardsInArray(arr: Array[Card], tag: String):
+	var returnArray = []
+	for card in arr:
+		if card.tags.has(tag):
+			returnArray.push_back(card)
+	return returnArray

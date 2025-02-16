@@ -36,10 +36,10 @@ enum ROLE {
 @export var levelupCards: Array[Zone]
 
 # strings that store info about their stat growth curves.
-@export var rawHealth: String
-@export var rawAttack: String
-@export var rawDefense: String
-@export var rawSpeed: String
+@export var rawHealth: int #Base Health Stat
+@export var rawAttack: int #Base Attack Stat
+@export var rawDefense: int #Base Defense Stat
+@export var rawSpeed: int #Base Speed Stat
 
 @export var levelingType: String
 @export var levelingItems: Array[String]
@@ -52,21 +52,35 @@ enum ROLE {
 
 # level
 @export var level: int
+static var MAX_LEVEL: int = 50
+static var BASE_AVG_STAT: float = 10
+static var PEAK_AVG_STAT: float = 50
+static var EXPONENTIAL_SCALING: float = 0.463
 
 @export var battleOffset: Vector2
 
-var StatCurves: Dictionary = {
-	"growth40": [10, 20, 30, 40, 46, 52, 58, 65, 71, 79, 86, 93, 100],
-	"growth20": [5, 10, 15, 20, 21, 22, 24, 26, 28, 30, 33, 36, 40],
-	"growth15": [4, 7, 12, 15, 16, 18, 19, 21, 22, 24, 26, 28, 30],
-	"growth12": [3, 6, 9, 12, 13, 14, 16, 17, 19, 20, 22, 23, 24],
-	"growth8": [2, 4, 6, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18],
-	"growthX": [100, 200, 300, 400, 500, 600, 700 ,800, 900, 1000],
-	"growthXX": [1000, 2000, 3000, 4000, 5000, 6000, 7000 ,8000, 9000, 10000]
-}
+#var StatCurves: Dictionary = {
+	#"growth40": [10, 20, 30, 40, 46, 52, 58, 65, 71, 79, 86, 93, 100],
+	#"growth20": [5, 10, 15, 20, 21, 22, 24, 26, 28, 30, 33, 36, 40],
+	#"growth15": [4, 7, 12, 15, 16, 18, 19, 21, 22, 24, 26, 28, 30],
+	#"growth12": [3, 6, 9, 12, 13, 14, 16, 17, 19, 20, 22, 23, 24],
+	#"growth8": [2, 4, 6, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18],
+	#"growthX": [100, 200, 300, 400, 500, 600, 700 ,800, 900, 1000],
+	#"growthXX": [1000, 2000, 3000, 4000, 5000, 6000, 7000 ,8000, 9000, 10000]
+#}
 
-func generateStatCurve(baseStat, hpStat = false):
-	return baseStat
+static func statFormula(lv, base):
+	var unitRatio = (pow(lv,EXPONENTIAL_SCALING)/pow(MAX_LEVEL,EXPONENTIAL_SCALING))
+	var ratio = unitRatio * base
+	var scaledRatio = ratio * (PEAK_AVG_STAT/BASE_AVG_STAT) 
+	return scaledRatio
+
+static func generateStatCurve(baseStat) -> Curve:
+	var statCurve = Curve.new()
+	for i in range(MAX_LEVEL):
+		var stat = statFormula(i,baseStat)
+		statCurve.add_point(Vector2(i/float(MAX_LEVEL),stat))
+	return statCurve
 
 # Level costs are an array with multiple layers.
 # Layer 1: 9 entries, holds the definitions for each level.
@@ -83,7 +97,7 @@ var LevelCosts = {
 
 func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_startingCardPool = null, 
 			p_statHealth = [1], p_statDefense = [1], p_statAttack = [1], p_statSpeed = [1],
-			p_level = 0, rawH = "growth40", rawA = "growth40", rawD = "growth40", rawS = "growth40"):
+			p_level = 0, rawH = 8, rawA = 10, rawD = 10, rawS = 10):
 	print("initializing: ",p_name)
 	id = p_id
 	name = p_name
@@ -102,16 +116,21 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	rawSpeed = rawS
 	#if deck.storedCards.size() == 0:
 	#	deck.storedCards = startingCardPool.storedCards;
-	
+
+static func getStat(inputLevel, growth):
+	var s = ceil(generateStatCurve(growth).sample(inputLevel*1.0/MAX_LEVEL))
+	print("lv. ",inputLevel," with base ",growth,": ", s)
+	return s
+
 func getHealth(inputLevel = level): 
-	return StatCurves[rawHealth][inputLevel]
+	return 4*getStat(inputLevel, rawHealth)
 	
 func getDefense(inputLevel = level): 
-	return StatCurves[rawDefense][inputLevel]
+	return getStat(inputLevel, rawDefense)
 	
 func getAttack(inputLevel = level): 
-	return StatCurves[rawAttack][inputLevel]
+	return getStat(inputLevel, rawAttack)
 
 func getSpeed(inputLevel = level):
-	return StatCurves[rawSpeed][inputLevel]
+	return getStat(inputLevel, rawSpeed)
 	

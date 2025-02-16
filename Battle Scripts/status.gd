@@ -26,7 +26,8 @@ enum EFFECTS {
 	CANT_PLAY,
 	OVERHEAT,
 	ENDLESS_BLOWS,
-	POISON
+	POISON,
+	NULLIFY_DAMAGE
 }
 var X: int = 0
 var Y: int = 0
@@ -102,6 +103,8 @@ func toMini() -> String:
 			return "EDB"
 		EFFECTS.POISON:
 			return "PSN"
+		EFFECTS.NULLIFY_DAMAGE:
+			return "NLD"
 	return "N/A"
 	
 
@@ -155,6 +158,8 @@ func rawToString() -> String:
 			return "Endless Blows"
 		EFFECTS.POISON:
 			return "Poison"
+		EFFECTS.NULLIFY_DAMAGE:
+			return "Nullify Next Hit"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -190,6 +195,8 @@ func isPositive() -> bool:
 		EFFECTS.STRONGARM:
 			return true
 		EFFECTS.PRIORITY:
+			return true
+		EFFECTS.NULLIFY_DAMAGE:
 			return true
 	return false
 
@@ -279,3 +286,5 @@ func newTurn() -> void:
 		EFFECTS.POISON:
 			if X < 1:
 				effectDone = true
+		EFFECTS.NULLIFY_DAMAGE:
+			effectDone = true

@@ -285,7 +285,8 @@ func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
 	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
 	return valid
 
-func addToGraveyard(card: Card):
+func addToGraveyard(card: Card, user: BattleMonster):
+	card.originator = user
 	graveyard.push_back(card)
 	#search for relevants statusses
 	for mon in (playerTeam + enemyTeam):
@@ -294,9 +295,9 @@ func addToGraveyard(card: Card):
 			var decayStatus = mon.getStatus(Status.EFFECTS.DECAY)
 			mon.trueDamage(decayStatus.X)
 
-func addArrayToGraveyard(cards: Array[Card]):
+func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
 	for card in cards:
-		addToGraveyard(card)
+		addToGraveyard(card, user)
 
 func parseBattleAction(mon: BattleMonster, actionID, switchID, switchAction = false, p_playerControlled = true) -> BattleAction:
 	if actionID == -100: 
@@ -1073,6 +1074,11 @@ func _process(delta: float) -> void:
 	pass
 
 
+static func syncedRandInArray(arr: Array):
+	if len(arr) == 0:
+		return null
+	else:
+		return arr[global_rng.randi_range(0, len(arr) - 1)]
 
 
 static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality) -> void:

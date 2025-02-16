@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_vs0ux"]
-[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="3_8577f"]
 [ext_resource type="Texture2D" uid="uid://bb7jieshcir82" path="res://Graphics/Monsters/Rev.png" id="3_fsk0c"]
+[ext_resource type="Resource" uid="uid://q61i0ca0teq8" path="res://Data/Cards/Dodge Roll.tres" id="3_o5jv8"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="4_l4hu3"]
+[ext_resource type="Resource" uid="uid://b0v570g5ts45g" path="res://Data/Cards/Revenant Fury.tres" id="4_my6oa"]
 
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_8577f"), ExtResource("3_8577f"), ExtResource("3_8577f"), ExtResource("3_8577f"), ExtResource("3_8577f")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_o5jv8"), ExtResource("3_o5jv8"), ExtResource("3_o5jv8"), ExtResource("4_my6oa"), ExtResource("4_my6oa")])
 
 [resource]
 script = ExtResource("2_dbcrm")
@@ -24,15 +25,15 @@ spriteScale = 0.035
 passive = ExtResource("4_l4hu3")
 deck = SubResource("Resource_dmqgo")
 levelupCards = Array[ExtResource("1_mkiur")]([])
-rawHealth = "growth40"
-rawAttack = "growth8"
-rawDefense = "growth8"
-rawSpeed = "growth15"
+rawHealth = 7
+rawAttack = 7
+rawDefense = 7
+rawSpeed = 16
 levelingType = ""
 levelingItems = Array[String]([])
 statHealth = []
 statAttack = []
 statDefense = []
 statSpeed = []
-level = 0
+level = 7
 battleOffset = Vector2(0, 0)

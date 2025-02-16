@@ -32,7 +32,7 @@ func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 	if heat > maxHeat:
 		heat = maxHeat
 		resetHeat = true
-		mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
+		await mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
 	
 	if heatGauge != null:
 		heatGauge.progress = heatProgress()

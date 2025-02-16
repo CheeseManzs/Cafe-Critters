@@ -179,7 +179,7 @@ func discardCard(card: Card, removeFromHand = true):
 	if card == null:
 		return
 	await discardAnimation(card)
-	battleController.addToGraveyard(card)
+	battleController.addToGraveyard(card, self)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	if removeFromHand:
 		currentHand.removeCards([card])
@@ -235,7 +235,7 @@ func hardReset() -> void:
 
 func removeCard(card: Card):
 	currentHand.removeCards([card])
-	battleController.addToGraveyard(card)
+	battleController.addToGraveyard(card, self)
 
 func meetsRequirement(requirement: Callable) -> bool:
 	for card in currentHand.storedCards:
@@ -421,7 +421,17 @@ func getMonsterDisplay() -> MonsterDisplay:
 	else:
 		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
 
+func checkNullifyDamage():
+	if hasStatus(Status.EFFECTS.NULLIFY_DAMAGE):
+		getStatus(Status.EFFECTS.NULLIFY_DAMAGE).effectDone = true
+		BattleLog.singleton.log(rawData.name + " dodged the attack!")
+		return true
+	return false
+
 func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> void:
+	#check nullify again for true damage
+	if checkNullifyDamage():
+		return
 	if dmg > 0:
 		battleController.playSound(battleController.hitSound)
 	#remove damage from hp
@@ -468,6 +478,10 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 		attacker.temp_attackBonus = 0
 		await attacker.atkAnim(self)
 	#play audio
+	#apply nullify
+	if checkNullifyDamage():
+		battleController.playSound(battleController.emptyHitSound)
+		return 0
 	#apply barrier
 	if hasStatus(Status.EFFECTS.BARRIER):
 		var status = getStatus(Status.EFFECTS.BARRIER)

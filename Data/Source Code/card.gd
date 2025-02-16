@@ -10,7 +10,7 @@ enum ALIGNMENT {
 	Sec,
 	Eco,
 	Jacks,
-	Blanc
+	Blanc,
 }
 
 #list of roles
@@ -29,6 +29,12 @@ enum RARITY {
 	Rare,
 	Epic,
 	Legendary
+}
+
+static var tooltipColors = {
+	"Attack":"77130e",
+	"Block":"7FFFD4",
+	"Keyword":"gold"
 }
 
 
@@ -53,6 +59,7 @@ var shieldPower: float = 0
 
 var statusConditions: Array[Status.EFFECTS] = []
 var tags: Array[String] = []
+var originator: BattleMonster = null #the monster that owns this card
 
 @export var aiDetails: AIInfo
 @export var art: Texture2D
@@ -158,11 +165,13 @@ func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 	
 	return discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
 
-func setDescription(attacker: BattleMonster, defender: BattleMonster):
+func descSetup():
 	if baseDescription == "null":
 		baseDescription = description
 	description = baseDescription
-	print("base for ",name,": ",baseDescription)
+
+func setDescription(attacker: BattleMonster, defender: BattleMonster):
+	descSetup()
 	genericDescription(attacker, defender)
 
 func genericDescription(attacker: BattleMonster, defender: BattleMonster):
@@ -176,7 +185,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Attack", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc, "Damage", "77130e",toReplace])
+			replaceBin.push_back([toReplace,calc, "Damage", tooltipColors["Attack"],toReplace])
 			replaceList.push_back(toReplace)
 	
 	atkDescInd = description.find("% Defend")
@@ -187,7 +196,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		print("DMG of ",name,":",atkNum," ",toReplace)
 		atkDescInd = description.find("% Defend", atkDescInd+1)
 		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc,"Block","7FFFD4",toReplace])
+			replaceBin.push_back([toReplace,calc,"Block",tooltipColors["Block"],toReplace])
 			replaceList.push_back(toReplace)
 
 	for keywordString in Keyword.keywords:
@@ -198,7 +207,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 			print(toReplace,getSurroundingWord(description,resetInd))
 			atkDescInd = description.find(toReplace, atkDescInd+1)
 			if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd).trim_prefix(" ") == toReplace:
-				replaceBin.push_back([toReplace,null,toReplace,"gold",Keyword.getDescription(keywordString)])
+				replaceBin.push_back([toReplace,null,toReplace,tooltipColors["Keyword"],Keyword.getDescription(keywordString)])
 				replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
@@ -214,6 +223,9 @@ func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 
 func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
 	return _calcShield(attacker, defender, atkNum/100.0)
+
+func getOmenCards(battleController: BattleController):
+	return Zone.getTaggedCardsInArray(battleController.graveyard, "Omen")
 
 func clone():
 	var newCard: Card = get_script().new()

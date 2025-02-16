@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b0v570g5ts45g"]
+
+[ext_resource type="Script" path="res://Data/Cards Scripts/FND-RU-002.gd" id="1_tqu5e"]
+
+[resource]
+script = ExtResource("1_tqu5e")
