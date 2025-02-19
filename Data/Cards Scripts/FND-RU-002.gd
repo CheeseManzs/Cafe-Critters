@@ -1,7 +1,7 @@
 extends Card
 
 func _init() -> void:
-	cost = 2
+	cost = 5
 	priority = 0
 	alignment = ALIGNMENT.Rea
 	role = "Smol"

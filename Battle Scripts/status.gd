@@ -235,6 +235,11 @@ func carriesOverOnSwitch() -> bool:
 			return true
 	return false
 
+func newSubTurn() -> void:
+	match effect:
+		EFFECTS.PERFECT_PARRY:
+			effectDone = true
+
 func newTurn() -> void:
 	#check effect
 	match effect:

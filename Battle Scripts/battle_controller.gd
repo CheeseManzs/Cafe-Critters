@@ -968,6 +968,11 @@ func activeTurn() -> void:
 		if !multiplayer_game:
 			enemyActions = enemyDeclare(true)
 		
+		for sortedMon in sortedMonList():
+			for i in len(sortedMon.statusConditions):
+				var status: Status = sortedMon.statusConditions[i]
+				status.newTurn()
+		
 		var actions: Array[BattleAction] = []
 		
 		if endTurn:
