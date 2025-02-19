@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=61 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -107,6 +107,16 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_myw15")
 size = Vector2(0.005, 0.3)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4b0ij"]
+texture = ExtResource("18_8s1nw")
+texture_margin_left = 94.0
+texture_margin_top = 77.0
+texture_margin_right = 94.0
+texture_margin_bottom = 1455.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 5760, 3243)
+
 [sub_resource type="Environment" id="Environment_7estt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e7phk"]
@@ -164,11 +174,10 @@ deckController = NodePath("../Control UI/Deck Pivot")
 
 [node name="Control UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 1080.0
 grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Battle Log" type="VBoxContainer" parent="Control UI"]
 layout_mode = 1
@@ -360,6 +369,19 @@ visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
 process_material = SubResource("ParticleProcessMaterial_bd3ru")
 draw_pass_1 = SubResource("QuadMesh_o1je0")
 
+[node name="Panel" type="Panel" parent="Control UI/Background"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 3840.0
+offset_bottom = 2160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+theme_override_styles/panel = SubResource("StyleBoxTexture_4b0ij")
+
 [node name="MP Fill" type="Control" parent="Control UI"]
 anchors_preset = 0
 offset_left = 738.0
@@ -433,6 +455,7 @@ text = "[center]6[/center]"
 scroll_active = false
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI"]
+visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
@@ -443,7 +466,7 @@ handle_input_locally = false
 msaa_3d = 3
 screen_space_aa = 1
 size = Vector2i(1920, 1080)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Dice Camera" type="Camera3D" parent="Control UI/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 100, -14.134, 0)

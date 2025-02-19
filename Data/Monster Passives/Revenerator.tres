@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dutyrms8vcug1"]
+
+[ext_resource type="Script" path="res://Data/Monster Passive Scripts/passive_rev.gd" id="1_y1t7h"]
+
+[resource]
+script = ExtResource("1_y1t7h")

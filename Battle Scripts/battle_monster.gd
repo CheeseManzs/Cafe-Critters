@@ -137,8 +137,7 @@ func raiseAnimation():
 
 func quick_discardAnimation(card: Card) -> void:
 	for display in battleController.cardButtons:
-		print(display.card.name,"=|=", card.name, " > ", display.card.name == card.name)
-		if display.card.name == card.name:
+		if display.card == card:
 			display.launch()
 			await battleController.get_tree().create_timer(0.2).timeout
 			break
@@ -158,7 +157,7 @@ func discardAnimation(card: Card) -> void:
 	await battleController.get_tree().create_timer(1.0).timeout
 	
 	for display in battleController.cardButtons:
-		if display.card.name == card.name:
+		if display.card == card || (display.card.name == card.name):
 			display.raise(2)
 			await battleController.get_tree().create_timer(1.0).timeout
 			display.launch()
@@ -259,7 +258,7 @@ func reset(active = true, forceDraw = false) -> void:
 	if hasStatus(Status.EFFECTS.REGEN):
 		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
 		var regenAmount: int = regenStatus.X
-		addHP(regenAmount)
+		await addHP(regenAmount)
 		regenStatus.X -= 1
 		if regenStatus.X <= 0:
 			regenStatus.effectDone = true
@@ -391,6 +390,7 @@ func addHP(hp: int):
 	battleController.playSound(battleController.powerUpSound)
 	if health > maxHP:
 		health = maxHP
+	await battleController.get_tree().create_timer(1.0).timeout
 
 func dmgAnim() -> void:
 	var obj: MonsterDisplay

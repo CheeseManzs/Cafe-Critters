@@ -162,8 +162,10 @@ func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 	
 	if discardedCard == null:
 		BattleLog.singleton.log("No card to discard...")
-	
-	return discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
+	var meetsConditions = discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
+	if meetsConditions:
+		await attacker.getPassive().onConditional(attacker, attacker.battleController, self)
+	return meetsConditions
 
 func descSetup():
 	if baseDescription == "null":
@@ -224,7 +226,7 @@ func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
 	return _calcShield(attacker, defender, atkNum/100.0)
 
-func getOmenCards(battleController: BattleController):
+static func getOmenCards(battleController: BattleController):
 	return Zone.getTaggedCardsInArray(battleController.graveyard, "Omen")
 
 func clone():

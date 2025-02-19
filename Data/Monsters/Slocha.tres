@@ -57,5 +57,5 @@ statHealth = []
 statAttack = []
 statDefense = []
 statSpeed = []
-level = 4
+level = 1
 battleOffset = Vector2(0, -2)

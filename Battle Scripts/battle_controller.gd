@@ -660,7 +660,7 @@ func getActivePlayerMon() -> BattleMonster:
 func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
-func universalSwap(oldMon, newMon):
+func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	for statuscond in oldMon.statusConditions:
 		var status: Status = statuscond
 		if status.endsOnSwitch():
@@ -674,8 +674,12 @@ func universalSwap(oldMon, newMon):
 		container = enemyUI[0].externalGaugeContainer 
 	while container.get_child_count() > 0:
 		container.get_child(0).free()
+	
+	await get_tree().create_timer(0.5).timeout
+	await oldMon.getPassive().onSwapOut(oldMon, self)
 	await newMon.getPassive().customUI(newMon, self)
-
+	await newMon.getPassive().onSwapIn(oldMon, self)
+	
 #swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:
 	
@@ -701,9 +705,10 @@ func playerSwap(newID) -> void:
 	await newMon.standardDraw()
 	await currentMon.carryStatusConditions(newMon)
 	
+	activePlayerMon = newID
 	await universalSwap(currentMon, newMon)
 	
-	activePlayerMon = newID
+	
 	
 	#emit signal
 	emitGUISignal()
@@ -763,9 +768,9 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 	
 	## Removes all existing Card UI elements. -A
 	while len(cardButtons) > 0:
-		for button in cardButtons:
-			cardButtons.remove_at(cardButtons.find(button))
-			button.queue_free()
+		var button = cardButtons[0]
+		cardButtons.remove_at(0)
+		button.queue_free()
 	
 	var id = 0
 
@@ -918,9 +923,8 @@ func activeTurn() -> void:
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
 		BattleLog.singleton.log("Enemy has " + str(enemyMP) + " MP!")
-		if !firstSubTurn:
-			await getActivePlayerMon().getPassive().onSubTurnStart(getActivePlayerMon(), self)
-			await getActiveEnemyMon().getPassive().onSubTurnStart(getActiveEnemyMon(), self)
+		for mon in sortedActiveMonList():
+			await mon.getPassive().onSubTurnStart(getActivePlayerMon(), self)
 		
 		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
@@ -1007,9 +1011,6 @@ func activeTurn() -> void:
 		var turnSequence = BattleSequence.new(actions)
 		await turnSequence.runActions(self)
 		hidePlayerChoiceUI(true)
-		await get_tree().create_timer(0.25).timeout
-		for sorted_mon in sortedActiveMonList():
-			await sorted_mon.getPassive().onSubTurnStart(sorted_mon, self)
 		await get_tree().create_timer(0.25).timeout
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		

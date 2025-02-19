@@ -35,12 +35,22 @@ func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 
 #ability events:
 
+func onSwapOut(mon: BattleMonster, battle: BattleController) -> void:
+	return
+	
+func onSwapIn(mon: BattleMonster, battle: BattleController) -> void:
+	return
+
 #runs when a monster is damaged by another monster/passive/status
 func onHit(mon: BattleMonster, battle: BattleController) -> void:
 	return
 
 #runs when a monster attacks
 func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> void:
+	return
+	
+#runs when a conditional effect triggers
+func onConditional(mon: BattleMonster, battle: BattleController, card: Card) -> void:
 	return
 	
 #runs when a monster attacks

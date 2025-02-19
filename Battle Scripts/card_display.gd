@@ -70,7 +70,7 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 		var rawHeight = size.y*scale.y
 		var cardWidth = size.x*scale.x*(0.5 + totalChoices*0.25/5)
 		
-		var viewportRect = Vector2(get_viewport().size.x,get_viewport().size.y)
+		var viewportRect = Vector2(1920,1080)
 		
 		## Determines how much to rotate the card. -A
 		var firstRot = -PI/12*(totalChoices/5)
@@ -110,7 +110,7 @@ func setCard(p_card: Card, cID: int, battleController: BattleController, context
 			basePos += baseDelta
 		
 		if fromSide:
-			basePos = Vector2(get_viewport().size.x + rawHeight*2*scaleFactor,get_viewport().size.y/2 - rawHeight*2*scaleFactor)
+			basePos = Vector2(viewportRect.x + rawHeight*2*scaleFactor,viewportRect.y/2 - rawHeight*2*scaleFactor)
 			
 			var scaler = 1
 			if totalChoices >= 5:

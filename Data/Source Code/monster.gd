@@ -59,6 +59,8 @@ static var EXPONENTIAL_SCALING: float = 0.463
 
 @export var battleOffset: Vector2
 
+static var curveCache = {}
+
 #var StatCurves: Dictionary = {
 	#"growth40": [10, 20, 30, 40, 46, 52, 58, 65, 71, 79, 86, 93, 100],
 	#"growth20": [5, 10, 15, 20, 21, 22, 24, 26, 28, 30, 33, 36, 40],
@@ -76,10 +78,13 @@ static func statFormula(lv, base):
 	return scaledRatio
 
 static func generateStatCurve(baseStat) -> Curve:
+	if curveCache.has(baseStat):
+		return curveCache.get(baseStat)
 	var statCurve = Curve.new()
 	for i in range(MAX_LEVEL):
 		var stat = statFormula(i,baseStat)
 		statCurve.add_point(Vector2(i/float(MAX_LEVEL),stat))
+	curveCache[baseStat] = statCurve
 	return statCurve
 
 # Level costs are an array with multiple layers.

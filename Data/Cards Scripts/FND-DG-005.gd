@@ -17,5 +17,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 		var hpGiven = 5
 		if statusConditions.has(Status.EFFECTS.EMPOWER):
 			hpGiven = ceil(hpGiven*1.5)
-		target.addHP(hpGiven)
+		await target.addHP(hpGiven)
 	return 0

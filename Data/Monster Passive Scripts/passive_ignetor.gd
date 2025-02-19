@@ -20,5 +20,5 @@ func onSubTurnStart(mon: BattleMonster, battle: BattleController) -> void:
 #runs when a sub-turn ends
 func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	await loseHeat(mon, battle)
-	await checkHeat(mon, battle)
+	#await checkHeat(mon, battle)
 	return
