@@ -915,16 +915,16 @@ func activeTurn() -> void:
 	var playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
 	var enemyCanPlay = !(len(getActiveEnemyMon().playableCards()) == 0 && enemyMP == 0)
 	var endTurn = false
-	
-	await getActivePlayerMon().getPassive().onTurnStart(getActivePlayerMon(), self)
 	var firstSubTurn = true
 	
+	for mon in sortedActiveMonList():
+			await mon.getPassive().onTurnStart(mon, self)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
 		BattleLog.singleton.log("Enemy has " + str(enemyMP) + " MP!")
 		for mon in sortedActiveMonList():
-			await mon.getPassive().onSubTurnStart(getActivePlayerMon(), self)
+			await mon.getPassive().onSubTurnStart(mon, self)
 		
 		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
