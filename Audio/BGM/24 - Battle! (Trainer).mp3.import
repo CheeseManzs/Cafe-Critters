@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://k2kdn7kc4np4"
+path="res://.godot/imported/24 - Battle! (Trainer).mp3-4e2dbffea6454917de9350c614d74941.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/24 - Battle! (Trainer).mp3"
+dest_files=["res://.godot/imported/24 - Battle! (Trainer).mp3-4e2dbffea6454917de9350c614d74941.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

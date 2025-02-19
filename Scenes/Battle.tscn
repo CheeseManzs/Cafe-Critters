@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=62 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -40,6 +40,7 @@
 [ext_resource type="AudioStream" uid="uid://brlgy2cm5xpns" path="res://Audio/BGM/10. Sunny Park Colosseum.mp3" id="35_01yby"]
 [ext_resource type="AudioStream" uid="uid://dvi7pnafojkpk" path="res://Audio/BGM/05. Colosseum Leader - Sashay's Theme.mp3" id="36_40yr6"]
 [ext_resource type="AudioStream" uid="uid://qi6fn2qcpdnw" path="res://Audio/BGM/2-05 Catus Carnival II.mp3" id="40_2aoel"]
+[ext_resource type="AudioStream" uid="uid://k2kdn7kc4np4" path="res://Audio/BGM/24 - Battle! (Trainer).mp3" id="41_50g80"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
 
@@ -544,8 +545,8 @@ stream = ExtResource("28_r2avy")
 volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel")])
-autoSet = 4
+audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("41_50g80")])
+autoSet = 8
 multiplayerGameIndex = -1
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]

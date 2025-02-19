@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" load_steps=10 format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
@@ -7,11 +7,12 @@
 [ext_resource type="Resource" uid="uid://q61i0ca0teq8" path="res://Data/Cards/Dodge Roll.tres" id="3_o5jv8"]
 [ext_resource type="Resource" uid="uid://b0v570g5ts45g" path="res://Data/Cards/Revenant Fury.tres" id="4_my6oa"]
 [ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="5_g2my1"]
+[ext_resource type="Resource" uid="uid://br8xmoy7kau5g" path="res://Data/Cards/Perfect Parry.tres" id="5_hldoi"]
 
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_o5jv8"), ExtResource("3_o5jv8"), ExtResource("3_o5jv8"), ExtResource("4_my6oa"), ExtResource("4_my6oa")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_o5jv8"), ExtResource("4_my6oa"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("5_hldoi")])
 
 [resource]
 script = ExtResource("2_dbcrm")

@@ -15,7 +15,7 @@ var battleController: BattleController
 var playerControlled = false
 var costMod = 1
 
-func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targID: int, targSelf: bool, p_card: Card,p_controller: BattleController, p_switching = false, p_costMod = 0) -> void:
+func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targID: int, targSelf: bool, p_card: Card,p_controller: BattleController, p_switching = false, p_costMod = 1) -> void:
 	battleMonster = p_battleMon
 	playerControlled = p_playerControlled
 	priority = prio
@@ -57,6 +57,14 @@ func getTarget() -> BattleMonster:
 		target = battleController.enemyTeam[tID]
 	return target
 	
+
+func clone(bmon: BattleMonster = null, _targID: int = -1):
+	if bmon == null:
+		bmon = battleMonster
+	if _targID == -1:
+		_targID = targetID
+	return BattleAction.new(bmon,bmon.playerControlled,priority,_targID,targetSelfTeam,card,battleController,switching,costMod)	
+
 func printAction():
 	
 	#target of action

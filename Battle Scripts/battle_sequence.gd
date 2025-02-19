@@ -34,8 +34,11 @@ func rearrange() -> void:
 	actions.sort_custom(sortAction)
 
 func runActions(battleController: Node) -> void:
-	for i in len(actions):
+	var i = -1
+	while i+1 < len(actions):
+		i += 1
 		var action = actions[i]
+		print("action for ",action.battleMonster.rawData.name)
 		if action.battleMonster.hasStatus(Status.EFFECTS.KO) && !action.switching:
 			#if action.battleMonster == battleController.getActivePlayerMon():
 			#	await battleController.promptPlayerSwitch()
@@ -69,10 +72,23 @@ func runActions(battleController: Node) -> void:
 			opposingMon.addStatusCondition(Status.new(Status.EFFECTS.REGEN,regenLevel+1),true)
 			#await battleController.get_tree().create_timer(0.75).timeout
 		
-		action.battleMonster.removeMP(action.card.cost)
+		action.battleMonster.removeMP(action.card.cost*action.costMod)
 		
 		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
+		
+		#parrying
+		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY):
+			await EffectFlair.singleton._runFlair("Perfect Parry",Color.GOLDENROD)
+			action.getTarget().getStatus(Status.EFFECTS.PERFECT_PARRY).effectDone = true
+			BattleLog.singleton.log(action.getTarget().rawData.name + " parried " + action.card.name)
+			action.getTarget().addMP(1)
+			await battleController.get_tree().create_timer(0.75).timeout
+			
+			var targetID = action.battleController.getBattleActionID(action.battleMonster,!action.targetSelfTeam)
+			action.targetSelfTeam = !action.targetSelfTeam
+			action.targetID = targetID
+		
 		await action.card.effect(action.battleMonster, action.getTarget())
 		await battleController.addToGraveyard(action.card, action.battleMonster)
 		await battleController.get_tree().create_timer(0.75).timeout

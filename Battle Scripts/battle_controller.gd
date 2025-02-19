@@ -114,6 +114,7 @@ var conditionalActions: Array[ConditionalAction] = []
 var winner: int = 0
 #display card used for animations
 var shownCard: CardDisplay
+var tookDamage = false
 #instantiates a monster
 
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -1029,7 +1030,15 @@ func activeTurn() -> void:
 		inTurn = false
 	else:
 		await endBattle(winner)
-	
+
+func getBattleActionID(mon: BattleMonster, targetSelfTeam = false) -> int:
+	var tID: int
+	if (mon.playerControlled && targetSelfTeam) || (!mon.playerControlled && !targetSelfTeam):
+		tID = playerTeam.find(mon)
+	if (!mon.playerControlled && targetSelfTeam) || (mon.playerControlled && !targetSelfTeam):
+		tID = enemyTeam.find(mon)
+	return tID
+
 func endBattle(winningSide: int):
 	#1 = player, 2 = enemy
 	await get_tree().create_timer(0.8).timeout

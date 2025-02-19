@@ -60,6 +60,7 @@ var shieldPower: float = 0
 var statusConditions: Array[Status.EFFECTS] = []
 var tags: Array[String] = []
 var originator: BattleMonster = null #the monster that owns this card
+var selfTarget: bool = false
 
 @export var aiDetails: AIInfo
 @export var art: Texture2D
