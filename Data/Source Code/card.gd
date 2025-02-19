@@ -127,7 +127,7 @@ func _calcShield(attacker: BattleMonster, defender: BattleMonster, _sp: float, a
 
 #for ai damage calculations
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return _calcPower(attacker, defender, power)
+	return _calcPower(attacker, defender, power) + omenCalc(attacker, defender)
 
 #for ai damage calculations
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
@@ -152,6 +152,24 @@ func calcStatusCured(attacker: BattleMonster, defender: BattleMonster) -> Status
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	return true
 
+func omenCalc(attacker: BattleMonster, defender: BattleMonster):
+	var dmg = 0
+	if tags.has("Omen"):
+		dmg = _omenCalc(attacker, defender)
+	print("found dmg: ", dmg)
+	return dmg
+
+#this one doesnt check for the omen tag
+func _omenCalc(attacker: BattleMonster, defender: BattleMonster):
+	var dmg = 0
+	for card in getOmenCards(attacker.battleController):
+		if card.originator == attacker:
+			card.tags.erase("Omen")
+			print("adding: ",card.calcDamage(attacker, defender))
+			dmg += card.calcDamage(attacker, defender)
+			card.tags.push_back("Omen")
+	return dmg
+
 #utility functions
 func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 	await EffectFlair.singleton._runFlair("Reckless")
@@ -167,6 +185,25 @@ func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 	if meetsConditions:
 		await attacker.getPassive().onConditional(attacker, attacker.battleController, self)
 	return meetsConditions
+
+func applyOmen(attacker: BattleMonster, defender: BattleMonster):
+	if !tags.has("Omen"):
+		return
+	var addBack = []
+	if len(getOmenCards(attacker.battleController)) > 0:
+		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
+	for card in getOmenCards(attacker.battleController):
+		if card.originator == attacker:
+			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
+				card.statusConditions.erase(Status.EFFECTS.EMPOWER)
+			BattleLog.singleton.log("Rea used " + card.name + "...")
+			await attacker.battleController.get_tree().create_timer(1.0).timeout
+			card.tags.erase("Omen")
+			await card.effect(attacker, defender)
+			card.tags.push_back("Omen")
+	for card in addBack:
+		attacker.battleController.graveyard.erase(card)
+		attacker.currentDeck.storedCards.push_back(addBack)
 
 func descSetup():
 	if baseDescription == "null":

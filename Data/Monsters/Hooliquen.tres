@@ -17,7 +17,7 @@
 [ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="13_jhrcl"]
 [ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="16_58exb"]
 [ext_resource type="Resource" uid="uid://c8uuewegmowut" path="res://Data/Cards/Stack The Deck.tres" id="17_j3lww"]
-[ext_resource type="Resource" path="res://Data/Cards/Endless Blows.tres" id="18_2qt1t"]
+[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="18_2qt1t"]
 
 [sub_resource type="Resource" id="Resource_y5cq6"]
 script = ExtResource("2_j0ra4")

@@ -338,6 +338,30 @@ func parseBattleAction(mon: BattleMonster, actionID, switchID, switchAction = fa
 		)
 	return battleAction
 
+func randomTeammate(mon: BattleMonster):
+	var randTeam = enemyTeam
+	if mon.playerControlled:
+		randTeam = playerTeam
+	var choices = []
+	for randmon in randTeam:
+		if randmon != mon:
+			choices.push_back(randmon)
+	if len(choices) == 0:
+		return null
+	var randID = global_rng.randi_range(0, len(choices) - 1)
+	return choices[randID]
+	
+func randomTeammateID(mon: BattleMonster):
+	var randTeam = enemyTeam
+	if mon.playerControlled:
+		randTeam = playerTeam
+	var teammate = randomTeammate(mon)
+	if teammate == null:
+		return -1
+	else:
+		return randTeam.find(teammate)
+
+
 ## Called when the player gains control of the game.
 func playerChooseCards(count: int, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
 	## Draws the appropriate cards of their current mon.

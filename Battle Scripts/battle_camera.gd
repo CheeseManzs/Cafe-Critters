@@ -44,7 +44,7 @@ func focusMonsters(mons: Array, _zoom = 1.5,_yweight = 1.0):
 	var averagePosition: Vector3 = Vector3.ZERO
 	for mon in mons:
 		averagePosition += mon.getMonsterDisplay().global_position + _yweight*Vector3.UP*mon.getMonsterDisplay().getHeight()/4.0
-	focusPos = averagePosition
+	focusPos = averagePosition/float(len(mons))
 	focusTargetPos = focusPos + focusOffset*(1.0/focusZoom)
 	focusing = true
 	while (global_position - focusTargetPos).length() > 0.1:

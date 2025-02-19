@@ -5,11 +5,15 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Rea
 	role = "Basic"
-	description = "Omen."
-	name = "Toll the Bells"
+	description = "Omen. 0% Attack"
+	name = "Toll the Bell"
+	tags = ["Omen"]
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	if tags.has("Omen"):
+		BattleLog.singleton.log("Rea's bells ring in the distance...")
+		await attacker.battleController.get_tree().create_timer(1.0).timeout
+		await applyOmen(attacker, defender)
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return omenCalc(attacker, defender)
