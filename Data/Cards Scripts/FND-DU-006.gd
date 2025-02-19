@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Set your Attack to 0. Empower the next card played."
 	name = "Press"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	await attacker.setAttack(0)

@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Support
 	description = "Gain 1 mp. Gain Barrier 3."
 	name = "Steady"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#idk what barrier is ngl but remember to apply empower to it

@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Haatea"
 	description = "Double your Regen, then gain barrier equal to your Regen."
 	name = "Fanning Fortification"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	pass

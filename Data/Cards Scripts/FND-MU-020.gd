@@ -4,12 +4,12 @@ func _init() -> void:
 	cost = 
 	priority = 0
 	alignment = ALIGNMENT.Mise
-    role = "Mise Forward 1"
+	role = "Mise Forward 1"
 	description = ""
 	name = ""
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+	pass
 
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+	pass

@@ -8,6 +8,7 @@ func _init() -> void:
 	description = "125% Defense. Gain Regen 5."
 	name = "Rejuvenate"
 	shieldPower = 1.25
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)

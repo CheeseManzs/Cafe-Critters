@@ -8,6 +8,7 @@ func _init() -> void:
 	description = "30% Defense. if Regenerating, draw 2."
 	name = "Recalibrate"
 	shieldPower = 0.3
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)

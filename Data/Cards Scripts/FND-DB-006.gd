@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "Draw 2 extra cards next turn."
 	name = "Stock Up"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var extraDraws = 2

@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Haatea"
 	description = "Whenever your opponent plays a card this turn, gain Regen 1. "
 	name = "Boil"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(attacker,Status.EFFECTS.BOIL)

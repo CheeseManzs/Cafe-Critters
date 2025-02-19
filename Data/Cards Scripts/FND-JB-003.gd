@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Search your deck for any card, add it to your hand. Then discard 3 cards at random."
 	name = "Diabolical Odds"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	pass

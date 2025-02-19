@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Support
 	description = "Heal target shelved critter for 5 HP."
 	name = "Heal"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#get critters

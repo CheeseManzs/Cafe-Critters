@@ -8,6 +8,7 @@ func _init() -> void:
 	description = "Roll two 6-sided die. (Number rolled x 5)% Defend."
 	name = "Dice Defend"
 	shieldPower = 0
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var sum = 0

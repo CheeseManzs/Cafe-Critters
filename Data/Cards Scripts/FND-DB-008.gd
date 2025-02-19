@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "Enemy 300% Attacks you. Draw 5 cards and gain 3 mana."
 	name = "Last Chance"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#calc attack power

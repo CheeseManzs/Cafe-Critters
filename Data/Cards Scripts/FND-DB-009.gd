@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain Priority 1. "
 	name = "Speed Up"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	await giveStatus(attacker,Status.EFFECTS.PRIORITY,1)

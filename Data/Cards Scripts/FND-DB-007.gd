@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "Gain an additional 1 mp per turn for the rest of the game."
 	name = "Meditate"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var mpBonus = 1

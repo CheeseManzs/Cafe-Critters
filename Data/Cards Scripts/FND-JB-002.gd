@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Draw 3 cards, then discard 3 cards at random."
 	name = "Card Replacement Therapy"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await attacker.drawCards(3)

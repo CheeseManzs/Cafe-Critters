@@ -8,6 +8,7 @@ func _init() -> void:
 	description = "30% Defend, Empowered: Draw 1"
 	name = "Affogato"
 	shieldPower = 0.3
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	#idk what barrier is ngl but remember to apply empower to it

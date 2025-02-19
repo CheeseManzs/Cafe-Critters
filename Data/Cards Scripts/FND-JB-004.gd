@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Pick a number between 1-6. Your next d6 dice will land on that number."
 	name = "Loaded Dice"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	pass

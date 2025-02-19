@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Take damage equal to your Attack. Empower the next card played."
 	name = "Roast"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var dmg: int = attacker.getAttack()

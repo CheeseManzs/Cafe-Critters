@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Empower the next card played."
 	name = "Caffeinate"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)

@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Haatea"
 	description = "Whenever you gain Regen this turn, gain that much Regen +1 instead."
 	name = "Stir"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	pass

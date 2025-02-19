@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "Gain 1 additional mp next turn."
 	name = "Store Power"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#add temporary MP

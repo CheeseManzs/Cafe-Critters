@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Unique
 	description = "Reckless > 100% Attack. If Reckless, gain 2 mp and draw 2 cards. You gain +25% on Attacks this turn."
 	name = "Devious Cackle"
+	selfTarget = true
 
 func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	if card.calcDamage(attacker,defender) > attacker.attack:

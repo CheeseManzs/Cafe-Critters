@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="8_v0itr"]
 [ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
 [ext_resource type="Resource" uid="uid://d3aqy1d8xrf2q" path="res://Data/Cards/Sneak Attack.tres" id="9_qors6"]
-[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="10_73hfu"]
+[ext_resource type="Resource" path="res://Data/Cards/Endless Blows.tres" id="10_73hfu"]
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")

@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Haatea"
 	description = "Consume all Barrier. Gain Regen per Barrier consumed. "
 	name = "Barrier Absorption "
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	if attacker.hasStatus(Status.EFFECTS.BARRIER):

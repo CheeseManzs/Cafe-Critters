@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Generic
 	description = "50% Defend."
 	name = "Light Block"
+	selfTarget = true
 
 	shieldPower = 0.5
 

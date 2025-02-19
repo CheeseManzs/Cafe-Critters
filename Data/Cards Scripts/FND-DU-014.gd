@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Haatea"
 	description = "Gain Barrier 10. Gain Regen 2."
 	name = "Lemon-Aid"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(attacker,Status.EFFECTS.BARRIER,10)

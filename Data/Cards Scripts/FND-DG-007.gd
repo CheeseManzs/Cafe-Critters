@@ -7,6 +7,7 @@ func _init() -> void:
 	role = ROLE.Support
 	description = "Clear all negative effects. Gain Regen 3."
 	name = "Soothing Song"
+	selfTarget = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
 	#create status object
