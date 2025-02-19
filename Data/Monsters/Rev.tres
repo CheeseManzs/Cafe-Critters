@@ -4,18 +4,18 @@
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_vs0ux"]
 [ext_resource type="Texture2D" uid="uid://bb7jieshcir82" path="res://Graphics/Monsters/Rev.png" id="3_fsk0c"]
-[ext_resource type="Resource" uid="uid://q61i0ca0teq8" path="res://Data/Cards/Dodge Roll.tres" id="3_o5jv8"]
-[ext_resource type="Resource" uid="uid://b0v570g5ts45g" path="res://Data/Cards/Revenant Fury.tres" id="4_my6oa"]
 [ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="5_g2my1"]
-[ext_resource type="Resource" uid="uid://br8xmoy7kau5g" path="res://Data/Cards/Perfect Parry.tres" id="5_hldoi"]
+[ext_resource type="Resource" uid="uid://onmg026gcr58" path="res://Data/Cards/Distant Screams.tres" id="6_4dsu4"]
 [ext_resource type="Resource" uid="uid://cqc415kf0lerc" path="res://Data/Cards/Panicked Streets.tres" id="6_lg813"]
+[ext_resource type="Resource" uid="uid://750yn82jqbcp" path="res://Data/Cards/Dripping Death.tres" id="7_30i7t"]
 [ext_resource type="Resource" uid="uid://qbsprjmm1beb" path="res://Data/Cards/Raven Sighting.tres" id="7_af52l"]
+[ext_resource type="Resource" uid="uid://7lto4c6s0v5w" path="res://Data/Cards/Hunter's Call.tres" id="8_384qj"]
 [ext_resource type="Resource" uid="uid://b4nuqna8lflht" path="res://Data/Cards/Toll the Bells.tres" id="8_n3sv5"]
 
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_o5jv8"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("5_hldoi"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("4_my6oa"), ExtResource("4_my6oa"), ExtResource("4_my6oa"), ExtResource("4_my6oa"), ExtResource("4_my6oa")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj")])
 
 [resource]
 script = ExtResource("2_dbcrm")

@@ -5,8 +5,9 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Rea
 	role = "Basic"
-	description = "Search your deck for any Omen card. Put it in the graveyard."
+	description = "Omen. Search your deck for any Omen card. Put it in the graveyard."
 	name = "Raven Sighting"
+	tags = ["Omen"]
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var omenDeck = Zone.getTaggedCardsInArray(attacker.currentDeck.storedCards, "Omen")
