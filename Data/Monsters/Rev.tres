@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=13 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
@@ -11,11 +11,12 @@
 [ext_resource type="Resource" uid="uid://qbsprjmm1beb" path="res://Data/Cards/Raven Sighting.tres" id="7_af52l"]
 [ext_resource type="Resource" uid="uid://7lto4c6s0v5w" path="res://Data/Cards/Hunter's Call.tres" id="8_384qj"]
 [ext_resource type="Resource" uid="uid://b4nuqna8lflht" path="res://Data/Cards/Toll the Bells.tres" id="8_n3sv5"]
+[ext_resource type="Resource" uid="uid://dbx4vwxi4c82n" path="res://Data/Cards/Rea's Call.tres" id="9_rdtyy"]
 
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy")])
 
 [resource]
 script = ExtResource("2_dbcrm")
@@ -29,7 +30,7 @@ spriteScale = 0.028
 passive = ExtResource("5_g2my1")
 deck = SubResource("Resource_dmqgo")
 levelupCards = Array[ExtResource("1_mkiur")]([])
-rawHealth = 7
+rawHealth = 5
 rawAttack = 7
 rawDefense = 7
 rawSpeed = 16
