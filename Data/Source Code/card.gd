@@ -187,13 +187,14 @@ func applyReckless(attacker: BattleMonster, defender: BattleMonster):
 	return meetsConditions
 
 func applyOmen(attacker: BattleMonster, defender: BattleMonster):
-	if !tags.has("Omen"):
+	if !(tags.has("Omen") || tags.has("Proc Omen")):
 		return
 	var addBack = []
 	if len(getOmenCards(attacker.battleController)) > 0:
 		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
 	for card in getOmenCards(attacker.battleController):
-		if card.originator == attacker:
+		print("omen card: ", card.name,", ",card.originator.playerControlled)
+		if card.originator == attacker && card != self:
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 				card.statusConditions.erase(Status.EFFECTS.EMPOWER)
 			BattleLog.singleton.log("Rea used " + card.name + "...")
@@ -201,6 +202,7 @@ func applyOmen(attacker: BattleMonster, defender: BattleMonster):
 			card.tags.erase("Omen")
 			await card.effect(attacker, defender)
 			card.tags.push_back("Omen")
+			addBack.push_back(card)
 	for card in addBack:
 		attacker.battleController.graveyard.erase(card)
 		attacker.currentDeck.storedCards.push_back(addBack)
@@ -239,16 +241,18 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 			replaceBin.push_back([toReplace,calc,"Block",tooltipColors["Block"],toReplace])
 			replaceList.push_back(toReplace)
 
-	for keywordString in Keyword.keywords:
-		atkDescInd = description.find(keywordString)
-		while atkDescInd != -1:
-			var toReplace = keywordString
-			var resetInd = atkDescInd
-			print(toReplace,getSurroundingWord(description,resetInd))
-			atkDescInd = description.find(toReplace, atkDescInd+1)
-			if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd).trim_prefix(" ") == toReplace:
-				replaceBin.push_back([toReplace,null,toReplace,tooltipColors["Keyword"],Keyword.getDescription(keywordString)])
-				replaceList.push_back(toReplace)
+	for rawKeywordString in Keyword.keywords:
+		for ending in ["","."]:
+			var keywordString = rawKeywordString + ending
+			atkDescInd = description.find(keywordString)
+			while atkDescInd != -1:
+				var toReplace = keywordString
+				var resetInd = atkDescInd
+				print(toReplace,getSurroundingWord(description,resetInd))
+				atkDescInd = description.find(toReplace, atkDescInd+1)
+				if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd).trim_prefix(" ") == toReplace:
+					replaceBin.push_back([toReplace,null,toReplace,tooltipColors["Keyword"],Keyword.getDescription(rawKeywordString)])
+					replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
 		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[4], "col": rpl[3]})
@@ -266,6 +270,10 @@ func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 
 static func getOmenCards(battleController: BattleController):
 	return Zone.getTaggedCardsInArray(battleController.graveyard, "Omen")
+
+static func createInstance(cardName: String):
+	var obj: Card = load("res://Data/Cards/"+cardName+".tres")
+	return obj.clone()
 
 func clone():
 	var newCard: Card = get_script().new()

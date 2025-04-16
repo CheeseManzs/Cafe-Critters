@@ -1,28 +1,28 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=15 format=3 uid="uid://cpf4dy38n68y2"]
+[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://cpf4dy38n68y2"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_517cx"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_h8b7h"]
+[ext_resource type="Resource" uid="uid://cyfkwq8louf5t" path="res://Data/Cards/Double Bite.tres" id="3_2kv08"]
 [ext_resource type="Texture2D" uid="uid://cekjausnnqoja" path="res://Graphics/Monsters/ignetor_placeholder.png" id="3_ewnrg"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="3_vkfmx"]
 [ext_resource type="Resource" uid="uid://dvteihkyuvwkv" path="res://Data/Cards/Cleave.tres" id="4_iu8pt"]
-[ext_resource type="Resource" uid="uid://cb4rdms84gvuh" path="res://Data/Cards/Trunk Shot.tres" id="5_2kc7n"]
-[ext_resource type="Resource" uid="uid://bxdnh0ci88hdp" path="res://Data/Cards/Last Stand.tres" id="5_i2dnk"]
-[ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="7_17kso"]
-[ext_resource type="Resource" uid="uid://5tars8qvxsgx" path="res://Data/Cards/Heal.tres" id="8_v0itr"]
+[ext_resource type="Resource" uid="uid://coyg0yjkl7nwa" path="res://Data/Cards/Hammer Head.tres" id="5_svvbb"]
+[ext_resource type="Resource" uid="uid://w2tc1euoehwq" path="res://Data/Cards/Heat Pump.tres" id="6_bm3go"]
+[ext_resource type="Resource" uid="uid://dm6ufss02oqj0" path="res://Data/Cards/Treatz.tres" id="7_vywsq"]
+[ext_resource type="Resource" uid="uid://dt85f2emye7a6" path="res://Data/Cards/Scrap.tres" id="8_hofqs"]
+[ext_resource type="Resource" uid="uid://bgip8qkk1shgw" path="res://Data/Cards/Molten Bubble.tres" id="9_n0bu2"]
 [ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
-[ext_resource type="Resource" uid="uid://d3aqy1d8xrf2q" path="res://Data/Cards/Sneak Attack.tres" id="9_qors6"]
-[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="10_73hfu"]
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")
 name = ""
-storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("3_vkfmx"), ExtResource("4_iu8pt"), ExtResource("5_i2dnk"), ExtResource("5_2kc7n"), ExtResource("7_17kso"), ExtResource("8_v0itr"), ExtResource("9_qors6"), ExtResource("9_qors6"), ExtResource("9_qors6"), ExtResource("10_73hfu"), ExtResource("10_73hfu"), ExtResource("10_73hfu"), ExtResource("10_73hfu"), ExtResource("10_73hfu")])
+storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("3_2kv08"), ExtResource("4_iu8pt"), ExtResource("5_svvbb"), ExtResource("5_svvbb"), ExtResource("6_bm3go"), ExtResource("6_bm3go"), ExtResource("7_vywsq"), ExtResource("7_vywsq"), ExtResource("8_hofqs"), ExtResource("8_hofqs"), ExtResource("8_hofqs"), ExtResource("3_2kv08"), ExtResource("3_2kv08"), ExtResource("3_2kv08"), ExtResource("9_n0bu2"), ExtResource("9_n0bu2")])
 
 [resource]
 script = ExtResource("2_8ybf3")
 id = 3
 name = "Ignetor"
+tags = Array[String](["Machine"])
 alignment = 0
 role = 0
 dexEntry = ""

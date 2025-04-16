@@ -11,6 +11,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(defender,Status.EFFECTS.POISON,1)
+	await applyOmen(attacker, defender)
 	pass
 
 func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:

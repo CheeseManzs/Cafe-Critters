@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Trigger all Omen cards in the graveyard. 0% Attack"
 	name = "Toll the Bell"
+	tags = ["Proc Omen"]
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	BattleLog.singleton.log("Rea's bells ring in the distance...")

@@ -4,12 +4,18 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Anvi
-    role = "Basic"
+	role = "Basic"
 	description = "As an additional cost to play this card, discard a card from your hand. Create Scrap equal to that card's mana cost."
 	name = "Scrap"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	var cards = await attacker.battleController.chooseCards(1,attacker.playerControlled)
+	
+	if len(cards) == 0:
+		return
+	var card = cards[0]
+	await attacker.discardCard(card, true, false)
+	for mp in card.cost:
+		attacker.currentHand.storedCards.push_back(createInstance("Scrap (Token)"))
+	BattleLog.log(attacker.rawData.name + " salvaged " + str(card.cost) + " scrap")
+	pass

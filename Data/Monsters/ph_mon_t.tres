@@ -29,6 +29,7 @@ storedCards = Array[ExtResource("2_irfdf")]([ExtResource("3_4mhww"), ExtResource
 script = ExtResource("12_ippfy")
 id = 0
 name = "doominator"
+tags = Array[String]([])
 alignment = 7
 role = 0
 dexEntry = ""

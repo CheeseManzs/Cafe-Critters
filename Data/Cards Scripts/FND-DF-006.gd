@@ -7,6 +7,7 @@ func _init() -> void:
 	role = "Forward"
 	description = 'When Endless Blows is played, shuffle 3 "Endless Blows" into your deck. (50% + 10% per Endless Blows played) Attack'
 	name = "Endless Blows"
+	power = 0.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	for i in range(3):

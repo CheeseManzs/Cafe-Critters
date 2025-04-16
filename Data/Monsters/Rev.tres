@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" load_steps=15 format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
 [ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_vs0ux"]
 [ext_resource type="Texture2D" uid="uid://bb7jieshcir82" path="res://Graphics/Monsters/Rev.png" id="3_fsk0c"]
 [ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="5_g2my1"]
+[ext_resource type="Resource" uid="uid://br8xmoy7kau5g" path="res://Data/Cards/Perfect Parry.tres" id="5_hldoi"]
 [ext_resource type="Resource" uid="uid://onmg026gcr58" path="res://Data/Cards/Distant Screams.tres" id="6_4dsu4"]
 [ext_resource type="Resource" uid="uid://cqc415kf0lerc" path="res://Data/Cards/Panicked Streets.tres" id="6_lg813"]
 [ext_resource type="Resource" uid="uid://750yn82jqbcp" path="res://Data/Cards/Dripping Death.tres" id="7_30i7t"]
@@ -16,12 +17,13 @@
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy")])
 
 [resource]
 script = ExtResource("2_dbcrm")
 id = 4
 name = "Rev"
+tags = Array[String]([])
 alignment = 2
 role = 0
 dexEntry = ""

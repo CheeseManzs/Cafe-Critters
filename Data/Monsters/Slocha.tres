@@ -38,6 +38,7 @@ resource_local_to_scene = true
 script = ExtResource("1_7umar")
 id = 2
 name = "Slocha"
+tags = Array[String]([])
 alignment = 0
 role = 2
 dexEntry = "the coffee on its back is rumoured to cause immortality. these rumours have never once been substantiated."

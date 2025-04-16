@@ -20,8 +20,8 @@ opportunism = 10.0
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_lv63s"), ExtResource("3_ntvn1"), ExtResource("5_f5fnq")])
-debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("3_ntvn1"), ExtResource("6_2sjoh"), ExtResource("3_ntvn1")])
+debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_ntvn1"), ExtResource("3_lv63s"), ExtResource("5_f5fnq")])
+debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("3_lv63s"), ExtResource("5_f5fnq"), ExtResource("6_2sjoh")])
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]

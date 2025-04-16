@@ -14,6 +14,11 @@ func _ready() -> void:
 		stream = audioList.pick_random()
 	else:
 		stream = audioList[autoSet]
+	var args = Array(OS.get_cmdline_args())
+	print("args: ",args)
+	if args.has("-mute_battle"):
+		volume_db = -80
+		originalVolume = volume_db
 	play(0.0)
 	pass # Replace with function body.
 

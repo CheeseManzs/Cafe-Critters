@@ -381,6 +381,10 @@ func playerChooseCards(count: int, endable = false, requirement: Callable = func
 		for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
 			var uiButton = cardButtons[uiIndex]
 			var uiCard = getActivePlayerMon().currentHand.storedCards[uiIndex]
+			
+			uiButton.canDrag = false
+			uiButton.clickable = true
+			uiButton.autoSend = false
 			if cardsChosen.has(uiCard):
 				uiButton.setTextColor(Color.GOLD)
 			else:
@@ -402,12 +406,16 @@ func playerChooseCards(count: int, endable = false, requirement: Callable = func
 			cardsChosen.remove_at(cardsChosen.find(card))
 	for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
 			var uiButton = cardButtons[uiIndex]
+			uiButton.canDrag = true
+			uiButton.clickable = false
+			uiButton.autoSend = true
 			uiButton.setTextColor(Color.WHITE)
 		
 	if endable:
 		skipButton.text = "Skip"
 		skipButton.disabled = true	
 	
+	await hidePlayerChoiceUI()
 	return cardsChosen
 
 
@@ -1045,6 +1053,16 @@ func activeTurn() -> void:
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		
 	
+	
+	for sortedMon in sortedMonList():
+		var mon: BattleMonster = sortedMon
+		if mon.hasStatus(Status.EFFECTS.BURN):
+			var status = mon.getStatus(Status.EFFECTS.BURN)
+			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
+			await mon.trueDamage(status.X)
+			status.X -= 1
+			if status.X <= 0:
+				status.effectDone = true
 	
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 

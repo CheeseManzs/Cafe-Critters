@@ -7,11 +7,14 @@ func _init() -> void:
 	role = "Forward"
 	description = "Omen. Any Faes with 5% HP or less are executed."
 	name = "Rea's Call"
+	tags = ["Omen"]
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	if defender.health <= defender.maxHP*0.05:
-		BattleLog.log("You cannot escape Rea!")
+		BattleLog.log(defender.rawData.name + " cannot escape Rea!")
 		await defender.trueDamage(defender.health,attacker)
+	else:
+		BattleLog.log("Nothing happens...")
 	await applyOmen(attacker, defender)
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:

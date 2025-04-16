@@ -95,7 +95,37 @@ func transfer(target: Zone, cardID = 0) -> void:
 	
 static func getTaggedCardsInArray(arr: Array[Card], tag: String):
 	var returnArray = []
+	print("tag search: start")
 	for card in arr:
+		print("tag search: ",card.name,":",card.tags," e ",tag," -> ",card.tags.has(tag))
 		if card.tags.has(tag):
 			returnArray.push_back(card)
 	return returnArray
+	
+static func getRoleCardsInArray(arr: Array[Card], role: Card.ROLE):
+	var returnArray = []
+	for card in arr:
+		print(card.role, ": ",card.role is int)
+		if card.role is int && card.role == role:
+			returnArray.push_back(card)
+	return returnArray
+	
+static func getRandomTaggedCardInArray(arr: Array[Card], tag: String) -> Card:
+	var taggedArr = getTaggedCardsInArray(arr, tag)
+	if len(taggedArr) == 0:
+		return null
+	else:
+		return taggedArr[BattleController.global_rng.randi_range(0, len(taggedArr) - 1)] 
+
+static func getRandomRoleCardInArray(arr: Array[Card], role: Card.ROLE) -> Card:
+	var taggedArr = getRoleCardsInArray(arr, role)
+	if len(taggedArr) == 0:
+		return null
+	else:
+		return taggedArr[BattleController.global_rng.randi_range(0, len(taggedArr) - 1)] 
+
+func getRandomTaggedCard(tag: String) -> Card:
+	return getRandomTaggedCardInArray(storedCards, tag)
+	
+func getRandomRoleCard(role: Card.ROLE) -> Card:
+	return getRandomRoleCardInArray(storedCards, role)

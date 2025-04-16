@@ -32,6 +32,8 @@ var canDrag = true
 var fromSide = false
 var deckEditController: Control
 var dragging = false
+var clickable = false
+var autoSend = true
 var dragVelocity: Vector2 = Vector2.ZERO
 var normalZIndex = 0
 var handSize = 0
@@ -146,11 +148,15 @@ func raise(manualBonus: float = 0):
 
 func launch():
 	launched = true
+	if !autoSend:
+		return
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = visiblePosition + upVec*1500
 	
 func straightLaunch():
 	launched = true
+	if !autoSend:
+		return
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	visiblePosition.x = position.x
 	targetPosition = visiblePosition + upVec*1500
@@ -186,7 +192,7 @@ func _process(delta: float) -> void:
 		dragging = true
 		currentlyDragging = true
 	
-	if dragging && Input.is_action_just_released("Primary"):
+	if (dragging && Input.is_action_just_released("Primary")) || (clickable && mouseOn && Input.is_action_just_pressed("Primary")):
 		currentlyDragging = false
 		dragging = false
 		z_index = normalZIndex
@@ -194,7 +200,7 @@ func _process(delta: float) -> void:
 			match displayLocation:
 				"default":
 					print("gpos:",global_position.y)
-					if global_position.y < 240.0 || dragVelocity.y < -2000:
+					if clickable || (global_position.y < 240.0 || dragVelocity.y < -2000):
 						sendChoice()
 				"collection":
 					sendToDeckEditor()	
@@ -231,6 +237,7 @@ func _on_mouse_exited() -> void:
 func sendChoice():
 	if isDisabled:
 		return
+	print("emitting ",choiceID)
 	straightLaunch()
 	controller.onHand(choiceID)
 	controller.emitGUISignal()

@@ -17,7 +17,7 @@ func onConditonal(mon: BattleMonster, battle: BattleController, card: Card) -> v
 
 func onSwapOut(mon: BattleMonster, battle: BattleController) -> void:
 	var missingHP: int = mon.maxHP - mon.health
-	if missingHP/2 > 0:
+	if missingHP/2 > 0 && !mon.isKO():
 		await EffectFlair.singleton._runFlair(mon.rawData.name,Color.REBECCA_PURPLE)
 		await mon.addHP(missingHP/2)
 	return

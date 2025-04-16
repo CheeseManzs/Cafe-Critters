@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cgs12ybxdasn7"
+path="res://.godot/imported/2-29 In the Shadows.mp3-cd626d0b5b8353dc4ed7044de635d1f3.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/2-29 In the Shadows.mp3"
+dest_files=["res://.godot/imported/2-29 In the Shadows.mp3-cd626d0b5b8353dc4ed7044de635d1f3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

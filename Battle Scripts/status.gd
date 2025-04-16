@@ -27,6 +27,7 @@ enum EFFECTS {
 	OVERHEAT,
 	ENDLESS_BLOWS,
 	POISON,
+	BURN,
 	NULLIFY_DAMAGE,
 	PERFECT_PARRY
 }
@@ -104,6 +105,8 @@ func toMini() -> String:
 			return "EDB"
 		EFFECTS.POISON:
 			return "PSN"
+		EFFECTS.BURN:
+			return "BRN"
 		EFFECTS.NULLIFY_DAMAGE:
 			return "NLD"
 		EFFECTS.PERFECT_PARRY:
@@ -161,6 +164,8 @@ func rawToString() -> String:
 			return "Endless Blows"
 		EFFECTS.POISON:
 			return "Poison"
+		EFFECTS.BURN:
+			return "Burn"
 		EFFECTS.NULLIFY_DAMAGE:
 			return "Nullify Next Hit"
 		EFFECTS.PERFECT_PARRY:
@@ -296,6 +301,9 @@ func newTurn() -> void:
 				effectDone = true
 			return
 		EFFECTS.POISON:
+			if X < 1:
+				effectDone = true
+		EFFECTS.BURN:
 			if X < 1:
 				effectDone = true
 		EFFECTS.NULLIFY_DAMAGE:

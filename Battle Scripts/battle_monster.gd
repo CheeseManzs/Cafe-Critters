@@ -174,10 +174,11 @@ func exileCard(card: Card):
 	BattleLog.singleton.log(rawData.name + " exiled " + card.name)
 
 
-func discardCard(card: Card, removeFromHand = true):
+func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	if card == null:
 		return
-	await discardAnimation(card)
+	if playAnimation:
+		await discardAnimation(card)
 	battleController.addToGraveyard(card, self)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	if removeFromHand:
@@ -205,11 +206,39 @@ func discardRandomCard() -> Card:
 	
 	return picked
 	
+func discardRandomTokenCard() -> Card:
+	
+	var picked = await currentHand.getRandomRoleCard(Card.ROLE.Token)
+	if picked == null:
+		return null
+	currentHand.storedCards.erase(picked)
+	await discardCard(picked, false)
+	return picked
+	
+func discardRandomTaggedCard(tag: String) -> Card:
+	var picked = await currentHand.getRandomTaggedCard(tag)
+	if picked == null:
+		return null
+	currentHand.storedCards.erase(picked)
+	await discardCard(picked, false)
+	return picked
+	
 func exileRandomCard() -> Card:
 	var picked = await pickRandomCard()
 	await exileCard(picked)
 	
 	return picked
+
+func addHeat(x):
+	if getPassive() is MachineAbility:
+		var passive: MachineAbility = getPassive()
+		await passive.setHeat(passive.heat + x, self, battleController)
+		
+func getHeat():
+	if getPassive() is MachineAbility:
+		var passive: MachineAbility = getPassive()
+		return passive.heat
+	return 0
 
 func playableCards() -> Array[Card]:
 	var playable: Array[Card] = []

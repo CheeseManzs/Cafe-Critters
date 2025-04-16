@@ -24,8 +24,10 @@ func heatProgress():
 func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 	if newHeat > heat:
 		BattleLog.singleton.log(mon.rawData.name + "'s heat rose to " + str(min(maxHeat, newHeat)))
+		battle.playSound(battle.powerUpSound)
 	if newHeat < heat:
 		BattleLog.singleton.log(mon.rawData.name + "'s heat dropped to " + str(max(minHeat,newHeat)))
+		battle.playSound(battle.powerDownSound)
 	heat = newHeat
 	if heat < minHeat:
 		heat = minHeat
@@ -80,19 +82,23 @@ func heatBoost(mon: BattleMonster, battle: BattleController):
 	elif heat >= 5:
 		return 0.5
 
+func getBonusScale(mon: BattleMonster):
+	if !mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		bonusScale = 1
+	else:
+		bonusScale = 0
+	return bonusScale
+
 func attackBonus(mon: BattleMonster, battle: BattleController) -> float:
-	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*bonusScale
+	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
 	
 func defenseBonus(mon: BattleMonster, battle: BattleController) -> float:
-	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*bonusScale
+	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
 
 func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> void:
 	if !mon.hasStatus(Status.EFFECTS.OVERHEAT) && (card.power > 0 || card.shieldPower > 0):
-		bonusScale = 1
 		BattleLog.log(mon.rawData.name + "'s " + card.name + " is heating up!")
 		lostHeat = true
-	else:
-		bonusScale = 0
 	return
 
 func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:

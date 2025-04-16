@@ -23,6 +23,7 @@ enum ROLE {
 # fixed features of the monster.
 @export var id: int
 @export var name: String
+@export var tags: Array[String]
 @export var alignment: ALIGNMENT
 @export var role: ROLE
 @export var dexEntry: String
