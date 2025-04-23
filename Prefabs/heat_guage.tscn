@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://676qd3sw1q65" path="res://Graphics/UI/beta_heat_guage.png" id="1_y6ev2"]
 [ext_resource type="Texture2D" uid="uid://bcyoeytkhkj3d" path="res://Graphics/UI/GuagePointer.png" id="2_1ooes"]
-[ext_resource type="Script" path="res://Battle Scripts/heat_gauge.gd" id="2_xr1ml"]
+[ext_resource type="Script" uid="uid://btkslluio7iwb" path="res://Battle Scripts/heat_gauge.gd" id="2_xr1ml"]
 
 [node name="Heat Gauge" type="TextureRect" node_paths=PackedStringArray("gaugePivot")]
 texture = ExtResource("1_y6ev2")

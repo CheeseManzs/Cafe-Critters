@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=14 format=3 uid="uid://cpf4dy38n68y2"]
 
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_517cx"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_h8b7h"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_517cx"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_h8b7h"]
 [ext_resource type="Resource" uid="uid://cyfkwq8louf5t" path="res://Data/Cards/Double Bite.tres" id="3_2kv08"]
 [ext_resource type="Texture2D" uid="uid://cekjausnnqoja" path="res://Graphics/Monsters/ignetor_placeholder.png" id="3_ewnrg"]
 [ext_resource type="Resource" uid="uid://dvteihkyuvwkv" path="res://Data/Cards/Cleave.tres" id="4_iu8pt"]

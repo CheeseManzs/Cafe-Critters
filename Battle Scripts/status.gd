@@ -289,16 +289,14 @@ func newTurn() -> void:
 			effectDone = true
 			return
 		EFFECTS.PRIORITY:
-			effectDone = true
+			if X == 0:
+				effectDone = true
+			X -= 1
 			return
 		EFFECTS.CANT_PLAY:
 			effectDone = true
 			return
 		EFFECTS.OVERHEAT:
-			if X > -1:
-				X = -1
-			else:
-				effectDone = true
 			return
 		EFFECTS.POISON:
 			if X < 1:

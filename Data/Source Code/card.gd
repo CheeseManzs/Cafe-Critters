@@ -166,7 +166,7 @@ func _omenCalc(attacker: BattleMonster, defender: BattleMonster):
 		if card.originator == attacker:
 			card.tags.erase("Omen")
 			print("adding: ",card.calcDamage(attacker, defender))
-			dmg += card.calcDamage(attacker, defender)
+			dmg += ceil(card.calcDamage(attacker, defender))
 			card.tags.push_back("Omen")
 	return dmg
 
@@ -190,11 +190,12 @@ func applyOmen(attacker: BattleMonster, defender: BattleMonster):
 	if !(tags.has("Omen") || tags.has("Proc Omen")):
 		return
 	var addBack = []
-	if len(getOmenCards(attacker.battleController)) > 0:
+	var omenCards = getOmenCardsFromMonster(attacker.battleController, attacker)
+	if len(omenCards) > 0:
 		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
-	for card in getOmenCards(attacker.battleController):
+	for card in omenCards:
 		print("omen card: ", card.name,", ",card.originator.playerControlled)
-		if card.originator == attacker && card != self:
+		if card != self:
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 				card.statusConditions.erase(Status.EFFECTS.EMPOWER)
 			BattleLog.singleton.log("Rea used " + card.name + "...")
@@ -270,6 +271,15 @@ func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 
 static func getOmenCards(battleController: BattleController):
 	return Zone.getTaggedCardsInArray(battleController.graveyard, "Omen")
+	
+static func getOmenCardsFromMonster(battleController: BattleController, originator: BattleMonster ):
+	var omenCards = getOmenCards(battleController)
+	var returnArr = []
+	for card in omenCards:
+		if card.originator == originator:
+			returnArr.push_back(card)
+	return returnArr
+	
 
 static func createInstance(cardName: String):
 	var obj: Card = load("res://Data/Cards/"+cardName+".tres")

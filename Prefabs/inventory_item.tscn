@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c05us6q6r3o0s"]
 
-[ext_resource type="Script" path="res://Overworld Scripts/inventory_item.gd" id="1_f12t0"]
+[ext_resource type="Script" uid="uid://wra30lai25ft" path="res://Overworld Scripts/inventory_item.gd" id="1_f12t0"]
 [ext_resource type="Texture2D" uid="uid://drvgi8jji3c5n" path="res://Graphics/Items/bad_beans.png" id="2_jd3xg"]
 
 [node name="InventoryItem" type="Control"]

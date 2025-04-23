@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bcw4ey42763fd"]
 
-[ext_resource type="Script" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
+[ext_resource type="Script" uid="uid://dtbalo0wc3uat" path="res://Battle Scripts/monster_ui.gd" id="1_2qbiv"]
 [ext_resource type="Texture2D" uid="uid://qp17wcy3m1n1" path="res://Graphics/UI/hd circle.png" id="2_pxn4j"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="3_jlxyx"]
 [ext_resource type="Texture2D" uid="uid://bjxvyrvwnteey" path="res://Graphics/UI/hd bar.png" id="4_13ff7"]

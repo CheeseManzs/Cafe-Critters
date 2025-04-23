@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=21 format=3 uid="uid://dc4d16vxlrivo"]
 
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_irfdf"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_ukx36"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_irfdf"]
 [ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="3_4mhww"]
 [ext_resource type="Resource" uid="uid://bcm28janrlvfi" path="res://Data/Cards/Warmup.tres" id="4_es2i0"]
 [ext_resource type="Resource" uid="uid://bxdnh0ci88hdp" path="res://Data/Cards/Last Stand.tres" id="5_aaob3"]
@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="9_lx8h6"]
 [ext_resource type="Resource" uid="uid://km2q7uarlhg2" path="res://Data/Cards/Blackjack Beatdown.tres" id="10_gtgtv"]
 [ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="11_0ujeq"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="12_ippfy"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="12_ippfy"]
 [ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Stock Up.tres" id="12_yl31c"]
 [ext_resource type="Texture2D" uid="uid://ccicpc4xaeayw" path="res://Graphics/Monsters/132.png" id="13_jsoku"]
 [ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="13_m8m16"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cibt4ci40lsi7"]
 
 [ext_resource type="Texture2D" uid="uid://d24t1aqedw4bh" path="res://Graphics/Overworld/press_z.png" id="1_gvt56"]
-[ext_resource type="Script" path="res://Overworld Scripts/bubble.gd" id="2_x8erm"]
+[ext_resource type="Script" uid="uid://bjly1vcba0sis" path="res://Overworld Scripts/bubble.gd" id="2_x8erm"]
 
 [node name="Node3D" type="Node3D"]
 

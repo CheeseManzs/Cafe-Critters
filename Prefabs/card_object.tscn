@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://ddkls0bkk1r1s"]
 
-[ext_resource type="Script" path="res://Battle Scripts/card_display.gd" id="1_e7irm"]
+[ext_resource type="Script" uid="uid://c8dtwhmjo0e00" path="res://Battle Scripts/card_display.gd" id="1_e7irm"]
 [ext_resource type="Texture2D" uid="uid://bijnu2mjsw31f" path="res://Graphics/Misc/Card_Front.png" id="1_k3rom"]
 [ext_resource type="FontFile" uid="uid://d2tkjbh5dkrjj" path="res://Fonts/Spirax-Regular.ttf" id="3_t0b2p"]
 [ext_resource type="Texture2D" uid="uid://b2rjweskrg7cm" path="res://Data/Card Art/STRIKE.jpg" id="3_xshkp"]
 [ext_resource type="Theme" uid="uid://psu5hxj6os7a" path="res://Graphics/Themes/CardTheme.tres" id="5_1lyr7"]
-[ext_resource type="Script" path="res://Battle Scripts/card_desc.gd" id="6_tx2qm"]
+[ext_resource type="Script" uid="uid://bm44syjaelejb" path="res://Battle Scripts/card_desc.gd" id="6_tx2qm"]
 [ext_resource type="PackedScene" uid="uid://dj2i811quc5ap" path="res://Prefabs/card_tooltip.tscn" id="7_78dhv"]
 
 [node name="Card Object" type="Control" node_paths=PackedStringArray("titleLabel", "descLabel", "manaLabel", "artTexture")]

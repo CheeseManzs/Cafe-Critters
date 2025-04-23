@@ -397,13 +397,19 @@ func playerChooseCards(count: int, endable = false, requirement: Callable = func
 			
 			
 		await gui_choice
+		
 		if endable && playerCardID == -100:
 			break
+		else:
+			rpc("send_choice",playerCardID)
+		
 		var card = getActivePlayerMon().currentHand.storedCards[playerCardID]
 		if !cardsChosen.has(card):
 			cardsChosen.push_back(card)
 		else:
 			cardsChosen.remove_at(cardsChosen.find(card))
+			
+	rpc("send_choice",-100)
 	for uiIndex in len(getActivePlayerMon().currentHand.storedCards):
 			var uiButton = cardButtons[uiIndex]
 			uiButton.canDrag = true
@@ -421,7 +427,19 @@ func playerChooseCards(count: int, endable = false, requirement: Callable = func
 
 func enemyChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
 	var cardsChosen: Array[Card] = []
-	cardsChosen = enemyAI.enemyChooseHand(count, requirement)
+	if multiplayer_game:
+		while true:
+			var choice = await getNextChoice()
+			if choice == -100:
+				break
+			else:
+				var card = getActiveEnemyMon().currentHand.storedCards[choice]
+				if !cardsChosen.has(card):
+					cardsChosen.push_back(card)
+				else:
+					cardsChosen.remove_at(cardsChosen.find(card))
+	else:
+		cardsChosen = enemyAI.enemyChooseHand(count, requirement)
 	return cardsChosen
 	
 

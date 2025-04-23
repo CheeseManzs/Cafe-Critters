@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=22 format=3 uid="uid://b3rp3vvccagnq"]
 
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
 [ext_resource type="Texture2D" uid="uid://duc8et87moyqr" path="res://Graphics/Monsters/temp_hooliquen.png" id="2_1jaoc"]
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="2_j0ra4"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="3_rwnvh"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="2_j0ra4"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="3_rwnvh"]
 [ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="4_degly"]
 [ext_resource type="Resource" uid="uid://b8muftsmeq6hk" path="res://Data/Monster Passives/Sore Loser.tres" id="5_jb0h0"]
 [ext_resource type="Resource" uid="uid://wnwaekj234my" path="res://Data/Cards/Oops.tres" id="5_u53q0"]

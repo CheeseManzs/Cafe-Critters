@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=25 format=3 uid="uid://bbmecjegxa3d3"]
 
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_7umar"]
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_7umar"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
 [ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Refreshing Tea.tres" id="3_j28od"]
 [ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="3_omahx"]
 [ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="4_1tr8c"]

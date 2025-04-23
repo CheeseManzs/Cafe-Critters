@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=15 format=3 uid="uid://ba7mef873ynqu"]
 
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_55mkf"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_qrph6"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_rhr5u"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_55mkf"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_qrph6"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_rhr5u"]
 [ext_resource type="Resource" uid="uid://km2q7uarlhg2" path="res://Data/Cards/Blackjack Beatdown.tres" id="3_n7swt"]
 [ext_resource type="Resource" uid="uid://bi61w1ojs0g06" path="res://Data/Cards/Breakneck Barrage.tres" id="5_5an3s"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="6_y7f2q"]
@@ -23,6 +23,7 @@ storedCards = Array[ExtResource("2_rhr5u")]([ExtResource("3_n7swt"), ExtResource
 script = ExtResource("1_qrph6")
 id = 2
 name = "MZMG"
+tags = Array[String]([])
 alignment = 7
 role = 0
 dexEntry = ""

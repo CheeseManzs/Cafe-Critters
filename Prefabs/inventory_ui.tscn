@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://2r8w0hejknsu"]
 
-[ext_resource type="Script" path="res://Overworld Scripts/inventory_ui.gd" id="1_2jqrm"]
+[ext_resource type="Script" uid="uid://58r6pp6xiae4" path="res://Overworld Scripts/inventory_ui.gd" id="1_2jqrm"]
 [ext_resource type="PackedScene" uid="uid://c05us6q6r3o0s" path="res://Prefabs/inventory_item.tscn" id="2_23hta"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ox2ro"]

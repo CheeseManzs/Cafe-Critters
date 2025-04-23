@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://djivfi2bj70bg"]
 
-[ext_resource type="Script" path="res://Battle Scripts/log_panel.gd" id="1_7lqgg"]
+[ext_resource type="Script" uid="uid://5uu5xo64qwd4" path="res://Battle Scripts/log_panel.gd" id="1_7lqgg"]
 
 [node name="Log Panel" type="Panel" node_paths=PackedStringArray("richText")]
 custom_minimum_size = Vector2(0, 35)

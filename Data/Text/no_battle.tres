@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ZText" load_steps=3 format=3 uid="uid://8rkfyfa8uil8"]
 
-[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="1_fw60r"]
+[ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="1_fw60r"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="2_a26jx"]
 
 [resource]

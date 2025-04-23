@@ -11,7 +11,7 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var dis = await attacker.discardRandomTokenCard()
 	power = 0
-	if attacker.getHeat() >= 1 && dis != null:
+	if dis != null:
 		power = 1
 		await defender.trueDamage(8,attacker)
 		await giveStatus(defender,Status.EFFECTS.BURN,2)

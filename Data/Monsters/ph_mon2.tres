@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" load_steps=40 format=3 uid="uid://jf4us7y5q5ot"]
 
-[ext_resource type="Script" path="res://Data/Source Code/zone.gd" id="1_5p4td"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="1_i1c1e"]
-[ext_resource type="Script" path="res://Data/Source Code/card.gd" id="2_8xsqr"]
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_5p4td"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_i1c1e"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_8xsqr"]
 [ext_resource type="Texture2D" uid="uid://j8rs8rcndwfq" path="res://Graphics/Monsters/placeholder3.png" id="2_dwuog"]
 [ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="3_tm8gn"]
 [ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="4_8hvtd"]
@@ -52,6 +52,7 @@ storedCards = Array[ExtResource("2_8xsqr")]([ExtResource("17_7x56m"), ExtResourc
 script = ExtResource("1_i1c1e")
 id = 1
 name = "hoi5678"
+tags = Array[String]([])
 alignment = 2
 role = 0
 dexEntry = ""

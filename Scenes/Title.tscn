@@ -1,13 +1,13 @@
 [gd_scene load_steps=11 format=3 uid="uid://d07fdcyc88i5y"]
 
-[ext_resource type="Script" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
-[ext_resource type="Script" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
+[ext_resource type="Script" uid="uid://dhukcpk4dcwm4" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="3_lv63s"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="3_ntvn1"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_f5fnq"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_2sjoh"]
-[ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
-[ext_resource type="Script" path="res://Battle Scripts/connection_manager.gd" id="7_co4j3"]
+[ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
+[ext_resource type="Script" uid="uid://b6ojlhcopfvnm" path="res://Battle Scripts/connection_manager.gd" id="7_co4j3"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
 
 [sub_resource type="Resource" id="Resource_eb42p"]

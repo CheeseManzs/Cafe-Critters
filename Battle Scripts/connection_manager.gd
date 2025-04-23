@@ -65,6 +65,8 @@ func hostServer():
 
 func joinServer():
 	BattleController.multiplayer_game = true
+	if ipText.text == "Not Connected":
+		ipText.text = "127.0.0.1"
 	peer.create_client(ipText.text, PORT)
 	multiplayer.multiplayer_peer = peer
 	host = false

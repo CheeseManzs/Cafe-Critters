@@ -1,6 +1,6 @@
 [gd_scene load_steps=95 format=3 uid="uid://byi5kwmyhaj0s"]
 
-[ext_resource type="Script" path="res://Overworld Scripts/overworld_player.gd" id="1_018uf"]
+[ext_resource type="Script" uid="uid://s83dqs0hrjua" path="res://Overworld Scripts/overworld_player.gd" id="1_018uf"]
 [ext_resource type="Texture2D" uid="uid://dq8krg0quf564" path="res://Graphics/Overworld/Idle-Anim.png" id="2_14vry"]
 [ext_resource type="Texture2D" uid="uid://n78qq5lmbq40" path="res://Graphics/Overworld/Walk-Anim.png" id="3_80hop"]
 

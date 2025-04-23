@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dj2i811quc5ap"]
 
-[ext_resource type="Script" path="res://Battle Scripts/card_tooltip.gd" id="1_1x5ng"]
+[ext_resource type="Script" uid="uid://du3ywqjr3uvxy" path="res://Battle Scripts/card_tooltip.gd" id="1_1x5ng"]
 [ext_resource type="Texture2D" uid="uid://0j2hh64ieetj" path="res://Graphics/Misc/Card_Back_9S.png" id="2_hleqo"]
-[ext_resource type="Script" path="res://Prefabs/container_filler.gd" id="3_akvnb"]
+[ext_resource type="Script" uid="uid://dkysjea8ygcsc" path="res://Prefabs/container_filler.gd" id="3_akvnb"]
 
 [node name="CardTooltip" type="Control" node_paths=PackedStringArray("richtext")]
 custom_minimum_size = Vector2(30, 30)

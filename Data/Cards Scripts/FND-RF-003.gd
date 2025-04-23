@@ -1,5 +1,7 @@
 extends Card
 
+var healPerc = 0.05
+
 func _init() -> void:
 	cost = 3
 	priority = 0
@@ -10,7 +12,7 @@ func _init() -> void:
 	tags = ["Omen"]
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	if defender.health <= defender.maxHP*0.05:
+	if defender.health <= defender.maxHP*healPerc:
 		BattleLog.log(defender.rawData.name + " cannot escape Rea!")
 		await defender.trueDamage(defender.health,attacker)
 	else:
@@ -18,7 +20,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await applyOmen(attacker, defender)
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	if defender.health <= defender.maxHP*0.05:
+	if defender.health <= defender.maxHP*healPerc:
 		return 99999999 + omenCalc(attacker, defender)
 	else:
 		return 0 + omenCalc(attacker, defender)

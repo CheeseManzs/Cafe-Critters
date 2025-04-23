@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ddw7raemmtnam"]
 
-[ext_resource type="Script" path="res://Prefabs/VFX/effect.gd" id="1_stce1"]
+[ext_resource type="Script" uid="uid://b8446xekuy6w7" path="res://Prefabs/VFX/effect.gd" id="1_stce1"]
 
 [sub_resource type="Curve" id="Curve_i0u2n"]
 _data = [Vector2(0, 0), 0.0, 7.04121, 0, 0, Vector2(0.506438, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.1166, 0.0, 0, 0]

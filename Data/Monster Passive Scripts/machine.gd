@@ -15,13 +15,13 @@ var lostHeat = false
 func _init() -> void:
 	name = "Machine"
 	desc = "Heat Guage" 
-
-
 		
 func heatProgress():
 	return (heat - minHeat)/(maxHeat - minHeat + 0.0)
 
 func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
+	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		return
 	if newHeat > heat:
 		BattleLog.singleton.log(mon.rawData.name + "'s heat rose to " + str(min(maxHeat, newHeat)))
 		battle.playSound(battle.powerUpSound)
@@ -33,12 +33,14 @@ func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 		heat = minHeat
 	if heat > maxHeat:
 		heat = maxHeat
-		resetHeat = true
-		await mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
 	
 	if heatGauge != null:
 		heatGauge.progress = heatProgress()
 		await battle.get_tree().create_timer(1.0).timeout
+
+	if newHeat > maxHeat:
+		resetHeat = true
+		await mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
 
 
 func createGuage(mon: BattleMonster, battle: BattleController):

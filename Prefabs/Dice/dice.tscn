@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://hs512cq25euv"]
 
-[ext_resource type="Script" path="res://Battle Scripts/dice.gd" id="1_q8408"]
+[ext_resource type="Script" uid="uid://buhifri6t6pf1" path="res://Battle Scripts/dice.gd" id="1_q8408"]
 [ext_resource type="PackedScene" uid="uid://cbgwin8c5hk12" path="res://Prefabs/Dice/placeholder dice/dice_06.tscn" id="2_hby3g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_spco3"]

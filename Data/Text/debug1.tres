@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ZText" load_steps=3 format=3 uid="uid://cer35didxcsso"]
 
-[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="1_h3kgu"]
+[ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="1_h3kgu"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="2_uqgjf"]
 
 [resource]

@@ -217,5 +217,18 @@ func _process(delta: float) -> void:
 	shieldParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.shield > 0
 	shieldParticles.amount_ratio = max(0.15, (1.0*connectedMon.shield)/connectedMon.maxHP); #30 is a good looking amount
 	empowerParticles.emitting = connectedMon != null && !connectedMon.isKO() && connectedMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED)
+	
+	if lockToIntendedPosition:
+		var targetColor = Color.WHITE
+		if connectedMon.hasStatus(Status.EFFECTS.OVERHEAT):
+			targetColor = lerp(targetColor,Color.DIM_GRAY, 0.5)
+		elif connectedMon.hasStatus(Status.EFFECTS.BURN):
+			targetColor = lerp(targetColor,Color.RED, 0.1)
+		elif connectedMon.hasStatus(Status.EFFECTS.POISON):
+			targetColor = lerp(targetColor,Color.PURPLE, 0.1)
+		elif connectedMon.hasStatus(Status.EFFECTS.PRIORITY):
+			targetColor = lerp(targetColor,Color.YELLOW, 0.2)
+		
+		sprite.modulate = lerp(sprite.modulate, targetColor, delta*4)
 	#update the total time by adding the delta time to the tracker
 	t += delta

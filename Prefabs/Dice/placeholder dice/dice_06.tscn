@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cbgwin8c5hk12"]
 
 [ext_resource type="PackedScene" uid="uid://dh7b1k868hudm" path="res://Prefabs/Dice/placeholder dice/Dice06.fbx" id="1_ln28d"]
-[ext_resource type="Script" path="res://Battle Scripts/dice_color.gd" id="2_5ucmf"]
+[ext_resource type="Script" uid="uid://s70jdyejbd6a" path="res://Battle Scripts/dice_color.gd" id="2_5ucmf"]
 [ext_resource type="Material" uid="uid://g406n076613j" path="res://Prefabs/Dice/placeholder dice/DiceWhite.tres" id="2_740nd"]
 [ext_resource type="Material" uid="uid://sihptjc76e6f" path="res://Prefabs/Dice/placeholder dice/DiceBlack.tres" id="3_2hhaj"]
 

@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ZDialog" load_steps=9 format=3 uid="uid://bru483uysg0mq"]
 
-[ext_resource type="Script" path="res://Data/Source Code/z_dialog.gd" id="1_0r624"]
-[ext_resource type="Script" path="res://Data/Source Code/z_text.gd" id="2_uyoyy"]
+[ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_0r624"]
+[ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="2_uyoyy"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="3_5ptpb"]
 [ext_resource type="Texture2D" uid="uid://dnkr1s2y1vv51" path="res://Graphics/Monsters/placeholder.png" id="3_ryyfr"]
-[ext_resource type="Script" path="res://Battle Scripts/ai_personality.gd" id="6_njep7"]
+[ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_njep7"]
 
 [sub_resource type="Resource" id="Resource_oqfi5"]
 script = ExtResource("6_njep7")

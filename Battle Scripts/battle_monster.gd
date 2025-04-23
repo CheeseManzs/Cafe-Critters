@@ -337,7 +337,8 @@ func returnStrongarmCard():
 	currentHand.storedCards.push_back(pickedCard)
 
 func addStatusCondition(status: Status, broadcast = false):
-
+	if isKO():
+		return
 	if broadcast:
 		await BattleCamera.singleton.focusMonster(self)
 		var printText = rawData.name + " was afflicted with " + status.toString()
@@ -386,6 +387,7 @@ func addStatusCondition(status: Status, broadcast = false):
 		getStatus(status.effect).X += status.X
 		getStatus(status.effect).Y += status.Y
 	else:
+		print("adding " + status.toString() + " manually")
 		statusConditions.push_back(status)
 	
 func getSpeed():
@@ -458,6 +460,8 @@ func checkNullifyDamage():
 	return false
 
 func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> void:
+	if isKO():
+		return
 	#check nullify again for true damage
 	if checkNullifyDamage():
 		return
@@ -503,6 +507,8 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+	if isKO():
+		return 0
 	if attacker != self && attacker != null:
 		attacker.temp_attackBonus = 0
 		await attacker.atkAnim(self)
