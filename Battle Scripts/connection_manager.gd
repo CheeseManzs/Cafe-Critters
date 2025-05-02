@@ -9,6 +9,10 @@ signal foundUPNP
 @export var teamPacker: MonsterCache
 @export var debugManager: DebugGameManager
 @export var lockedButtons: Array[Button]
+@export var defaultPersonality: AIPersonality
+
+var targetIP = "debug"
+var playerTeam: Array[Monster]
 
 var peer = ENetMultiplayerPeer.new()
 var upnp = UPNP.new()
@@ -33,7 +37,7 @@ func _ready() -> void:
 func setTeam():
 	var currentTeam: Array[Array]
 	currentTeam.assign(JSON.parse_string(teamText.text))
-	debugManager.debugTeamA = teamPacker.toMonsterArray(currentTeam)
+	playerTeam = teamPacker.toMonsterArray(currentTeam)
 
 func setIPText(txt):
 	ipText.text = txt
@@ -58,49 +62,64 @@ func upnpSetup():
 			print("calling!")
 			foundUPNP.emit.call_deferred()
 
-func hostServer():
+func eg():
+	var createdTeam = [] #<--- THE TEAM YOUR TEAMBUILDER GENERATERS
+	ConnectionManager.singleton.targetIP = "ip address" #ONLY FOR JOINING PLAYERS
+	ConnectionManager.singleton.playerTeam = createdTeam
+	ConnectionManager.singleton.hostProcess(false) #ConnectionManager.singleton.joinProcess(false) for joining player 
+
+func hostServer(inDebug: bool):
 	BattleController.multiplayer_game = true
 	var external_ip = upnp.query_external_address()
-	
-	ipDisplay.text = "Hosted on " + str(external_ip)
+	if inDebug:
+		ipDisplay.text = "Hosted on " + str(external_ip)
 	
 	peer.create_server(PORT)
 	multiplayer.multiplayer_peer = peer
 	host = true
 	print("hosted!")
 
-func joinServer():
+func joinServer(inDebug: bool):
 	BattleController.multiplayer_game = true
-	if ipText.text == "Not Connected":
-		ipText.text = "127.0.0.1"
-	peer.create_client(ipText.text, PORT)
+	if inDebug:
+		if ipText.text == "Not Connected":
+			ipText.text = "127.0.0.1"
+		targetIP = ipText.text
+	peer.create_client(targetIP, PORT)
 	multiplayer.multiplayer_peer = peer
 	host = false
 	print("joined!")
 	
-
+func hostProcess(inDebug: bool):
+	Thread.new().start(upnpSetup.bind())
+	await foundUPNP
+	var external_ip = upnp.query_external_address()
+	if inDebug:
+		print("ip: ",external_ip)
+		ipText.text = str(external_ip)
+	hostServer(inDebug)
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality)
+	
+func joinProcess(inDebug: bool):
+	Thread.new().start(upnpSetup.bind())
+	await foundUPNP
+	var external_ip = upnp.query_external_address()
+	if inDebug:
+		print("ip: ",external_ip)
+	joinServer(inDebug)
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality)
 
 func _on_online_battle_host_pressed() -> void:
 	setTeam()
 	for button in lockedButtons:
 		button.disabled = true
 	ipText.text = "Connecting..."
-	Thread.new().start(upnpSetup.bind())
-	await foundUPNP
-	var external_ip = upnp.query_external_address()
-	print("ip: ",external_ip)
-	ipText.text = str(external_ip)
-	hostServer()
-	debugManager.loadScene("Battle")
+	hostProcess(true)
+	
 
 
 func _on_online_battle_join_pressed() -> void:
 	setTeam()
 	for button in lockedButtons:
 		button.disabled = true
-	Thread.new().start(upnpSetup.bind())
-	await foundUPNP
-	var external_ip = upnp.query_external_address()
-	print("ip: ",external_ip)
-	joinServer()
-	debugManager.loadScene("Battle")
+	joinProcess(true)

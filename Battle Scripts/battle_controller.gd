@@ -1177,7 +1177,7 @@ static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster
 
 @rpc("any_peer")
 func set_enemy_team(cacheArray: String):
-	print(JSON.parse_string(cacheArray))
+	print("enm team: ",JSON.parse_string(cacheArray))
 	var loadedCache: Array[Array]
 	loadedCache.assign(JSON.parse_string(cacheArray))
 	enemyBattleTeam = monsterCache.toMonsterArray(loadedCache)
