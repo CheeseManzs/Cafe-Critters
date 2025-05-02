@@ -23,11 +23,17 @@ func _ready() -> void:
 	if singleton == null:
 		singleton = self
 	
-	teamText.text = JSON.stringify(teamPacker.toCacheArray(debugManager.debugTeamA))
+	var debTeam: Dictionary[Monster, Array] = {}
+	for mon in debugManager.debugTeamA:
+		debTeam[mon] = mon.deck.storedCards
+	
+	teamText.text = JSON.stringify(teamPacker.toCacheArray(debTeam))
 	
 
 func setTeam():
-	debugManager.debugTeamA = teamPacker.toMonsterArray(JSON.parse_string(teamText.text))
+	var currentTeam: Array[Array]
+	currentTeam.assign(JSON.parse_string(teamText.text))
+	debugManager.debugTeamA = teamPacker.toMonsterArray(currentTeam)
 
 func setIPText(txt):
 	ipText.text = txt

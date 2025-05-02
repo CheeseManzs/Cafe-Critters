@@ -340,7 +340,6 @@ moveParticles = NodePath("CamDashParticles")
 
 [node name="CamDashParticles" type="GPUParticles3D" parent="Control UI/Background/SubViewportContainer/SubViewport/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171837, -1.93416)
-visible = false
 amount = 10000
 lifetime = 0.3
 preprocess = 0.5

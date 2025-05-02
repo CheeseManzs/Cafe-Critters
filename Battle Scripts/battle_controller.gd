@@ -265,7 +265,7 @@ func _ready() -> void:
 	global_rng = RandomNumberGenerator.new()
 	if multiplayer_game:
 		multiplayer_id = multiplayer.get_unique_id()
-		var idCache = monsterCache.toCacheArray(playerBattleTeam)
+		var idCache = monsterCache.toCacheArray(MonsterCache.defaultMonsterDict(playerBattleTeam))
 		rpc("set_enemy_team", JSON.stringify(idCache))
 		await synced
 		if ConnectionManager.host:
@@ -1178,7 +1178,7 @@ static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster
 @rpc("any_peer")
 func set_enemy_team(cacheArray: String):
 	print(JSON.parse_string(cacheArray))
-	var loadedCache: Array[int]
+	var loadedCache: Array[Array]
 	loadedCache.assign(JSON.parse_string(cacheArray))
 	enemyBattleTeam = monsterCache.toMonsterArray(loadedCache)
 	synced.emit()
