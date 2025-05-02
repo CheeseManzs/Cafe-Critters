@@ -96,10 +96,11 @@ func contactAnimation(target: MonsterDisplay) -> void:
 		back = -1
 	
 	var originalPos = position
+	var originalGlobal = global_position
 	var deltaPos = (target.global_position - global_position)
 	elapsed = 0
-	connectedMon.battleController.dashParticles.process_material.direction.x = -back
-	connectedMon.battleController.dashParticles.position = originalPos
+	connectedMon.battleController.dashParticles.process_material.direction.x = back
+	connectedMon.battleController.dashParticles.global_position = originalGlobal + deltaPos.normalized()*0.5
 	var deltaAngle = acos((deltaPos).normalized().x)
 	connectedMon.battleController.dashParticles.rotation_degrees = Vector3(0,0,deltaAngle)
 	connectedMon.battleController.dashParticles.emitting = true
@@ -107,6 +108,7 @@ func contactAnimation(target: MonsterDisplay) -> void:
 		var a_progress: float = elapsed/(timeMax/2.0)
 		var progress: float = dashFraction*elapsed/(timeMax/2.0)
 		position = originalPos + deltaPos*progress
+		connectedMon.battleController.dashParticles.global_position = global_position + deltaPos.normalized()*0.5
 		sprite.modulate.a = (1 - a_progress)
 		
 		elapsed += lastDelta

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Backdrop" load_steps=3 format=3 uid="uid://banab6f75ryxy"]
+
+[ext_resource type="Script" uid="uid://c1owgu6ve0wmk" path="res://Data/Backdrops/backdrop.gd" id="1_avhkd"]
+[ext_resource type="PackedScene" uid="uid://tuje7acd8ybr" path="res://Prefabs/Backdrops/Training Grounds.tscn" id="1_nebfj"]
+
+[resource]
+script = ExtResource("1_avhkd")
+backgroundScene = ExtResource("1_nebfj")
+metadata/_custom_type_script = "uid://c1owgu6ve0wmk"

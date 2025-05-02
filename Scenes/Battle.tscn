@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=62 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" uid="uid://ds6y71to2odr" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" uid="uid://2agtjocn5cbo" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -44,12 +44,8 @@
 [ext_resource type="AudioStream" uid="uid://cgs12ybxdasn7" path="res://Audio/BGM/2-29 In the Shadows.mp3" id="42_2ti1b"]
 [ext_resource type="AudioStream" uid="uid://dmbdtpa0pgw4v" path="res://Audio/BGM/114. Showdown! (Nemona).mp3" id="43_6o2cy"]
 [ext_resource type="AudioStream" uid="uid://cfyllggc1gdy0" path="res://Audio/BGM/10. Battle! (Nemona).mp3" id="44_6uit3"]
-[ext_resource type="Environment" uid="uid://c23v0s4gfkt0e" path="res://Prefabs/BattleEnvironment.tres" id="45_6uit3"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1guf"]
-albedo_color = Color(0.277118, 0.159207, 0.0452019, 1)
+[ext_resource type="Script" uid="uid://qyjjk824ex4m" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
+[ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="46_qncyj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]
 bg_color = Color(0, 0, 0, 0.423529)
@@ -117,7 +113,7 @@ size = Vector3(29.9875, 23.1108, 1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3478b"]
 emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
+emission_box_extents = Vector3(0.235, 0.575, 0.05)
 spread = 0.0
 initial_velocity_min = 10.0
 initial_velocity_max = 10.0
@@ -132,16 +128,6 @@ material = SubResource("StandardMaterial3D_myw15")
 size = Vector2(0.1, 0.005)
 
 [node name="Battle" type="Node3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(400, 0, 0, 0, 1, 0, 0, 0, 400, 0, -0.5, 0)
-mesh = SubResource("BoxMesh_6m2jc")
-surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.650775, 0.759272, 0, -0.759272, 0.650775, 0, 2.74825, 0)
-shadow_enabled = true
-shadow_blur = 0.0
 
 [node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "audioPlayers", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
@@ -525,8 +511,8 @@ script = ExtResource("22_wgwlo")
 cardBackPrefab = ExtResource("5_1cnu7")
 
 [node name="DashParticles" type="GPUParticles3D" parent="."]
-emitting = false
-amount = 180
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89653, 0, 0)
+amount = 25
 lifetime = 0.1
 preprocess = 0.5
 process_material = SubResource("ParticleProcessMaterial_3478b")
@@ -551,7 +537,11 @@ multiplayerGameIndex = 10
 
 [node name="SFX5" type="AudioStreamPlayer" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("45_6uit3")
+[node name="BG Manager" type="Control" parent="." node_paths=PackedStringArray("container")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("46_csjxp")
+backdrop = ExtResource("46_qncyj")
+container = NodePath("..")
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

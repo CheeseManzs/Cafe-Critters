@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://tuje7acd8ybr"]
+
+[ext_resource type="Environment" uid="uid://c23v0s4gfkt0e" path="res://Prefabs/BattleEnvironment.tres" id="1_mmour"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6m2jc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1guf"]
+albedo_color = Color(0.277118, 0.159207, 0.0452019, 1)
+
+[node name="BD" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(400, 0, 0, 0, 1, 0, 0, 0, 400, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_6m2jc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y1guf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.650774, 0.759271, 0, -0.759271, 0.650774, 0, 2.74825, 0)
+shadow_enabled = true
+shadow_blur = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_mmour")
