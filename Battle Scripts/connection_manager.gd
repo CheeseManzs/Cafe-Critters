@@ -32,11 +32,13 @@ func _ready() -> void:
 		debTeam[mon] = mon.deck.storedCards
 	
 	teamText.text = JSON.stringify(teamPacker.toCacheArray(debTeam))
+	setTeam()
 	
 
 func setTeam():
 	var currentTeam: Array[Array]
-	currentTeam.assign(JSON.parse_string(teamText.text))
+	var teamStr = JSON.parse_string(teamText.text)
+	currentTeam.assign(teamStr)
 	playerTeam = teamPacker.toMonsterArray(currentTeam)
 
 func setIPText(txt):
