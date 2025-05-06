@@ -2,30 +2,40 @@ class_name CardStorage
 extends Resource
 ## Helper class that provides helpful functions for inventory management.
 
-var cardNames: Array = [[], [], [], [], []]
-var cardData: Array = [[], [], [], [], []]
+var cardNames: Array = []
+var cardCounts: Array = []
+var cards: Array = [[], []]
 
 func _init():
 	pass
 
-func addCards(resourceString: String, quantity: int = 1):
-	var refCard = load("res://Data/Cards/" + resourceString + ".tres")
-	var cat = refCard.tab
-	var cardInd = cardNames[cat].find(resourceString)
+func addCards(resource: Card, quantity: int = 1):
+	var cardInd = cardNames.find(resource)
 	if cardInd == -1:
-		cardNames[cat].push_back(resourceString)
-		cardData[cat].push_back([refCard.index, quantity])
+		cardNames.push_back(resource)
+		cardCounts.push_back(quantity)
 	else:
-		cardData[cat][cardInd][1] += quantity
+		cardCounts[cardInd] += quantity
+	rebuild()
 	
-func removeCards(resourceString: String, quantity: int = 1):
-	var refCard = load("res://Data/Cards/" + resourceString + ".tres")
-	var cat = refCard.tab
-	var cardInd = cardNames[cat].find(resourceString)
+func removeCards(resource: Card, quantity: int = 1):
+	var cardInd = cardNames.find(resource)
 	if cardInd == -1:
 		return
 	else:
-		cardData[cat][cardInd][1] -= quantity
-		if cardData[cat][cardInd][1] <= 0:
-			cardData[cat].pop_at(cardInd)
-			cardNames[cat].pop_at(cardInd)
+		cardCounts[cardInd] -= quantity
+		if cardCounts[cardInd] <= 0:
+			cardCounts.pop_at(cardInd)
+			cardNames.pop_at(cardInd)
+	rebuild()
+
+func convertDeck(deck: Zone):
+	cardNames = []
+	cardCounts = []
+	for item in deck.storedCards:
+		addCards(item)
+	pass
+	rebuild()
+	
+func rebuild():
+	cards = [cardNames, cardCounts]

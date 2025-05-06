@@ -10,7 +10,9 @@ extends Control
 var allCards: Array[Card]
 var allMonsters: Array[Monster]
 var storedID: int
+var deckOpened: bool = true
 
+var currentDeck = CardStorage.new()
 var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -90,17 +92,26 @@ func rebuildMonsters(id):
 		team = enemyMons
 		id -= 3
 	else:
-		team = playerMons 
+		team = playerMons
+	for child in %LeftGridContainer.get_children():
+		child.queue_free() 
 	if team[id] != null:
-		for child in %LeftGridContainer.get_children():
-			child.queue_free()
 		if team[id].deck.storedCards.size() == 0:
 			team[id].deck.storedCards = team[id].startingCardPool.storedCards
-		for item in team[id].deck.storedCards:
+				
+		# decks are stored as Deck Objects, which are good for decks but
+		# bad for inventory management. we convert a deck to a CardStorage first
+		# THEN we load the CardStorage
+		currentDeck.convertDeck(team[id].deck)
+		for ind in range(currentDeck.cards[0].size()):
+			# loaded cardObjects get meta info that lets me add arbitrary
+			# behaviour to them. hopefully i can modify the context tool to
+			# do this for me but w/e
 			var temp = cardObject.instantiate()
 			var cParent = Control.new()
 			temp.displayLocation = "collection"
-			temp.setCard(item, 1, null, "collection")
+			temp.setCard(currentDeck.cardNames[ind], 1, null, "collection")
+			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
 			temp.deckEditController = self
 			temp.set_meta("half", "left")
 			cParent.add_child(temp)
