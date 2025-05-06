@@ -189,8 +189,10 @@ func _process(delta: float) -> void:
 			z_index = normalZIndex + 5
 
 	if canDrag && mouseOn && Input.is_action_just_pressed("Primary"):
-		dragging = true
-		currentlyDragging = true
+		
+		#if(displayLocation == "default"):
+			dragging = true
+			currentlyDragging = true
 	
 	if (dragging && Input.is_action_just_released("Primary")) || (clickable && mouseOn && Input.is_action_just_pressed("Primary")):
 		currentlyDragging = false
@@ -247,7 +249,7 @@ func sendChoice():
 func sendToDeckEditor():
 	if isDisabled:
 		return
-	#deckEditController.
+	deckEditController.moveCard(get_meta("half"), self.card)
 
 func setTextColor(col: Color):
 	titleLabel.set("theme_override_colors/default_color",col)

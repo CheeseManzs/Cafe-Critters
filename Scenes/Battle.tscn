@@ -44,7 +44,7 @@
 [ext_resource type="AudioStream" uid="uid://cgs12ybxdasn7" path="res://Audio/BGM/2-29 In the Shadows.mp3" id="42_2ti1b"]
 [ext_resource type="AudioStream" uid="uid://dmbdtpa0pgw4v" path="res://Audio/BGM/114. Showdown! (Nemona).mp3" id="43_6o2cy"]
 [ext_resource type="AudioStream" uid="uid://cfyllggc1gdy0" path="res://Audio/BGM/10. Battle! (Nemona).mp3" id="44_6uit3"]
-[ext_resource type="Script" uid="uid://qyjjk824ex4m" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
+[ext_resource type="Script" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
 [ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="46_qncyj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]

@@ -19,7 +19,6 @@ var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 func _ready() -> void:
 	buildCards()
 	buildMonsters()
-	rebuildCards()
 	# sets up the buttons that let you choose monster slots
 	for i in range(6):
 		var temp = Button.new()
@@ -74,6 +73,8 @@ func buildCards():
 # currently shows all cards (TODO: ADD FILTERING)
 # it's the collection so you click here to add to the deck uhhh
 func rebuildCards(): 
+	for child in %RightGridContainer.get_children():
+		child.queue_free() 
 	for item in allCards:
 		var temp = cardObject.instantiate()
 		var cParent = Control.new()
@@ -81,6 +82,8 @@ func rebuildCards():
 		temp.setCard(item, 1, null, "collection")
 		temp.deckEditController = self
 		temp.set_meta("half", "right")
+		temp.canDrag = false
+		temp.clickable = true
 		cParent.add_child(temp)
 		%RightGridContainer.add_child(cParent)
 		
@@ -113,16 +116,12 @@ func rebuildMonsters(id):
 			temp.setCard(currentDeck.cardNames[ind], 1, null, "collection")
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
 			temp.deckEditController = self
+			temp.canDrag = false
+			temp.clickable = true
 			temp.set_meta("half", "left")
 			cParent.add_child(temp)
 			%LeftGridContainer.add_child(cParent)
-		
-	#for i in range(storedCards.itemNames.size()):
-	#	for j in range(storedCards.itemNames[i].size()):
-	#		# does the copy operation.
-	#		# first creates the display node and loads its properties.
-	#		var temp = storedCards.instantiate()
-	#		temp.initiate(storedCards.cardNames[i][j], storedCards.cardData[i][j][1])
+	rebuildCards()
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
@@ -148,4 +147,9 @@ func _monster_select_pressed(storedMonster):
 	%MonsterButtons.get_child(storedID).text = "monster" + str(storedID + 1) + " (" + storedMonster.name + ")"
 	rebuildMonsters(storedID)
 	$MonsterSelectPanel.visible = false
+	pass
+
+func moveCard(side, passCard):
+	print(side)
+	print(passCard)
 	pass
