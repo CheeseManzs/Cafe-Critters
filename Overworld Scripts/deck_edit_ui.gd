@@ -103,8 +103,21 @@ func rebuildCards():
 	for child in %RightGridContainer.get_children():
 		child.queue_free() 
 	for item in allCards:
-		var temp = cardObject.instantiate()
+		var temp: CardDisplay = cardObject.instantiate()
 		var cParent = Control.new()
+		var currentID = storedID
+		var mon: Monster = null
+		if currentID > 2:
+			mon = enemyMons[currentID - 3]
+		else:
+			mon = playerMons[currentID]
+		
+		if mon != null && item.role not in ["Basic","Point","Forward","Guard","Point","Token",Card.ROLE.Point,Card.ROLE.Generic,Card.ROLE.Payoff,Card.ROLE.Support,Card.ROLE.Unique,Card.ROLE.Token,mon.name]:
+			continue
+			
+		if mon != null && mon.name in [item.role]: #signature card
+			temp.setTextColor(Color.YELLOW)
+		 
 		temp.displayLocation = "collection"
 		temp.setCard(item, 1, null, "collection")
 		temp.deckEditController = self
