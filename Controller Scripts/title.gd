@@ -27,5 +27,7 @@ func loadScene(sceneName: String) -> void:
 		ConnectionManager.singleton.setTeam()
 		BattleController.startBattle(ConnectionManager.playerTeam, debugTeamB, debugPersonality)
 		return
+	if sceneName == "DeckEditUI":
+		ConnectionManager.singleton.setTeam()
 	LoadManager.loadScene(sceneName)
 	pass # Replace with function body.
