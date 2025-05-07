@@ -76,6 +76,7 @@ static func statFormula(lv, base):
 	var unitRatio = (pow(lv,EXPONENTIAL_SCALING)/pow(MAX_LEVEL,EXPONENTIAL_SCALING))
 	var ratio = unitRatio * base
 	var scaledRatio = ratio * (PEAK_AVG_STAT/BASE_AVG_STAT) 
+	print("scaled ",lv,": ", scaledRatio)
 	return scaledRatio
 
 static func generateStatCurve(baseStat) -> Curve:
@@ -124,7 +125,9 @@ func _init(p_id = 0, p_name = "null", p_sprite = null, p_deck = null, p_starting
 	#	deck.storedCards = startingCardPool.storedCards;
 
 static func getStat(inputLevel, growth):
-	var s = ceil(generateStatCurve(growth).sample(inputLevel*1.0/MAX_LEVEL))
+	print("using raw: ", growth)
+	print("with lv ", inputLevel, ": sampling at ",inputLevel*1.0/MAX_LEVEL)
+	var s = ceil(statFormula(inputLevel, growth))
 	print("lv. ",inputLevel," with base ",growth,": ", s)
 	return s
 

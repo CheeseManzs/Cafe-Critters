@@ -125,4 +125,10 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	mon.currentHand.removeCards(discardCards)
 	await battle.get_tree().create_timer(1.0).timeout
 	await setHeat(heat + cardCount, mon, battle)
+	
+	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		mon.getStatus(Status.EFFECTS.OVERHEAT).X -= 1
+		if mon.getStatus(Status.EFFECTS.OVERHEAT).X < -1:
+			mon.getStatus(Status.EFFECTS.OVERHEAT).effectDone = true
+			await setHeat(0,mon,battle)
 	return

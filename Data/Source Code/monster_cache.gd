@@ -95,6 +95,7 @@ func decode(decoding: String) -> Array[Monster]:
 			monData.assign(line.split(" ("))
 			monData[1] = monData[1].replace(")","")
 			var monName = monData[0]
+			print("mon data: ",monData[1])
 			var monLevel = int(monData[1])
 			currentMon = getMonsterByName(monName)
 			currentMon.level = monLevel

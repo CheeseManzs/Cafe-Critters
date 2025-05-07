@@ -25,7 +25,7 @@ func loadScene(sceneName: String) -> void:
 	if sceneName == "Battle":
 		print("personality: ", debugPersonality)
 		ConnectionManager.singleton.setTeam()
-		BattleController.startBattle(debugTeamA, debugTeamB, debugPersonality)
+		BattleController.startBattle(ConnectionManager.playerTeam, debugTeamB, debugPersonality)
 		return
 	LoadManager.loadScene(sceneName)
 	pass # Replace with function body.
