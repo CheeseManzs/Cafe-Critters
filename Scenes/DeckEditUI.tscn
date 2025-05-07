@@ -110,3 +110,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 200
 theme_override_constants/v_separation = 40
+
+[node name="Control UI" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

@@ -54,6 +54,12 @@ func _ready() -> void:
 	temp.text = "import deck"
 	temp.pressed.connect(importMons.bind())
 	%MonsterButtons.add_child(temp)
+	
+	# return to title :3
+	temp = Button.new()
+	temp.text = "back to title"
+	temp.pressed.connect(toTitle.bind())
+	%MonsterButtons.add_child(temp)
 		
 	pass # Replace with function body.
 
@@ -213,4 +219,10 @@ func exportMons():
 	
 func importMons():
 	playerMons = cache.decode(%PortText.text)
+	rebuildMonsters(storedID)
+	for num in range(3):
+		%MonsterButtons.get_child(num).text = "monster" + str(num + 1) + " (" + playerMons[num].name + ")"
 	pass
+
+func toTitle():
+	LoadManager.loadScene("Title")
