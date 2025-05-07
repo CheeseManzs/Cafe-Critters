@@ -27,7 +27,7 @@ static var host = false
 func _ready() -> void:
 	if singleton == null:
 		singleton = self
-	if hasSetTeam == false:
+	if hasSetTeam == false || len(playerTeam) == 0:
 		hasSetTeam = true
 		playerTeam = debugManager.debugTeamA
 	
@@ -40,7 +40,10 @@ func _ready() -> void:
 
 
 static func setTeamManual(monArr: Array[Monster]):
-	playerTeam = monArr	
+	playerTeam = []
+	for mon in monArr:
+		if mon != null:
+			playerTeam.push_back(mon)
 
 func setTeam():
 	var currentTeam: String

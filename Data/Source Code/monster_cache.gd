@@ -71,6 +71,9 @@ func encode(cacheArr: Array[Array]) -> String:
 		
 
 func decode(decoding: String) -> Array[Monster]:
+	if len(decoding) == 0:
+		return []
+	
 	var cardDict = {}
 	var lines = decoding.split("\n")
 	var team: Array[Monster] = []

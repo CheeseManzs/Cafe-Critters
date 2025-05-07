@@ -21,15 +21,17 @@ var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 func _ready() -> void:
 	buildCards()
 	buildMonsters()
+	allMonsters = cache.cache
 	# sets up the buttons that let you choose monster slots
 	for i in range(6):
 		var temp = Button.new()
-		temp.text = "monster" + str(i + 1)
+		temp.text = "Monster" + str(i + 1)
 		# stores the monster's "id" as a meta variable, which then gets
 		# retrieved by the onclick to be used later! clever
 		temp.set_meta("id", i)
 		temp.pressed.connect(_monster_button_pressed.bind(temp.get_meta("id")))
 		%MonsterButtons.add_child(temp)
+		
 	
 	# sets up a "change monster" button
 	var temp = Button.new()
@@ -39,8 +41,13 @@ func _ready() -> void:
 	
 	# sets up an extra button for each monster in Data/Monsters
 	for monster in allMonsters:
-		temp = Button.new()
-		temp.text = monster.name
+		temp = TextureButton.new()
+		temp.texture_normal = monster.sprite
+		temp.ignore_texture_size = true
+		temp.stretch_mode = TextureButton.STRETCH_SCALE
+		temp.custom_minimum_size = Vector2(120, 120)
+		temp.mouse_entered.connect(_enterTexButton.bind(temp))
+		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		$MonsterSelectPanel/MonsterGridContainer.add_child(temp)
 		
@@ -186,7 +193,7 @@ func _monster_select_pressed(storedMonster):
 		team = playerMons 
 		internalID = storedID
 	team[internalID] = storedMonster
-	%MonsterButtons.get_child(storedID).text = "monster" + str(storedID + 1) + " (" + storedMonster.name + ")"
+	%MonsterButtons.get_child(storedID).text = storedMonster.name
 	rebuildMonsters(storedID)
 	$MonsterSelectPanel.visible = false
 	pass
@@ -212,6 +219,13 @@ func moveCard(side, passCard):
 		pass
 	pass
 
+
+func _enterTexButton(button: TextureButton):
+	button.modulate = Color(0.5,0.5,0.5,1)
+
+func _exitTexButton(button: TextureButton):
+	button.modulate = Color.WHITE
+
 func exportMons():
 	var tempDict: Dictionary[Monster, Array] = {}
 	for mon in playerMons:
@@ -221,9 +235,14 @@ func exportMons():
 	
 func importMons():
 	playerMons = cache.decode(%PortText.text)
+	while len(playerMons) < 3:
+		playerMons.push_back(null)
 	rebuildMonsters(storedID)
-	for num in range(3):
-		%MonsterButtons.get_child(num).text = "monster" + str(num + 1) + " (" + playerMons[num].name + ")"
+	for num in len(playerMons):
+		if playerMons[num] != null:
+			%MonsterButtons.get_child(num).text = playerMons[num].name
+		else:
+			%MonsterButtons.get_child(num).text = "Monster" + str(num+1)
 	pass
 
 func toTitle():
