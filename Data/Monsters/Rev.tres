@@ -17,7 +17,7 @@
 [sub_resource type="Resource" id="Resource_dmqgo"]
 script = ExtResource("1_mkiur")
 name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy")])
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("6_lg813"), ExtResource("6_lg813"), ExtResource("7_af52l"), ExtResource("7_af52l"), ExtResource("6_4dsu4"), ExtResource("6_4dsu4"), ExtResource("7_30i7t"), ExtResource("7_30i7t"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("9_rdtyy"), ExtResource("9_rdtyy"), ExtResource("5_hldoi"), ExtResource("5_hldoi"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("8_384qj"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5"), ExtResource("8_n3sv5")])
 
 [resource]
 script = ExtResource("2_dbcrm")

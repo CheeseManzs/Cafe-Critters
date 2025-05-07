@@ -58,69 +58,73 @@ bbcode_enabled = true
 text = "[center]Café Critters[/center]
 [center][color=gold]Debug Test[/color][/center]"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = 300.0
-offset_right = -100.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="Control UI"]
+layout_mode = 2
+offset_top = 270.0
+offset_right = 1920.0
+offset_bottom = 863.0
+alignment = 1
 
-[node name="Battle Button" type="Button" parent="Control UI/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="Battle Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Battle"
 
-[node name="Online Battle (Host)" type="Button" parent="Control UI/VBoxContainer"]
+[node name="Online Battle (Host)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Host"
 
-[node name="Team Selection Box" type="TextEdit" parent="Control UI/VBoxContainer"]
-custom_minimum_size = Vector2(0, 60)
-layout_mode = 2
-text = "Connecting..."
-
-[node name="Online Battle (Join)" type="Button" parent="Control UI/VBoxContainer"]
+[node name="Online Battle (Join)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Join"
 
-[node name="IP Box" type="TextEdit" parent="Control UI/VBoxContainer"]
+[node name="IP Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 text = "Not Connected"
 
-[node name="Overworld Button" type="Button" parent="Control UI/VBoxContainer"]
+[node name="Overworld Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Overworld"
 
-[node name="Deck Editor Button" type="Button" parent="Control UI/VBoxContainer"]
+[node name="Deck Editor Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Deck Editor"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Team Selection Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Connecting..."
+
 [node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
 script = ExtResource("7_co4j3")
-ipDisplay = NodePath("../Control UI/VBoxContainer/Online Battle (Host)")
-ipText = NodePath("../Control UI/VBoxContainer/IP Box")
-teamText = NodePath("../Control UI/VBoxContainer/Team Selection Box")
+ipDisplay = NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)")
+ipText = NodePath("../Control UI/HBoxContainer/VBoxContainer2/IP Box")
+teamText = NodePath("../Control UI/HBoxContainer/VBoxContainer/Team Selection Box")
 teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
-lockedButtons = [NodePath("../Control UI/VBoxContainer/Battle Button"), NodePath("../Control UI/VBoxContainer/Online Battle (Host)"), NodePath("../Control UI/VBoxContainer/Online Battle (Join)"), NodePath("../Control UI/VBoxContainer/Overworld Button")]
+lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button")]
 defaultPersonality = SubResource("Resource_pld1e")
 
-[connection signal="pressed" from="Control UI/VBoxContainer/Battle Button" to="." method="loadScene" binds= ["Battle"]]
-[connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
-[connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
-[connection signal="pressed" from="Control UI/VBoxContainer/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
-[connection signal="pressed" from="Control UI/VBoxContainer/Deck Editor Button" to="." method="loadScene" binds= ["DeckEditUI"]]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button" to="." method="loadScene" binds= ["DeckEditUI"]]

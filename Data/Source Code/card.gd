@@ -154,7 +154,7 @@ func meetsRequirement(card: Card, attacker: BattleMonster, defender: BattleMonst
 
 func omenCalc(attacker: BattleMonster, defender: BattleMonster):
 	var dmg = 0
-	if tags.has("Omen"):
+	if tags.has("Omen") || tags.has("Proc Omen"):
 		dmg = _omenCalc(attacker, defender)
 	print("found dmg: ", dmg)
 	return dmg
@@ -163,6 +163,7 @@ func omenCalc(attacker: BattleMonster, defender: BattleMonster):
 func _omenCalc(attacker: BattleMonster, defender: BattleMonster):
 	var dmg = 0
 	for card in getOmenCards(attacker.battleController):
+		print("omen card: ", card.name, " > ", card.originator == attacker)
 		if card.originator == attacker:
 			card.tags.erase("Omen")
 			print("adding: ",card.calcDamage(attacker, defender))

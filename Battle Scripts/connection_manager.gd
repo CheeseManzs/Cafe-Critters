@@ -31,15 +31,13 @@ func _ready() -> void:
 	for mon in debugManager.debugTeamA:
 		debTeam[mon] = mon.deck.storedCards
 	
-	teamText.text = JSON.stringify(teamPacker.toCacheArray(debTeam))
+	teamText.text = teamPacker.encode(teamPacker.toCacheArray(debTeam))
 	setTeam()
 	
 
 func setTeam():
-	var currentTeam: Array[Array]
-	var teamStr = JSON.parse_string(teamText.text)
-	currentTeam.assign(teamStr)
-	playerTeam = teamPacker.toMonsterArray(currentTeam)
+	var currentTeam: String
+	playerTeam = teamPacker.decode(teamText.text)
 
 func setIPText(txt):
 	ipText.text = txt
