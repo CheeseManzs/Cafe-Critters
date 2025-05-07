@@ -151,6 +151,8 @@ func rebuildMonsters(id, setCards = true):
 			%LeftGridContainer.add_child(cParent)
 	if setCards:
 		rebuildCards()
+	if playerMons != null && len(playerMons) > 0:
+		ConnectionManager.setTeamManual(playerMons)
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible

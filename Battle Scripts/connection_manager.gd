@@ -12,7 +12,8 @@ signal foundUPNP
 @export var defaultPersonality: AIPersonality
 
 var targetIP = "debug"
-var playerTeam: Array[Monster]
+static var hasSetTeam: bool = false
+static var playerTeam: Array[Monster]
 
 var peer = ENetMultiplayerPeer.new()
 var upnp = UPNP.new()
@@ -26,14 +27,20 @@ static var host = false
 func _ready() -> void:
 	if singleton == null:
 		singleton = self
+	if hasSetTeam == false:
+		hasSetTeam = true
+		playerTeam = debugManager.debugTeamA
 	
 	var debTeam: Dictionary[Monster, Array] = {}
-	for mon in debugManager.debugTeamA:
+	for mon in playerTeam:
 		debTeam[mon] = mon.deck.storedCards
 	
 	teamText.text = teamPacker.encode(teamPacker.toCacheArray(debTeam))
 	setTeam()
-	
+
+
+static func setTeamManual(monArr: Array[Monster]):
+	playerTeam = monArr	
 
 func setTeam():
 	var currentTeam: String
