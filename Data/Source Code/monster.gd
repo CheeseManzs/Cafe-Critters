@@ -55,7 +55,7 @@ enum ROLE {
 @export var level: int
 static var MAX_LEVEL: int = 50
 static var BASE_AVG_STAT: float = 10
-static var PEAK_AVG_STAT: float = 50
+static var PEAK_AVG_STAT: float = 75 #50
 static var EXPONENTIAL_SCALING: float = 0.463
 
 @export var battleOffset: Vector2

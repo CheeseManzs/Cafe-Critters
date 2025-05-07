@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 5
 	priority = 0
 	alignment = ALIGNMENT.Rea
-	role = "Smol"
+	role = "Rev"
 	description = "Omen. (25% per Omen card in graveyard) Attack."
 	name = "Revenant Fury"
 	tags=["Omen"]

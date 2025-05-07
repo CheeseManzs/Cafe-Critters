@@ -523,8 +523,7 @@ volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
 audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3")])
-autoSet = 10
-multiplayerGameIndex = 10
+multiplayerGameIndex = -1
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]
 

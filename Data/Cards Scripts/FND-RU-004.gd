@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 2
 	priority = 0
 	alignment = ALIGNMENT.Rea
-	role = "Smol"
+	role = "Rev"
 	description = "If you've taken no damage this turn, gain 2 mp. 105% Attack."
 	name = "Skull Bash"
 

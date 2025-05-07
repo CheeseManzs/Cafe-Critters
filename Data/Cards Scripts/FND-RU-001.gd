@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Rea
-	role = "Smol"
+	role = "Rev"
 	description = "As an additional cost to play this card, shuffle an Omen card back into it's respective Fae's deck. Prevent the next instance of damage taken this turn."
 	name = "Dodge Roll"
 
