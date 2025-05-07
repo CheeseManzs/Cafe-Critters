@@ -103,6 +103,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Overworld"
 
+[node name="Deck Editor Button" type="Button" parent="Control UI/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Deck Editor"
+
 [node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
 script = ExtResource("7_co4j3")
 ipDisplay = NodePath("../Control UI/VBoxContainer/Online Battle (Host)")
@@ -117,3 +123,4 @@ defaultPersonality = SubResource("Resource_pld1e")
 [connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
 [connection signal="pressed" from="Control UI/VBoxContainer/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
 [connection signal="pressed" from="Control UI/VBoxContainer/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
+[connection signal="pressed" from="Control UI/VBoxContainer/Deck Editor Button" to="." method="loadScene" binds= ["DeckEditUI"]]

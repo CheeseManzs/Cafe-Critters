@@ -3,7 +3,7 @@
 # Click on cards (right) to add them into decks (left)
 
 extends Control
-@export var storedCards: CardStorage = CardStorage.new()
+#@export var storedCards: CardStorage = CardStorage.new()
 @export var monDeck: CardStorage = CardStorage.new()
 @export var playerMons: Array[Monster]
 @export var enemyMons: Array[Monster]
@@ -11,6 +11,7 @@ var allCards: Array[Card]
 var allMonsters: Array[Monster]
 var storedID: int
 var deckOpened: bool = true
+var cache = MonsterCache.singleton
 
 var currentDeck = CardStorage.new()
 var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
@@ -106,14 +107,17 @@ func rebuildMonsters(id):
 		# bad for inventory management. we convert a deck to a CardStorage first
 		# THEN we load the CardStorage
 		currentDeck.convertDeck(team[id].deck)
-		for ind in range(currentDeck.cards[0].size()):
+		for ind in range(currentDeck.cardNames.size()):
 			# loaded cardObjects get meta info that lets me add arbitrary
 			# behaviour to them. hopefully i can modify the context tool to
 			# do this for me but w/e
 			var temp = cardObject.instantiate()
 			var cParent = Control.new()
+			print(MonsterCache.singleton)
+			var loadedCard = MonsterCache.singleton.getCard(MonsterCache.singleton.getCardIDByName(currentDeck.cardNames[ind]))
+			#var loadedCard = load("res://Data/Cards/" + currentDeck.cardNames[ind] + ".tres")
 			temp.displayLocation = "collection"
-			temp.setCard(currentDeck.cardNames[ind], 1, null, "collection")
+			temp.setCard(loadedCard, 1, null, "collection")
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
 			temp.deckEditController = self
 			temp.canDrag = false
@@ -150,6 +154,24 @@ func _monster_select_pressed(storedMonster):
 	pass
 
 func moveCard(side, passCard):
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+		
+	if side == "left":
+		var temp: Array[Card] = [passCard]
+		team[internalID].deck.removeCards(temp)
+		rebuildMonsters(storedID)
+		pass
+	if side == "right":
+		team[internalID].deck.storedCards.append(passCard)
+		rebuildMonsters(storedID)
+		pass
 	print(side)
 	print(passCard)
 	pass

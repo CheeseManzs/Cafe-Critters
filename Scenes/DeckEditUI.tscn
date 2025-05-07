@@ -1,12 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bilfuichpxj00"]
+[gd_scene load_steps=4 format=3 uid="uid://bilfuichpxj00"]
 
 [ext_resource type="Script" uid="uid://dwsr5ddo2atr5" path="res://Overworld Scripts/deck_edit_ui.gd" id="1_tbx7c"]
-[ext_resource type="Script" uid="uid://cpea1o83cui8d" path="res://Data/Source Code/card_inventory.gd" id="2_aiymk"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="3_rfpxp"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="4_ptn7t"]
-
-[sub_resource type="Resource" id="Resource_tw7un"]
-script = ExtResource("2_aiymk")
 
 [node name="DeckEditUI" type="Control"]
 layout_mode = 3
@@ -16,7 +12,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tbx7c")
-storedCards = SubResource("Resource_tw7un")
 playerMons = Array[ExtResource("3_rfpxp")]([ExtResource("4_ptn7t"), null, null])
 enemyMons = Array[ExtResource("3_rfpxp")]([null, null, null])
 
