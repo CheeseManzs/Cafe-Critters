@@ -4,10 +4,6 @@ extends Resource
 @export var cache: Array[Monster]
 @export var cardCache: Array[Card]
 @export var cardFolderPath: String
-static var singleton: MonsterCache
-
-func _ready() -> void:
-	singleton = self
 
 
 #monArr is a dictionary where the key is the monster and the value is its corrosponding deck

@@ -3,17 +3,18 @@
 # Click on cards (right) to add them into decks (left)
 
 extends Control
-#@export var storedCards: CardStorage = CardStorage.new()
-@export var monDeck: CardStorage = CardStorage.new()
 @export var playerMons: Array[Monster]
 @export var enemyMons: Array[Monster]
+@export var cache: MonsterCache
+
 var allCards: Array[Card]
 var allMonsters: Array[Monster]
 var storedID: int
 var deckOpened: bool = true
-var cache = MonsterCache.singleton
+
 
 var currentDeck = CardStorage.new()
+var currentDeckZone = Zone.new()
 var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -42,6 +43,18 @@ func _ready() -> void:
 		temp.text = monster.name
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		$MonsterSelectPanel/MonsterGridContainer.add_child(temp)
+		
+	# sets up 2 buttons for importing/exporting teams
+	temp = Button.new()
+	temp.text = "export deck"
+	temp.pressed.connect(exportMons.bind())
+	%MonsterButtons.add_child(temp)
+	
+	temp = Button.new()
+	temp.text = "import deck"
+	temp.pressed.connect(importMons.bind())
+	%MonsterButtons.add_child(temp)
+		
 	pass # Replace with function body.
 
 
@@ -90,7 +103,7 @@ func rebuildCards():
 		
 # stupid function name
 # loads the deck of a selected monster onto the left
-func rebuildMonsters(id):
+func rebuildMonsters(id, setCards = true):
 	var team
 	if id > 2: 
 		team = enemyMons
@@ -107,31 +120,48 @@ func rebuildMonsters(id):
 		# bad for inventory management. we convert a deck to a CardStorage first
 		# THEN we load the CardStorage
 		currentDeck.convertDeck(team[id].deck)
+		currentDeckZone.storedCards.clear()
 		for ind in range(currentDeck.cardNames.size()):
 			# loaded cardObjects get meta info that lets me add arbitrary
 			# behaviour to them. hopefully i can modify the context tool to
 			# do this for me but w/e
 			var temp = cardObject.instantiate()
 			var cParent = Control.new()
-			print(MonsterCache.singleton)
-			var loadedCard = MonsterCache.singleton.getCard(MonsterCache.singleton.getCardIDByName(currentDeck.cardNames[ind]))
-			#var loadedCard = load("res://Data/Cards/" + currentDeck.cardNames[ind] + ".tres")
-			temp.displayLocation = "collection"
+			var loadedCard = cache.getCard(cache.getCardIDByName(currentDeck.cardNames[ind]))
+			
+			for i in range(currentDeck.cardCounts[ind]):
+				currentDeckZone.storedCards.append(loadedCard)
+				
 			temp.setCard(loadedCard, 1, null, "collection")
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
+			
+			
+			temp.displayLocation = "collection"
 			temp.deckEditController = self
 			temp.canDrag = false
 			temp.clickable = true
 			temp.set_meta("half", "left")
 			cParent.add_child(temp)
 			%LeftGridContainer.add_child(cParent)
-	rebuildCards()
+	if setCards:
+		rebuildCards()
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
 
 # selects a monster slot and loads their deck if possible so you can edit it
 func _monster_button_pressed(id):
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+	if currentDeckZone.storedCards and team[internalID]:
+		
+		team[internalID].deck.storedCards = currentDeckZone.storedCards.duplicate()
 	storedID = id
 	rebuildMonsters(storedID)
 	pass
@@ -165,13 +195,22 @@ func moveCard(side, passCard):
 		
 	if side == "left":
 		var temp: Array[Card] = [passCard]
-		team[internalID].deck.removeCards(temp)
-		rebuildMonsters(storedID)
+		currentDeckZone.removeCards(temp)
+		_monster_button_pressed(storedID)
 		pass
 	if side == "right":
 		team[internalID].deck.storedCards.append(passCard)
-		rebuildMonsters(storedID)
+		rebuildMonsters(storedID, false)
 		pass
-	print(side)
-	print(passCard)
+	pass
+
+func exportMons():
+	var tempDict: Dictionary[Monster, Array] = {}
+	for mon in playerMons:
+		tempDict[mon] = mon.deck.storedCards
+	%PortText.text = cache.encode(cache.toCacheArray(tempDict))
+	pass
+	
+func importMons():
+	playerMons = cache.decode(%PortText.text)
 	pass

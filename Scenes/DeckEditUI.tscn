@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bilfuichpxj00"]
+[gd_scene load_steps=5 format=3 uid="uid://bilfuichpxj00"]
 
 [ext_resource type="Script" uid="uid://dwsr5ddo2atr5" path="res://Overworld Scripts/deck_edit_ui.gd" id="1_tbx7c"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="3_rfpxp"]
+[ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="4_dpoq2"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="4_ptn7t"]
 
 [node name="DeckEditUI" type="Control"]
@@ -14,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_tbx7c")
 playerMons = Array[ExtResource("3_rfpxp")]([ExtResource("4_ptn7t"), null, null])
 enemyMons = Array[ExtResource("3_rfpxp")]([null, null, null])
+cache = ExtResource("4_dpoq2")
 
 [node name="CardGridHSplit" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -62,7 +64,7 @@ theme_override_constants/h_separation = 250
 theme_override_constants/v_separation = 350
 columns = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="ScrollContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.85
@@ -83,6 +85,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 6
+
+[node name="PortText" type="TextEdit" parent="ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MonsterSelectPanel" type="Panel" parent="."]
 visible = false
