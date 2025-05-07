@@ -19,13 +19,22 @@ var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	playerMons = ConnectionManager.playerTeam
+	while len(playerMons) < 3:
+		playerMons.push_back(null)
+	
 	buildCards()
 	buildMonsters()
 	allMonsters = cache.cache
 	# sets up the buttons that let you choose monster slots
+	var fullMons = playerMons + enemyMons
 	for i in range(6):
 		var temp = Button.new()
-		temp.text = "Monster" + str(i + 1)
+		if fullMons[i] == null:
+			temp.text = "Monster" + str(i + 1)
+		else:
+			temp.text = fullMons[i].name
 		# stores the monster's "id" as a meta variable, which then gets
 		# retrieved by the onclick to be used later! clever
 		temp.set_meta("id", i)
