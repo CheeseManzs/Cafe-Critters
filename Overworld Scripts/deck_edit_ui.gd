@@ -61,7 +61,7 @@ func _ready() -> void:
 		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		
-		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) + "\n" + str(monster.ROLE.keys()[monster.role])
+		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) + "\n" + str(monster.role)
 		tempLabel.custom_minimum_size = Vector2(120, 120)
 		
 		tempContainer.add_theme_constant_override("separation", 20)
@@ -130,7 +130,16 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
-		if mon != null && item.role not in ["Basic","Point","Forward","Guard","Point","Token",Card.ROLE.Point,Card.ROLE.Generic,Card.ROLE.Payoff,Card.ROLE.Support,Card.ROLE.Unique,Card.ROLE.Token,mon.name]:
+		print(item.name)
+		print(item.role)
+		print(mon.role)
+		if mon != null && item.role not in ["Basic",mon.role,mon.name]:
+			continue
+			
+		print(item.name)
+		print(item.alignment)
+		print(mon.alignment)
+		if item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
 			continue
 			
 		if mon != null && mon.name in [item.role]: #signature card

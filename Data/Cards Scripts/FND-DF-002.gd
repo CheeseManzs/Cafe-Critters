@@ -6,7 +6,7 @@ func _init() -> void:
 	alignment = ALIGNMENT.Default
 	role = "Basic"
 	description = "75% Attack. If Tagged, 150% Attack instead."
-	name = "Last Chance"
+	name = "Follow Up"
 	power = 0.75
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

@@ -22,7 +22,6 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 0.1
 offset_right = 700.0
-text = "Currently Editing: None!"
 
 [node name="CardGridHSplit" type="HSplitContainer" parent="."]
 layout_mode = 1

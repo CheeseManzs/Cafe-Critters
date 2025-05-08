@@ -25,7 +25,7 @@ enum ROLE {
 @export var name: String
 @export var tags: Array[String]
 @export var alignment: ALIGNMENT
-@export var role: ROLE
+@export var role: String
 @export var dexEntry: String
 @export var sprite: Texture
 @export var spriteScale: float = 1
