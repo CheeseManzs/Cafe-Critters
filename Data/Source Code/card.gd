@@ -37,6 +37,17 @@ static var tooltipColors = {
 	"Keyword":"gold"
 }
 
+static var alignemColors = {
+	ALIGNMENT.Default: "ffffff",
+	ALIGNMENT.Mise:"b2cdf7",
+	ALIGNMENT.Rea:"cdb6d9",
+	ALIGNMENT.Anvi:"ffe1b8",
+	ALIGNMENT.Sec:"faf4be",
+	ALIGNMENT.Eco:"ddfabe",
+	ALIGNMENT.Jacks:"ffbab8",
+	ALIGNMENT.Blanc:"c9c9c7",
+}
+
 
 #cost of card
 var cost: int

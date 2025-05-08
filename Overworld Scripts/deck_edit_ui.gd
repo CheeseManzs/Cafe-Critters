@@ -144,6 +144,8 @@ func rebuildCards(alignment = "all", role = "all"):
 			
 		if mon != null && mon.name in [item.role]: #signature card
 			temp.setTextColor(Color.YELLOW)
+		elif mon != null && item.alignment in [mon.alignment, item.ALIGNMENT.Default]:
+			temp.setTextColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
 		 
 		temp.displayLocation = "collection"
 		temp.setCard(item, 1, null, "collection")
