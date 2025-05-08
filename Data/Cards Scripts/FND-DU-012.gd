@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Haatea"
 	description = "Consume all Regen.  (10% + 20% per Regen consumed) Attack."
 	name = "Boiling Point"
 

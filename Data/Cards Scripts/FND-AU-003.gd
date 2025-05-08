@@ -10,7 +10,7 @@ func _init() -> void:
 	selfTarget = true
 
 func drawReq(x: Card):
-	return x.role is int && x.role == ROLE.Token
+	return x.role is int && x.role == "Token"
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var cards = await attacker.battleController.chooseCards(99,attacker.playerControlled,true,drawReq)

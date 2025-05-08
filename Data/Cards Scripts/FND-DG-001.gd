@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 1
 	alignment = ALIGNMENT.Default
-	role = ROLE.Support
+	role = "Guard"
 	description = "Gain 1 mp. Gain Barrier 3."
 	name = "Steady"
 	selfTarget = true

@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 3
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Generic
+	role = "Basic"
 	description = "Enemy 300% Attacks you. Draw 5 cards and gain 3 mana."
 	name = "Last Chance"
 	selfTarget = true

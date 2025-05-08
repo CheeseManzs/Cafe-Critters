@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 2
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Generic
+	role = "Basic"
 	description = "75% Attack. If Tagged, 150% Attack instead."
 	name = "Last Chance"
 	power = 0.75

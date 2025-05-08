@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Haatea"
 	description = "Consume all Barrier. Gain Regen per Barrier consumed."
 	name = "Steep"
 	selfTarget = true

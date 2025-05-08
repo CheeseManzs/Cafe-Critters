@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 3
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Haatea"
 	description = "Consume all Regen. Draw 1 card per Regen consumed."
 	name = "Sip"
 	selfTarget = true

@@ -19,7 +19,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		BattleLog.log("No token card to discard...")
 
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
-	if len(Zone.getRoleCardsInArray(attacker.currentHand.storedCards,ROLE.Token)) > 0:
+	if len(Zone.getRoleCardsInArray(attacker.currentHand.storedCards,"Token")) > 0:
 		return 8
 	else:
 		return 0

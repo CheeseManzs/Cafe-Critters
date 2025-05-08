@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Generic
+	role = "Basic"
 	description = "Gain 1 mp. 20% Attack."
 	name = "Warm Up"
 	

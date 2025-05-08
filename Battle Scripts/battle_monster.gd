@@ -208,7 +208,7 @@ func discardRandomCard() -> Card:
 	
 func discardRandomTokenCard() -> Card:
 	
-	var picked = await currentHand.getRandomRoleCard(Card.ROLE.Token)
+	var picked = await currentHand.getRandomRoleCard("Token")
 	if picked == null:
 		return null
 	currentHand.storedCards.erase(picked)

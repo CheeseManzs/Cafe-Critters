@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 2
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Support
+	role = "Guard"
 	description = "Clear all negative effects. Gain Regen 3."
 	name = "Soothing Song"
 	selfTarget = true
