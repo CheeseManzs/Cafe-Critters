@@ -35,13 +35,22 @@ func toDec(b: String) -> int:
 		scaler *= 2
 	return u
 
-func countDuplicates(arr: Array) -> Dictionary:
+static func countDuplicates(arr: Array) -> Dictionary:
 	var dict = {}
 	for element in arr:
 		if !dict.has(element):
 			dict[element] = 1
 		else:
 			dict[element] = dict[element] + 1
+	return dict
+	
+static func countCardDuplicates(arr: Array[Card]) -> Dictionary:
+	var dict = {}
+	for element in arr:
+		if !dict.has(element.name):
+			dict[element.name] = 1
+		else:
+			dict[element.name] = dict[element.name] + 1
 	return dict
 	
 func encode(cacheArr: Array[Array]) -> String:

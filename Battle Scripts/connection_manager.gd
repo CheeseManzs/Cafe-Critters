@@ -48,7 +48,7 @@ static func setTeamManual(monArr: Array[Monster]):
 func setTeam():
 	var currentTeam: String
 	playerTeam = teamPacker.decode(teamText.text)
-	print("lv:", playerTeam[0].level,playerTeam[0].getAttack(playerTeam[0].level))
+	print("valid: ",DeckVerification.teamIsValid(playerTeam))
 
 func setIPText(txt):
 	ipText.text = txt
