@@ -17,7 +17,7 @@ playerMons = Array[ExtResource("3_rfpxp")]([ExtResource("4_ptn7t"), null, null])
 enemyMons = Array[ExtResource("3_rfpxp")]([null, null, null])
 cache = ExtResource("4_dpoq2")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="TitleHelper" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 0.1

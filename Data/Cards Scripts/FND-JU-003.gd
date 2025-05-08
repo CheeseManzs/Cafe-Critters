@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Jacks
-	role = ROLE.Unique
+	role = "Hooliquen"
 	description = "If you were Reckless this turn, draw 2 cards. Attack 25%."
 	name = "Non-Pointy End"
 	power = 0.25

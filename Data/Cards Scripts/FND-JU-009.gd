@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Jacks
-	role = ROLE.Unique
+	role = "Hooliquen"
 	description = "Reckless > 100% Attack. If Reckless, gain 2 mp and draw 2 cards. You gain +25% on Attacks this turn."
 	name = "Devious Cackle"
 	selfTarget = true

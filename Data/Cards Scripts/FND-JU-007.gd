@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 2
 	priority = 0
 	alignment = ALIGNMENT.Jacks
-	role = ROLE.Unique
+	role = "Hooliquen"
 	description = "Reckless > 100% Attack. If Reckless, gain 2 mp. 125% Attack"
 	name = "Breakneck Barrage"
 	

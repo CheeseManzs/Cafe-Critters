@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Slocha"
 	description = "Gain Haste 1. Empowered: Gain Haste 3"
 	name = "Cappucino"
 

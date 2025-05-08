@@ -117,7 +117,7 @@ func buildCards():
 # used to add cards to the cards display
 # currently shows all cards (TODO: ADD FILTERING)
 # it's the collection so you click here to add to the deck uhhh
-func rebuildCards(): 
+func rebuildCards(alignment = "all", role = "all"): 
 	for child in %RightGridContainer.get_children():
 		child.queue_free() 
 	for item in allCards:

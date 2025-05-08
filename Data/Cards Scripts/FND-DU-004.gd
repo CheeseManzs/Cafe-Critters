@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Slocha"
 	description = "40% Attack, Empowered: Empower the next card played."
 	name = "Espresso"
 	power = 0.4

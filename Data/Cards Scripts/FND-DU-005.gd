@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 1
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Slocha"
 	description = "30% Defend, Empowered: Draw 1"
 	name = "Affogato"
 	shieldPower = 0.3

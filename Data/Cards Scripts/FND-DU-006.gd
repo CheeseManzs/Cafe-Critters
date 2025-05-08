@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
+	role = "Slocha"
 	description = "Set your Attack to 0. Empower the next card played."
 	name = "Press"
 	selfTarget = true
