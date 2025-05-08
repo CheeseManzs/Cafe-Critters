@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Default
-	role = ROLE.Token
+	role = "Token"
 	description = "Token card. Does nothing."
 	name = "Scrap Token"
 	power = 0
