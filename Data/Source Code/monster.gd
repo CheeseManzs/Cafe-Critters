@@ -56,8 +56,8 @@ enum ROLE {
 static var MAX_LEVEL: int = 50
 static var AVG_BASE_STAT: float = 10
 static var AVG_MIN_STAT: float = 10
-static var AVG_MAX_STAT: float = 75 #50
-static var EXPONENTIAL_SCALING: float = 0.463
+static var AVG_MAX_STAT: float = 100 #50
+static var EXPONENTIAL_SCALING: float = 0.663 #0.463
 
 @export var battleOffset: Vector2
 
@@ -74,7 +74,7 @@ static var curveCache = {}
 #}
 
 static func statFormula(lv, base):
-	return pow((lv - 1)/(MAX_LEVEL - 1), EXPONENTIAL_SCALING) * (base/AVG_BASE_STAT) * (AVG_MAX_STAT - AVG_MIN_STAT) + AVG_MIN_STAT
+	return pow((float)(lv - 1)/(float)(MAX_LEVEL - 1), EXPONENTIAL_SCALING) * (base/AVG_BASE_STAT) * (AVG_MAX_STAT - AVG_MIN_STAT) + AVG_MIN_STAT
 
 static func generateStatCurve(baseStat) -> Curve:
 	if curveCache.has(baseStat):
