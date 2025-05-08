@@ -8,6 +8,14 @@ var cardCounts: Array = []
 func _init():
 	pass
 
+func getCard(resource: String):
+	var cardInd = cardNames.find(resource)
+	if cardInd == -1:
+		return 0
+	else:
+		return cardCounts[cardInd]
+	
+
 func addCards(resource: String, quantity: int = 1):
 	var cardInd = cardNames.find(resource)
 	if cardInd == -1:

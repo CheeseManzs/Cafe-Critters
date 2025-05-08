@@ -145,7 +145,7 @@ func rebuildCards(alignment = "all", role = "all"):
 		if mon != null && mon.name in [item.role]: #signature card
 			temp.setTextColor(Color.YELLOW)
 		elif mon != null && item.alignment in [mon.alignment, item.ALIGNMENT.Default]:
-			temp.setTextColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
+			temp.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
 		 
 		temp.displayLocation = "collection"
 		temp.setCard(item, 1, null, "collection")
@@ -171,11 +171,14 @@ func rebuildMonsters(id, setCards = true):
 		if team[id].deck.storedCards.size() == 0:
 			team[id].deck.storedCards = team[id].startingCardPool.storedCards
 				
-		# decks are stored as Deck Objects, which are good for decks but
+		# decks are stored as Zones, which are good for decks but
 		# bad for inventory management. we convert a deck to a CardStorage first
 		# THEN we load the CardStorage
 		currentDeck.convertDeck(team[id].deck)
+		
+		# currentDeckZone is used to store rendered cards
 		currentDeckZone.storedCards.clear()
+		
 		for ind in range(currentDeck.cardNames.size()):
 			# loaded cardObjects get meta info that lets me add arbitrary
 			# behaviour to them. hopefully i can modify the context tool to
@@ -184,12 +187,15 @@ func rebuildMonsters(id, setCards = true):
 			var cParent = Control.new()
 			var loadedCard = cache.getCard(cache.getCardIDByName(currentDeck.cardNames[ind]))
 			
+			# cache.getCard() creates a new resource ID each time it's called
+			# so storing multiple copies of the same card in currentDeckZone ensures
+			# that they can be found later  
 			for i in range(currentDeck.cardCounts[ind]):
 				currentDeckZone.storedCards.append(loadedCard)
-				
+			
+			# loadedCard is the card that gets rendered on screen
 			temp.setCard(loadedCard, 1, null, "collection")
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
-			
 			
 			temp.displayLocation = "collection"
 			temp.deckEditController = self
@@ -216,9 +222,13 @@ func _monster_button_pressed(id):
 	else:
 		team = playerMons 
 		internalID = storedID
+	
+	# only runs when going from one deck to another
+	# currentDeckZone is the "live" version of the current deck
+	# so it needs to be copies into the monster's real deck, as a "save" operation
 	if currentDeckZone.storedCards and team[internalID]:
-		
 		team[internalID].deck.storedCards = currentDeckZone.storedCards.duplicate()
+	
 	storedID = id
 	rebuildMonsters(storedID)
 	pass
@@ -240,6 +250,8 @@ func _monster_select_pressed(storedMonster):
 	$MonsterSelectPanel.visible = false
 	pass
 
+# called whenever a card is clicked
+# side is left in the monster deck and right in the master list
 func moveCard(side, passCard):
 	var team
 	var internalID
@@ -251,13 +263,17 @@ func moveCard(side, passCard):
 		internalID = storedID
 		
 	if side == "left":
+		# removes a card from the monster's deck
+		# currentDeckZone holds copies of display card which is why this works
 		var temp: Array[Card] = [passCard]
 		currentDeckZone.removeCards(temp)
 		_monster_button_pressed(storedID)
 		pass
 	if side == "right":
-		team[internalID].deck.storedCards.append(passCard)
-		rebuildMonsters(storedID, false)
+		# needs some kind of validation first
+		if currentDeck.getCard(passCard.name) < 3:
+			team[internalID].deck.storedCards.append(passCard)
+			rebuildMonsters(storedID, false)
 		pass
 	pass
 

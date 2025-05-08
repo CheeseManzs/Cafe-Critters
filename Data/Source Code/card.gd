@@ -39,12 +39,12 @@ static var tooltipColors = {
 
 static var alignemColors = {
 	ALIGNMENT.Default: "ffffff",
-	ALIGNMENT.Mise:"b2cdf7",
-	ALIGNMENT.Rea:"cdb6d9",
-	ALIGNMENT.Anvi:"ffe1b8",
-	ALIGNMENT.Sec:"faf4be",
-	ALIGNMENT.Eco:"ddfabe",
-	ALIGNMENT.Jacks:"ffbab8",
+	ALIGNMENT.Mise:"79c3ed",
+	ALIGNMENT.Rea:"d197f0",
+	ALIGNMENT.Anvi:"e89420",
+	ALIGNMENT.Sec:"f5e07a",
+	ALIGNMENT.Eco:"9dfc74",
+	ALIGNMENT.Jacks:"#fa8282",
 	ALIGNMENT.Blanc:"c9c9c7",
 }
 
