@@ -50,6 +50,8 @@ func _ready() -> void:
 	
 	# sets up an extra button for each monster in Data/Monsters
 	for monster in allMonsters:
+		var tempContainer = HBoxContainer.new()
+		var tempLabel = RichTextLabel.new()
 		temp = TextureButton.new()
 		temp.texture_normal = monster.sprite
 		temp.ignore_texture_size = true
@@ -58,7 +60,14 @@ func _ready() -> void:
 		temp.mouse_entered.connect(_enterTexButton.bind(temp))
 		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
-		$MonsterSelectPanel/MonsterGridContainer.add_child(temp)
+		
+		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) + "\n" + str(monster.ROLE.keys()[monster.role])
+		tempLabel.custom_minimum_size = Vector2(120, 120)
+		
+		tempContainer.add_theme_constant_override("separation", 20)
+		tempContainer.add_child(temp)
+		tempContainer.add_child(tempLabel)
+		$MonsterSelectPanel/MonsterGridContainer.add_child(tempContainer)
 		
 	# sets up 2 buttons for importing/exporting teams
 	temp = Button.new()
