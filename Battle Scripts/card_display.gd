@@ -40,6 +40,7 @@ var handSize = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	size = Vector2(720,1000)
 	currentlyDragging = false
 	normalZIndex = z_index
 	scale = Vector2(0.34,0.34)*scaleFactor
@@ -165,7 +166,6 @@ func straightLaunch():
 func _process(delta: float) -> void:
 	
 	if mouseOn == false:
-		size = Vector2(720,1000)
 		scale = Vector2(0.34,0.34)*scaleFactor
 	if launched:
 			launch()
