@@ -394,10 +394,18 @@ func getSpeed():
 	return speed
 	
 func getAttack():
-	return attack*(1 + attackBonus + temp_attackBonus + getPassive().attackBonus(self,battleController))
+	var atkUpBonus = 0
+	if hasStatus(Status.EFFECTS.ATTACK_UP):
+		atkUpBonus = 0.05*getStatus(Status.EFFECTS.ATTACK_UP).X
+	
+	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + getPassive().attackBonus(self,battleController))
 
 func getDefense():
-	return defense*(1 + defenseBonus + getPassive().defenseBonus(self,battleController))
+	var defUpBonus = 0
+	if hasStatus(Status.EFFECTS.DEFENSE_UP):
+		defUpBonus = 0.05*getStatus(Status.EFFECTS.DEFENSE_UP).X
+	
+	return defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController))
 
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:

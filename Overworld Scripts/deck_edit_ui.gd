@@ -21,13 +21,18 @@ var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
+	cache.loadCards()
+	
+	allMonsters = cache.cache
+	allCards = cache.cardCache
+	
 	playerMons = ConnectionManager.playerTeam
 	while len(playerMons) < 3:
 		playerMons.push_back(null)
 	
 	buildCards()
 	buildMonsters()
-	allMonsters = cache.cache
+	
 	# sets up the buttons that let you choose monster slots
 	var fullMons = playerMons + enemyMons
 	for i in range(6):
@@ -99,23 +104,16 @@ func _process(delta: float) -> void:
 # finds every monster implemented so far and stores them to allMonsters for future
 # stores Monster resources which we can plug diretly into teams (nice)
 func buildMonsters():
-	var monsterDir = DirAccess.open("res://Data/Monsters")
-	monsterDir.list_dir_begin()
-	var readMonsterName = monsterDir.get_next()
-	while readMonsterName != "":
-		allMonsters.push_back(load("res://Data/Monsters/" + readMonsterName))
-		readMonsterName = monsterDir.get_next()
+	allMonsters = cache.cache
 	pass
 
 # finds every card made so far and stores them into allCards for future
 # stores Card resources which plug directly into decks
 func buildCards():
-	var cardDir = DirAccess.open("res://Data/Cards")
-	cardDir.list_dir_begin()
-	var readCardName = cardDir.get_next()
-	while readCardName != "":
-		allCards.push_back(load("res://Data/Cards/" + readCardName))
-		readCardName = cardDir.get_next()
+	cache.loadCards()
+	allCards = cache.cardCache
+	for card in allCards:
+		print("added card: ", card.name)
 		
 # used to add cards to the cards display
 # currently shows all cards (TODO: ADD FILTERING)
@@ -133,6 +131,10 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
+		print("all card: ", item.name, ", ", item.get_script().get_path())
+		print(item.role)
+		print(mon.role)
+		if mon != null && item.role not in ["Basic",mon.role,mon.name]:
 		if applyFilter(item, mon, temp):
 			continue
 		

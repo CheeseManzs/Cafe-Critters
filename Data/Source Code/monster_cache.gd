@@ -5,6 +5,7 @@ extends Resource
 @export var cardCache: Array[Card]
 @export var cardFolderPath: String
 
+var loadedCards = false
 
 #monArr is a dictionary where the key is the monster and the value is its corrosponding deck
 func toCacheArray(monArr: Dictionary[Monster, Array]) -> Array[Array]:
@@ -161,6 +162,11 @@ func getCards(ids: Array[int]) -> Array[Card]:
 	return cards
 	
 func loadCards():
+	if loadedCards:
+		return
+	
+	loadedCards = true
+	
 	if !cardFolderPath.ends_with("/"):
 		cardFolderPath = cardFolderPath + "/"
 	
@@ -175,6 +181,8 @@ func loadCards():
 		print("loading ",filename)
 		var absPath = cardFolderPath+filename
 		var card = ResourceLoader.load(absPath, "Card")
+		print(filename, " > ", card.name)
+		print(filename, " is null: ", (card == null))
 		cardCache.push_back(card)
 		filename = dir.get_next()
 	
