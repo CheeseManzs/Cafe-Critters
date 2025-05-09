@@ -254,3 +254,6 @@ func sendToDeckEditor():
 func setTextColor(col: Color):
 	titleLabel.set("theme_override_colors/default_color",col)
 	manaLabel.set("theme_override_colors/default_color",col)
+
+func setFaceColor(col: Color):
+	$Front.self_modulate = col
