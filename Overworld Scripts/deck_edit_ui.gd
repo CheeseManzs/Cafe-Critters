@@ -11,6 +11,7 @@ var allCards: Array[Card]
 var allMonsters: Array[Monster]
 var storedID: int
 var deckOpened: bool = true
+var strictMode: bool = true
 
 
 var currentDeck = CardStorage.new()
@@ -43,6 +44,8 @@ func _ready() -> void:
 		# stores the monster's "id" as a meta variable, which then gets
 		# retrieved by the onclick to be used later! clever
 		temp.set_meta("id", i)
+		if i >= 3:
+			temp.disabled = true
 		temp.pressed.connect(_monster_button_pressed.bind(temp.get_meta("id")))
 		%MonsterButtons.add_child(temp)
 		
@@ -128,10 +131,6 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
-		print("all card: ", item.name, ", ", item.get_script().get_path())
-		print(item.role)
-		print(mon.role)
-		if mon != null && item.role not in ["Basic",mon.role,mon.name]:
 		if applyFilter(item, mon, temp):
 			continue
 		
@@ -184,8 +183,10 @@ func rebuildMonsters(id, setCards = true):
 			
 			# loadedCard is the card that gets rendered on screen
 			temp.setCard(loadedCard, 1, null, "collection")
+			if currentDeck.cardCounts[ind] > 3:
+				temp.get_child(1).set("theme_override_colors/default_color",Color.RED)
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
-			applyFilter(loadedCard, team[id], temp, false)
+			applyFilter(loadedCard, team[id], temp, true)
 			temp.displayLocation = "collection"
 			temp.deckEditController = self
 			temp.canDrag = false
@@ -197,6 +198,7 @@ func rebuildMonsters(id, setCards = true):
 		rebuildCards()
 	if playerMons != null && len(playerMons) > 0:
 		ConnectionManager.setTeamManual(playerMons)
+	%HelperTitle.text = "Currently Editing: " + team[id].name
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
@@ -220,6 +222,7 @@ func _monster_button_pressed(id):
 	
 	storedID = id
 	rebuildMonsters(storedID)
+	
 	pass
 	
 # sets a monster into a selected monster slot
@@ -260,7 +263,7 @@ func moveCard(side, passCard):
 		pass
 	if side == "right":
 		# needs some kind of validation first
-		if currentDeck.getCard(passCard.name) < 3:
+		if currentDeck.getCard(passCard.name) < 3 or strictMode == false:
 			team[internalID].deck.storedCards.append(passCard)
 			rebuildMonsters(storedID, false)
 		pass
@@ -268,23 +271,22 @@ func moveCard(side, passCard):
 
 # applies visual changes to target card based on monster
 # returns true if the card would get filtered out
-func applyFilter(item, mon, crd, strict = true):
+func applyFilter(item, mon, crd, loose = false):
 	if mon != null && item.role not in ["Basic",mon.role,mon.name]:
-		if strict == true:
+		if strictMode and !loose:
 			return true
 		else:
 			crd.setTextColor(Color.RED)
 		
-	if item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
-		if strict == true:
+	if mon != null and item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
+		if strictMode and !loose:
 			return true
 		else:
 			crd.setTextColor(Color.RED)
 		
 	if mon != null && mon.name in [item.role]: #signature card
 		crd.setTextColor(Color.YELLOW)
-	elif mon != null && item.alignment in [mon.alignment, item.ALIGNMENT.Default]:
-		crd.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
+	crd.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
 	 
 pass
 
@@ -297,7 +299,8 @@ func _exitTexButton(button: TextureButton):
 func exportMons():
 	var tempDict: Dictionary[Monster, Array] = {}
 	for mon in playerMons:
-		tempDict[mon] = mon.deck.storedCards
+		if mon:
+			tempDict[mon] = mon.deck.storedCards
 	%PortText.text = cache.encode(cache.toCacheArray(tempDict))
 	pass
 	
@@ -315,3 +318,9 @@ func importMons():
 
 func toTitle():
 	LoadManager.loadScene("Title")
+
+
+func toggleStrict(toggled_on: bool) -> void:
+	strictMode = !strictMode
+	rebuildMonsters(storedID)
+	pass # Replace with function body.
