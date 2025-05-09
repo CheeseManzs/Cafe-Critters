@@ -17,11 +17,25 @@ playerMons = Array[ExtResource("3_rfpxp")]([ExtResource("4_ptn7t"), null, null])
 enemyMons = Array[ExtResource("3_rfpxp")]([null, null, null])
 cache = ExtResource("4_dpoq2")
 
+[node name="StrictModeButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 24.0
+offset_right = 873.0
+offset_bottom = 55.0
+scale = Vector2(2, 2)
+button_pressed = true
+text = "Strict Mode"
+
 [node name="HelperTitle" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 0.1
 offset_right = 700.0
+theme_override_font_sizes/normal_font_size = 35
+text = "Currently Editing: None!"
+vertical_alignment = 1
 
 [node name="CardGridHSplit" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -122,3 +136,5 @@ theme_override_constants/v_separation = 20
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
