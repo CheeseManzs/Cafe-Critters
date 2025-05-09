@@ -29,7 +29,9 @@ enum EFFECTS {
 	POISON,
 	BURN,
 	NULLIFY_DAMAGE,
-	PERFECT_PARRY
+	PERFECT_PARRY,
+	ATTACK_UP,
+	DEFENSE_UP
 }
 var X: int = 0
 var Y: int = 0
@@ -111,6 +113,10 @@ func toMini() -> String:
 			return "NLD"
 		EFFECTS.PERFECT_PARRY:
 			return "PRY"
+		EFFECTS.ATTACK_UP:
+			return "ATK"
+		EFFECTS.DEFENSE_UP:
+			return "DEF"
 	return "N/A"
 	
 
@@ -170,6 +176,10 @@ func rawToString() -> String:
 			return "Nullify Next Hit"
 		EFFECTS.PERFECT_PARRY:
 			return "Perfect Parry"
+		EFFECTS.ATTACK_UP:
+			return "Attack Up"
+		EFFECTS.DEFENSE_UP:
+			return "Defense Up"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -209,6 +219,10 @@ func isPositive() -> bool:
 		EFFECTS.NULLIFY_DAMAGE:
 			return true
 		EFFECTS.PERFECT_PARRY:
+			return true
+		EFFECTS.ATTACK_UP:
+			return true
+		EFFECTS.DEFENSE_UP:
 			return true
 	return false
 

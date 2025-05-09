@@ -8,8 +8,8 @@ func _init() -> void:
 	description = "Gain Defense Up 1."
 	name = "Defense Up"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveStatus(attacker, Status.EFFECTS.DEFENSE_UP, 1)
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.DEFENSE_UP, 1)

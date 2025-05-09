@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_h8b7h"]
 [ext_resource type="Resource" uid="uid://cyfkwq8louf5t" path="res://Data/Cards/Double Bite.tres" id="3_2kv08"]
-[ext_resource type="Texture2D" uid="uid://cekjausnnqoja" path="res://Graphics/Monsters/ignetor_placeholder.png" id="3_ewnrg"]
 [ext_resource type="Resource" uid="uid://dvteihkyuvwkv" path="res://Data/Cards/Cleave.tres" id="4_iu8pt"]
 [ext_resource type="Resource" uid="uid://coyg0yjkl7nwa" path="res://Data/Cards/Hammer Head.tres" id="5_svvbb"]
 [ext_resource type="Resource" uid="uid://w2tc1euoehwq" path="res://Data/Cards/Heat Pump.tres" id="6_bm3go"]
@@ -12,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://dt85f2emye7a6" path="res://Data/Cards/Scrap.tres" id="8_hofqs"]
 [ext_resource type="Resource" uid="uid://bgip8qkk1shgw" path="res://Data/Cards/Molten Bubble.tres" id="9_n0bu2"]
 [ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
+[ext_resource type="Texture2D" uid="uid://b3jeog1jyky2k" path="res://Graphics/Monsters/Ignetor.png" id="12_e728s"]
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")
@@ -24,10 +24,10 @@ id = 3
 name = "Ignetor"
 tags = Array[String](["Machine"])
 alignment = 3
-role = "Point"
+role = "Forward"
 dexEntry = ""
-sprite = ExtResource("3_ewnrg")
-spriteScale = 0.019
+sprite = ExtResource("12_e728s")
+spriteScale = 0.667
 passive = ExtResource("9_p6ryl")
 deck = SubResource("Resource_rsf8y")
 levelupCards = Array[ExtResource("1_517cx")]([])
