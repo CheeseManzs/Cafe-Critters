@@ -131,10 +131,6 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
-		print("all card: ", item.name, ", ", item.get_script().get_path())
-		print(item.role)
-		print(mon.role)
-		if mon != null && item.role not in ["Basic",mon.role,mon.name]:
 		if applyFilter(item, mon, temp):
 			continue
 		
