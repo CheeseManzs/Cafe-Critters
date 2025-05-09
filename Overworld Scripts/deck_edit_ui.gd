@@ -130,23 +130,9 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
-		print(item.name)
-		print(item.role)
-		print(mon.role)
-		if mon != null && item.role not in ["Basic",mon.role,mon.name]:
+		if applyFilter(item, mon, temp):
 			continue
-			
-		print(item.name)
-		print(item.alignment)
-		print(mon.alignment)
-		if item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
-			continue
-			
-		if mon != null && mon.name in [item.role]: #signature card
-			temp.setTextColor(Color.YELLOW)
-		elif mon != null && item.alignment in [mon.alignment, item.ALIGNMENT.Default]:
-			temp.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
-		 
+		
 		temp.displayLocation = "collection"
 		temp.setCard(item, 1, null, "collection")
 		temp.deckEditController = self
@@ -193,10 +179,11 @@ func rebuildMonsters(id, setCards = true):
 			for i in range(currentDeck.cardCounts[ind]):
 				currentDeckZone.storedCards.append(loadedCard)
 			
+			
 			# loadedCard is the card that gets rendered on screen
 			temp.setCard(loadedCard, 1, null, "collection")
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
-			
+			applyFilter(loadedCard, team[id], temp, false)
 			temp.displayLocation = "collection"
 			temp.deckEditController = self
 			temp.canDrag = false
@@ -277,6 +264,27 @@ func moveCard(side, passCard):
 		pass
 	pass
 
+# applies visual changes to target card based on monster
+# returns true if the card would get filtered out
+func applyFilter(item, mon, crd, strict = true):
+	if mon != null && item.role not in ["Basic",mon.role,mon.name]:
+		if strict == true:
+			return true
+		else:
+			crd.setTextColor(Color.RED)
+		
+	if item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
+		if strict == true:
+			return true
+		else:
+			crd.setTextColor(Color.RED)
+		
+	if mon != null && mon.name in [item.role]: #signature card
+		crd.setTextColor(Color.YELLOW)
+	elif mon != null && item.alignment in [mon.alignment, item.ALIGNMENT.Default]:
+		crd.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
+	 
+pass
 
 func _enterTexButton(button: TextureButton):
 	button.modulate = Color(0.5,0.5,0.5,1)
