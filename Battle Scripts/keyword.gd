@@ -32,7 +32,8 @@ static var keywords = [
 	"Defense Up",
 	"Attack Down",
 	"Defense Down",
-	"Gold"
+	"Gold",
+	"Omen"
 ]
 
 static var keywordDescriptions = {
@@ -66,7 +67,8 @@ static var keywordDescriptions = {
 	"Defense Up": "Faes get +5% damage on Defense cards per stack of Defense Up",
 	"Attack Down": "Faes get -5% damage on Attack cards per stack of Attack Down",
 	"Defense Down": "Faes get -5% damage on Attack cards per stack of Frailty",
-	"Gold": "0 Cost: Draw a card. Gain 1 mp."
+	"Gold": "0 Cost: Draw a card. Gain 1 mp.",
+	"Omen": "Whenever an Omen card is played and this card is in the graveyard, trigger it's effects. If this card was triggered, is in the graveyard and was not played, shuffle it back into it's respective Fae's deck."
 }
 
 static func getDescription(keywordString) -> String:

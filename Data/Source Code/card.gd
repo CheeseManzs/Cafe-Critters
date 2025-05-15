@@ -78,14 +78,23 @@ var selfTarget: bool = false
 
 
 
-func getSurroundingWord(s: String, index):
+func getSurroundingWord(s: String, index, spaceCount = 0):
 	var left = index
 	var right = index
+	var maxSpaces = spaceCount
+	var rightSpaces = maxSpaces
+	
 	while left > 0 && s[left] != " ":
 		left = left - 1
-	while right < len(s) && s[right] != " ":
+	
+	while right < len(s) && rightSpaces >= 0:
+		if s[right] == " ":
+			rightSpaces -= 1
+		if rightSpaces < 0:
+			break
 		right = right + 1
 	print("left:",left," right:",right)
+	print(s, " l:", left, " r-l:",right - left)
 	return s.substr(left, right - left)
 	
 
@@ -255,20 +264,21 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 			replaceList.push_back(toReplace)
 
 	for rawKeywordString in Keyword.keywords:
+		var spaces = rawKeywordString.count(" ")
 		for ending in ["","."]:
 			var keywordString = rawKeywordString + ending
 			atkDescInd = description.find(keywordString)
 			while atkDescInd != -1:
 				var toReplace = keywordString
 				var resetInd = atkDescInd
-				print(toReplace,getSurroundingWord(description,resetInd))
+				print("toReplace: ", "1:",toReplace,"2:",getSurroundingWord(description,resetInd,spaces),"|")
 				atkDescInd = description.find(toReplace, atkDescInd+1)
-				if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd).trim_prefix(" ") == toReplace:
+				if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd,spaces).trim_prefix(" ") == toReplace:
 					replaceBin.push_back([toReplace,null,toReplace,tooltipColors["Keyword"],Keyword.getDescription(rawKeywordString)])
 					replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
-		var tooltip = "[hint={ratio}][color={col}]".format({"ratio": rpl[4], "col": rpl[3]})
+		var tooltip = '[hint="{ratio}"][color={col}]'.format({"ratio": rpl[4], "col": rpl[3]})
 		if rpl[1] == null:
 			description = description.replace(rpl[0],tooltip+rpl[2]+"[/color][/hint]")
 		else:
