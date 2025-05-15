@@ -9,7 +9,7 @@ extends Control
 
 var allCards: Array[Card]
 var allMonsters: Array[Monster]
-var storedID: int
+var storedID: int = -1
 var deckOpened: bool = true
 var strictMode: bool = true
 
@@ -88,6 +88,12 @@ func _ready() -> void:
 	temp.pressed.connect(importMons.bind())
 	%MonsterButtons.add_child(temp)
 	
+	# sets up button to empty a deck
+	temp = Button.new()
+	temp.text = "clear deck"
+	temp.pressed.connect(clearDeck.bind())
+	%MonsterButtons.add_child(temp)
+	
 	# return to title :3
 	temp = Button.new()
 	temp.text = "back to title"
@@ -145,7 +151,7 @@ func rebuildCards(alignment = "all", role = "all"):
 		
 # stupid function name
 # loads the deck of a selected monster onto the left
-func rebuildMonsters(id, setCards = true):
+func rebuildMonsters(id, setCards = true, setupMonster = false):
 	var team
 	if id > 2: 
 		team = enemyMons
@@ -155,7 +161,7 @@ func rebuildMonsters(id, setCards = true):
 	for child in %LeftGridContainer.get_children():
 		child.queue_free() 
 	if team[id] != null:
-		if team[id].deck.storedCards.size() == 0:
+		if team[id].deck.storedCards.size() == 0 and setupMonster == true:
 			team[id].deck.storedCards = team[id].startingCardPool.storedCards
 				
 		# decks are stored as Zones, which are good for decks but
@@ -198,7 +204,7 @@ func rebuildMonsters(id, setCards = true):
 		rebuildCards()
 	if playerMons != null && len(playerMons) > 0:
 		ConnectionManager.setTeamManual(playerMons)
-	%HelperTitle.text = "Currently Editing: " + team[id].name
+	%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
@@ -217,7 +223,7 @@ func _monster_button_pressed(id):
 	# only runs when going from one deck to another
 	# currentDeckZone is the "live" version of the current deck
 	# so it needs to be copies into the monster's real deck, as a "save" operation
-	if currentDeckZone.storedCards and team[internalID]:
+	if id == storedID and team[internalID]:
 		team[internalID].deck.storedCards = currentDeckZone.storedCards.duplicate()
 	
 	storedID = id
@@ -238,7 +244,7 @@ func _monster_select_pressed(storedMonster):
 		internalID = storedID
 	team[internalID] = storedMonster
 	%MonsterButtons.get_child(storedID).text = storedMonster.name
-	rebuildMonsters(storedID)
+	rebuildMonsters(storedID, true, true)
 	$MonsterSelectPanel.visible = false
 	pass
 
@@ -287,7 +293,7 @@ func applyFilter(item, mon, crd, loose = false):
 	if mon != null && mon.name in [item.role]: #signature card
 		crd.setTextColor(Color.YELLOW)
 	crd.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
-	 
+	crd.get_node("Front/Role").text = item.role[0]
 pass
 
 func _enterTexButton(button: TextureButton):
@@ -314,6 +320,15 @@ func importMons():
 			%MonsterButtons.get_child(num).text = playerMons[num].name
 		else:
 			%MonsterButtons.get_child(num).text = "Monster" + str(num+1)
+	pass
+
+func clearDeck():
+	if []:
+		print("yeah")
+	else:
+		print("nah")
+	currentDeckZone.storedCards.clear()
+	_monster_button_pressed(storedID)
 	pass
 
 func toTitle():
