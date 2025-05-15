@@ -634,7 +634,7 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 	for i in maxActiveMons:
 		var trySwitch = false
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
-		
+		BattleLog.log("Should switch: " + str(enemyAI.enemyShouldSwitch()))
 		if !(enemyAI.enemyShouldSwitch() || mon.hasStatus(Status.EFFECTS.KO)) && len(getActiveEnemyMon().playableCards()) > 0:
 			#choose card if mon has not fainted
 			if len(mon.playableCards()) == 0:
@@ -852,8 +852,14 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 				#cardButton.text += " (EMP)"
 				pass
-			## Disables the card if you can't affortd it.
-			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
+			## Disables the card if you can't afford it.
+			var strongarmEffect = false
+			if mon.hasStatus(Status.EFFECTS.STRONGARM):
+				var strongarmStatus = mon.getStatus(Status.EFFECTS.STRONGARM)
+				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
+					strongarmEffect = true
+
+			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 
@@ -997,7 +1003,7 @@ func activeTurn() -> void:
 		for sortedMon in sortedMonList():
 			for i in len(sortedMon.statusConditions):
 				var status: Status = sortedMon.statusConditions[i]
-				status.newTurn()
+				status.newSubTurn()
 		
 		var actions: Array[BattleAction] = []
 		
@@ -1015,7 +1021,7 @@ func activeTurn() -> void:
 		#show player gui
 		var mon: BattleMonster = getActivePlayerMon()
 		
-		
+		print("strongarmed")
 		setCardSelection(mon)
 		
 		#wait for a gui choice to be made

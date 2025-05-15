@@ -84,6 +84,8 @@ func decode(decoding: String) -> Array[Monster]:
 	if len(decoding) == 0:
 		return []
 	
+	loadCards()
+	
 	var cardDict = {}
 	var lines = decoding.split("\n")
 	var team: Array[Monster] = []

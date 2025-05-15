@@ -23,10 +23,10 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		BattleLog.singleton.log("Card does not meet requirements...")
 		return 0
 
-	await giveStatus_noempower(attacker, Status.EFFECTS.STRONGARM)
+	await giveStatus_noempower(defender, Status.EFFECTS.STRONGARM, 1)
 	
 	return
 
 #checks what status will be given to the user
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
-	return Status.new(Status.EFFECTS.STRONGARM)
+	return Status.new(Status.EFFECTS.STRONGARM, 1)

@@ -105,8 +105,7 @@ static func getTaggedCardsInArray(arr: Array[Card], tag: String):
 static func getRoleCardsInArray(arr: Array[Card], role: String):
 	var returnArray = []
 	for card in arr:
-		print(card.role, ": ",card.role is int)
-		if card.role is int && card.role == role:
+		if card.role == role:
 			returnArray.push_back(card)
 	return returnArray
 	

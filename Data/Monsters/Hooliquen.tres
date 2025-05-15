@@ -22,7 +22,7 @@
 [sub_resource type="Resource" id="Resource_y5cq6"]
 script = ExtResource("2_j0ra4")
 name = ""
-storedCards = Array[ExtResource("3_rwnvh")]([])
+storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("16_58exb"), ExtResource("16_58exb"), ExtResource("16_58exb"), ExtResource("16_58exb"), ExtResource("16_58exb")])
 
 [sub_resource type="Resource" id="Resource_7s4x1"]
 script = ExtResource("2_j0ra4")

@@ -12,4 +12,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	if defender.shield > 0:
 		await attacker.addAttackBonus(0.5, true)
 	await attacker.addMP(2)
-	await giveStatus_noempower(attacker, Status.EFFECTS.STRONGARM)
+	await giveStatus_noempower(defender, Status.EFFECTS.STRONGARM, 1)

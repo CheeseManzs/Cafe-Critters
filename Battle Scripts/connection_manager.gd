@@ -10,6 +10,7 @@ signal foundUPNP
 @export var debugManager: DebugGameManager
 @export var lockedButtons: Array[Button]
 @export var defaultPersonality: AIPersonality
+@export_multiline var defaultTeam: String
 
 var targetIP = "debug"
 static var hasSetTeam: bool = false
@@ -29,7 +30,7 @@ func _ready() -> void:
 		singleton = self
 	if hasSetTeam == false || len(playerTeam) == 0:
 		hasSetTeam = true
-		playerTeam = debugManager.debugTeamA
+		playerTeam = teamPacker.decode(defaultTeam)
 	
 	var debTeam: Dictionary[Monster, Array] = {}
 	for mon in playerTeam:

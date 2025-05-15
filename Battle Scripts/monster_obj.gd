@@ -7,6 +7,7 @@ extends Node3D
 @export var empowerParticles: GPUParticles3D
 @export var sprite: Sprite3D
 #total "time elapsed" tracker
+static var timeScale = 1
 var t = 0.0
 #link to monster data structure
 var monsterData: Monster
@@ -64,9 +65,9 @@ func hitAnimation() -> void:
 	
 	while elapsed < timeMax:
 		var progress: float = elapsed/timeMax
-		position += Vector3(2*lastDelta*back*(1 - progress), 0, 0)
-		elapsed += lastDelta
-		await get_tree().create_timer(lastDelta).timeout
+		position += Vector3(2*lastDelta*timeScale*back*(1 - progress), 0, 0)
+		elapsed += lastDelta*timeScale
+		await get_tree().create_timer(lastDelta*timeScale).timeout
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
 
@@ -78,8 +79,8 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 		var progress: float = (1 - dashFraction) + dashFraction*elapsed/(timeMax/2.0)
 		position = originalPos + deltaPos*pow(1 - progress, 3)
 		sprite.modulate.a = (a_progress)
-		elapsed += lastDelta
-		await get_tree().create_timer(lastDelta).timeout
+		elapsed += lastDelta*timeScale
+		await get_tree().create_timer(lastDelta*timeScale).timeout
 	#sprite.modulate.a = 1
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
@@ -111,8 +112,8 @@ func contactAnimation(target: MonsterDisplay) -> void:
 		connectedMon.battleController.dashParticles.global_position = global_position + deltaPos.normalized()*0.5
 		sprite.modulate.a = (1 - a_progress)
 		
-		elapsed += lastDelta
-		await get_tree().create_timer(lastDelta).timeout
+		elapsed += lastDelta*timeScale
+		await get_tree().create_timer(lastDelta*timeScale).timeout
 	connectedMon.battleController.dashParticles.emitting = false
 	
 	
@@ -182,16 +183,18 @@ func jumpToPosition(pos: Vector3, delta) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	lastDelta = delta
+	
+	var scaledDelta = delta*timeScale
 	#calculate and set the monster position to the intended position
 	if lockToIntendedPosition:
 		var intendedPosition: Vector3 =  getMonsterPosition()
 		if (intendedPosition - position).length() > 0.2 && !jumping:
 			jumping = true
-			jumpToPosition(intendedPosition, delta)
+			jumpToPosition(intendedPosition, scaledDelta)
 	#check if KO'd
 	if connectedMon.isKO():
 		#run KO animation
-		faintAnimation(delta)
+		faintAnimation(scaledDelta)
 	
 	
 	
@@ -231,6 +234,6 @@ func _process(delta: float) -> void:
 		elif connectedMon.hasStatus(Status.EFFECTS.PRIORITY):
 			targetColor = lerp(targetColor,Color.YELLOW, 0.2)
 		
-		sprite.modulate = lerp(sprite.modulate, targetColor, delta*4)
+		sprite.modulate = lerp(sprite.modulate, targetColor, scaledDelta*4)
 	#update the total time by adding the delta time to the tracker
-	t += delta
+	t += scaledDelta

@@ -375,13 +375,6 @@ func addStatusCondition(status: Status, broadcast = false):
 				[self]
 			)
 			battleController.conditionalActions.push_back(graveAction)
-		Status.EFFECTS.STRONGARM:
-			if health > 0:
-				await EffectFlair.singleton._runFlair("Strongarm", Color.ROYAL_BLUE)
-				var removedCard: Card = await battleController.getOpposingMon(playerControlled).exileRandomCard()
-				if removedCard != null:
-					removedCard.statusConditions.push_back(Status.EFFECTS.STRONGARM)
-				return
 	#enemy instant effects
 	if hasStatus(status.effect):
 		getStatus(status.effect).X += status.X
@@ -482,11 +475,13 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> v
 		var cameraMag = 0.6
 		if shielded:
 			cameraMag = 0.2
-		BattleCamera.singleton.shake(cameraMag*dmg/float(maxHP))
+		
+		BattleCamera.singleton.shake(cameraMag*min(1, dmg/float(maxHP)))
+			
 		#add popup text
 		var popup: DamagePopup = damagePopupPrefab.instantiate()
 		
-		popup.setDamage(dmg, 0.5 + 2*dmg/float(maxHP))
+		popup.setDamage(dmg, 0.5 + 2*min(1, dmg/float(maxHP)))
 		var obj: MonsterDisplay = getMonsterDisplay()
 		obj.get_parent().add_child(popup)
 		popup.position = obj.position + Vector3(0, 0.5, 0)

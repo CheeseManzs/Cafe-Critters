@@ -212,8 +212,6 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.REGEN:
 			return true
-		EFFECTS.STRONGARM:
-			return true
 		EFFECTS.PRIORITY:
 			return true
 		EFFECTS.NULLIFY_DAMAGE:
@@ -258,6 +256,23 @@ func newSubTurn() -> void:
 	match effect:
 		EFFECTS.PERFECT_PARRY:
 			effectDone = true
+		EFFECTS.SLOW:
+			if X <= 0:
+				effectDone = true
+		EFFECTS.HASTE:
+			if X <= 0:
+				effectDone = true
+		EFFECTS.PRIORITY:
+			if X == 0:
+				effectDone = true
+			X -= 1
+			return
+		EFFECTS.POISON:
+			if X < 1:
+				effectDone = true
+		EFFECTS.BURN:
+			if X < 1:
+				effectDone = true
 
 func newTurn() -> void:
 	#check effect
@@ -298,26 +313,16 @@ func newTurn() -> void:
 		EFFECTS.REGEN:
 			return
 		EFFECTS.STRONGARM:
+			effectDone = true
 			return
 		EFFECTS.RECKLESS:
 			effectDone = true
-			return
-		EFFECTS.PRIORITY:
-			if X == 0:
-				effectDone = true
-			X -= 1
 			return
 		EFFECTS.CANT_PLAY:
 			effectDone = true
 			return
 		EFFECTS.OVERHEAT:
 			return
-		EFFECTS.POISON:
-			if X < 1:
-				effectDone = true
-		EFFECTS.BURN:
-			if X < 1:
-				effectDone = true
 		EFFECTS.NULLIFY_DAMAGE:
 			effectDone = true
 		EFFECTS.PERFECT_PARRY:

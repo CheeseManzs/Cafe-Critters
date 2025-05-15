@@ -57,7 +57,7 @@ static var MAX_LEVEL: int = 50
 static var AVG_BASE_STAT: float = 10
 static var AVG_MIN_STAT: float = 10
 static var AVG_MAX_STAT: float = 100 #50
-static var EXPONENTIAL_SCALING: float = 0.663 #0.463
+static var EXPONENTIAL_SCALING: float = 0.963 #0.463
 
 @export var battleOffset: Vector2
 

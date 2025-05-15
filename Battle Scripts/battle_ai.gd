@@ -210,14 +210,14 @@ func enemyShouldSwitch():
 	#get active monster
 	var mon = battleController.getActiveEnemyMon()
 	#if monster is at or below 50% hp then switch out
-	var switchScore = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
+	var scoreToBeat = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
 	
 	for otherMon in battleController.enemyTeam:
 		if !battleController.validSwap(mon, otherMon):
 			continue
-		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1]
-		print("sw/pot: ",switchScore,"/",pot,"|",100*(1 + personality.standards))
-		if pot > switchScore && pot >= 100*(1 + personality.standards):
+		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1]/sqrt(personality.opportunism)
+		print("sw/pot: ",scoreToBeat,"/",pot,"|",100*(1 + personality.standards))
+		if pot > scoreToBeat && pot >= 100*(1 + personality.standards):
 			print("found switch!")
 			shouldSwich = true
 			break
@@ -316,6 +316,7 @@ func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 		
 		var score = scoreCard(mon, target, card, activeMon, MP, targetMP)
 		print(card.name+": ", score)
+		BattleLog.log(card.name + ": " + str(score))
 		if score > maxScore:
 			maxScore = score
 			bestCard = card

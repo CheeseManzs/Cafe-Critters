@@ -12,10 +12,10 @@
 
 [sub_resource type="Resource" id="Resource_eb42p"]
 script = ExtResource("6_3vadh")
-aggression = 1.0
-caution = 0.0
-mechanics = 1.0
-standards = 1.0
+aggression = 2.0
+caution = 1.0
+mechanics = 100.0
+standards = 0.0
 opportunism = 10.0
 
 [sub_resource type="Resource" id="Resource_pld1e"]
@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
 debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_ntvn1"), ExtResource("3_lv63s"), ExtResource("5_f5fnq")])
-debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("3_lv63s"), ExtResource("5_f5fnq"), ExtResource("6_2sjoh")])
+debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("6_2sjoh"), ExtResource("3_lv63s"), ExtResource("5_f5fnq")])
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]
@@ -122,6 +122,37 @@ teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
 lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button")]
 defaultPersonality = SubResource("Resource_pld1e")
+defaultTeam = "Ignetor (50)
+- Cleave (3)
+- Block (3)
+- Double Bite (3)
+- Hammer Head (3)
+- Heat Pump (3)
+- Strike (3)
+- Scrap (3)
+Rev (50)
+- Assist (3)
+- Attack Up (3)
+- Dodge Roll (3)
+- Defense Up (3)
+- Block (3)
+- Panicked Streets (1)
+- Perfect Parry (3)
+- Raven Sighting (3)
+- Revenant Fury (3)
+- Toll the Bell (3)
+Slocha (50)
+- Affogato (3)
+- Caffeinate (3)
+- Block (3)
+- Espresso (3)
+- Heal (3)
+- Latte (3)
+- Rejuvenate (3)
+- Recalibrate (3)
+- Roast (3)
+- Turtle Time (3)
+- Warm Up (3)"
 
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
