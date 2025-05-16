@@ -14,7 +14,7 @@
 script = ExtResource("6_3vadh")
 aggression = 2.0
 caution = 1.0
-mechanics = 100.0
+mechanics = 5.0
 standards = 0.0
 opportunism = 10.0
 

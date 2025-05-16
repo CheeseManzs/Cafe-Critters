@@ -165,14 +165,33 @@ func discardAnimation(card: Card) -> void:
 	
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
-	
-func exileCard(card: Card):
+
+func exileCard(card: Card, discardAnim = true):
 	if card == null:
 		return
-	await discardAnimation(card)
+	if discardAnim:
+		await discardAnimation(card)
 	exileZone.storedCards.push_back(card)
 	BattleLog.singleton.log(rawData.name + " exiled " + card.name)
 
+func gravyardSize():
+	var s = 0
+	for card in battleController.graveyard:
+		if card.originator != null && card.originator.playerControlled == playerControlled:
+			s += 1
+	return s
+
+func randomGraveyardCardFromTeam(removeCard = false) -> Card:
+	var canPull = []
+	for card in battleController.graveyard:
+		if card.originator != null && card.originator.playerControlled == playerControlled:
+			canPull.append(card)
+	if len(canPull) == 0:
+		return null
+	var pulled = canPull[battleController.global_rng.randi_range(0, len(canPull) - 1)]
+	if removeCard:
+		battleController.graveyard.erase(pulled)
+	return pulled
 
 func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	if card == null:

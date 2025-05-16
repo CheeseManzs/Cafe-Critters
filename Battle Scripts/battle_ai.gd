@@ -316,7 +316,6 @@ func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 		
 		var score = scoreCard(mon, target, card, activeMon, MP, targetMP)
 		print(card.name+": ", score)
-		BattleLog.log(card.name + ": " + str(score))
 		if score > maxScore:
 			maxScore = score
 			bestCard = card
