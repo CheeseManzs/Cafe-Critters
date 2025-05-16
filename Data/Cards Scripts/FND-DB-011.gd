@@ -7,9 +7,9 @@ func _init() -> void:
 	role = "Basic"
 	description = "50% Attack. 50% Defend"
 	name = "Shield Slap"
+	power = 0.5
+	shieldPower = 0.5
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)
+	await dealDamage(attacker, defender)
