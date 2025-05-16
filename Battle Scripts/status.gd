@@ -273,6 +273,9 @@ func newSubTurn() -> void:
 		EFFECTS.BURN:
 			if X < 1:
 				effectDone = true
+		EFFECTS.CANT_PLAY:
+			effectDone = true
+			return
 
 func newTurn() -> void:
 	#check effect
@@ -316,9 +319,6 @@ func newTurn() -> void:
 			effectDone = true
 			return
 		EFFECTS.RECKLESS:
-			effectDone = true
-			return
-		EFFECTS.CANT_PLAY:
 			effectDone = true
 			return
 		EFFECTS.OVERHEAT:

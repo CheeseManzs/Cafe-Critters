@@ -5,7 +5,7 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Forward"
-	description = "When you play this card, you can no longer play other cards for the rest of the turn. 100% Attack"
+	description = "When you play this card, you can no longer play other cards for the rest of the round. 100% Attack"
 	name = "Last Stand"
 	
 	power = 1
