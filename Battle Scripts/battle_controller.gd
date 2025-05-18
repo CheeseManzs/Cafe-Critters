@@ -260,7 +260,6 @@ func getNextChoice():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("reading personality: ",enemyPersonality.aggression)
 	#debug initialization
 	global_rng = RandomNumberGenerator.new()
 	if multiplayer_game:
@@ -493,7 +492,6 @@ func getHigherSpeed(a: BattleMonster, b: BattleMonster):
 	if a.speed < b.speed:
 		return false
 	else:
-		print("higher speed is random! > ",self.multiplayer.get_unique_id())
 		return randomBool()
 
 func getLowerID(a: BattleMonster, b: BattleMonster):
@@ -502,7 +500,6 @@ func getLowerID(a: BattleMonster, b: BattleMonster):
 	if a.gameID < b.gameID:
 		return false
 	else:
-		print("lower id is random! > ",multiplayer.get_unique_id())
 		return randomBool()
 		
 
@@ -957,7 +954,6 @@ func activeTurn() -> void:
 	#post reset actions
 
 	for mon in sortedMonList():
-		print("running passive for ", mon.rawData.name,">",mon.playerControlled,">",multiplayer.get_unique_id())
 		await mon.getPassive().initPassive(mon,self)
 	
 	
@@ -1008,7 +1004,6 @@ func activeTurn() -> void:
 		var actions: Array[BattleAction] = []
 		
 		if endTurn:
-			print("ending turn!")
 			break
 		
 		for sorted_mon in sortedActiveMonList():
@@ -1020,8 +1015,6 @@ func activeTurn() -> void:
 
 		#show player gui
 		var mon: BattleMonster = getActivePlayerMon()
-		
-		print("strongarmed")
 		setCardSelection(mon)
 		
 		#wait for a gui choice to be made

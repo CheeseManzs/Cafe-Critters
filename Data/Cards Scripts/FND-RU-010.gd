@@ -10,3 +10,6 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(attacker, Status.EFFECTS.PERFECT_PARRY)
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.PERFECT_PARRY)

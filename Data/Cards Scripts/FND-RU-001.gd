@@ -9,7 +9,6 @@ func _init() -> void:
 	name = "Dodge Roll"
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveStatus(attacker, Status.EFFECTS.NULLIFY_DAMAGE, 0, 0, true, false)
 	var omenCards = getOmenCards(attacker.battleController)
 	if len(omenCards) <= 0:
 		BattleLog.singleton.log("No omen cards to retrieve...")
@@ -20,4 +19,12 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	attacker.currentDeck.storedCards.push_back(omenCard)
 	BattleLog.singleton.log(attacker.rawData.name + " retrieved " + omenCard.name + " from the Graveyard!")
 	await attacker.battleController.get_tree().create_timer(1.0).timeout
+	await giveStatus(attacker, Status.EFFECTS.NULLIFY_DAMAGE, 0, 0, true, false)
 	pass
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	var omenCards = getOmenCards(attacker.battleController)
+	if len(omenCards) <= 0:
+		return null
+	else:
+		return Status.new(Status.EFFECTS.NULLIFY_DAMAGE)

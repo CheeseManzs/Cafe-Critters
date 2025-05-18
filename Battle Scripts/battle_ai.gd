@@ -100,6 +100,14 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 			for potentialCard in mon.currentHand.storedCards:
 				oppurtunityCost += 1
 			return -oppurtunityCost
+		Status.EFFECTS.NULLIFY_DAMAGE:
+			var opp = battleController.getOpposingMon(mon.playerControlled)
+			var maxDmg = maxDamage(opp, mon)
+			return min(maxDmg,mon.health)/10.0
+		Status.EFFECTS.PERFECT_PARRY:
+			var opp = battleController.getOpposingMon(mon.playerControlled)
+			var maxDmg = maxDamage(opp, mon)
+			return min(maxDmg,mon.health)/10.0 + maxDmg*personality.aggression/10.0
 	return 0
 
 
@@ -213,9 +221,9 @@ func enemyShouldSwitch():
 	var scoreToBeat = scoreMonPotential(mon,battleController.getActivePlayerMon())[1]
 	
 	for otherMon in battleController.enemyTeam:
-		if !battleController.validSwap(mon, otherMon):
+		if otherMon == mon || !battleController.validSwap(mon, otherMon):
 			continue
-		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon())[1]/sqrt(personality.opportunism)
+		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon(), 1)[1]*personality.caution
 		print("sw/pot: ",scoreToBeat,"/",pot,"|",100*(1 + personality.standards))
 		if pot > scoreToBeat && pot >= 100*(1 + personality.standards):
 			print("found switch!")
@@ -243,7 +251,7 @@ func enemyShelfed(count: int) -> Array[BattleMonster]:
 			choices.push_back(mon)
 	return choices
 
-func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
+func scoreMonPotential(mon: BattleMonster, target: BattleMonster, mpOffset = 0) -> Array:
 	var cards: Array[Card] = mon.currentHand.storedCards + mon.currentDeck.storedCards
 	var activeMon: BattleMonster
 	#check for all possible choices
@@ -254,7 +262,7 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 	var targetMP: int = battleController.playerMP
 	
 	if mon.playerControlled:
-		MP = battleController.playerMP
+		MP = battleController.playerMP - mpOffset
 		targetMP = battleController.enemyMP
 		activeMon = mon.battleController.getActivePlayerMon()
 	else:
@@ -264,7 +272,6 @@ func scoreMonPotential(mon: BattleMonster, target: BattleMonster) -> Array:
 			available.push_back(card)
 		else:
 			requiredMP += card.cost - MP
-	
 	#calculate scores for all possible choices
 	var scores = []
 	var maxScore: int = -999

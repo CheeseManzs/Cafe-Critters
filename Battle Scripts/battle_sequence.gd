@@ -38,7 +38,6 @@ func runActions(battleController: Node) -> void:
 	while i+1 < len(actions):
 		i += 1
 		var action = actions[i]
-		print("action for ",action.battleMonster.rawData.name)
 		if action.battleMonster.hasStatus(Status.EFFECTS.KO) && !action.switching:
 			#if action.battleMonster == battleController.getActivePlayerMon():
 			#	await battleController.promptPlayerSwitch()

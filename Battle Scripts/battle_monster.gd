@@ -399,7 +399,6 @@ func addStatusCondition(status: Status, broadcast = false):
 		getStatus(status.effect).X += status.X
 		getStatus(status.effect).Y += status.Y
 	else:
-		print("adding " + status.toString() + " manually")
 		statusConditions.push_back(status)
 	
 func getSpeed():

@@ -1,0 +1,161 @@
+[gd_scene load_steps=12 format=3 uid="uid://d07fdcyc88i5y"]
+
+[ext_resource type="Script" uid="uid://dhukcpk4dcwm4" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_kaf8s"]
+[ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="3_lv63s"]
+[ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="3_ntvn1"]
+[ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_f5fnq"]
+[ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_2sjoh"]
+[ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
+[ext_resource type="Script" uid="uid://b6ojlhcopfvnm" path="res://Battle Scripts/connection_manager.gd" id="7_co4j3"]
+[ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
+
+[sub_resource type="Resource" id="Resource_eb42p"]
+script = ExtResource("6_3vadh")
+aggression = 2.0
+caution = 0.0
+mechanics = 5.0
+standards = 0.0
+opportunism = 10.0
+
+[sub_resource type="Resource" id="Resource_pld1e"]
+script = ExtResource("6_3vadh")
+aggression = 1.0
+caution = 1.0
+mechanics = 1.0
+standards = 0.0
+opportunism = 1.0
+metadata/_custom_type_script = "uid://b05gspdpjvbuc"
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_uu8m1")
+debugTeamA = Array[ExtResource("2_kaf8s")]([ExtResource("3_ntvn1"), ExtResource("3_lv63s"), ExtResource("5_f5fnq")])
+debugTeamB = Array[ExtResource("2_kaf8s")]([ExtResource("3_lv63s"), ExtResource("6_2sjoh"), ExtResource("5_f5fnq")])
+debugPersonality = SubResource("Resource_eb42p")
+
+[node name="Control UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_top = 100.0
+offset_right = 960.0
+offset_bottom = 300.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[center]Café Critters[/center]
+[center][color=gold]Debug Test[/color][/center]"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control UI"]
+layout_mode = 2
+offset_top = 270.0
+offset_right = 1920.0
+offset_bottom = 863.0
+alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="Battle Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Battle"
+
+[node name="Online Battle (Host)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Host"
+
+[node name="Online Battle (Join)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Join"
+
+[node name="IP Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "Not Connected"
+
+[node name="Overworld Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Debug Overworld"
+
+[node name="Deck Editor Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Deck Editor"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="Team Selection Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Connecting..."
+
+[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
+script = ExtResource("7_co4j3")
+ipDisplay = NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)")
+ipText = NodePath("../Control UI/HBoxContainer/VBoxContainer2/IP Box")
+teamText = NodePath("../Control UI/HBoxContainer/VBoxContainer/Team Selection Box")
+teamPacker = ExtResource("11_ji716")
+debugManager = NodePath("..")
+lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button")]
+defaultPersonality = SubResource("Resource_pld1e")
+defaultTeam = "Ignetor (50)
+- Cleave (3)
+- Block (3)
+- Double Bite (3)
+- Hammer Head (3)
+- Heat Pump (3)
+- Strike (3)
+- Scrap (3)
+Rev (50)
+- Assist (3)
+- Attack Up (3)
+- Dodge Roll (3)
+- Defense Up (3)
+- Block (3)
+- Panicked Streets (1)
+- Perfect Parry (3)
+- Raven Sighting (3)
+- Revenant Fury (3)
+- Toll the Bell (3)
+Slocha (50)
+- Affogato (3)
+- Caffeinate (3)
+- Block (3)
+- Espresso (3)
+- Heal (3)
+- Latte (3)
+- Rejuvenate (3)
+- Recalibrate (3)
+- Roast (3)
+- Turtle Time (3)
+- Warm Up (3)"
+
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button" to="." method="loadScene" binds= ["DeckEditUI"]]
