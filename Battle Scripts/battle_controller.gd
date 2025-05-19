@@ -15,6 +15,7 @@ var multiplayer_choice_buffer: Array[int] = []
 var multiplayer_options_buffer: Array = []
 var rng_sync = false
 var multiplayer_loaded_peer = false
+static var opponent_id = -1
 #monster object prefab
 static var multiplayer_game = false
 static var multiplayer_seed = 0
@@ -115,6 +116,7 @@ var winner: int = 0
 #display card used for animations
 var shownCard: CardDisplay
 var tookDamage = false
+var networkPriority = false
 #instantiates a monster
 
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -143,10 +145,16 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 	playerMPGain = 3
 	enemyMPGain = 3
 	
+	if multiplayer_game:
+		#set_opponent(get_tree().get_network_unique_id())
+		while opponent_id == -1:
+			print("waiting")
+			await get_tree().create_timer(0.1).timeout
+	
 	
 	#create monsters on the enemy's side
 	var creationOrder = [[plrTeam, playerTeam, true], [enmTeam, enemyTeam, false]]
-	if !ConnectionManager.host:
+	if !networkPriority:
 		creationOrder.reverse()
 	
 	#create monsters on the player's side
@@ -158,9 +166,9 @@ func initialize(plrTeam: Array, enmTeam: Array) -> void:
 			#create battle monster object
 			var newBattleMon = BattleMonster.new(team[index], self, plrControl)
 			newBattleMon.gameID = index
-			if !plrControl && ConnectionManager.host:
+			if !plrControl && networkPriority:
 				newBattleMon.gameID += 3
-			if plrControl && !ConnectionManager.host:
+			if plrControl && !networkPriority:
 				newBattleMon.gameID += 3
 			#newBattleMon.reset()
 			if plrControl:
@@ -263,11 +271,12 @@ func _ready() -> void:
 	#debug initialization
 	global_rng = RandomNumberGenerator.new()
 	if multiplayer_game:
+		networkPriority = (opponent_id > multiplayer.get_unique_id()) 
 		multiplayer_id = multiplayer.get_unique_id()
 		var idCache = monsterCache.toCacheArray(MonsterCache.defaultMonsterDict(playerBattleTeam))
 		rpc("set_enemy_team", JSON.stringify(idCache))
 		await synced
-		if ConnectionManager.host:
+		if networkPriority:
 			print("seed setter:",multiplayer.get_unique_id())
 			print("seed sending:",global_rng.seed)
 			rpc("sync_rng", global_rng.seed, global_rng.state)
@@ -454,7 +463,7 @@ func chooseCards(count: int, playerControlled: bool = true, endable = false, req
 func forceRngSync():
 	rng_sync = false
 	var timer = 3000
-	if ConnectionManager.host:
+	if networkPriority:
 		rpc("sync_rng", global_rng.seed, global_rng.state)
 	while !rng_sync && timer > 0:
 		timer -= 1
@@ -482,7 +491,7 @@ func hidePlayerChoiceUI(removeAll = false):
 
 func randomBool() -> bool:
 	var boolArr = [true, false]
-	if BattleController.multiplayer_game && !ConnectionManager.host:
+	if BattleController.multiplayer_game && !networkPriority:
 		boolArr.reverse()
 	return boolArr[BattleController.global_rng.randi_range(0,1)]
 
@@ -1155,7 +1164,7 @@ static func syncedRandInArray(arr: Array):
 		return arr[global_rng.randi_range(0, len(arr) - 1)]
 
 
-static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality) -> void:
+static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality, _opponent_id: int = -1) -> void:
 	
 
 	
@@ -1164,18 +1173,25 @@ static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster
 	enemyPersonality = p_enemyPersonality
 	
 	if multiplayer_game:
-		print("waiting for connection")
-		await ConnectionManager.singleton.peer.peer_connected
+		opponent_id = _opponent_id
+		print(ConnectionManager.singleton.multiplayer.get_unique_id(), " vs ", opponent_id)
 		
 	print("setting enemy personality: ", enemyPersonality)
 
 	LoadManager.loadSceneTemp("Battle",LoadManager.activeScene)
 	pass
 
+
+func from_opponent() -> bool:
+	print(opponent_id, " == ", multiplayer.get_remote_sender_id(), ": ", multiplayer.get_remote_sender_id() == opponent_id)
+	return multiplayer.get_remote_sender_id() == opponent_id
+
 #Multiplayer RPC Functions
 
 @rpc("any_peer")
 func set_enemy_team(cacheArray: String):
+	if !from_opponent():
+		return
 	print("enm team: ",JSON.parse_string(cacheArray))
 	var loadedCache: Array[Array]
 	loadedCache.assign(JSON.parse_string(cacheArray))
@@ -1185,6 +1201,8 @@ func set_enemy_team(cacheArray: String):
 
 @rpc("any_peer")
 func set_enemy_choice(choiceID: int, switchID: int, switching: bool):
+	if !from_opponent():
+		return
 	multiplayer_options_buffer.push_back([choiceID, switchID, switching])
 	
 func get_enemy_choice():
@@ -1212,6 +1230,8 @@ func get_enemy_choice():
 
 @rpc("any_peer")
 func sync_rng(sync_seed: int, sync_state: int):
+	if !from_opponent():
+		return
 	print("seed setting:",global_rng.seed,"->",sync_seed)
 	global_rng.set_seed(sync_seed)
 	if global_rng.state != sync_state:
@@ -1219,11 +1239,22 @@ func sync_rng(sync_seed: int, sync_state: int):
 	global_rng.state = sync_state
 	rng_sync = true
 	rpc("done_sync")
+
+@rpc("any_peer")
+func set_opponent(_opponent_id: int):
+	if !from_opponent():
+		return
+	if multiplayer.get_unique_id() == _opponent_id:
+		opponent_id = multiplayer.get_remote_sender_id()
 	
 @rpc("any_peer")
 func done_sync():
+	if !from_opponent():
+		return
 	rng_sync = true
 
 @rpc("any_peer")
 func send_choice(multi_choice: int):
+	if !from_opponent():
+		return
 	multiplayer_choice_buffer.push_back(multi_choice)

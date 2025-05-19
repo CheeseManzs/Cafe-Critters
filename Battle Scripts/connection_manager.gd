@@ -110,7 +110,8 @@ func hostProcess(inDebug: bool):
 		print("ip: ",external_ip)
 		ipText.text = str(external_ip)
 	hostServer(inDebug)
-	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality)
+	await peer.peer_connected
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality, multiplayer.get_peers().get(0))
 	
 func joinProcess(inDebug: bool):
 	Thread.new().start(upnpSetup.bind())
@@ -119,7 +120,8 @@ func joinProcess(inDebug: bool):
 	if inDebug:
 		print("ip: ",external_ip)
 	joinServer(inDebug)
-	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality)
+	await peer.peer_connected
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality, multiplayer.get_peers().get(0)) #host id is always 0
 
 func _on_online_battle_host_pressed() -> void:
 	setTeam()
