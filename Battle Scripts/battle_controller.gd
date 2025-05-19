@@ -1084,7 +1084,8 @@ func activeTurn() -> void:
 		if mon.hasStatus(Status.EFFECTS.BURN):
 			var status = mon.getStatus(Status.EFFECTS.BURN)
 			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
-			await mon.trueDamage(status.X)
+			var burnDamage = (0.01*status.X)*mon.maxHP
+			await mon.trueDamage(burnDamage)
 			status.X -= 1
 			if status.X <= 0:
 				status.effectDone = true

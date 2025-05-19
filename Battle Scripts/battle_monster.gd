@@ -305,7 +305,7 @@ func reset(active = true, forceDraw = false) -> void:
 	#heal from regen
 	if hasStatus(Status.EFFECTS.REGEN):
 		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
-		var regenAmount: int = regenStatus.X
+		var regenAmount: int = regenStatus.X*0.01*maxHP
 		await addHP(regenAmount)
 		regenStatus.X -= 1
 		if regenStatus.X <= 0:
