@@ -456,7 +456,18 @@ func atkAnim(target: BattleMonster) -> void:
 	await BattleCamera.singleton.focusMonsters([self, target], 1.2, 0)
 	await obj.contactAnimation(target.getMonsterDisplay())
 	BattleCamera.singleton.disableFocus()
+
+func getOmenCards() -> Array[Card]:
+	var cards = []
+	for _card in Zone.getTaggedCardsInArray(battleController.graveyard, "Omen"):
+		var card: Card = _card
+		if card.originator == self:
+			cards.push_back(card)
+	return cards
 	
+func getRoleCardsInHand(role: String) -> Array[Card]:
+	return Zone.getRoleCardsInArray(currentHand.storedCards, role)
+		
 
 #draw cards from deck	
 func drawCards(count: int) -> void:

@@ -9,7 +9,7 @@ func _init() -> void:
 	name = "Dodge Roll"
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	var omenCards = getOmenCards(attacker.battleController)
+	var omenCards = attacker.getOmenCards()
 	if len(omenCards) <= 0:
 		BattleLog.singleton.log("No omen cards to retrieve...")
 		await attacker.battleController.get_tree().create_timer(1.0).timeout
@@ -21,6 +21,10 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await attacker.battleController.get_tree().create_timer(1.0).timeout
 	await giveStatus(attacker, Status.EFFECTS.NULLIFY_DAMAGE, 0, 0, true, false)
 	pass
+
+func canBePlayed(user: BattleMonster):
+	var omenCards = user.getOmenCards()
+	return len(omenCards) > 0 
 
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	var omenCards = getOmenCards(attacker.battleController)

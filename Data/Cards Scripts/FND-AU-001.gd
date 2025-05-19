@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Hammer Head"
 	power = 2
 
+func canBePlayed(user: BattleMonster):
+	var omenCards = user.getRoleCardsInHand("Token")
+	return (user.gravyardSize() >= 1) && (user.getHeat() >= 1)
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var dis = await attacker.discardRandomTokenCard()
 	if attacker.getHeat() >= 1 && dis != null:

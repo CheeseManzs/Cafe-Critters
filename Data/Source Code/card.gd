@@ -161,6 +161,9 @@ func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	return null
 
+func canBePlayed(user: BattleMonster):
+	return true
+
 #checks what status will be inflicted on the defender
 func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	return null

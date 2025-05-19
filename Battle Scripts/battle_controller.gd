@@ -864,7 +864,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
 					strongarmEffect = true
 
-			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect
+			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 

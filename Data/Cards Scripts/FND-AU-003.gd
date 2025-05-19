@@ -12,6 +12,10 @@ func _init() -> void:
 func drawReq(x: Card):
 	return x.role is int && x.role == "Token"
 
+func canBePlayed(user: BattleMonster):
+	var omenCards = user.getRoleCardsInHand("Token")
+	return (user.gravyardSize() >= 1)
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var cards = await attacker.battleController.chooseCards(99,attacker.playerControlled,true,drawReq)
 	if len(cards) > 0:

@@ -128,3 +128,6 @@ func getRandomTaggedCard(tag: String) -> Card:
 	
 func getRandomRoleCard(role: String) -> Card:
 	return getRandomRoleCardInArray(storedCards, role)
+
+func getRoleCards(role: String) -> Card:
+	return getRandomRoleCardInArray(storedCards, role)

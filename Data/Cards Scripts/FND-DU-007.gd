@@ -21,6 +21,11 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(attacker, Status.EFFECTS.EMPOWER_PLAYED)
 	return
 
+func canBePlayed(user: BattleMonster):
+	var omenCards = user.getOmenCards()
+	return (user.gravyardSize() >= 12)
+
+
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	if attacker.gravyardSize() >= 12:
 		return Status.new(Status.EFFECTS.EMPOWER_PLAYED)
