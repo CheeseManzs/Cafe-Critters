@@ -8,7 +8,7 @@ func _init() -> void:
 	description = "As an additional cost to play this card, discard a card from your hand. Create Scrap equal to that card's mana cost."
 	name = "Scrap"
 func canBePlayed(user: BattleMonster):
-	return len(user.currentHand) >= 2
+	return len(user.currentHand.storedCards) >= 2
 
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
