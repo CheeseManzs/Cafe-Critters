@@ -2,7 +2,7 @@ extends PassiveAbility
 
 func _init() -> void:
 	name = "Revenerator"
-	desc = "N/A"
+	desc = "If a card played by Rev has its conditional effect trigger, search your deck for any Omen card. Put it in the graveyard. Rev heals 50% of its missing HP on switch-out."
 
 #runs when a monster attacks
 func onConditonal(mon: BattleMonster, battle: BattleController, card: Card) -> void:

@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_f5fnq"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_2sjoh"]
 [ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
-[ext_resource type="Script" uid="uid://d0f12bk0312l3" path="res://Scenes/network_manager_settings.gd" id="10_7t0me"]
+[ext_resource type="Script" path="res://Scenes/network_manager_settings.gd" id="10_7t0me"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
 
 [sub_resource type="Resource" id="Resource_eb42p"]
