@@ -733,6 +733,7 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 		container.get_child(0).free()
 	
 	await get_tree().create_timer(0.5).timeout
+	await oldMon.carryStatusConditions(newMon)
 	await oldMon.getPassive().onSwapOut(oldMon, self)
 	await newMon.getPassive().customUI(newMon, self)
 	await newMon.getPassive().onSwapIn(oldMon, self)
@@ -760,7 +761,6 @@ func playerSwap(newID) -> void:
 	
 	#setup new mon
 	await newMon.standardDraw()
-	await currentMon.carryStatusConditions(newMon)
 	
 	activePlayerMon = newID
 	await universalSwap(currentMon, newMon)
@@ -791,7 +791,6 @@ func enemySwap(newID) -> void:
 	
 	#setup new mon
 	await newMon.standardDraw()
-	await currentMon.carryStatusConditions(newMon)
 	
 	activeEnemyMon = newID
 	await universalSwap(currentMon, newMon)
