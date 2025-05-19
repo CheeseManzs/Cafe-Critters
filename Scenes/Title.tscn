@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="5_f5fnq"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_2sjoh"]
 [ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
-[ext_resource type="Script" uid="uid://b6ojlhcopfvnm" path="res://Battle Scripts/connection_manager.gd" id="7_co4j3"]
+[ext_resource type="Script" uid="uid://d0f12bk0312l3" path="res://Scenes/network_manager_settings.gd" id="10_7t0me"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
 
 [sub_resource type="Resource" id="Resource_eb42p"]
@@ -18,7 +18,7 @@ mechanics = 5.0
 standards = 0.0
 opportunism = 10.0
 
-[sub_resource type="Resource" id="Resource_pld1e"]
+[sub_resource type="Resource" id="Resource_7t0me"]
 script = ExtResource("6_3vadh")
 aggression = 1.0
 caution = 1.0
@@ -113,15 +113,15 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Connecting..."
 
-[node name="Multiplayer Handler" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
-script = ExtResource("7_co4j3")
+[node name="Network Manager Settings" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
+script = ExtResource("10_7t0me")
 ipDisplay = NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)")
 ipText = NodePath("../Control UI/HBoxContainer/VBoxContainer2/IP Box")
 teamText = NodePath("../Control UI/HBoxContainer/VBoxContainer/Team Selection Box")
 teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
-lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button")]
-defaultPersonality = SubResource("Resource_pld1e")
+lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button")]
+defaultPersonality = SubResource("Resource_7t0me")
 defaultTeam = "Ignetor (50)
 - Cleave (3)
 - Block (3)
@@ -155,7 +155,7 @@ Slocha (50)
 - Warm Up (3)"
 
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
-[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Multiplayer Handler" method="_on_online_battle_host_pressed"]
-[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)" to="Multiplayer Handler" method="_on_online_battle_join_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Network Manager Settings" method="_on_online_battle_host_pressed"]
+[connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)" to="Network Manager Settings" method="_on_online_battle_join_pressed"]
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Overworld Button" to="." method="loadScene" binds= ["Overworld"]]
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button" to="." method="loadScene" binds= ["DeckEditUI"]]

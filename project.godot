@@ -17,6 +17,10 @@ run/max_fps=165
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[autoload]
+
+NetworkManager="*res://Battle Scripts/connection_manager.gd"
+
 [debug]
 
 gdscript/warnings/enable=false

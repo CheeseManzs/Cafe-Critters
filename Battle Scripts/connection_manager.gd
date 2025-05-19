@@ -3,14 +3,14 @@ extends Node
 
 signal foundUPNP
 
-@export var ipDisplay: Button
-@export var ipText: TextEdit
-@export var teamText: TextEdit
-@export var teamPacker: MonsterCache
-@export var debugManager: DebugGameManager
-@export var lockedButtons: Array[Button]
-@export var defaultPersonality: AIPersonality
-@export_multiline var defaultTeam: String
+var ipDisplay: Button
+var ipText: TextEdit
+var teamText: TextEdit
+var teamPacker: MonsterCache
+var debugManager: DebugGameManager
+var lockedButtons: Array[Button]
+var defaultPersonality: AIPersonality
+var defaultTeam: String
 
 var targetIP = "debug"
 static var hasSetTeam: bool = false
@@ -25,19 +25,13 @@ const ADDRESS = "localhost"
 static var singleton: ConnectionManager = null
 static var host = false
 
+var setup = false
+var game_response = 0 #0 = waiting, 1 = accepted, -1 = rejected
+var opponent_id = -1
+
 func _ready() -> void:
 	if singleton == null:
 		singleton = self
-	if hasSetTeam == false || len(playerTeam) == 0:
-		hasSetTeam = true
-		playerTeam = teamPacker.decode(defaultTeam)
-	
-	var debTeam: Dictionary[Monster, Array] = {}
-	for mon in playerTeam:
-		debTeam[mon] = mon.deck.storedCards
-	
-	teamText.text = teamPacker.encode(teamPacker.toCacheArray(debTeam))
-	setTeam()
 
 
 static func setTeamManual(monArr: Array[Monster]):
@@ -111,7 +105,8 @@ func hostProcess(inDebug: bool):
 		ipText.text = str(external_ip)
 	hostServer(inDebug)
 	await peer.peer_connected
-	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality, multiplayer.get_peers().get(0))
+	await search_for_game()
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality,opponent_id)
 	
 func joinProcess(inDebug: bool):
 	Thread.new().start(upnpSetup.bind())
@@ -121,7 +116,22 @@ func joinProcess(inDebug: bool):
 		print("ip: ",external_ip)
 	joinServer(inDebug)
 	await peer.peer_connected
-	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality, multiplayer.get_peers().get(0)) #host id is always 0
+	await search_for_game()
+	BattleController.startBattle(playerTeam, playerTeam, ConnectionManager.singleton.defaultPersonality, opponent_id) #host id is always 0
+
+
+func search_for_game():
+	game_response = 0
+	while game_response == 0:
+		for id in multiplayer.get_peers():
+			game_response = 0
+			rpc("request_game", id)
+			while game_response == 0:
+				await get_tree().create_timer(0.1).timeout
+			print("response: ", game_response)
+			if game_response == 1:
+				break
+	print(multiplayer.get_unique_id(), ": found game with ", opponent_id)
 
 func _on_online_battle_host_pressed() -> void:
 	setTeam()
@@ -137,3 +147,45 @@ func _on_online_battle_join_pressed() -> void:
 	for button in lockedButtons:
 		button.disabled = true
 	joinProcess(true)
+
+func setSettings(settings: NetworkManagerSettings ) -> void:
+	ipDisplay = settings.ipDisplay
+	ipText = settings.ipText
+	print("ip text: ", ipText.name)
+	teamText = settings.teamText
+	teamPacker = settings.teamPacker
+	debugManager = settings.debugManager
+	lockedButtons = settings.lockedButtons
+	defaultPersonality = settings.defaultPersonality
+	defaultTeam = settings.defaultTeam
+	
+	
+	if hasSetTeam == false || len(playerTeam) == 0:
+		hasSetTeam = true
+		playerTeam = teamPacker.decode(defaultTeam)
+	
+	var debTeam: Dictionary[Monster, Array] = {}
+	for mon in playerTeam:
+		debTeam[mon] = mon.deck.storedCards
+	
+	teamText.text = teamPacker.encode(teamPacker.toCacheArray(debTeam))
+	setTeam()
+
+@rpc("any_peer")
+func request_game(m_id):
+	if multiplayer.get_unique_id() == m_id:
+		if game_response == 1:
+			rpc("send_game_response", multiplayer.get_remote_sender_id(), 0)		
+		else:
+			rpc("send_game_response", multiplayer.get_remote_sender_id(), 1)
+			
+@rpc("any_peer")
+func send_game_response(m_id, response):
+	print("sending response ", response)
+	print(multiplayer.get_unique_id(), ": found game with ", m_id)
+	if multiplayer.get_unique_id() == m_id:
+		print("matching id!")
+		game_response = response
+		if response == 1:
+			opponent_id = multiplayer.get_remote_sender_id()
+			game_response = 1
