@@ -54,6 +54,8 @@ func _ready() -> void:
 	var temp = Button.new()
 	temp.text = "change monster"
 	temp.pressed.connect(toggleMonsters.bind())
+	temp.disabled = true
+	temp.name = "ChangeMonsterButton"
 	%MonsterButtons.add_child(temp)
 	
 	# sets up an extra button for each monster in Data/Monsters
@@ -69,8 +71,11 @@ func _ready() -> void:
 		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		
-		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) + "\n" + str(monster.role)
-		tempLabel.custom_minimum_size = Vector2(120, 120)
+		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) \
+		+ "\n" + str(monster.role) + "\n" + str(monster.passive.desc) + "\n" \
+		+ str(monster.rawHealth * 4) + "/" + str(monster.rawAttack) + "/" \
+		+ str(monster.rawDefense) + "/" + str(monster.rawSpeed)
+		tempLabel.custom_minimum_size = Vector2(1200, 120)
 		
 		tempContainer.add_theme_constant_override("separation", 20)
 		tempContainer.add_child(temp)
@@ -152,6 +157,7 @@ func rebuildCards(alignment = "all", role = "all"):
 # stupid function name
 # loads the deck of a selected monster onto the left
 func rebuildMonsters(id, setCards = true, setupMonster = false):
+	var startingID = id
 	var team
 	if id > 2: 
 		team = enemyMons
@@ -200,11 +206,20 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 			temp.set_meta("half", "left")
 			cParent.add_child(temp)
 			%LeftGridContainer.add_child(cParent)
+		
+		# display level and stats of monster
+		%LevelNumber.text = str(team[id].level)
+		setLabels(team[id])
 	if setCards:
 		rebuildCards()
 	if playerMons != null && len(playerMons) > 0:
 		ConnectionManager.setTeamManual(playerMons)
-	%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
+	if team[id]:
+		%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
+	else:
+		%HelperTitle.text = "Currently Editing: Monster " + str(startingID + 1)
+		for child in %RightGridContainer.get_children():
+			child.queue_free() 
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
@@ -225,9 +240,17 @@ func _monster_button_pressed(id):
 	# so it needs to be copies into the monster's real deck, as a "save" operation
 	if id == storedID and team[internalID]:
 		team[internalID].deck.storedCards = currentDeckZone.storedCards.duplicate()
+		
+	
+	if team[internalID]:
+		#setLabels(team[internalID])
+		pass
 	
 	storedID = id
 	rebuildMonsters(storedID)
+	%MonsterButtons.get_node("ChangeMonsterButton").disabled = false
+	
+	
 	
 	pass
 	
@@ -245,6 +268,7 @@ func _monster_select_pressed(storedMonster):
 	team[internalID] = storedMonster
 	%MonsterButtons.get_child(storedID).text = storedMonster.name
 	rebuildMonsters(storedID, true, true)
+	setLabels(team[internalID])
 	$MonsterSelectPanel.visible = false
 	pass
 
@@ -260,6 +284,9 @@ func moveCard(side, passCard):
 		team = playerMons 
 		internalID = storedID
 		
+	
+	setLabels(team[internalID])
+	
 	if side == "left":
 		# removes a card from the monster's deck
 		# currentDeckZone holds copies of display card which is why this works
@@ -334,6 +361,12 @@ func clearDeck():
 func toTitle():
 	LoadManager.loadScene("Title")
 
+func setLabels(mon):
+	mon.level = int(%LevelNumber.text)
+	%StatsLabel.text = str(int(mon.getHealth())) + " HP, " + \
+	str(int(mon.getAttack())) + " ATK, \n" + \
+	str(int(mon.getDefense())) + " DEF, " + \
+	str(int(mon.getSpeed())) + " SPD"
 
 func toggleStrict(toggled_on: bool) -> void:
 	strictMode = !strictMode
