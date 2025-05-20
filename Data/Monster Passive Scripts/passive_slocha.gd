@@ -2,7 +2,7 @@ extends PassiveAbility
 
 func _init() -> void:
 	name = "Refreshing Tea"
-	desc = "N/A"
+	desc = "Whenver Slocha Empowers, gain Haste 1 and apply Slow 1."
 
 func onStatus(mon: BattleMonster, battle: BattleController, status: Status) -> void:
 	if status.effect == Status.EFFECTS.EMPOWER_PLAYED:
