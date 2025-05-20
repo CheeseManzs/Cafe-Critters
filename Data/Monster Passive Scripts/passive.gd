@@ -4,10 +4,19 @@ extends Resource
 var name = ""
 var desc = ""
 var initialized = false
+@export var flairColour: Color
 
 func _init() -> void:
 	name = "Undefined"
 	desc = "N/A"
+
+func createFlair(mon: BattleMonster):
+	await EffectFlair.singleton._runFlair(mon.rawData.name,flairColour)
+	return
+	
+func createSpecialFlair(specText: String, specColour: Color):
+	await EffectFlair.singleton._runFlair(specText,specColour)
+	return
 
 func createUI(mon: BattleMonster, battle: BattleController, packedscene: PackedScene):
 	var container: VBoxContainer
@@ -40,6 +49,12 @@ func onSwapOut(mon: BattleMonster, battle: BattleController) -> void:
 	
 func onSwapIn(mon: BattleMonster, battle: BattleController) -> void:
 	return
+	
+func onSwapIn_beforeSwap(newMon: BattleMonster, oldMon: BattleMonster, battle: BattleController) -> void:
+	return
+	
+func onSwapOut_beforeSwap(newMon: BattleMonster, oldMon: BattleMonster, battle: BattleController) -> void:
+	return
 
 #runs when a monster is damaged by another monster/passive/status
 func onHit(mon: BattleMonster, battle: BattleController) -> void:
@@ -71,6 +86,12 @@ func attackBonus(mon: BattleMonster, battle: BattleController) -> float:
 func defenseBonus(mon: BattleMonster, battle: BattleController) -> float:
 	return 0
 
+func switchCostModifier_active(mon: BattleMonster, battle: BattleController, currentCost: int) -> float:
+	return 0
+
+func switchCostModifier_shelved(mon: BattleMonster, battle: BattleController, activeMon: BattleMonster, currentCost: int) -> int:
+	return 0
+
 #runs when a turn ends
 func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	return
@@ -96,3 +117,6 @@ func onSelfKO(mon: BattleMonster, battle: BattleController) -> void:
 #runs when a mon KO's another mon
 func onOtherKO(mon: BattleMonster, battle: BattleController) -> void:
 	return
+
+func diceTransform(mon: BattleMonster, battle: BattleController, diceNumber: int, maxNumber: int = 6) -> int:
+	return diceNumber

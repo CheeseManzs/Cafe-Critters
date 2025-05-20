@@ -8,3 +8,4 @@
 script = ExtResource("1_uafoa")
 heatGaugePrefab = ExtResource("1_o2fes")
 startUpSound = ExtResource("3_6j8vx")
+flairColour = Color(1, 0.54902, 0, 1)

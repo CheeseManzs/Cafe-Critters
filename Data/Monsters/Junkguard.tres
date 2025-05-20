@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://xpws0bsn3qdb"]
+
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_kxciy"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_s5q4s"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_vpru3"]
+[ext_resource type="Resource" uid="uid://chqbec4re4vwv" path="res://Data/Monster Passives/Scrap Engine.tres" id="3_a715d"]
+[ext_resource type="Texture2D" uid="uid://c4v01yxrpxb5d" path="res://Graphics/Monsters/junkguard.png" id="3_s5q4s"]
+
+[sub_resource type="Resource" id="Resource_a715d"]
+script = ExtResource("1_kxciy")
+name = ""
+storedCards = Array[ExtResource("2_vpru3")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[sub_resource type="Resource" id="Resource_oeeww"]
+script = ExtResource("1_kxciy")
+name = ""
+storedCards = Array[ExtResource("2_vpru3")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[resource]
+script = ExtResource("2_s5q4s")
+id = 6
+name = "Junkguard"
+tags = Array[String]([])
+alignment = 3
+role = "Guard"
+dexEntry = ""
+sprite = ExtResource("3_s5q4s")
+spriteScale = 0.024
+passive = ExtResource("3_a715d")
+deck = SubResource("Resource_a715d")
+startingCardPool = SubResource("Resource_oeeww")
+levelupCards = Array[ExtResource("1_kxciy")]([])
+rawHealth = 10
+rawAttack = 10
+rawDefense = 10
+rawSpeed = 10
+levelingType = ""
+levelingItems = Array[String]([])
+statHealth = []
+statAttack = []
+statDefense = []
+statSpeed = []
+level = 1
+battleOffset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://c4ll0oxv5iqop"

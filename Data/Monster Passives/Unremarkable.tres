@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_gmvw2")
+flairColour = Color(0.699653, 0.699653, 0.699653, 1)

@@ -6,7 +6,7 @@ func _init() -> void:
 
 #runs when a monster attacks
 func onConditonal(mon: BattleMonster, battle: BattleController, card: Card) -> void:
-	await EffectFlair.singleton._runFlair(mon.rawData.name,Color.REBECCA_PURPLE)
+	await createFlair(mon)
 	var omenCards = Zone.getTaggedCardsInArray(mon.currentDeck.storedCards, "Omen")
 	if len(omenCards) <= 0:
 		return
@@ -18,6 +18,6 @@ func onConditonal(mon: BattleMonster, battle: BattleController, card: Card) -> v
 func onSwapOut(mon: BattleMonster, battle: BattleController) -> void:
 	var missingHP: int = mon.maxHP - mon.health
 	if missingHP/2 > 0 && !mon.isKO():
-		await EffectFlair.singleton._runFlair(mon.rawData.name,Color.REBECCA_PURPLE)
+		await createFlair(mon)
 		await mon.addHP(missingHP/2)
 	return

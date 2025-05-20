@@ -6,7 +6,7 @@ func _init() -> void:
 
 func onStatus(mon: BattleMonster, battle: BattleController, status: Status) -> void:
 	if status.effect == Status.EFFECTS.EMPOWER_PLAYED:
-		await EffectFlair.singleton._runFlair(mon.rawData.name,Color.SADDLE_BROWN)
+		await createFlair(mon)
 		await mon.addStatusCondition(Status.new(Status.EFFECTS.HASTE, 1), true)
 		await battle.getOpposingMon(mon.playerControlled).addStatusCondition(Status.new(Status.EFFECTS.SLOW, 1), true)
 	return

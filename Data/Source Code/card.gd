@@ -126,10 +126,14 @@ func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: 
 func giveStatus_noempower(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true):
 	await giveStatus(target, effect, X, Y,broadcast, false)
 
-func rollDice(roller: BattleMonster):
+static func rollDice(roller: BattleMonster):
 	var rolledNum = await Dice.singleton.roll()
 	BattleLog.singleton.log(roller.rawData.name + " rolled a " + str(rolledNum)+"!")
-	return rolledNum
+	var transformedNum = roller.getPassive().diceTransform(roller, roller.battleController, rolledNum)
+	if transformedNum != rolledNum:
+		await roller.getPassive().createFlair(roller)
+		BattleLog.singleton.log(roller.rawData.name + " turned the " + str(rolledNum) + " into a " + str(transformedNum) + "!")
+	return transformedNum
 
 #for dynamic damage calculations
 func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float, applyEmpower = true) -> int:

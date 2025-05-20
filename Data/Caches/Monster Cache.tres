@@ -1,15 +1,17 @@
-[gd_resource type="Resource" script_class="MonsterCache" load_steps=8 format=3 uid="uid://cjnsk71nyutp"]
+[gd_resource type="Resource" script_class="MonsterCache" load_steps=10 format=3 uid="uid://cjnsk71nyutp"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_ntfgn"]
 [ext_resource type="Script" uid="uid://djslq1q2bn8dc" path="res://Data/Source Code/monster_cache.gd" id="2_mcreu"]
+[ext_resource type="Resource" uid="uid://p6q8cguee21j" path="res://Data/Monsters/Snake Eyes.tres" id="6_0yj3b"]
 [ext_resource type="Resource" uid="uid://b3rp3vvccagnq" path="res://Data/Monsters/Hooliquen.tres" id="6_sdfuw"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="7_0yj3b"]
+[ext_resource type="Resource" uid="uid://xpws0bsn3qdb" path="res://Data/Monsters/Junkguard.tres" id="7_7lq5t"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="7_xmuw6"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="8_gbt8i"]
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 
 [resource]
 script = ExtResource("2_mcreu")
-cache = Array[ExtResource("1_ntfgn")]([ExtResource("7_xmuw6"), ExtResource("6_sdfuw"), ExtResource("8_gbt8i"), ExtResource("9_jpghj")])
+cache = Array[ExtResource("1_ntfgn")]([ExtResource("7_xmuw6"), ExtResource("6_sdfuw"), ExtResource("8_gbt8i"), ExtResource("9_jpghj"), ExtResource("6_0yj3b"), ExtResource("7_7lq5t")])
 cardCache = Array[ExtResource("7_0yj3b")]([])
 cardFolderPath = "res://Data/Cards/"

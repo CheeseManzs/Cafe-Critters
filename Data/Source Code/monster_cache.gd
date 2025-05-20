@@ -11,6 +11,7 @@ var loadedCards = false
 func toCacheArray(monArr: Dictionary[Monster, Array]) -> Array[Array]:
 	var cacheArr: Array[Array] = []
 	for mon in monArr.keys():
+		print("mon name: ", mon.name)
 		var monID = mon.id
 		var monCards = monArr[mon]
 		var idArr = getCardIDs(monCards)
@@ -61,6 +62,7 @@ func encode(cacheArr: Array[Array]) -> String:
 	var pasteString = "```"
 	for mon in monsterArray:
 		var name = mon.name
+		print("mon name to export: ", name)
 		var level = mon.level
 		var cards = ""
 		var cardArr = []

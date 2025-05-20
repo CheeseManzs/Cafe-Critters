@@ -717,6 +717,11 @@ func getActivePlayerMon() -> BattleMonster:
 func getActiveEnemyMon() -> BattleMonster:
 	return enemyTeam[activeEnemyMon]
 
+
+func universalPreswap(oldMon: BattleMonster, newMon: BattleMonster):
+	await newMon.getPassive().onSwapIn_beforeSwap(newMon, oldMon, self)
+	await oldMon.getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
+
 func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	for statuscond in oldMon.statusConditions:
 		var status: Status = statuscond
@@ -750,6 +755,7 @@ func playerSwap(newID) -> void:
 	if !validSwap(currentMon, newMon):
 		return
 	
+	await universalPreswap(currentMon, newMon)
 	#swap team IDs
 	var oldTID = currentObj.teamID
 	currentObj.teamID = newObj.teamID
@@ -780,6 +786,8 @@ func enemySwap(newID) -> void:
 	
 	if !validSwap(currentMon, newMon):
 		return
+	
+	await universalPreswap(currentMon, newMon)
 	
 	#swap team IDs
 	var oldTID = currentObj.teamID
@@ -909,7 +917,15 @@ func banishArray(cards: Array[Card], isPlayer = true):
 		else:
 			banishedPlayerCards.push_back(card)
 
-
+func getSwitchCost() -> int:
+	var baseSwitchCost = 1
+	var switchCost = baseSwitchCost + getActivePlayerMon().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost)
+		
+	for _shelvedMon in sortedMonList():
+		var shelvedMon: BattleMonster = _shelvedMon
+		if shelvedMon != getActivePlayerMon():
+			switchCost += shelvedMon.getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost)
+	return switchCost
 
 ## seems to be the main gameplay loop? looks like it's what calls everything else
 ## running this starts a new turn, and does everything associated with it -a
@@ -1030,11 +1046,16 @@ func activeTurn() -> void:
 		if len(mon.playableCards()) <= 0 && (playerMP == 0 || playerUsableMonCount() <= 1):
 			pass#skipChoosingPhase = true
 		skipButton.disabled = false
+		
+		var switchCost = getSwitchCost()
+		
+		
+		
 		for shelfUI in shelfedMonUI:
 			if shelfUI.connectedMon == null:
 				shelfUI.switchButton.disabled = true
 				continue
-			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < 1
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < switchCost
 		if !skipChoosingPhase:
 			await gui_choice
 			rpc("set_enemy_choice",playerCardID,playerSwitchID,skipChoice)

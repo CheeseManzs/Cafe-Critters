@@ -132,7 +132,7 @@ func _ready() -> void:
 	reloadMonster()
 	playerControlled = get_meta("playerControlled")
 	#generate the bobbing offset
-	randOffset = rng.randf_range(0, 20)
+	randOffset = rng.randf_range(0, 2*PI)
 
 # Returns negative for even values of x and positive of odd values of x
 func posOddNegEven(x) -> int:
@@ -199,7 +199,7 @@ func _process(delta: float) -> void:
 	
 	
 	#calculate the delta for the bobbing
-	var bobDelta = idleStrength*(sin(t*2 + randOffset) + bobAddition)
+	var bobDelta = idleStrength*(sin(t*2*(0.3*(monsterData.rawSpeed/10.0) + randOffset/10.0) + randOffset) + bobAddition)
 	
 	if playerControlled:
 		#if monster is player controlled, rotate the sprite 180 degrees

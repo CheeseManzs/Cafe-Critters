@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bxpcg2fwclvyi"]
+
+[ext_resource type="Script" uid="uid://dvojf0d70l5tv" path="res://Data/Monster Passive Scripts/passive_snakeeyes.gd" id="1_2pmsf"]
+
+[resource]
+script = ExtResource("1_2pmsf")
+flairColour = Color(0.792649, 0.321833, 0.25189, 1)
+metadata/_custom_type_script = "uid://divyfp6lwcp8w"

@@ -113,7 +113,8 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 		await setHeat(0, mon, battle)
 		return
 	
-	await EffectFlair.singleton._runFlair("Machine",Color.WEB_GRAY)
+	await createSpecialFlair("Machine", Color.WEB_GRAY)
+	
 	var discardCards = mon.currentHand.storedCards
 	await mon.raiseAnimation()
 	var cardCount = len(discardCards)

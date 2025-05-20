@@ -134,6 +134,13 @@ func raiseAnimation():
 		display.raise()
 		display.ignoreInput = true
 	await battleController.get_tree().create_timer(0.5).timeout
+	
+func lowerAnimation():
+	battleController.setCardSelection(self, false)
+	for display in battleController.cardButtons:
+		display.hideCard()
+		display.ignoreInput = true
+	await battleController.get_tree().create_timer(0.5).timeout
 
 func quick_discardAnimation(card: Card) -> void:
 	for display in battleController.cardButtons:
@@ -458,7 +465,7 @@ func atkAnim(target: BattleMonster) -> void:
 	BattleCamera.singleton.disableFocus()
 
 func getOmenCards() -> Array[Card]:
-	var cards = []
+	var cards: Array[Card] = []
 	for _card in Zone.getTaggedCardsInArray(battleController.graveyard, "Omen"):
 		var card: Card = _card
 		if card.originator == self:

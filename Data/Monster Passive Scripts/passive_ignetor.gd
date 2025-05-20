@@ -7,7 +7,7 @@ func _init() -> void:
 
 func checkHeat(mon: BattleMonster, battle: BattleController):
 	if heat >= 4 && !mon.hasStatus(Status.EFFECTS.PRIORITY) && !mon.hasStatus(Status.EFFECTS.OVERHEAT):
-		await EffectFlair.singleton._runFlair(mon.rawData.name,Color.DARK_ORANGE)
+		await createFlair(mon)
 		BattleLog.singleton.log(mon.rawData.name+" is getting revved up!")
 		await mon.addStatusCondition(Status.new(Status.EFFECTS.PRIORITY,1),true)
 	elif heat < 4 && mon.hasStatus(Status.EFFECTS.PRIORITY):

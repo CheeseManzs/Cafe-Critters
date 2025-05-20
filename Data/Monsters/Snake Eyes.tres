@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://p6q8cguee21j"]
+
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_j726d"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_bjdx7"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_ll0hc"]
+[ext_resource type="Resource" uid="uid://bxpcg2fwclvyi" path="res://Data/Monster Passives/Snake's Jackpot.tres" id="3_bjdx7"]
+[ext_resource type="Texture2D" uid="uid://cko0072ugqehq" path="res://Graphics/Monsters/snake eyes.png" id="3_ll0hc"]
+
+[sub_resource type="Resource" id="Resource_3wnx5"]
+script = ExtResource("1_j726d")
+name = ""
+storedCards = Array[ExtResource("2_bjdx7")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[sub_resource type="Resource" id="Resource_s13md"]
+script = ExtResource("1_j726d")
+name = ""
+storedCards = Array[ExtResource("2_bjdx7")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[resource]
+script = ExtResource("2_ll0hc")
+id = 5
+name = "Snake Eyes"
+tags = Array[String]([])
+alignment = 6
+role = "Point"
+dexEntry = ""
+sprite = ExtResource("3_ll0hc")
+spriteScale = 0.019
+passive = ExtResource("3_bjdx7")
+deck = SubResource("Resource_3wnx5")
+startingCardPool = SubResource("Resource_s13md")
+levelupCards = Array[ExtResource("1_j726d")]([])
+rawHealth = 10
+rawAttack = 10
+rawDefense = 10
+rawSpeed = 10
+levelingType = ""
+levelingItems = Array[String]([])
+statHealth = []
+statAttack = []
+statDefense = []
+statSpeed = []
+level = 1
+battleOffset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://c4ll0oxv5iqop"

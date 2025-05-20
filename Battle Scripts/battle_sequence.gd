@@ -48,7 +48,7 @@ func runActions(battleController: Node) -> void:
 		#run card action
 		action.printAction()
 		if action.switching:
-			action.battleMonster.removeMP(1)
+			action.battleMonster.removeMP(action.battleController.getSwitchCost())
 			await action.runSwitch()
 			await battleController.get_tree().create_timer(1.0).timeout
 			continue
