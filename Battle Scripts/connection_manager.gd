@@ -122,8 +122,11 @@ func joinProcess(inDebug: bool):
 
 func search_for_game():
 	game_response = 0
-	while game_response == 0:
+	print(multiplayer.get_unique_id(), " is looking for a game!")
+	while game_response != 1:
 		for id in multiplayer.get_peers():
+			if id == multiplayer.get_unique_id():
+				continue
 			game_response = 0
 			rpc("request_game", id)
 			while game_response == 0:
@@ -131,7 +134,7 @@ func search_for_game():
 			print("response: ", game_response)
 			if game_response == 1:
 				break
-	print(multiplayer.get_unique_id(), ": found game with ", opponent_id)
+	print(multiplayer.get_unique_id(), ": successfully matched with ", opponent_id)
 
 func _on_online_battle_host_pressed() -> void:
 	setTeam()
@@ -174,17 +177,17 @@ func setSettings(settings: NetworkManagerSettings ) -> void:
 @rpc("any_peer")
 func request_game(m_id):
 	if multiplayer.get_unique_id() == m_id:
-		if game_response == 1:
-			rpc("send_game_response", multiplayer.get_remote_sender_id(), 0)		
+		if game_response == 1 && opponent_id != multiplayer.get_remote_sender_id():
+			rpc("send_game_response", multiplayer.get_remote_sender_id(), -1)		
 		else:
 			rpc("send_game_response", multiplayer.get_remote_sender_id(), 1)
 			
 @rpc("any_peer")
 func send_game_response(m_id, response):
-	print("sending response ", response)
-	print(multiplayer.get_unique_id(), ": found game with ", m_id)
 	if multiplayer.get_unique_id() == m_id:
 		print("matching id!")
+		print("sending response ", response)
+		print(multiplayer.get_remote_sender_id(), ": found game with ", m_id)
 		game_response = response
 		if response == 1:
 			opponent_id = multiplayer.get_remote_sender_id()

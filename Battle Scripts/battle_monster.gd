@@ -465,7 +465,7 @@ func getOmenCards() -> Array[Card]:
 			cards.push_back(card)
 	return cards
 	
-func getRoleCardsInHand(role: String) -> Array[Card]:
+func getRoleCardsInHand(role: String):
 	return Zone.getRoleCardsInArray(currentHand.storedCards, role)
 		
 
