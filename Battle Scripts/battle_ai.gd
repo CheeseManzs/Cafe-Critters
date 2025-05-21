@@ -60,7 +60,7 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 	match status.effect:
 		Status.EFFECTS.KO:
 			return -100
-		Status.EFFECTS.DECAY:
+		Status.EFFECTS.RIPTIDE:
 			return -status.X
 		Status.EFFECTS.EMPOWER:
 			return 0
