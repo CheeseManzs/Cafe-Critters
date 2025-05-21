@@ -3,7 +3,7 @@ class_name Status
 enum EFFECTS {
 	NONE,
 	KO, #mon hp is 0
-	DECAY,
+	RIPTIDE,
 	EMPOWER,
 	EMPOWER_NEXT,
 	EMPOWER_PLAYED,
@@ -39,7 +39,7 @@ var effectDone = false
 var effect: EFFECTS
 #checks if effect is numerable (i.e has X after it, like Decay X or Haste X)
 static func isNumerable(eff) -> bool:
-	if [EFFECTS.DECAY, EFFECTS.SLOW, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN].has(eff):
+	if [EFFECTS.RIPTIDE, EFFECTS.SLOW, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN].has(eff):
 		return true
 	else:
 		return false
@@ -59,8 +59,8 @@ func toMini() -> String:
 	match effect:
 		EFFECTS.KO:
 			return "KO"
-		EFFECTS.DECAY:
-			return "DEC"
+		EFFECTS.RIPTIDE:
+			return "RPT"
 		EFFECTS.EMPOWER:
 			return "EMP"
 		EFFECTS.EMPOWER_NEXT:
@@ -124,8 +124,8 @@ func rawToString() -> String:
 	match effect:
 		EFFECTS.KO:
 			return "Knocked Out"
-		EFFECTS.DECAY:
-			return "Decay"
+		EFFECTS.RIPTIDE:
+			return "Riptide"
 		EFFECTS.EMPOWER:
 			return "Empower"
 		EFFECTS.EMPOWER_NEXT:
@@ -282,7 +282,7 @@ func newTurn() -> void:
 	match effect:
 		EFFECTS.KO:
 			return
-		EFFECTS.DECAY:
+		EFFECTS.RIPTIDE:
 			return
 		EFFECTS.EMPOWER:
 			return

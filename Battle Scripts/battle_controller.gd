@@ -297,12 +297,15 @@ func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
 func addToGraveyard(card: Card, user: BattleMonster):
 	card.originator = user
 	graveyard.push_back(card)
+	card.salvaged = true
 	#search for relevants statusses
 	for mon in (playerTeam + enemyTeam):
-		#decay
-		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.DECAY):
-			var decayStatus = mon.getStatus(Status.EFFECTS.DECAY)
-			mon.trueDamage(decayStatus.X)
+		#riptide
+		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.RIPTIDE):
+			var decayStatus = mon.getStatus(Status.EFFECTS.RIPTIDE)
+			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
+			var riptideDamage = (0.01*decayStatus.X)*mon.maxHP
+			await mon.trueDamage(riptideDamage)
 
 func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
 	for card in cards:
