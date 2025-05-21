@@ -4,9 +4,9 @@ func _init() -> void:
 	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Mise
-	role = "Token"
-	description = "Token card. Draw 1. Salvage: Draw 1, gain 1 mp."
-	name = "Flotsam"
+	role = "Point"
+	description = "Inflict 3 Riptide."
+	name = "Riptide Rushdown"
 	power = 0
 
 
@@ -14,7 +14,6 @@ func _init() -> void:
 	
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await attacker.drawCards(1)
+	await giveStatus(defender,Status.EFFECTS.RIPTIDE,10)
 	
-	if salvaged:
-		await attacker.addMP(1)
-		
+	

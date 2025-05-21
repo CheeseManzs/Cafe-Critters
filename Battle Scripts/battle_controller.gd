@@ -294,7 +294,7 @@ func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
 	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
 	return valid
 
-func addToGraveyard(card: Card, user: BattleMonster):
+func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 	card.originator = user
 	graveyard.push_back(card)
 	card.salvaged = true
@@ -303,13 +303,17 @@ func addToGraveyard(card: Card, user: BattleMonster):
 		#riptide
 		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.RIPTIDE):
 			var decayStatus = mon.getStatus(Status.EFFECTS.RIPTIDE)
-			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
+			if !multidiscard:
+				print("ow")
+				await EffectFlair.singleton._runFlair("Riptide", Color.LIGHT_SEA_GREEN)
 			var riptideDamage = (0.01*decayStatus.X)*mon.maxHP
 			await mon.trueDamage(riptideDamage)
 
 func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
+	var first = true
 	for card in cards:
-		addToGraveyard(card, user)
+		addToGraveyard(card, user, !first)
+		first = false
 
 func parseBattleAction(mon: BattleMonster, actionID, switchID, switchAction = false, p_playerControlled = true) -> BattleAction:
 	if actionID == -100: 

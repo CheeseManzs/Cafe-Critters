@@ -483,6 +483,11 @@ func drawCards(count: int) -> void:
 	if playerControlled and len(battleController.playerTeam) > 0 and battleController.getActivePlayerMon() == self:
 		battleController.deckController.updateDeckDisplay(len(currentDeck.storedCards))
 
+func millCards(count: int) -> void:
+	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
+	battleController.addArrayToGraveyard(card, self)
+	
+
 func getMonsterDisplay() -> MonsterDisplay:
 	if playerControlled:
 		return battleController.playerObjs[battleController.playerTeam.find(self)]
