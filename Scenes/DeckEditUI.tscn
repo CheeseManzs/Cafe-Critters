@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bilfuichpxj00"]
+[gd_scene load_steps=8 format=3 uid="uid://bilfuichpxj00"]
 
 [ext_resource type="Script" uid="uid://dwsr5ddo2atr5" path="res://Overworld Scripts/deck_edit_ui.gd" id="1_tbx7c"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="3_rfpxp"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="4_dpoq2"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="4_ptn7t"]
+[ext_resource type="AudioStream" uid="uid://dc4bi82ompo3e" path="res://Audio/BGM/15. Team Snagem Battle - Colosseum Round 1 Battle.mp3" id="5_g2il1"]
+[ext_resource type="Script" uid="uid://dg51ouo1x4r4u" path="res://Battle Scripts/audiolist.gd" id="6_hqyyq"]
+[ext_resource type="AudioStream" uid="uid://cbx76p6vjq5bt" path="res://Audio/BGM/Gentle Breeze.mp3" id="7_bu876"]
 
 [node name="DeckEditUI" type="Control"]
 layout_mode = 3
@@ -176,5 +179,14 @@ offset_right = 47.84
 theme_override_font_sizes/font_size = 35
 placeholder_text = "N/A"
 max_length = 2
+
+[node name="BGM Player" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_g2il1")
+volume_db = -20.0
+parameters/looping = true
+script = ExtResource("6_hqyyq")
+audioList = Array[AudioStream]([ExtResource("7_bu876")])
+autoSet = 0
+startTime = 1.0
 
 [connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
