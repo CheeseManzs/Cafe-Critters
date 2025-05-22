@@ -1,15 +1,15 @@
 extends Card
 
 func _init() -> void:
-	cost = 
+	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Mise
-    role = "Inkhor"
-	description = ""
-	name = ""
+	role = "Inkhor"
+	description = "15% Attack for each card in the opponent Fae's hand."
+	name = "Counterweight Bash"
 
 func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+	pass
 
 func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+	pass

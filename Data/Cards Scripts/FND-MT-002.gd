@@ -1,18 +1,18 @@
 extends Card
 
 func _init() -> void:
-	cost = 0
+	cost = 1
 	priority = 0
 	alignment = ALIGNMENT.Mise
-	role = "Point"
-	description = "Mill 20."
-	name = "Mill 20"
+	role = "Token"
+	description = "Token card. Draw 1."
+	name = "Jetsam"
 	power = 0
 
 
 
 	
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await attacker.millCards(5)
+	await attacker.drawCards(1)
 	
 		

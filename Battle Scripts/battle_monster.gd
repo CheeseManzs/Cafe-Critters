@@ -487,6 +487,12 @@ func millCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
 	await battleController.addArrayToGraveyard(card, self)
 	
+func shuffleCardIntoDeck(card: Card, index: int) -> void:
+	if index == -1:
+		index = randi() % currentDeck.storedCards.size()
+	currentDeck.storedCards.insert(index, card)
+		
+	
 func getCostMod() -> int:
 	var costMod = 0
 	# if haste, then apply haste effect

@@ -1,15 +1,17 @@
 extends Card
 
 func _init() -> void:
-	cost = 
-	priority = 0
+	cost = 0
+	priority = 1
 	alignment = ALIGNMENT.Mise
-    role = "Inkhor"
-	description = ""
-	name = ""
+	role = "Inkhor"
+	description = "20% Defend. Create 3 Jetsam in each active Fae's deck."
+	name = "Jetspray"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+	shieldPower = 0.2
 
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)
+	for i in range(3):
+		attacker.currentHand.storedCards.push_back(createInstance("Flotsam"))
+		defender.currentHand.storedCards.push_back(createInstance("Flotsam"))
