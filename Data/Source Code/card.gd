@@ -13,6 +13,17 @@ enum ALIGNMENT {
 	Blanc,
 }
 
+static var alignmentToString = {
+	ALIGNMENT.Default: "Default",
+	ALIGNMENT.Mise: "Mise",
+	ALIGNMENT.Rea: "Rea",
+	ALIGNMENT.Anvi: "Anvi",
+	ALIGNMENT.Sec: "Sec",
+	ALIGNMENT.Eco: "Eco",
+	ALIGNMENT.Jacks: "Jacks",
+	ALIGNMENT.Blanc: "Blanc"
+}
+
 #list of roles
 enum ROLE {
 	Generic,

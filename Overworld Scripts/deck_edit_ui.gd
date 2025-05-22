@@ -6,6 +6,7 @@ extends Control
 @export var playerMons: Array[Monster]
 @export var enemyMons: Array[Monster]
 @export var cache: MonsterCache
+@export var searchBar: LineEdit
 
 var allCards: Array[Card]
 var allMonsters: Array[Monster]
@@ -142,7 +143,9 @@ func rebuildCards(alignment = "all", role = "all"):
 		else:
 			mon = playerMons[currentID]
 		
-		if applyFilter(item, mon, temp):
+		print("applying filter with ", searchBar.text)
+		if applyFilter(item, mon, temp, false, searchBar.text):
+			print("removing ", item.name)
 			continue
 		
 		temp.displayLocation = "collection"
@@ -198,7 +201,7 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 			if currentDeck.cardCounts[ind] > 3:
 				temp.get_child(1).set("theme_override_colors/default_color",Color.RED)
 			temp.get_child(1).text = str(currentDeck.cardCounts[ind]) + "x"
-			applyFilter(loadedCard, team[id], temp, true)
+			applyFilter(loadedCard, team[id], temp, true, searchBar.text)
 			temp.displayLocation = "collection"
 			temp.deckEditController = self
 			temp.canDrag = false
@@ -304,7 +307,15 @@ func moveCard(side, passCard):
 
 # applies visual changes to target card based on monster
 # returns true if the card would get filtered out
-func applyFilter(item, mon, crd, loose = false):
+func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
+	
+	print("searching with ", searchText)
+	#activate search
+	if len(searchText) > 0:
+		if !CardSearch.search(searchText, item):
+			return true
+
+	
 	if mon != null && item.role not in ["Basic",mon.role,mon.name]:
 		if strictMode and !loose:
 			return true
@@ -372,3 +383,10 @@ func toggleStrict(toggled_on: bool) -> void:
 	strictMode = !strictMode
 	rebuildMonsters(storedID)
 	pass # Replace with function body.
+
+
+func _on_card_search_bar_text_submitted(new_text: String) -> void:
+	searchBar.text = new_text
+	print("triggered for ", new_text)
+	rebuildCards() # Replace with function body.
+	return
