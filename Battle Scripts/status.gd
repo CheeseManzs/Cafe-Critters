@@ -228,6 +228,8 @@ func endsOnSwitch() -> bool:
 	match effect:
 		EFFECTS.POISON:
 			return true
+		EFFECTS.RIPTIDE:
+			return true
 	return false
 
 func carriesOverOnSwitch() -> bool:
