@@ -216,6 +216,8 @@ func playSound(clip: AudioStream, layer: int = -1):
 		layer = 0
 		while audioPlayers[layer].playing:
 			layer += 1
+			if layer >= 5:
+				layer -= 1
 	audioPlayers[layer].stream = clip
 	audioPlayers[layer].play()
 
@@ -313,6 +315,7 @@ func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
 	var first = true
 	for card in cards:
 		addToGraveyard(card, user, !first)
+		await get_tree().create_timer(0.25).timeout
 		first = false
 
 func parseBattleAction(mon: BattleMonster, actionID, switchID, switchAction = false, p_playerControlled = true) -> BattleAction:

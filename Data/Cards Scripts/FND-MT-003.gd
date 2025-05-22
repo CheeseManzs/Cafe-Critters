@@ -14,6 +14,6 @@ func _init() -> void:
 	
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await attacker.drawCards(1)
-	await giveStatus(defender,Status.EFFECTS.RIPTIDE,10)
+	await giveStatus(defender,Status.EFFECTS.RIPTIDE,3)
 	
 	

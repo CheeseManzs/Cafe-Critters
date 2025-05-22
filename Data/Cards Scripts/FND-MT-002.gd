@@ -13,6 +13,6 @@ func _init() -> void:
 
 	
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await attacker.millCards(20)
+	await attacker.millCards(5)
 	
 		
