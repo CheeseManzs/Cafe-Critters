@@ -19,3 +19,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	else:
 		BattleLog.singleton.log("No omen cards in the deck...")
 		return
+	await applyOmen(attacker, defender)
