@@ -455,7 +455,7 @@ func dmgAnim() -> void:
 		obj = battleController.playerObjs[battleController.playerTeam.find(self)]
 	else:
 		obj = battleController.enemyObjs[battleController.enemyTeam.find(self)]
-	obj.hitAnimation()
+	await obj.hitAnimation()
 
 
 func atkAnim(target: BattleMonster) -> void:
@@ -501,7 +501,7 @@ func checkNullifyDamage():
 		return true
 	return false
 
-func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> void:
+func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, damageAnim = true) -> void:
 	if isKO():
 		return
 	#check nullify again for true damage
@@ -538,8 +538,8 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false) -> v
 		if attacker != null:
 			await attacker.getPassive().onOtherKO(attacker,battleController)
 		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
-	elif dmg > 0:
-		dmgAnim()
+	elif dmg > 0 and damageAnim:
+		await dmgAnim()
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):

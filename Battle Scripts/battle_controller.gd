@@ -309,7 +309,7 @@ func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 				print("ow")
 				await EffectFlair.singleton._runFlair("Riptide", Color.LIGHT_SEA_GREEN)
 			var riptideDamage = (0.01*decayStatus.X)*mon.maxHP
-			await mon.trueDamage(riptideDamage)
+			await mon.trueDamage(riptideDamage,null,false,false)
 			await get_tree().create_timer(1.0).timeout
 
 func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
