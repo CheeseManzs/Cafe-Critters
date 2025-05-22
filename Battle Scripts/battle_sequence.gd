@@ -95,6 +95,6 @@ func runActions(battleController: Node) -> void:
 		if action.battleMonster.hasStatus(Status.EFFECTS.POISON):
 			var poisonStatus: Status = action.battleMonster.getStatus(Status.EFFECTS.POISON)
 			await EffectFlair.singleton._runFlair("Poison",Color.MEDIUM_PURPLE)
-			var poisonDamage = poisonStatus.X*action.battleMonster.maxHP
+			var poisonDamage = 0.01*poisonStatus.X*(action.battleMonster.maxHP)
 			await action.battleMonster.trueDamage(poisonDamage)
 			poisonStatus.X -= 1

@@ -233,9 +233,9 @@ func applyOmen(attacker: BattleMonster, defender: BattleMonster):
 			await card.effect(attacker, defender)
 			card.tags.push_back("Omen")
 			addBack.push_back(card)
-	for card in addBack:
-		attacker.battleController.graveyard.erase(card)
-		attacker.currentDeck.storedCards.push_back(addBack)
+	#for card in addBack:
+		#attacker.battleController.graveyard.erase(card)
+		#attacker.currentDeck.storedCards.push_back(addBack)
 
 func descSetup():
 	if baseDescription == "null":
