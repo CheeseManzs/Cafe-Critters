@@ -294,7 +294,7 @@ func moveCard(side, passCard):
 		# removes a card from the monster's deck
 		# currentDeckZone holds copies of display card which is why this works
 		var temp: Array[Card] = [passCard]
-		currentDeckZone.removeCards(temp)
+		await currentDeckZone.removeCards(temp)
 		_monster_button_pressed(storedID)
 		pass
 	if side == "right":

@@ -315,7 +315,7 @@ func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
 	var first = true
 	for card in cards:
-		addToGraveyard(card, user, !first)
+		await addToGraveyard(card, user, !first)
 		await get_tree().create_timer(0.25).timeout
 		first = false
 
@@ -890,7 +890,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 #banishes player cards to the graveyard
 func banishPlayerCards(count: int):
 	var cc = await chooseCards(count)
-	getActivePlayerMon().currentHand.removeCards(cc)
+	await getActivePlayerMon().currentHand.removeCards(cc)
 	for c in cc:
 		banishedPlayerCards.push_back(c)
 
@@ -914,7 +914,7 @@ func banishEnemyCards(count: int):
 	var cc = []
 	for index in count:
 		cc.push_back(getActiveEnemyMon().currentHand.storedCards[index])
-	getActiveEnemyMon().currentHand.removeCards(cc)
+	await getActiveEnemyMon().currentHand.removeCards(cc)
 	for c in cc:
 		banishedEnemyCards.push_back(c)
 

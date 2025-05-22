@@ -34,7 +34,7 @@ func removeCards(cards: Array[Card]):
 		if storedCards.has(card):
 			storedCards.remove_at(storedCards.find(card))
 			if card.originator != null:
-				card.originator.battleController.addToGraveyard(card, card.originator)
+				await card.originator.battleController.addToGraveyard(card, card.originator)
 
 func exileCards(cards: Array[Card], mon: BattleMonster):
 	for card in cards:

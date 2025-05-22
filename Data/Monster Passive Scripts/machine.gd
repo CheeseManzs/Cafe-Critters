@@ -123,7 +123,7 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 		await mon.getPassive().onDiscard(mon,battle,discardCards[i])
 	
 	
-	mon.currentHand.removeCards(discardCards)
+	await mon.currentHand.removeCards(discardCards)
 	await battle.get_tree().create_timer(1.0).timeout
 	await setHeat(heat + cardCount, mon, battle)
 	

@@ -27,4 +27,4 @@ func onSwapIn_beforeSwap(newMon: BattleMonster, oldMon: BattleMonster, battle: B
 		await oldMon.getPassive().onDiscard(oldMon,battle,scrap)
 	await oldMon.lowerAnimation()
 	
-	oldMon.currentHand.removeCards(scraps)
+	await oldMon.currentHand.removeCards(scraps)

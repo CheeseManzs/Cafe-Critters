@@ -12,7 +12,7 @@ func onConditonal(mon: BattleMonster, battle: BattleController, card: Card) -> v
 		return
 	var omenCard: Card = BattleController.syncedRandInArray(omenCards)
 	mon.currentDeck.storedCards.erase(omenCard)
-	mon.battleController.addToGraveyard(omenCard, mon)
+	await mon.battleController.addToGraveyard(omenCard, mon)
 	return
 
 func onSwapOut(mon: BattleMonster, battle: BattleController) -> void:

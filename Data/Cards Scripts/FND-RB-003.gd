@@ -14,7 +14,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	if len(omenDeck) > 0:
 		var card = omenDeck[attacker.battleController.global_rng.randi_range(0, len(omenDeck) - 1)]
 		attacker.currentDeck.storedCards.erase(card)
-		attacker.battleController.addToGraveyard(card, attacker)
+		await attacker.battleController.addToGraveyard(card, attacker)
 		BattleLog.singleton.log(card.name + " was sent to the graveyard!")
 	else:
 		BattleLog.singleton.log("No omen cards in the deck...")

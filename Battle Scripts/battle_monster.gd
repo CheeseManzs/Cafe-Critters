@@ -205,10 +205,10 @@ func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 		return
 	if playAnimation:
 		await discardAnimation(card)
-	battleController.addToGraveyard(card, self)
+	await battleController.addToGraveyard(card, self)
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	if removeFromHand:
-		currentHand.removeCards([card])
+		await currentHand.removeCards([card])
 	await getPassive().onDiscard(self, battleController, card)
 
 func pickRandomCard() -> Card:
@@ -288,8 +288,8 @@ func hardReset() -> void:
 	currentHand = Zone.new()
 
 func removeCard(card: Card):
-	currentHand.removeCards([card])
-	battleController.addToGraveyard(card, self)
+	await currentHand.removeCards([card])
+	await battleController.addToGraveyard(card, self)
 
 func meetsRequirement(requirement: Callable) -> bool:
 	for card in currentHand.storedCards:
@@ -391,7 +391,7 @@ func addStatusCondition(status: Status, broadcast = false):
 			var toBanish = await battleController.chooseCards(status.X,playerControlled)
 			
 			battleController.banishArray(toBanish)
-			currentHand.removeCards(toBanish)
+			await currentHand.removeCards(toBanish)
 			
 			var graveAction: ConditionalAction = ConditionalAction.new(
 				battleController,
