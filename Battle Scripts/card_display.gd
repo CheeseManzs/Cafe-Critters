@@ -37,13 +37,14 @@ var autoSend = true
 var dragVelocity: Vector2 = Vector2.ZERO
 var normalZIndex = 0
 var handSize = 0
-
+var targetScale: Vector2 = Vector2(1, 1)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	size = Vector2(720,1000)
 	currentlyDragging = false
 	normalZIndex = z_index
 	scale = Vector2(0.34,0.34)*scaleFactor
+	targetScale = scale
 	if displayLocation == "collection" or displayLocation == "deck edit":
 		position = position * 0.75
 		pass
@@ -165,8 +166,10 @@ func straightLaunch():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	scale = lerp(scale, targetScale, delta*16.0)
+	
 	if mouseOn == false:
-		scale = Vector2(0.34,0.34)*scaleFactor
+		targetScale = Vector2(0.34,0.34)*scaleFactor
 	if launched:
 			launch()
 	if runAnim && !dragging:
@@ -218,7 +221,7 @@ func _on_mouse_entered() -> void:
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
 	if (displayLocation == "collection" or displayLocation == "deck edit") && !currentlyDragging:
-		scale = Vector2(0.5, 0.5)*scaleFactor
+		targetScale = Vector2(0.5, 0.5)*scaleFactor
 		z_index = 3
 	mouseOn = true
 	pass # Replace with function body.
@@ -230,7 +233,7 @@ func _on_mouse_exited() -> void:
 	if !isHidden && !selected:
 		targetPosition = originalPosition
 	if displayLocation == "collection" or displayLocation == "deck edit":
-		scale = Vector2(0.34, 0.34)*scaleFactor
+		targetScale = Vector2(0.34, 0.34)*scaleFactor
 		z_index = 1
 	mouseOn = false
 	pass # Replace with function body.
