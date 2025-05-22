@@ -846,6 +846,8 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		cardButtons.remove_at(0)
 		button.queue_free()
 	
+	var costMod = mon.getCostMod()
+	
 	var id = 0
 
 	## Creates a new Card UI element for each card in the current monster's hand.
@@ -881,8 +883,8 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 				var strongarmStatus = mon.getStatus(Status.EFFECTS.STRONGARM)
 				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
 					strongarmEffect = true
-
-			var disableCard = card.cost > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
+			
+			var disableCard = max(0, card.cost + costMod) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 

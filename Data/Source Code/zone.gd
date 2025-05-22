@@ -72,14 +72,6 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 		#check for status conditions
 		for c in len(mon.statusConditions):
 			var status: Status = mon.statusConditions[c]
-			# if haste, then apply haste effect
-			if status.effect == Status.EFFECTS.HASTE and status.X > 0:
-				card.cost = max(0, card.cost - 1)
-				status.X -= 1
-			#if slow, then apply slow effect
-			if status.effect == Status.EFFECTS.SLOW and status.X > 0:
-				card.cost = max(0, card.cost + 1)
-				status.X -= 1
 			#if empowering next card, then empower card and mark status for removal
 			if status.effect == Status.EFFECTS.EMPOWER_NEXT and !status.effectDone:
 				card.statusConditions.push_back(Status.EFFECTS.EMPOWER)

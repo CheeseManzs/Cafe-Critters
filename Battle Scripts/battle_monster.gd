@@ -487,6 +487,16 @@ func millCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
 	await battleController.addArrayToGraveyard(card, self)
 	
+func getCostMod() -> int:
+	var costMod = 0
+	# if haste, then apply haste effect
+	if hasStatus(Status.EFFECTS.HASTE) and getStatus(Status.EFFECTS.HASTE).X > 0:
+		costMod += -1
+	#if slow, then apply slow effect
+	if hasStatus(Status.EFFECTS.SLOW) and getStatus(Status.EFFECTS.SLOW).X > 0:
+		costMod += 1
+	return costMod
+
 
 func getMonsterDisplay() -> MonsterDisplay:
 	if playerControlled:

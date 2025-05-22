@@ -71,10 +71,17 @@ func runActions(battleController: Node) -> void:
 			opposingMon.addStatusCondition(Status.new(Status.EFFECTS.REGEN,regenLevel+1),true)
 			#await battleController.get_tree().create_timer(0.75).timeout
 		
-		action.battleMonster.removeMP(action.card.cost*action.costMod)
+		action.battleMonster.removeMP(max(0, action.card.cost+action.battleMonster.getCostMod())*action.costMod)
 		
 		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
+		
+		#haste/slow
+		if action.battleMonster.hasStatus(Status.EFFECTS.HASTE) and action.battleMonster.getStatus(Status.EFFECTS.HASTE).X > 0:
+			action.battleMonster.getStatus(Status.EFFECTS.HASTE).X -= 1
+		#if slow, then apply slow effect
+		if action.battleMonster.hasStatus(Status.EFFECTS.SLOW) and action.battleMonster.getStatus(Status.EFFECTS.SLOW).X > 0:
+			action.battleMonster.getStatus(Status.EFFECTS.SLOW).X -= 1
 		
 		#parrying
 		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY):
