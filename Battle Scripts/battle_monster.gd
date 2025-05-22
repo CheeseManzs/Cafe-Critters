@@ -485,7 +485,7 @@ func drawCards(count: int) -> void:
 
 func millCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
-	battleController.addArrayToGraveyard(card, self)
+	await battleController.addArrayToGraveyard(card, self)
 	
 
 func getMonsterDisplay() -> MonsterDisplay:
