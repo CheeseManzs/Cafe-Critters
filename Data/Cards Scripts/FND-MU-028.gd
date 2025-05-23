@@ -7,9 +7,8 @@ func _init() -> void:
 	role = "Inkhor"
 	description = "15% Attack for each card in the opponent Fae's hand."
 	name = "Counterweight Bash"
+	power = 0.15
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	for i in range(defender.currentHand.storedCards.size()):
+		await dealDamage(attacker,defender)

@@ -54,12 +54,13 @@ func _ready() -> void:
 ## Sets parameters of the card from the given resource. -A
 func setCard(p_card: Card, cID: int, battleController: BattleController, context: String = "default", user: BattleMonster = null, target: BattleMonster = null) -> void:
 	costMod = 0
-	# if haste, then apply haste effect
-	if user.hasStatus(Status.EFFECTS.HASTE) and user.getStatus(Status.EFFECTS.HASTE).X > 0:
-		costMod += -1
-	#if slow, then apply slow effect
-	if user.hasStatus(Status.EFFECTS.SLOW) and user.getStatus(Status.EFFECTS.SLOW).X > 0:
-		costMod += 1
+	if context == "default":
+		# if haste, then apply haste effect
+		if user.hasStatus(Status.EFFECTS.HASTE) and user.getStatus(Status.EFFECTS.HASTE).X > 0:
+			costMod += -1
+		#if slow, then apply slow effect
+		if user.hasStatus(Status.EFFECTS.SLOW) and user.getStatus(Status.EFFECTS.SLOW).X > 0:
+			costMod += 1
 	runAnim = false
 	card = p_card
 	titleLabel.text = card.name

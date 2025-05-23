@@ -490,7 +490,7 @@ func millCards(count: int) -> void:
 func shuffleCardIntoDeck(card: Card, index: int) -> void:
 	if index == -1:
 		index = randi() % currentDeck.storedCards.size()
-	currentDeck.storedCards.insert(index, card)
+	await currentDeck.storedCards.insert(index, card)
 		
 	
 func getCostMod() -> int:

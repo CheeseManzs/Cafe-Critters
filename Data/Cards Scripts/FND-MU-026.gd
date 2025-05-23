@@ -8,8 +8,10 @@ func _init() -> void:
 	description = "Inflict Riptide 1. Create 6 Flotsam in each active Fae's deck. Draw 1."
 	name = "Uncontrolled Discharge"
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+	
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveStatus(defender,Status.EFFECTS.RIPTIDE,1)
+	for i in range(6):
+		await attacker.shuffleCardIntoDeck(createInstance("Flotsam"), -1)
+		await defender.shuffleCardIntoDeck(createInstance("Flotsam"), -1)
+	await attacker.drawCards(1)

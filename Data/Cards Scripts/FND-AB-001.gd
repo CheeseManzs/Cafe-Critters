@@ -7,6 +7,8 @@ func _init() -> void:
 	role = "Basic"
 	description = "As an additional cost to play this card, discard a card from your hand. Create Scrap equal to that card's mana cost."
 	name = "Scrap"
+	selfTarget = true
+	
 func canBePlayed(user: BattleMonster):
 	return len(user.currentHand.storedCards) >= 2
 

@@ -13,5 +13,5 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)
 	for i in range(3):
-		attacker.currentHand.storedCards.push_back(createInstance("Flotsam"))
-		defender.currentHand.storedCards.push_back(createInstance("Flotsam"))
+		await attacker.shuffleCardIntoDeck(createInstance("Jetsam"), -1)
+		await defender.shuffleCardIntoDeck(createInstance("Jetsam"), -1)

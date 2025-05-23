@@ -7,9 +7,9 @@ func _init() -> void:
 	role = "Inkhor"
 	description = "65% Attack. Create 5 Flotsam in the opponent Fae's hand."
 	name = "Turbulance"
+	power = 0.65
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker,defender)
+	for i in range(5):
+		defender.currentHand.storedCards.push_back(createInstance("Flotsam"))
