@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://cpf4dy38n68y2"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://cpf4dy38n68y2"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_517cx"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_h8b7h"]
+[ext_resource type="Resource" uid="uid://c6uo8laoo77ns" path="res://Data/Cards/Strike.tres" id="6_lx4dj"]
 [ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="9_p6ryl"]
 [ext_resource type="Texture2D" uid="uid://b3jeog1jyky2k" path="res://Graphics/Monsters/Ignetor.png" id="12_e728s"]
 
@@ -11,11 +12,10 @@ script = ExtResource("1_517cx")
 name = ""
 storedCards = Array[ExtResource("2_h8b7h")]([])
 
-[sub_resource type="Resource" id="Resource_3lquw"]
+[sub_resource type="Resource" id="Resource_7ku6v"]
 script = ExtResource("1_517cx")
-name = ""
-storedCards = Array[ExtResource("2_h8b7h")]([])
-metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+name = "Starting Deck"
+storedCards = Array[ExtResource("2_h8b7h")]([ExtResource("6_lx4dj")])
 
 [resource]
 script = ExtResource("2_8ybf3")
@@ -29,7 +29,7 @@ sprite = ExtResource("12_e728s")
 spriteScale = 0.667
 passive = ExtResource("9_p6ryl")
 deck = SubResource("Resource_rsf8y")
-startingCardPool = SubResource("Resource_3lquw")
+startingCardPool = SubResource("Resource_7ku6v")
 levelupCards = Array[ExtResource("1_517cx")]([])
 rawHealth = 5
 rawAttack = 12

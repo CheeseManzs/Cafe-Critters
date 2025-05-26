@@ -43,9 +43,9 @@ enum RARITY {
 }
 
 static var tooltipColors = {
-	"Attack":"77130e",
-	"Block":"7FFFD4",
-	"Keyword":"gold"
+	"ATK":"77130e",
+	"DEF":"7FFFD4",
+	"KEY":"gold"
 }
 
 static var alignemColors = {
@@ -59,6 +59,16 @@ static var alignemColors = {
 	ALIGNMENT.Blanc:"c9c9c7",
 }
 
+func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return _calcPower(attacker, defender, atkNum/100.0)
+
+func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return _calcShield(attacker, defender, atkNum/100.0)
+
+var hintStats: Dictionary[String, Callable] = {
+	"ATK": descAttackCalc,
+	"DEF": descShieldCalc
+}
 
 #cost of card
 var cost: int
@@ -85,7 +95,6 @@ var originator: BattleMonster = null #the monster that owns this card
 var selfTarget: bool = false
 var salvaged: bool = false
 
-@export var aiDetails: AIInfo
 @export var art: Texture2D
 
 
@@ -108,6 +117,25 @@ func getSurroundingWord(s: String, index, spaceCount = 0):
 	print("left:",left," right:",right)
 	print(s, " l:", left, " r-l:",right - left)
 	return s.substr(left, right - left)
+
+func getSurroundingHint(s: String, index, spaceCount = 0):
+	var left = index
+	var right = index
+	var maxSpaces = spaceCount
+	var rightSpaces = maxSpaces
+	
+	while left > 0 && s[left] != "(":
+		left = left - 1
+	
+	while right < len(s) && rightSpaces >= 0:
+		if s[right] == ")":
+			rightSpaces -= 1
+		if rightSpaces < 0:
+			break
+		right = right + 1
+	print("left:",left," right:",right)
+	print(s, " l:", left, " r-l:",right - left)
+	return s.substr(left, right + 1 - left)
 	
 
 
@@ -258,40 +286,36 @@ func setDescription(attacker: BattleMonster, defender: BattleMonster):
 	genericDescription(attacker, defender)
 
 func genericDescription(attacker: BattleMonster, defender: BattleMonster):
-	var atkDescInd = description.find("% Attack")
 	var replaceBin = []
 	var replaceList = []
-	while atkDescInd != -1:
-		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = descAttackCalc(attacker, defender, atkNum)
-		var toReplace = str(atkNum) + "% Attack"
-		atkDescInd = description.find("% Attack", atkDescInd+1)
-		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc, "Damage", tooltipColors["Attack"],toReplace])
-			replaceList.push_back(toReplace)
 	
-	atkDescInd = description.find("% Defend")
-	while atkDescInd != -1:
-		var atkNum = int(getSurroundingWord(description, atkDescInd))
-		var calc = descShieldCalc(attacker, defender, atkNum)
-		var toReplace = str(atkNum) + "% Defend"
-		atkDescInd = description.find("% Defend", atkDescInd+1)
-		if !replaceList.has(toReplace):
-			replaceBin.push_back([toReplace,calc,"Block",tooltipColors["Block"],toReplace])
-			replaceList.push_back(toReplace)
+	for statName in hintStats.keys():
+		var statInd = "% " + statName
+		var atkDescInd = description.find(statInd)
+		print("finding: " + statInd)
+		while atkDescInd != -1:
+			print("found "+str(statInd)+": " + str(atkDescInd))
+			var fullHint = getSurroundingHint(description, atkDescInd)
+			var atkNum = int(fullHint)
+			var calc = hintStats[statName].call(attacker, defender, atkNum)
+			var toReplace = fullHint
+			atkDescInd = description.find(statInd, atkDescInd+1)
+			if !replaceList.has(toReplace):
+				replaceBin.push_back([toReplace,calc, "", tooltipColors[statName],toReplace.replace("(","").replace(")","")])
+				replaceList.push_back(toReplace)
 
 	for rawKeywordString in Keyword.keywords:
 		var spaces = rawKeywordString.count(" ")
 		for ending in ["","."]:
 			var keywordString = rawKeywordString + ending
-			atkDescInd = description.find(keywordString)
+			var atkDescInd = description.find(keywordString)
 			while atkDescInd != -1:
 				var toReplace = keywordString
 				var resetInd = atkDescInd
 				print("toReplace: ", "1:",toReplace,"2:",getSurroundingWord(description,resetInd,spaces),"|")
 				atkDescInd = description.find(toReplace, atkDescInd+1)
 				if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd,spaces).trim_prefix(" ") == toReplace:
-					replaceBin.push_back([toReplace,null,toReplace,tooltipColors["Keyword"],Keyword.getDescription(rawKeywordString)])
+					replaceBin.push_back([toReplace,null,toReplace,tooltipColors["KEY"],Keyword.getDescription(rawKeywordString)])
 					replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
@@ -299,14 +323,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 		if rpl[1] == null:
 			description = description.replace(rpl[0],tooltip+rpl[2]+"[/color][/hint]")
 		else:
-			description = description.replace(rpl[0],tooltip+str(rpl[1])+" "+rpl[2]+"[/color][/hint]")
-
-
-func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
-	return _calcPower(attacker, defender, atkNum/100.0)
-
-func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
-	return _calcShield(attacker, defender, atkNum/100.0)
+			description = description.replace(rpl[0],tooltip+str(rpl[1])+"[/color][/hint]")
 
 static func getOmenCards(battleController: BattleController):
 	return Zone.getTaggedCardsInArray(battleController.graveyard, "Omen")

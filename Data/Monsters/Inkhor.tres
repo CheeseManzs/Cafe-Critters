@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bhvtitdwabhi8"]
+[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://bhvtitdwabhi8"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_g5leh"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_kbqtg"]
 [ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="3_g5leh"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="4_glas4"]
 [ext_resource type="Texture2D" uid="uid://dpw0fiuiwcotk" path="res://Graphics/Monsters/inkhor_temp.png" id="5_kbqtg"]
+[ext_resource type="Resource" uid="uid://c6uo8laoo77ns" path="res://Data/Cards/Strike.tres" id="6_kbqtg"]
 
 [sub_resource type="Resource" id="Resource_a715d"]
 script = ExtResource("1_g5leh")
@@ -12,11 +13,10 @@ name = ""
 storedCards = Array[ExtResource("2_kbqtg")]([])
 metadata/_custom_type_script = "uid://ck6kibtk6piq4"
 
-[sub_resource type="Resource" id="Resource_oeeww"]
+[sub_resource type="Resource" id="Resource_ffw5w"]
 script = ExtResource("1_g5leh")
-name = ""
-storedCards = Array[ExtResource("2_kbqtg")]([])
-metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+name = "Starting Deck"
+storedCards = Array[ExtResource("2_kbqtg")]([ExtResource("6_kbqtg")])
 
 [resource]
 script = ExtResource("4_glas4")
@@ -30,7 +30,7 @@ sprite = ExtResource("5_kbqtg")
 spriteScale = 0.026
 passive = ExtResource("3_g5leh")
 deck = SubResource("Resource_a715d")
-startingCardPool = SubResource("Resource_oeeww")
+startingCardPool = SubResource("Resource_ffw5w")
 levelupCards = Array[ExtResource("1_g5leh")]([])
 rawHealth = 10
 rawAttack = 6

@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=7 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_vs0ux"]
 [ext_resource type="Texture2D" uid="uid://bb7jieshcir82" path="res://Graphics/Monsters/Rev.png" id="3_fsk0c"]
+[ext_resource type="Resource" uid="uid://c6uo8laoo77ns" path="res://Data/Cards/Strike.tres" id="3_uxiga"]
 [ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="5_g2my1"]
 
-[sub_resource type="Resource" id="Resource_dmqgo"]
+[sub_resource type="Resource" id="Resource_uxiga"]
 script = ExtResource("1_mkiur")
-name = ""
-storedCards = Array[ExtResource("2_vs0ux")]([])
+name = "Starting Deck"
+storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_uxiga")])
 
 [resource]
 script = ExtResource("2_dbcrm")
@@ -22,7 +23,7 @@ dexEntry = ""
 sprite = ExtResource("3_fsk0c")
 spriteScale = 0.028
 passive = ExtResource("5_g2my1")
-deck = SubResource("Resource_dmqgo")
+deck = SubResource("Resource_uxiga")
 levelupCards = Array[ExtResource("1_mkiur")]([])
 rawHealth = 7
 rawAttack = 7
