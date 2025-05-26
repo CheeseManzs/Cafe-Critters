@@ -1,47 +1,23 @@
-'''extends Card
-
-func _init() -> void:
-	cost = 0
-	priority = 1
-	alignment = ALIGNMENT.Default
-	role = ROLE.Unique
-	description = "30% Defend, Empowered: Draw 1"
-	name = "Affogato"
-
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#idk what barrier is ngl but remember to apply empower to it
-	var shieldGiven = ceil(0.3*attacker.getDefense())
-	attacker.addShield(shieldGiven)
-	#if empowered, draw 1 card
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		attacker.drawCards(1)
-	
-	return shieldGiven
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var shieldGiven = ceil(0.3*attacker.getDefense())
-	return shieldGiven'''
 import csv
 import os.path
 
-def gen_program(cost, prio, align, role, desc, name, code):
-    filename = code+".gd"
+def gen_program(card):
+    filename = card["Code #"]+".gd"
     make = not os.path.isfile(filename)
     filetext = f'''extends Card
 
 func _init() -> void:
-	cost = {cost}
-	priority = {prio}
-	alignment = ALIGNMENT.{align}
-    role = "{role}"
-	description = "{desc}"
-	name = "{name}"
+\tcost = {card["Cost"]}
+\tpriority = {card["Priority"]}
+\talignment = ALIGNMENT.{card["God"]}
+\trole = "{card["Role"]}"
+\tdescription = "{card["Simplified Description"]}"
+\tname = "{card["Name"]}"
+\ttags = {card["Tags"]}
+\trarity = RARITY.{card["Rarity"]}
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
-
-func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
-    pass
+func effect(attacker: BattleMonster, defender: BattleMonster):
+\tpass
 '''
     if make:
         o = open(filename,'w')
@@ -49,20 +25,30 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
         o.close()
         print("wrote to " + filename)
 
-card_file = open("Legends of Coffeeland - Master List.csv")
+card_file = open("card_list.csv")
 cards = csv.reader(card_file, delimiter=',', quotechar='"')
 for card in cards:
-    "Code #,Card Name,God,Rarity,Class,Role,Cost,Card Description,WIP Status,Implemented"
-    code = card[0]
-    name = card[1]
-    prio = 0
-    align = card[2].split(" ")[0]
-    role = card[5]
-    cost = card[6]
-    desc = card[7]
-    if name == "Card Name":
+    keys = "Code #,Name,God,Rarity,Tags,Role,Cost,Priority,Simplified Description,Card Description,WIP Status,Implemented".split(",")
+    card_obj = {}
+    index = 0
+    for key in keys:
+        card_obj[key] = card[index]
+        index += 1
+
+    tag_list = []
+    for tag in card_obj["Tags"].split(","):
+        tag_list.append(tag)
+
+    card_obj["Tags"] = str(tag_list)
+    
+    if card_obj["Simplified Description"] != "" and card_obj["WIP Status"] == "V4 Updated" and card_obj["Code #"] != "":
+        print("---")
+        print(card_obj)
+        gen_program(card_obj)
+    
+    if card_obj["Name"] == "Card Name":
         continue
-    gen_program(cost, prio, align, role, desc, name, code)
+    
     
 
 

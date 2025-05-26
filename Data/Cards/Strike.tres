@@ -1,8 +1,7 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://24xkm0mry784"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c6uo8laoo77ns"]
 
-[ext_resource type="Script" uid="uid://de8h4hc6ylh3w" path="res://Data/Cards Scripts/FND-DB-001.gd" id="1_6h0q0"]
-[ext_resource type="Texture2D" uid="uid://b2rjweskrg7cm" path="res://Data/Card Art/STRIKE.jpg" id="1_j34ov"]
+[ext_resource type="Script" uid="uid://bcxug84rbdx3s" path="res://Data/Cards Scripts/FND-DB-001.gd" id="1_6h0q0"]
 
 [resource]
 script = ExtResource("1_6h0q0")
-art = ExtResource("1_j34ov")
+metadata/_custom_type_script = "uid://dvojf61xkmwk0"

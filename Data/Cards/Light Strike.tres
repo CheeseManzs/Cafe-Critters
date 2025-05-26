@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c6nbxybpiih53"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dk2oyqnvbfdq5"]
 
-[ext_resource type="Script" uid="uid://chfsxyfnp173" path="res://Data/Cards Scripts/FND-DB-003.gd" id="1_f0npr"]
+[ext_resource type="Script" uid="uid://db67juhmoyr84" path="res://Data/Cards Scripts/FND-DB-003.gd" id="1_f0npr"]
 
 [resource]
 script = ExtResource("1_f0npr")
+metadata/_custom_type_script = "uid://dvojf61xkmwk0"

@@ -1,38 +1,20 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=22 format=3 uid="uid://b3rp3vvccagnq"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://b3rp3vvccagnq"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
 [ext_resource type="Texture2D" uid="uid://duc8et87moyqr" path="res://Graphics/Monsters/temp_hooliquen.png" id="2_1jaoc"]
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="2_j0ra4"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="3_rwnvh"]
-[ext_resource type="Resource" uid="uid://c503bnhudnip0" path="res://Data/Cards/Devious Cackle.tres" id="4_degly"]
 [ext_resource type="Resource" uid="uid://b8muftsmeq6hk" path="res://Data/Monster Passives/Sore Loser.tres" id="5_jb0h0"]
-[ext_resource type="Resource" uid="uid://wnwaekj234my" path="res://Data/Cards/Oops.tres" id="5_u53q0"]
-[ext_resource type="Resource" uid="uid://co1hbyhiaxnee" path="res://Data/Cards/Sinister Plotting.tres" id="6_knfcj"]
-[ext_resource type="Resource" uid="uid://bi61w1ojs0g06" path="res://Data/Cards/Breakneck Barrage.tres" id="7_a0no4"]
-[ext_resource type="Resource" uid="uid://cby8hqiru7341" path="res://Data/Cards/Savage Stab.tres" id="8_d38gr"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="9_fek8i"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="10_pnqd8"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="11_awhvu"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="12_qyths"]
-[ext_resource type="Resource" uid="uid://duivr6o0n37tx" path="res://Data/Cards/Non-Pointy End.tres" id="13_jhrcl"]
-[ext_resource type="Resource" uid="uid://co745it0tlk43" path="res://Data/Cards/You're In For It Now.tres" id="16_58exb"]
-[ext_resource type="Resource" uid="uid://c8uuewegmowut" path="res://Data/Cards/Stack The Deck.tres" id="17_j3lww"]
-[ext_resource type="Resource" uid="uid://dkw4inmsls3hc" path="res://Data/Cards/Endless Blows.tres" id="18_2qt1t"]
 
 [sub_resource type="Resource" id="Resource_y5cq6"]
 script = ExtResource("2_j0ra4")
 name = ""
 storedCards = Array[ExtResource("3_rwnvh")]([])
 
-[sub_resource type="Resource" id="Resource_7s4x1"]
-script = ExtResource("2_j0ra4")
-name = ""
-storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("6_knfcj"), ExtResource("6_knfcj"), ExtResource("8_d38gr")])
-
 [sub_resource type="Resource" id="Resource_5u6vm"]
 script = ExtResource("2_j0ra4")
 name = "Starting Deck"
-storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("4_degly"), ExtResource("4_degly"), ExtResource("5_u53q0"), ExtResource("5_u53q0"), ExtResource("6_knfcj"), ExtResource("7_a0no4"), ExtResource("7_a0no4"), ExtResource("8_d38gr"), ExtResource("8_d38gr"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("9_fek8i"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("10_pnqd8"), ExtResource("11_awhvu"), ExtResource("11_awhvu"), ExtResource("12_qyths"), ExtResource("12_qyths"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("13_jhrcl"), ExtResource("16_58exb"), ExtResource("17_j3lww"), ExtResource("18_2qt1t")])
+storedCards = Array[ExtResource("3_rwnvh")]([])
 
 [resource]
 script = ExtResource("1_i2xwq")
@@ -47,7 +29,7 @@ spriteScale = 1.0
 passive = ExtResource("5_jb0h0")
 deck = SubResource("Resource_y5cq6")
 startingCardPool = SubResource("Resource_5u6vm")
-levelupCards = Array[ExtResource("2_j0ra4")]([SubResource("Resource_7s4x1"), null, null, null, null, null, null, null, null])
+levelupCards = Array[ExtResource("2_j0ra4")]([])
 rawHealth = 9
 rawAttack = 7
 rawDefense = 5

@@ -5,13 +5,10 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "Draw 2 extra cards next turn."
+	description = "Next turn start: Draw 2."
 	name = "Stock Up"
-	selfTarget = true
+	tags = ['Utility', ' Self-Target']
+	rarity = RARITY.Common
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	var extraDraws = 2
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		extraDraws = ceil(extraDraws*1.5)
-	attacker.extraDraw += extraDraws
-	return 0
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	pass

@@ -5,17 +5,10 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "Gain 1 additional mp next turn."
+	description = "Next turn start: Gain 1 mp."
 	name = "Store Power"
-	selfTarget = true
+	tags = ['Utility', ' Self-Target']
+	rarity = RARITY.Epic
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#add temporary MP
-	var mpNextTurn = 1
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		mpNextTurn = ceil(mpNextTurn*1.5)
-	attacker.addTempMPPerTurn(mpNextTurn)
-	return 0
-
-func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
-	return 1
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	pass

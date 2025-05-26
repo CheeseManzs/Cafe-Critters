@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cpqpycj36a2ia"
+
+[deps]
+
+files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Role.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Priority.translation", "res://Data/Cards Scripts/card_list.Simplified Description.translation", "res://Data/Cards Scripts/card_list.Card Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation", "res://Data/Cards Scripts/card_list.Implemented.translation", "res://Data/Cards Scripts/card_list.Column 1.translation", "res://Data/Cards Scripts/card_list.Column 2.translation"]
+
+source_file="res://Data/Cards Scripts/card_list.csv"
+dest_files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Role.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Priority.translation", "res://Data/Cards Scripts/card_list.Simplified Description.translation", "res://Data/Cards Scripts/card_list.Card Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation", "res://Data/Cards Scripts/card_list.Implemented.translation", "res://Data/Cards Scripts/card_list.Column 1.translation", "res://Data/Cards Scripts/card_list.Column 2.translation"]
+
+[params]
+
+compress=true
+delimiter=0

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cmopm77ihw1bq"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://hi41bba6itf"]
 
-[ext_resource type="Script" uid="uid://wqjn8s0xuse1" path="res://Data/Cards Scripts/FND-DB-004.gd" id="1_topui"]
+[ext_resource type="Script" uid="uid://dchpsf3bnbqi5" path="res://Data/Cards Scripts/FND-DB-004.gd" id="1_topui"]
 
 [resource]
 script = ExtResource("1_topui")
+metadata/_custom_type_script = "uid://dvojf61xkmwk0"

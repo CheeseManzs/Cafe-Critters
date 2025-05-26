@@ -1,27 +1,10 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=25 format=3 uid="uid://bbmecjegxa3d3"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bbmecjegxa3d3"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_7umar"]
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
 [ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Refreshing Tea.tres" id="3_j28od"]
-[ext_resource type="Resource" uid="uid://dgoby5qn3o4st" path="res://Data/Cards/Affogato.tres" id="3_omahx"]
-[ext_resource type="Resource" uid="uid://bnw3jnvekeqvn" path="res://Data/Cards/Caffeinate.tres" id="4_1tr8c"]
-[ext_resource type="Resource" uid="uid://bu1ah4gcfsjiq" path="res://Data/Cards/Cappucino.tres" id="5_12ul0"]
-[ext_resource type="Resource" uid="uid://c2kl8c0g243dl" path="res://Data/Cards/Latte.tres" id="6_qlhrh"]
-[ext_resource type="Resource" uid="uid://cnxe8tie0eicv" path="res://Data/Cards/Press.tres" id="7_dt1ir"]
-[ext_resource type="Resource" uid="uid://cotdnpt076p0a" path="res://Data/Cards/Roast.tres" id="8_tpt1p"]
-[ext_resource type="Resource" uid="uid://bwaam8s51mxx0" path="res://Data/Cards/Store Power.tres" id="10_4v8kc"]
-[ext_resource type="Resource" uid="uid://c6nbxybpiih53" path="res://Data/Cards/Light Strike.tres" id="11_neq14"]
-[ext_resource type="Resource" uid="uid://btips8papk36l" path="res://Data/Cards/Stock Up.tres" id="11_rkwg2"]
-[ext_resource type="Resource" uid="uid://cmopm77ihw1bq" path="res://Data/Cards/Light Block.tres" id="12_dgmpa"]
-[ext_resource type="Resource" uid="uid://dqtq4dx1gk8nh" path="res://Data/Cards/Assist.tres" id="12_lxgm7"]
-[ext_resource type="Resource" uid="uid://cgc5v44kiego7" path="res://Data/Cards/Meditate.tres" id="13_8bxlx"]
-[ext_resource type="Resource" uid="uid://duleufd5ra7w0" path="res://Data/Cards/Block.tres" id="13_re3ge"]
-[ext_resource type="Resource" uid="uid://24xkm0mry784" path="res://Data/Cards/Strike.tres" id="14_c6ebl"]
-[ext_resource type="Resource" uid="uid://cy8eslywphxoa" path="res://Data/Cards/Hinder.tres" id="14_n7l43"]
-[ext_resource type="Resource" uid="uid://ogu20egwfgss" path="res://Data/Cards/Prepare.tres" id="15_sry76"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="16_jyqkw"]
-[ext_resource type="Resource" uid="uid://csadofip0u4t7" path="res://Data/Cards/Espresso.tres" id="17_ktb1y"]
 
 [sub_resource type="Resource" id="Resource_jeqqs"]
 script = ExtResource("1_qo6j8")
@@ -31,7 +14,7 @@ storedCards = Array[ExtResource("2_lxcvb")]([])
 [sub_resource type="Resource" id="Resource_7k3sr"]
 script = ExtResource("1_qo6j8")
 name = "Starting Deck"
-storedCards = Array[ExtResource("2_lxcvb")]([ExtResource("14_c6ebl"), ExtResource("14_c6ebl"), ExtResource("14_c6ebl"), ExtResource("13_re3ge"), ExtResource("13_re3ge"), ExtResource("13_re3ge"), ExtResource("11_neq14"), ExtResource("11_neq14"), ExtResource("12_dgmpa"), ExtResource("10_4v8kc"), ExtResource("10_4v8kc"), ExtResource("10_4v8kc"), ExtResource("11_rkwg2"), ExtResource("11_rkwg2"), ExtResource("12_lxgm7"), ExtResource("12_lxgm7"), ExtResource("13_8bxlx"), ExtResource("14_n7l43"), ExtResource("14_n7l43"), ExtResource("15_sry76"), ExtResource("15_sry76"), ExtResource("15_sry76"), ExtResource("4_1tr8c"), ExtResource("4_1tr8c"), ExtResource("4_1tr8c"), ExtResource("17_ktb1y"), ExtResource("17_ktb1y"), ExtResource("17_ktb1y"), ExtResource("8_tpt1p"), ExtResource("8_tpt1p"), ExtResource("3_omahx"), ExtResource("3_omahx"), ExtResource("3_omahx"), ExtResource("5_12ul0"), ExtResource("5_12ul0"), ExtResource("6_qlhrh"), ExtResource("6_qlhrh"), ExtResource("7_dt1ir")])
+storedCards = Array[ExtResource("2_lxcvb")]([])
 
 [resource]
 resource_local_to_scene = true

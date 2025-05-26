@@ -5,11 +5,10 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "50% Attack. 50% Defend"
+	description = "Deal (50% ATK) damage. Gain (50% DEF) block."
 	name = "Shield Slap"
-	power = 0.5
-	shieldPower = 0.5
+	tags = ['Attack']
+	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveShield(attacker, defender)
-	await dealDamage(attacker, defender)
+	pass

@@ -5,10 +5,10 @@ func _init() -> void:
 	priority = 1
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "50% Defend."
+	description = "Gain (50% DEF) block."
 	name = "Light Block"
-	selfTarget = true
-
+	tags = ['Defence', ' Self-Target']
+	rarity = RARITY.Common
 	shieldPower = 0.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

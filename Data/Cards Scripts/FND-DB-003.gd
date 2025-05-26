@@ -5,9 +5,10 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "50% Attack."
+	description = "Deal (50% ATK) damage."
 	name = "Light Strike"
-	
+	tags = ['Attack']
+	rarity = RARITY.Common
 	power = 0.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

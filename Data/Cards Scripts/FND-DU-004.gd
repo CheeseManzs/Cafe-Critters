@@ -1,24 +1,14 @@
 extends Card
 
 func _init() -> void:
-	cost = 0
-	priority = 0
+	cost = 1
+	priority = 1
 	alignment = ALIGNMENT.Default
 	role = "Slocha"
-	description = "40% Attack, Empowered: Empower the next card played."
-	name = "Espresso"
-	power = 0.4
+	description = "Gain (40% DEF) block. If this card is played with a modified cost, draw a card."
+	name = "Cappucino"
+	tags = ['Defence', ' Self-Target']
+	rarity = RARITY.Uncommon
 
-func effect(attacker: BattleMonster, defender: BattleMonster) -> int:
-	#create status object
-	await dealDamage(attacker, defender, power, false)
-	if statusConditions.has(Status.EFFECTS.EMPOWER):
-		await giveStatus_noempower(attacker,Status.EFFECTS.EMPOWER_PLAYED)
-	
-	return 0
-
-#checks what status will be given to the user
-func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
-	if attacker.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
-		return Status.new(Status.EFFECTS.EMPOWER_PLAYED)
-	return null
+func effect(attacker: BattleMonster, defender: BattleMonster):
+	pass

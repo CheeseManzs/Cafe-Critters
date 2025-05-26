@@ -5,13 +5,11 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "100% Attack."
+	description = "Deal (100% ATK) damage."
 	name = "Strike"
-	
+	tags = ['Attack']
+	rarity = RARITY.Common
 	power = 1
 
-
-
-	
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)

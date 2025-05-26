@@ -17,6 +17,7 @@ enum EFFECTS {
 	PITCH,
 	KNOWLEDGE,
 	BARRIER,
+	VEIL,
 	REGEN,
 	BECOME_RECKLESS,
 	RECKLESS,
@@ -39,7 +40,7 @@ var effectDone = false
 var effect: EFFECTS
 #checks if effect is numerable (i.e has X after it, like Decay X or Haste X)
 static func isNumerable(eff) -> bool:
-	if [EFFECTS.RIPTIDE, EFFECTS.SLOW, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN].has(eff):
+	if [EFFECTS.RIPTIDE, EFFECTS.SLOW, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN, EFFECTS.VEIL].has(eff):
 		return true
 	else:
 		return false
@@ -87,6 +88,8 @@ func toMini() -> String:
 			return "KNW"
 		EFFECTS.BARRIER:
 			return "BAR"
+		EFFECTS.VEIL:
+			return "VEL"
 		EFFECTS.REGEN:
 			return "RGN"
 		EFFECTS.BECOME_RECKLESS:
