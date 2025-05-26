@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://c578sqnsegwhb"]
+[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://bhvtitdwabhi8"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_g5leh"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_kbqtg"]

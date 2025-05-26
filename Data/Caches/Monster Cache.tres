@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="7_0yj3b"]
 [ext_resource type="Resource" uid="uid://xpws0bsn3qdb" path="res://Data/Monsters/Junkguard.tres" id="7_7lq5t"]
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="7_xmuw6"]
-[ext_resource type="Resource" uid="uid://c578sqnsegwhb" path="res://Data/Monsters/Inkhor.tres" id="8_4e5nh"]
+[ext_resource type="Resource" path="res://Data/Monsters/Inkhor.tres" id="8_4e5nh"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="8_gbt8i"]
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 
