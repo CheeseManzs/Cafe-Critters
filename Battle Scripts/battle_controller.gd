@@ -753,6 +753,9 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	await newMon.getPassive().customUI(newMon, self)
 	await newMon.getPassive().onSwapIn(oldMon, self)
 	
+	oldMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_OUT
+	newMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_IN
+	
 #swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:
 	
@@ -1013,6 +1016,7 @@ func activeTurn() -> void:
 		
 		BattleLog.singleton.log("Enemy has " + str(enemyMP) + " MP!")
 		for mon in sortedActiveMonList():
+			mon.switchState = BattleMonster.SWITCH_STATE.NONE
 			await mon.getPassive().onSubTurnStart(mon, self)
 		
 		createDeckDisplay()	

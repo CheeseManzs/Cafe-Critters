@@ -143,6 +143,12 @@ func getSurroundingHint(s: String, index, spaceCount = 0):
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
 
+func localSwap(old: BattleMonster, new: BattleMonster):
+	if old.playerControlled:
+		await old.battleController.playerSwap(old.battleController.playerTeam.find(new))
+	else:
+		await old.battleController.enemySwap(old.battleController.enemyTeam.find(new))
+
 #deal damage
 func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float = power, applyEmpower = true) -> int:
 	var dmg = _calcPower(attacker, defender, _power, applyEmpower)
@@ -290,19 +296,27 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	var replaceList = []
 	
 	for statName in hintStats.keys():
-		var statInd = "% " + statName
-		var atkDescInd = description.find(statInd)
-		print("finding: " + statInd)
-		while atkDescInd != -1:
-			print("found "+str(statInd)+": " + str(atkDescInd))
-			var fullHint = getSurroundingHint(description, atkDescInd)
-			var atkNum = int(fullHint)
-			var calc = hintStats[statName].call(attacker, defender, atkNum)
-			var toReplace = fullHint
-			atkDescInd = description.find(statInd, atkDescInd+1)
-			if !replaceList.has(toReplace):
-				replaceBin.push_back([toReplace,calc, "", tooltipColors[statName],toReplace.replace("(","").replace(")","")])
-				replaceList.push_back(toReplace)
+		for prefix in ["", "Opponent "]:
+			var statInd = "% " + prefix + statName
+			var atkDescInd = description.find(statInd)
+			var currentAttacker = attacker
+			var currentDefender = defender 
+			
+			if prefix == "Opponent ":
+				currentDefender = attacker
+				currentAttacker = defender 
+			
+			print("finding: " + statInd)
+			while atkDescInd != -1:
+				print("found "+str(statInd)+": " + str(atkDescInd))
+				var fullHint = getSurroundingHint(description, atkDescInd)
+				var atkNum = int(fullHint)
+				var calc = hintStats[statName].call(currentAttacker, currentDefender, atkNum)
+				var toReplace = fullHint
+				atkDescInd = description.find(statInd, atkDescInd+1)
+				if !replaceList.has(toReplace):
+					replaceBin.push_back([toReplace,calc, "", tooltipColors[statName],toReplace.replace("(","").replace(")","")])
+					replaceList.push_back(toReplace)
 
 	for rawKeywordString in Keyword.keywords:
 		var spaces = rawKeywordString.count(" ")

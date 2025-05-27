@@ -9,6 +9,11 @@ func _init() -> void:
 	name = "Tanking"
 	tags = ['Defence', ' Self-Target']
 	rarity = RARITY.Uncommon
+	shieldPower = 0.75
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	if defender.switchState == BattleMonster.SWITCH_STATE.SWITCHED_IN:
+		await giveShield(attacker, defender, shieldPower*2)
+	else:
+		await giveShield(attacker, defender, shieldPower)
 	pass

@@ -11,4 +11,4 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.addMPPerTurn(1)

@@ -236,6 +236,13 @@ func getCardIDByName(cardName: String) -> int:
 		if matching.name == cardName:
 			return id
 	return -1
+	
+func getCardByName(cardName: String) -> Card:
+	for id in len(cardCache):
+		var matching = cardCache[id]
+		if matching.name == cardName:
+			return matching
+	return null
 
 func getCardIDs(cards: Array[Card]) -> Array[int]:
 	if len(cardCache) == 0:

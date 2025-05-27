@@ -9,6 +9,11 @@ func _init() -> void:
 	name = "Cleave"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.4
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender, power)
+	for mon in attacker.battleController.getTeam(defender):
+		if mon != defender:
+			await dealDamage(attacker, mon, 0.3)
 	pass

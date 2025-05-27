@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Last Stand"
 	tags = ['Attack']
 	rarity = RARITY.Epic
+	power = 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)
+	await giveStatus(attacker, Status.EFFECTS.CANT_PLAY)
 	pass

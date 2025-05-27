@@ -11,4 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	for status in attacker.statusConditions:
+		if !status.isPositive():
+			status.effectDone = true
+	
+	BattleLog.log(defender.getName() + " cleared all their negative status effects!")
+	
+	await giveStatus(attacker, Status.EFFECTS.REGEN, 3)

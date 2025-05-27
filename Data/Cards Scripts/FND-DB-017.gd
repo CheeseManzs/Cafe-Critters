@@ -9,6 +9,20 @@ func _init() -> void:
 	name = "Piercing Strike"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.75
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	var blocking = defender.shield > 0
+	
+	if blocking:
+		await dealDamage(attacker, defender, power*2)
+	else:
+		await dealDamage(attacker, defender)
 	pass
+
+func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var blocking = defender.shield > 0
+	if blocking:
+		return _calcPower(attacker, defender, power*2)
+	else:
+		return _calcPower(attacker, defender, power)

@@ -37,6 +37,15 @@ var temp_attackBonus = 0
 var defenseBonus = 0
 var gameID = 0
 var canDraw = true
+
+enum SWITCH_STATE {
+	NONE,
+	SWITCHED_IN,
+	SWITCHED_OUT
+}
+
+var switchState: SWITCH_STATE = SWITCH_STATE.NONE
+
 static var damagePopupPrefab: PackedScene
 
 func _init(data: Monster, controller: BattleController = null, p_playerControlled = true) -> void:
@@ -224,6 +233,9 @@ func pickRandomCard() -> Card:
 	
 	var card = cards[0]
 	return card
+
+func getName() -> String:
+	return rawData.name
 
 func discardRandomCard() -> Card:
 	

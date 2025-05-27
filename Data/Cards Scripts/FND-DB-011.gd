@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Shield Slap"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	shieldPower = 0.5
+	power = 0.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	await dealDamage(attacker, defender)

@@ -9,6 +9,8 @@ func _init() -> void:
 	name = "Rejuvenate"
 	tags = ['Defence', ' Self-Target']
 	rarity = RARITY.Rare
+	shieldPower = 1.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	await giveStatus(attacker, Status.EFFECTS.REGEN, 15)

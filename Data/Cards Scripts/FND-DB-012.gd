@@ -9,6 +9,12 @@ func _init() -> void:
 	name = "Follow Up"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.75
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	
+	if defender.switchState == BattleMonster.SWITCH_STATE.SWITCHED_IN:
+		await dealDamage(attacker, defender, power*2)
+	else:
+		await dealDamage(attacker, defender)
 	pass

@@ -278,8 +278,6 @@ func newSubTurn() -> void:
 		EFFECTS.BURN:
 			if X < 1:
 				effectDone = true
-		EFFECTS.CANT_PLAY:
-			effectDone = true
 			return
 
 func newTurn() -> void:
@@ -303,6 +301,8 @@ func newTurn() -> void:
 			if X <= 0:
 				effectDone = true
 			return
+		EFFECTS.CANT_PLAY:
+			effectDone = true
 		EFFECTS.SUSPEND:
 			return
 		EFFECTS.DREDGE:

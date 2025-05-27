@@ -9,6 +9,13 @@ func _init() -> void:
 	name = "Sneak Attack"
 	tags = ['Attack']
 	rarity = RARITY.Rare
+	power = 0.45
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var chosen = await attacker.battleController.chooseShelfedMon(1, attacker.playerControlled)
+	if len(chosen) > 0:
+		var switchTarget: BattleMonster = chosen[0]
+		await dealDamage(switchTarget, defender, power)
+	else:
+		await dealDamage(attacker, defender, power)
+		

@@ -9,6 +9,7 @@ func _init() -> void:
 	name = "Quick Strike"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.35
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)

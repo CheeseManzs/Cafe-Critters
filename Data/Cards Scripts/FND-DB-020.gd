@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Recalibrate"
 	tags = ['Defence', ' Self-Target']
 	rarity = RARITY.Uncommon
+	shieldPower = 0.3
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	if attacker.hasStatus(Status.EFFECTS.REGEN):
+		await attacker.drawCards(2)
+		await attacker.battleController.get_tree().create_timer(1).timeout

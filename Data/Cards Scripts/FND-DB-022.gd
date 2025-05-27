@@ -11,4 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	for status in defender.statusConditions:
+		if status.isPositive():
+			status.effectDone = true
+	
+	BattleLog.log(defender.getName() + " lost their positive status effects!")
+	await giveStatus(defender, Status.EFFECTS.SLOW, 1)
 	pass

@@ -11,4 +11,5 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	attacker.extraDraw = 2
+	await BattleLog.log(attacker.getName() + " will draw 2 more cards next turn!")
