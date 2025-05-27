@@ -4,8 +4,8 @@ extends Node
 static var keywords = [
 	"Riptide",
 	"Empower",
-	"Haste",
-	"Slow",
+	"Focus",
+	"Fatigue",
 	"Suspend",
 	"Dredge",
 	"Flotsam",
@@ -39,8 +39,8 @@ static var keywords = [
 static var keywordDescriptions = {
 	"Riptide": "Whenever ANY card enters the graveyard, lose X HP.",
 	"Empower": "Empowered card gain a 1.5x multiplier on relevant number.",
-	"Haste": "Your cards cost 1 less to play. Whenever you play a card decrease X by 1.",
-	"Slow": "Your cards cost 1 less to play. Whenever you play a card decrease X by 1.",
+	"Focus": "Your cards cost 1 less to play. Whenever you play a card decrease X by 1.",
+	"Fatigue": "Your cards cost 1 less to play. Whenever you play a card decrease X by 1.",
 	"Suspend": "Banish X cards from your deck. When the effect ends, those cards are sent to the graveyard.",
 	"Dredge": "Reveal Y cards from your graveyard. Add X of them to hand, exile the rest.",
 	"Flotsam": "Unique token. 0 cost, draw 1.",

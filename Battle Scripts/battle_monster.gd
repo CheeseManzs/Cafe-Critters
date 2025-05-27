@@ -508,10 +508,10 @@ func shuffleCardIntoDeck(card: Card, index: int) -> void:
 func getCostMod() -> int:
 	var costMod = 0
 	# if haste, then apply haste effect
-	if hasStatus(Status.EFFECTS.HASTE) and getStatus(Status.EFFECTS.HASTE).X > 0:
+	if hasStatus(Status.EFFECTS.FOCUS) and getStatus(Status.EFFECTS.FOCUS).X > 0:
 		costMod += -1
 	#if slow, then apply slow effect
-	if hasStatus(Status.EFFECTS.SLOW) and getStatus(Status.EFFECTS.SLOW).X > 0:
+	if hasStatus(Status.EFFECTS.FATIGUE) and getStatus(Status.EFFECTS.FATIGUE).X > 0:
 		costMod += 1
 	return costMod
 

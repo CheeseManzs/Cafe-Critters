@@ -5,7 +5,7 @@ func _init() -> void:
 	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
-	description = "Clear all enemy positive effects. Apply Slow 1 to the opponent."
+	description = "Clear all enemy positive effects. Apply Fatigue 1 to the opponent."
 	name = "Rinse"
 	tags = ['Utility']
 	rarity = RARITY.Uncommon
@@ -16,5 +16,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 			status.effectDone = true
 	
 	BattleLog.log(defender.getName() + " lost their positive status effects!")
-	await giveStatus(defender, Status.EFFECTS.SLOW, 1)
+	await giveStatus(defender, Status.EFFECTS.FATIGUE, 1)
 	pass

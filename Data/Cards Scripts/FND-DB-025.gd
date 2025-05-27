@@ -11,4 +11,7 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	for card in attacker.battleController.graveyard:
+		attacker.battleController.graveyard.erase(card)
+		await card.originator.currentDeck.storedCards.push_back(card)
+	BattleLog.log("All cards in the graveyard have been sent back...")

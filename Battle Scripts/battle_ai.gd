@@ -70,9 +70,9 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 			if mon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
 				return 0
 			return 3
-		Status.EFFECTS.HASTE:
+		Status.EFFECTS.FOCUS:
 			return status.X
-		Status.EFFECTS.SLOW:
+		Status.EFFECTS.FATIGUE:
 			return -status.X
 		Status.EFFECTS.SUSPEND:
 			return -status.X

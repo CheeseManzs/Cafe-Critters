@@ -77,11 +77,11 @@ func runActions(battleController: Node) -> void:
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#haste/slow
-		if action.battleMonster.hasStatus(Status.EFFECTS.HASTE) and action.battleMonster.getStatus(Status.EFFECTS.HASTE).X > 0:
-			action.battleMonster.getStatus(Status.EFFECTS.HASTE).X -= 1
+		if action.battleMonster.hasStatus(Status.EFFECTS.FOCUS) and action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X > 0:
+			action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X -= 1
 		#if slow, then apply slow effect
-		if action.battleMonster.hasStatus(Status.EFFECTS.SLOW) and action.battleMonster.getStatus(Status.EFFECTS.SLOW).X > 0:
-			action.battleMonster.getStatus(Status.EFFECTS.SLOW).X -= 1
+		if action.battleMonster.hasStatus(Status.EFFECTS.FATIGUE) and action.battleMonster.getStatus(Status.EFFECTS.FATIGUE).X > 0:
+			action.battleMonster.getStatus(Status.EFFECTS.FATIGUE).X -= 1
 		
 		#parrying
 		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY):

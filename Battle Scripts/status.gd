@@ -7,8 +7,8 @@ enum EFFECTS {
 	EMPOWER,
 	EMPOWER_NEXT,
 	EMPOWER_PLAYED,
-	HASTE,
-	SLOW,
+	FOCUS,
+	FATIGUE,
 	SUSPEND,
 	BOIL,
 	DREDGE,
@@ -38,15 +38,15 @@ var X: int = 0
 var Y: int = 0
 var effectDone = false
 var effect: EFFECTS
-#checks if effect is numerable (i.e has X after it, like Decay X or Haste X)
+#checks if effect is numerable (i.e has X after it, like Decay X or Focus X)
 static func isNumerable(eff) -> bool:
-	if [EFFECTS.RIPTIDE, EFFECTS.SLOW, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN, EFFECTS.VEIL].has(eff):
+	if [EFFECTS.RIPTIDE, EFFECTS.FATIGUE, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN, EFFECTS.VEIL].has(eff):
 		return true
 	else:
 		return false
 
 func appliesToCards() -> bool:
-	if [EFFECTS.HASTE, EFFECTS.SLOW, EFFECTS.EMPOWER, EFFECTS.SALVAGE].has(effect):
+	if [EFFECTS.FOCUS, EFFECTS.FATIGUE, EFFECTS.EMPOWER, EFFECTS.SALVAGE].has(effect):
 		return true
 	else:
 		return false
@@ -68,9 +68,9 @@ func toMini() -> String:
 			return "EMP+"
 		EFFECTS.EMPOWER_PLAYED:
 			return "EMP+"
-		EFFECTS.HASTE:
+		EFFECTS.FOCUS:
 			return "HST"
-		EFFECTS.SLOW:
+		EFFECTS.FATIGUE:
 			return "SLW"
 		EFFECTS.SUSPEND:
 			return "SSP"
@@ -135,10 +135,10 @@ func rawToString() -> String:
 			return "Drawn Empower"
 		EFFECTS.EMPOWER_PLAYED:
 			return "Empower"
-		EFFECTS.HASTE:
-			return "Haste"
-		EFFECTS.SLOW:
-			return "Slow"
+		EFFECTS.FOCUS:
+			return "Focus"
+		EFFECTS.FATIGUE:
+			return "Fatigue"
 		EFFECTS.SUSPEND:
 			return "Suspend"
 		EFFECTS.BOIL:
@@ -205,7 +205,7 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.EMPOWER_PLAYED:
 			return true
-		EFFECTS.HASTE:
+		EFFECTS.FOCUS:
 			return true
 		EFFECTS.BOIL:
 			return true
@@ -239,9 +239,9 @@ func carriesOverOnSwitch() -> bool:
 	match effect:
 		EFFECTS.EMPOWER_PLAYED:
 			return true
-		EFFECTS.HASTE:
+		EFFECTS.FOCUS:
 			return true
-		EFFECTS.SLOW:
+		EFFECTS.FATIGUE:
 			return true
 		EFFECTS.BOIL:
 			return true
@@ -261,10 +261,10 @@ func newSubTurn() -> void:
 	match effect:
 		EFFECTS.PERFECT_PARRY:
 			effectDone = true
-		EFFECTS.SLOW:
+		EFFECTS.FATIGUE:
 			if X <= 0:
 				effectDone = true
-		EFFECTS.HASTE:
+		EFFECTS.FOCUS:
 			if X <= 0:
 				effectDone = true
 		EFFECTS.PRIORITY:
@@ -291,13 +291,13 @@ func newTurn() -> void:
 			return
 		EFFECTS.EMPOWER_NEXT:
 			return
-		EFFECTS.HASTE:
+		EFFECTS.FOCUS:
 			if X <= 0:
 				effectDone = true
 			return
 		EFFECTS.BOIL:
 			effectDone = true
-		EFFECTS.SLOW:
+		EFFECTS.FATIGUE:
 			if X <= 0:
 				effectDone = true
 			return
