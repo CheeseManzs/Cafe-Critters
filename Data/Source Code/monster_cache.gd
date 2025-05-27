@@ -4,6 +4,7 @@ extends Resource
 @export var cache: Array[Monster]
 @export var cardCache: Array[Card]
 @export var cardFolderPath: String
+@export var cardScriptsPath: String
 
 var loadedCards = false
 
@@ -189,7 +190,38 @@ func loadCards():
 		print(filename, " is null: ", (card == null))
 		cardCache.push_back(card)
 		filename = dir.get_next()
+	loadScripts()
+
+func loadScripts():
+	if !cardScriptsPath.ends_with("/"):
+		cardScriptsPath = cardScriptsPath + "/"
 	
+	cardCache = []
+	if !DirAccess.dir_exists_absolute(cardScriptsPath):
+		print(cardScriptsPath, " does not exist!")
+		return
+	var dir = DirAccess.open(cardScriptsPath)
+	dir.list_dir_begin()
+	var filename = dir.get_next()
+	while filename != "":
+		print("checking ",filename)
+		var valid = filename.ends_with(".gd") && filename.contains("FND-")
+		if valid:
+			print("loading ",filename)
+			var absPath = cardScriptsPath+filename
+			var card = Card.new()
+			card.set_script(load(absPath))
+			card._init()
+			print(filename, " > ", card.name)
+			print(filename, " is null: ", (card == null))
+			var dupe = false
+			for _card in cardCache:
+				if _card.name == card.name:
+					dupe = true
+					break
+			if !dupe:
+				cardCache.push_back(card)
+		filename = dir.get_next()
 
 func getCardID(card: Card) -> int:
 	for id in len(cardCache):

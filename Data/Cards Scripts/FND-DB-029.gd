@@ -1,8 +1,8 @@
 extends Card
 
 func _init() -> void:
-	cost = 
-	priority = 
+	cost = 0
+	priority = 0
 	alignment = ALIGNMENT.Default
 	role = "Basic"
 	description = "Apply Fatigue 1 to opponent. If they're Fatigued, apply Fatigue 3 instead."
