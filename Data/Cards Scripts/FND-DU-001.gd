@@ -11,7 +11,7 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func canBePlayed(user: BattleMonster):
-	return len(user.gravyardSize()) >= 5
+	return user.gravyardSize() >= 5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	if canBePlayed(attacker):
