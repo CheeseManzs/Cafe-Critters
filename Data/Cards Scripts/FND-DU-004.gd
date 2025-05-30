@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Cappucino"
 	tags = ['Defence', ' Self-Target']
 	rarity = RARITY.Uncommon
+	shieldPower = 0.4
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	if playedCost != cost:
+		await attacker.drawCards(1)

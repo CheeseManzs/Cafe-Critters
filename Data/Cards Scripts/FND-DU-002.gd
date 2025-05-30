@@ -9,6 +9,13 @@ func _init() -> void:
 	name = "Expresso"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.6
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)
+	if playedCost != cost:
+		await giveStatus(attacker, Status.EFFECTS.FOCUS, 2)
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster):
+	if attacker.hasStatus(Status.EFFECTS.FOCUS) || attacker.hasStatus(Status.EFFECTS.FATIGUE):
+		return Status.new(Status.EFFECTS.FOCUS, 2)

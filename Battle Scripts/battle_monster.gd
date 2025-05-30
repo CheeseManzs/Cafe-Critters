@@ -196,6 +196,13 @@ func gravyardSize():
 		if card.originator != null && card.originator.playerControlled == playerControlled:
 			s += 1
 	return s
+	
+func getTeamGraveyard() -> Array[Card]:
+	var teamGraveyard: Array[Card] = []
+	for card in battleController.graveyard:
+		if card.originator != null && card.originator.playerControlled == playerControlled:
+			teamGraveyard.push_back(card)
+	return teamGraveyard
 
 func randomGraveyardCardFromTeam(removeCard = false) -> Card:
 	var canPull = []

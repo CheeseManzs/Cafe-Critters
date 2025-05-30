@@ -72,6 +72,8 @@ var hintStats: Dictionary[String, Callable] = {
 
 #cost of card
 var cost: int
+#cost the card was played with
+var playedCost: int
 #priority of card
 var priority: int
 #god alignment of card

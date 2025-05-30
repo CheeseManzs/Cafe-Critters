@@ -10,5 +10,16 @@ func _init() -> void:
 	tags = ['Utility', ' Self-Target']
 	rarity = RARITY.Uncommon
 
+func canBePlayed(user: BattleMonster):
+	return len(user.gravyardSize()) >= 5
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	if canBePlayed(attacker):
+		attacker.battleController.graveyard.shuffle()
+		var teamGraveyard = attacker.getTeamGraveyard()
+		for i in 5:
+			var card: Card = teamGraveyard[i]
+			attacker.battleController.removeFromGraveyardToOwnerDeck(card)
+		await attacker.addMP(1)
+		await attacker.drawCards(1)
+	return 

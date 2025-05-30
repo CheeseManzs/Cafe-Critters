@@ -70,8 +70,9 @@ func runActions(battleController: Node) -> void:
 				#regenLevel = opposingMon.getStatus(Status.EFFECTS.REGEN).X
 			opposingMon.addStatusCondition(Status.new(Status.EFFECTS.REGEN,regenLevel+1),true)
 			#await battleController.get_tree().create_timer(0.75).timeout
-		
-		action.battleMonster.removeMP(max(0, action.card.cost+action.battleMonster.getCostMod())*action.costMod)
+		var cardCost = max(0, action.card.cost+action.battleMonster.getCostMod())*action.costMod
+		action.battleMonster.removeMP(cardCost)
+		action.card.playedCost = cardCost
 		
 		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout

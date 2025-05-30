@@ -9,6 +9,13 @@ func _init() -> void:
 	name = "Latte"
 	tags = ['Defence', ' Self-Target']
 	rarity = RARITY.Uncommon
+	shieldPower = 0.6
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	if playedCost != cost:
+		await giveStatus(defender, Status.EFFECTS.FATIGUE, 2)
+
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster):
+	if attacker.hasStatus(Status.EFFECTS.FOCUS) || attacker.hasStatus(Status.EFFECTS.FATIGUE):
+		return Status.new(Status.EFFECTS.FATIGUE, 2)

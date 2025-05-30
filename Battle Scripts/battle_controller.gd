@@ -296,6 +296,10 @@ func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
 	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
 	return valid
 
+func removeFromGraveyardToOwnerDeck(card: Card):
+	graveyard.erase(card)
+	card.originator.currentDeck.storedCards.push_back(card)
+
 func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 	card.originator = user
 	graveyard.push_back(card)
