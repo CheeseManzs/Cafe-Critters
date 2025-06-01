@@ -141,8 +141,11 @@ func getSurroundingHint(s: String, index, spaceCount = 0):
 	print(s, " l:", left, " r-l:",right - left)
 	return s.substr(left, right + 1 - left)
 	
+func getRealCost() -> int:
+	return max(0, cost + getCostMod())
 
-
+func getCostMod() -> int:
+	return costMod
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
@@ -370,6 +373,7 @@ func clone():
 	newCard.description = description
 	newCard.name = name
 	newCard.statusConditions = []
+	newCard.costMod = costMod
 	if statusConditions != null:
 		newCard.statusConditions += statusConditions
 	return newCard

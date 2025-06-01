@@ -853,8 +853,6 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		cardButtons.remove_at(0)
 		button.queue_free()
 	
-	var costMod = mon.getCostMod()
-	
 	var id = 0
 
 	## Creates a new Card UI element for each card in the current monster's hand.
@@ -891,7 +889,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
 					strongarmEffect = true
 			
-			var disableCard = max(0, card.cost + costMod) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
+			var disableCard = max(0, card.getRealCost()) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 
@@ -1130,9 +1128,7 @@ func activeTurn() -> void:
 			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
 			var burnDamage = (0.01*status.X)*mon.maxHP
 			await mon.trueDamage(burnDamage)
-			status.X -= 1
-			if status.X <= 0:
-				status.effectDone = true
+			status.addX(-1)
 	
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 

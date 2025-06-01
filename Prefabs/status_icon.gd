@@ -11,6 +11,7 @@ var deleteAnimationTime: float = 0
 static var spawnAnimationLength: float = 0.3
 var connectedStatus: Status = null
 var done = false
+var currentX = 0
 func _ready() -> void:
 	maxScale = scale
 	scale = maxScale*spawnAnimationCurve.sample(0)
@@ -42,6 +43,12 @@ func setIcon(effect: Status):
 	var extension = " " + str(effect.X)
 	if effect.X == 0:
 		extension = ""
+	currentX = effect.X
+	effect.icon = self
 	statusText.text = effect.toMini() + extension
 	spawnAnimationTime = 0
 	connectedStatus = effect
+
+func update(effect: Status):
+	if currentX != effect.X:
+		setIcon(effect)

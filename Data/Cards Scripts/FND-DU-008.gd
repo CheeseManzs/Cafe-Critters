@@ -21,6 +21,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
 	var stacks = attacker.getStatusLevel(Status.EFFECTS.FATIGUE) + attacker.getStatusLevel(Status.EFFECTS.FOCUS)
 	var fullPower = power*stacks
-	if attacker.getCostMod() != 0:
+	if costMod != 0:
 		fullPower *= 2
 	return _calcPower(attacker, defender, fullPower)

@@ -39,6 +39,10 @@ var X: int = 0
 var Y: int = 0
 var effectDone = false
 var effect: EFFECTS
+
+#ui connections
+var icon: StatusIcon = null
+
 #checks if effect is numerable (i.e has X after it, like Decay X or Focus X)
 static func isNumerable(eff) -> bool:
 	if [EFFECTS.RIPTIDE, EFFECTS.FATIGUE, EFFECTS.SUSPEND, EFFECTS.DREDGE, EFFECTS.BARRIER, EFFECTS.REGEN, EFFECTS.VEIL].has(eff):
@@ -56,6 +60,17 @@ func _init(eff: EFFECTS, p_X:int = 0, p_Y:int = 0):
 	effect = eff
 	X = p_X
 	Y = p_Y
+
+func addX(delta: int):
+	setX(X + delta)
+
+func setX(newX: int):
+	X = newX
+	if X <= 0:
+		effectDone = true
+	
+	if icon != null:
+		icon.update(self)
 
 func toMini() -> String:
 	match effect:
@@ -323,7 +338,7 @@ func newTurn() -> void:
 		EFFECTS.KNOWLEDGE:
 			return
 		EFFECTS.BARRIER:
-			X -= 1
+			addX(-1)
 			return
 		EFFECTS.REGEN:
 			return

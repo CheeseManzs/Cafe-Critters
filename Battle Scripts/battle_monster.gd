@@ -341,9 +341,7 @@ func reset(active = true, forceDraw = false) -> void:
 		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
 		var regenAmount: int = regenStatus.X*0.01*maxHP
 		await addHP(regenAmount)
-		regenStatus.X -= 1
-		if regenStatus.X <= 0:
-			regenStatus.effectDone = true
+		regenStatus.addX(-1)
 	
 	#remove removable status effects
 	for status in statusConditions:
@@ -432,8 +430,9 @@ func addStatusCondition(status: Status, broadcast = false):
 			battleController.conditionalActions.push_back(graveAction)
 	#enemy instant effects
 	if hasStatus(status.effect):
-		getStatus(status.effect).X += status.X
-		getStatus(status.effect).Y += status.Y
+		var newStatus = getStatus(status.effect)
+		newStatus.addX(status.X)
+		newStatus.Y += status.Y
 	else:
 		statusConditions.push_back(status)
 	
@@ -541,16 +540,6 @@ func promptSwitch():
 	else:
 		await battleController.promptEnemySwitch()
 
-func getCostMod() -> int:
-	var costMod = 0
-	# if haste, then apply haste effect
-	if hasStatus(Status.EFFECTS.FOCUS) and getStatus(Status.EFFECTS.FOCUS).X > 0:
-		costMod += -1
-	#if slow, then apply slow effect
-	if hasStatus(Status.EFFECTS.FATIGUE) and getStatus(Status.EFFECTS.FATIGUE).X > 0:
-		costMod += 1
-	return costMod
-
 
 func getMonsterDisplay() -> MonsterDisplay:
 	if playerControlled:
@@ -610,7 +599,7 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 	if !hasStatus(eff):
 		await addStatusCondition(Status.new(eff,0,0), true)
 	var status: Status = getStatus(eff)
-	status.X += x
+	status.addX(x)
 	status.Y += y
 
 #applies general damage

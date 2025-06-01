@@ -70,19 +70,13 @@ func runActions(battleController: Node) -> void:
 				#regenLevel = opposingMon.getStatus(Status.EFFECTS.REGEN).X
 			opposingMon.addStatusCondition(Status.new(Status.EFFECTS.REGEN,regenLevel+1),true)
 			#await battleController.get_tree().create_timer(0.75).timeout
-		var cardCost = max(0, action.card.cost+action.battleMonster.getCostMod())*action.costMod
+		var cardCost = action.card.getRealCost()*action.costMod
+		print("card stats: ", action.card.cost, ", ", action.card.costMod)
 		action.battleMonster.removeMP(cardCost)
 		action.card.playedCost = cardCost
 		
 		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
-		
-		#haste/slow
-		if action.battleMonster.hasStatus(Status.EFFECTS.FOCUS) and action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X > 0 and !action.battleMonster.hasStatus(Status.EFFECTS.CAFFEINATED_OVERDRIVE):
-			action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X -= 1
-		#if slow, then apply slow effect
-		if action.battleMonster.hasStatus(Status.EFFECTS.FATIGUE) and action.battleMonster.getStatus(Status.EFFECTS.FATIGUE).X > 0:
-			action.battleMonster.getStatus(Status.EFFECTS.FATIGUE).X -= 1
 		
 		#parrying
 		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY):
@@ -105,4 +99,4 @@ func runActions(battleController: Node) -> void:
 			await EffectFlair.singleton._runFlair("Poison",Color.MEDIUM_PURPLE)
 			var poisonDamage = 0.01*poisonStatus.X*(action.battleMonster.maxHP)
 			await action.battleMonster.trueDamage(poisonDamage)
-			poisonStatus.X -= 1
+			poisonStatus.addX(-1)
