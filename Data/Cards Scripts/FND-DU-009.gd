@@ -10,5 +10,10 @@ func _init() -> void:
 	tags = ['Utility']
 	rarity = RARITY.Epic
 
+func canBePlayed(user: BattleMonster):
+	return len(user.currentDeck.storedCards) >= 12
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	for i in 12:
+		await attacker.exileRandomCard()
+	await giveStatus(attacker, Status.EFFECTS.FOCUS, 5)

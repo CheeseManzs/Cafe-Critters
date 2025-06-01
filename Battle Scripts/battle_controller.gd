@@ -1044,6 +1044,9 @@ func activeTurn() -> void:
 			for i in len(sortedMon.statusConditions):
 				var status: Status = sortedMon.statusConditions[i]
 				status.newSubTurn()
+			#update status display
+			sortedMon.getMonsterDisplay().updateStatusConditions()
+		
 		
 		var actions: Array[BattleAction] = []
 		

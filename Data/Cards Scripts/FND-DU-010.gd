@@ -11,4 +11,4 @@ func _init() -> void:
 	rarity = RARITY.Epic
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveStatus(attacker, Status.EFFECTS.CAFFEINATED_OVERDRIVE)

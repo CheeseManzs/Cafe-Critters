@@ -9,6 +9,16 @@ func _init() -> void:
 	name = "Affogato"
 	tags = ['Defence']
 	rarity = RARITY.Uncommon
+	shieldPower = 1.6
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	await giveStatus(defender, Status.EFFECTS.FATIGUE, 1)
+	if playedCost != cost:
+		for i in 2:
+			await defender.discardRandomCard()
+		await defender.drawCards(2)
+	return
+
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster):
+	return Status.new(Status.EFFECTS.FATIGUE, 1)

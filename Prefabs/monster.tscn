@@ -1,8 +1,10 @@
-[gd_scene load_steps=52 format=3 uid="uid://dnrf07o2xqjni"]
+[gd_scene load_steps=54 format=3 uid="uid://dnrf07o2xqjni"]
 
 [ext_resource type="Script" uid="uid://o7ay4tsfe8sc" path="res://Battle Scripts/monster_obj.gd" id="1_8ie6h"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="2_cy5to"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="3_ugrdx"]
+[ext_resource type="Script" uid="uid://bu2dusbuth2ey" path="res://Prefabs/status_layout.gd" id="4_og4gj"]
+[ext_resource type="PackedScene" uid="uid://dnhc2r78aed7w" path="res://Prefabs/status_icon.tscn" id="5_vrexm"]
 
 [sub_resource type="Gradient" id="Gradient_p62xj"]
 colors = PackedColorArray(0, 0, 0, 0, 0.282645, 0.610605, 1, 1)
@@ -314,13 +316,15 @@ sections = 4
 section_segments = 2
 curve = SubResource("Curve_bdgis")
 
-[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles", "sprite")]
+[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles", "sprite", "statusList")]
 script = ExtResource("1_8ie6h")
 shieldParticles = NodePath("Shield Particles")
 boostParticles = NodePath("Boost Particles")
 unboostParticles = NodePath("Unboost Particles")
 empowerParticles = NodePath("Empower Particles")
 sprite = NodePath("Sprite3D")
+statusList = NodePath("Status List")
+statusIconPrefab = ExtResource("5_vrexm")
 metadata/Monster_Data = ExtResource("2_cy5to")
 metadata/playerControlled = true
 
@@ -373,3 +377,8 @@ trail_enabled = true
 trail_lifetime = 0.01
 process_material = SubResource("ParticleProcessMaterial_2c1q0")
 draw_pass_1 = SubResource("RibbonTrailMesh_h6eo3")
+
+[node name="Status List" type="Node3D" parent="." node_paths=PackedStringArray("monsterObject")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("4_og4gj")
+monsterObject = NodePath("..")

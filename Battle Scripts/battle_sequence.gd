@@ -78,7 +78,7 @@ func runActions(battleController: Node) -> void:
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#haste/slow
-		if action.battleMonster.hasStatus(Status.EFFECTS.FOCUS) and action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X > 0:
+		if action.battleMonster.hasStatus(Status.EFFECTS.FOCUS) and action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X > 0 and !action.battleMonster.hasStatus(Status.EFFECTS.CAFFEINATED_OVERDRIVE):
 			action.battleMonster.getStatus(Status.EFFECTS.FOCUS).X -= 1
 		#if slow, then apply slow effect
 		if action.battleMonster.hasStatus(Status.EFFECTS.FATIGUE) and action.battleMonster.getStatus(Status.EFFECTS.FATIGUE).X > 0:

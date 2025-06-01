@@ -267,7 +267,13 @@ func discardRandomTaggedCard(tag: String) -> Card:
 	currentHand.storedCards.erase(picked)
 	await discardCard(picked, false)
 	return picked
-	
+
+func exileRandomDeckCards(count: int) -> Array:
+	var randomCards = await currentDeck.bulkDraw(count)
+	for card in randomCards:
+		await exileCard(card, false)
+	return randomCards
+
 func exileRandomCard() -> Card:
 	var picked = await pickRandomCard()
 	await exileCard(picked)
@@ -328,6 +334,8 @@ func reset(active = true, forceDraw = false) -> void:
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]
 		status.newTurn()
+	#update status icon
+	getMonsterDisplay().updateStatusConditions()
 	#heal from regen
 	if hasStatus(Status.EFFECTS.REGEN):
 		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
@@ -384,10 +392,12 @@ func returnStrongarmCard():
 func addStatusCondition(status: Status, broadcast = false):
 	if isKO():
 		return
+		
+	var obj: MonsterDisplay = getMonsterDisplay()
+	
 	if broadcast:
 		await BattleCamera.singleton.focusMonster(self)
 		var printText = rawData.name + " was afflicted with " + status.toString()
-		var obj: MonsterDisplay = getMonsterDisplay()
 		if status.isPositive():
 			printText = rawData.name + " was embued with " + status.toString()
 			battleController.playSound(battleController.powerUpSound)
@@ -426,6 +436,8 @@ func addStatusCondition(status: Status, broadcast = false):
 		getStatus(status.effect).Y += status.Y
 	else:
 		statusConditions.push_back(status)
+	
+	obj.updateStatusConditions()
 	
 func getSpeed():
 	return speed
@@ -510,8 +522,25 @@ func shuffleCardIntoDeck(card: Card, index: int) -> void:
 	if index == -1:
 		index = randi() % currentDeck.storedCards.size()
 	await currentDeck.storedCards.insert(index, card)
-		
-	
+
+func getStatusLevel(effectType: Status.EFFECTS) -> int:
+	var x: int = 0
+	if hasStatus(effectType):
+		x = getStatus(effectType).X
+	return x 
+
+func getActiveTeammate():
+	if playerControlled:
+		return battleController.getActivePlayerMon()
+	else:
+		return battleController.getActiveEnemyMon()
+
+func promptSwitch():
+	if playerControlled:
+		await battleController.promptPlayerSwitch()
+	else:
+		await battleController.promptEnemySwitch()
+
 func getCostMod() -> int:
 	var costMod = 0
 	# if haste, then apply haste effect

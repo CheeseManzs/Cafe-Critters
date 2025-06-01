@@ -9,6 +9,18 @@ func _init() -> void:
 	name = "Press"
 	tags = ['Utility']
 	rarity = RARITY.Rare
+	power = 0.1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var stacks = attacker.getStatusLevel(Status.EFFECTS.FATIGUE) + attacker.getStatusLevel(Status.EFFECTS.FOCUS)
+	var fullPower = power*stacks
+	if playedCost != cost:
+		fullPower *= 2
+	await dealDamage(attacker, defender, fullPower)
+
+func calcDamage(attacker: BattleMonster, defender: BattleMonster) -> int:
+	var stacks = attacker.getStatusLevel(Status.EFFECTS.FATIGUE) + attacker.getStatusLevel(Status.EFFECTS.FOCUS)
+	var fullPower = power*stacks
+	if attacker.getCostMod() != 0:
+		fullPower *= 2
+	return _calcPower(attacker, defender, fullPower)

@@ -32,7 +32,8 @@ enum EFFECTS {
 	NULLIFY_DAMAGE,
 	PERFECT_PARRY,
 	ATTACK_UP,
-	DEFENSE_UP
+	DEFENSE_UP,
+	CAFFEINATED_OVERDRIVE
 }
 var X: int = 0
 var Y: int = 0
@@ -69,9 +70,9 @@ func toMini() -> String:
 		EFFECTS.EMPOWER_PLAYED:
 			return "EMP+"
 		EFFECTS.FOCUS:
-			return "HST"
+			return "FCS"
 		EFFECTS.FATIGUE:
-			return "SLW"
+			return "FTG"
 		EFFECTS.SUSPEND:
 			return "SSP"
 		EFFECTS.BOIL:
@@ -120,6 +121,8 @@ func toMini() -> String:
 			return "ATK"
 		EFFECTS.DEFENSE_UP:
 			return "DEF"
+		EFFECTS.CAFFEINATED_OVERDRIVE:
+			return "CAF"
 	return "N/A"
 	
 
@@ -183,6 +186,8 @@ func rawToString() -> String:
 			return "Attack Up"
 		EFFECTS.DEFENSE_UP:
 			return "Defense Up"
+		EFFECTS.CAFFEINATED_OVERDRIVE:
+			return "Caffeinated Overdrive"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -224,6 +229,8 @@ func isPositive() -> bool:
 		EFFECTS.ATTACK_UP:
 			return true
 		EFFECTS.DEFENSE_UP:
+			return true
+		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return true
 	return false
 
@@ -331,4 +338,6 @@ func newTurn() -> void:
 		EFFECTS.NULLIFY_DAMAGE:
 			effectDone = true
 		EFFECTS.PERFECT_PARRY:
+			effectDone = true
+		EFFECTS.CAFFEINATED_OVERDRIVE:
 			effectDone = true

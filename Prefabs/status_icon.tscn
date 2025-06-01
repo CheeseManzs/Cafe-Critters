@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnhc2r78aed7w"]
+
+[ext_resource type="Script" uid="uid://dwjk3lsnidt3u" path="res://Prefabs/status_icon.gd" id="1_4pp82"]
+
+[sub_resource type="Curve" id="Curve_4pp82"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.503356, 1.21965), 0.0, 0.0, 0, 0, Vector2(1, 0.991132), 0.243046, 0.0, 0, 0]
+point_count = 3
+
+[node name="Status Icon" type="Node3D" node_paths=PackedStringArray("statusText")]
+script = ExtResource("1_4pp82")
+statusText = NodePath("Label3D")
+spawnAnimationCurve = SubResource("Curve_4pp82")
+
+[node name="Label3D" type="Label3D" parent="."]
+text = "STA"

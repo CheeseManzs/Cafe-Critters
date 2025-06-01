@@ -6,6 +6,8 @@ extends Node3D
 @export var unboostParticles: GPUParticles3D
 @export var empowerParticles: GPUParticles3D
 @export var sprite: Sprite3D
+@export var statusList: StatusLayout
+@export var statusIconPrefab: PackedScene
 #total "time elapsed" tracker
 static var timeScale = 1
 var t = 0.0
@@ -84,6 +86,28 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 	#sprite.modulate.a = 1
 	await get_tree().create_timer(0.1).timeout
 	lockToIntendedPosition = true
+
+func removeStatusIcon(status: Status):
+	var newIcon: StatusIcon = statusIconPrefab.instantiate()
+	statusList.add_child(newIcon)
+	newIcon.setIcon(status)
+	statusList.realign()
+
+func addStatusIcon(status: Status):
+	var newIcon: StatusIcon = statusIconPrefab.instantiate()
+	statusList.add_child(newIcon)
+	newIcon.setIcon(status)
+	statusList.realign()
+
+func updateStatusConditions():
+	for status in connectedMon.statusConditions:
+		if !status.effectDone and status not in statusList.statusArray:
+			statusList.statusArray.push_back(status)
+			var newIcon: StatusIcon = statusIconPrefab.instantiate()
+			statusList.add_child(newIcon)
+			newIcon.setIcon(status)
+			newIcon.layout = statusList
+	statusList.realign()
 
 
 func contactAnimation(target: MonsterDisplay) -> void:
