@@ -55,8 +55,10 @@ func _ready() -> void:
 func setCard(p_card: Card, cID: int, battleController: BattleController, context: String = "default", user: BattleMonster = null, target: BattleMonster = null) -> void:
 	# if haste, then apply haste effect
 	costMod = p_card.costMod
-	if costMod != 0:
+	if costMod < 0:
 		manaLabel.modulate = Color.WEB_GREEN
+	if costMod > 0:
+		manaLabel.modulate = Color.YELLOW
 	runAnim = false
 	card = p_card
 	titleLabel.text = card.name

@@ -107,6 +107,12 @@ func updateStatusConditions():
 			statusList.add_child(newIcon)
 			newIcon.setIcon(status)
 			newIcon.layout = statusList
+	
+	for status in statusList.statusArray:
+		if status not in connectedMon.statusConditions:
+			statusList.statusArray.erase(status)
+			if is_instance_valid(status.icon):
+				status.icon.done = true
 	statusList.realign()
 
 

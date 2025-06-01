@@ -461,6 +461,8 @@ func carryStatusConditions(target: BattleMonster) -> void:
 		if status.carriesOverOnSwitch():
 			target.statusConditions.push_back(status)
 			statusConditions.remove_at(statusConditions.find(status))
+	getMonsterDisplay().updateStatusConditions()
+	target.getMonsterDisplay().updateStatusConditions()
 
 #adds to monster's shield
 func addShield(shieldAmount: int) -> void:

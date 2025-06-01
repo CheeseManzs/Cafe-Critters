@@ -12,6 +12,6 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	if defender.hasStatus(Status.EFFECTS.FATIGUE):
-		await giveStatus(attacker, Status.EFFECTS.FOCUS, 3)
+		await giveStatus(attacker, Status.EFFECTS.FATIGUE, 3)
 	else:
-		await giveStatus(attacker, Status.EFFECTS.FOCUS, 1)
+		await giveStatus(attacker, Status.EFFECTS.FATIGUE, 1)

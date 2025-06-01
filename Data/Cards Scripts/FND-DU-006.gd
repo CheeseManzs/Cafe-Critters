@@ -14,5 +14,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	if attacker.hasStatus(Status.EFFECTS.FOCUS):
 		await giveStatus(attacker, Status.EFFECTS.FOCUS, attacker.getStatus(Status.EFFECTS.FOCUS).X)
 	if defender.hasStatus(Status.EFFECTS.FATIGUE):
-		await giveStatus(defender, Status.EFFECTS.FATIGUE, attacker.getStatus(Status.EFFECTS.FATIGUE).X)
+		await giveStatus(defender, Status.EFFECTS.FATIGUE, defender.getStatus(Status.EFFECTS.FATIGUE).X)
 	await attacker.addMP(1)
