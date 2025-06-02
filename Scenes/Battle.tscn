@@ -512,6 +512,7 @@ script = ExtResource("22_wgwlo")
 cardBackPrefab = ExtResource("5_1cnu7")
 
 [node name="Graveyard Display" type="Control" parent="." node_paths=PackedStringArray("cardContainer", "background")]
+z_index = 1000
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -542,14 +543,22 @@ grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Graveyard Display/ScrollContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_bottom = 550
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
 
 [node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 250
-theme_override_constants/v_separation = 350
+theme_override_constants/h_separation = 300
+theme_override_constants/v_separation = 400
 columns = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="Graveyard Display"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DashParticles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89653, 0, 0)
