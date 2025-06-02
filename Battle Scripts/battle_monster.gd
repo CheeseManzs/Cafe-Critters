@@ -455,6 +455,9 @@ func getDefense():
 	
 	return defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController))
 
+func chooseFromGraveyard():
+	return (await battleController.chooseFromGraveyard(playerControlled))
+
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
 	for status in statusConditions:

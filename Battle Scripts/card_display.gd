@@ -151,6 +151,12 @@ func hideCard() -> void:
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = originalPosition - upVec*(400 + 100*choiceID)
 
+func overwritePosition(newPosition: Vector2):
+	visiblePosition = newPosition + (visiblePosition - originalPosition)
+	targetPosition = newPosition
+	originalPosition = newPosition
+	
+
 func raise(manualBonus: float = 0):
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = visiblePosition + upVec*100*manualBonus

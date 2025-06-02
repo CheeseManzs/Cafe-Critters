@@ -28,6 +28,8 @@ static var multiplayer_id = 0
 @export var detailsPanel: DetailsPanel
 @export var impactEffect: PackedScene
 
+@export var graveyardDisplay: BulkDisplay
+
 @export var audioPlayers: Array[AudioStreamPlayer]
 @export var hitSound: AudioStream
 @export var emptyHitSound: AudioStream
@@ -933,6 +935,52 @@ func banishArray(cards: Array[Card], isPlayer = true):
 			banishedPlayerCards.push_back(card)
 		else:
 			banishedPlayerCards.push_back(card)
+
+func getGraveyard(playerControlled) -> Array:
+	var cards: Array = []
+	for card in graveyard:
+		if card.originator != null and card.originator.playerControlled == playerControlled:
+			cards.push_back(card)
+	return cards
+
+func displayGraveyard(playerControlled, user: BattleMonster = null, target: BattleMonster = null):
+	#for testing
+	for i in 100:
+		var debugCard: Card = monsterCache.cardCache.get(0).clone()
+		debugCard.originator = getActivePlayerMon()
+		graveyard.push_back(debugCard)
+	
+	var teamGraveyard = getGraveyard(playerControlled)
+	
+	var cardButtons: Array[Card] = []
+	
+	for cID in len(teamGraveyard):
+		var newCard: CardDisplay = cardPrefab.instantiate()
+		newCard.setCard(teamGraveyard[cID], cID, self, "collection", user, target)
+		
+		newCard.canDrag = false
+		newCard.clickable = false 
+		graveyardDisplay.addCardDisplay(newCard)
+	
+	while true:
+		await get_tree().create_timer(0.1).timeout
+	
+	return teamGraveyard
+
+func playerChooseFromGraveyard():
+	var choices: Array = await displayGraveyard(true)
+	pass
+
+func enemyChooseFromGraveyard():
+	var choices: Array = await displayGraveyard(false)
+	pass
+
+func chooseFromGraveyard(playerControlled: bool):
+	if playerControlled:
+		return (await playerChooseFromGraveyard())
+	else:
+		return (await enemyChooseFromGraveyard())
+	
 
 func getSwitchCost() -> int:
 	var baseSwitchCost = 1
