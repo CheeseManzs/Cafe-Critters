@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=65 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" uid="uid://ds6y71to2odr" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" uid="uid://2agtjocn5cbo" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -112,6 +112,10 @@ region_rect = Rect2(0, 0, 5760, 3243)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e7phk"]
 size = Vector3(29.9875, 23.1108, 1)
+
+[sub_resource type="Curve" id="Curve_66d1q"]
+_data = [Vector2(0, 0), 0.0, 2.211, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3478b"]
 emission_shape = 3
@@ -523,6 +527,7 @@ mouse_filter = 1
 script = ExtResource("32_66d1q")
 cardContainer = NodePath("ScrollContainer/MarginContainer/Card Container")
 background = NodePath("Background")
+openingCurve = SubResource("Curve_66d1q")
 
 [node name="Background" type="Control" parent="Graveyard Display"]
 layout_mode = 1
@@ -544,9 +549,9 @@ grow_vertical = 2
 [node name="MarginContainer" type="MarginContainer" parent="Graveyard Display/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 200
+theme_override_constants/margin_top = 300
 theme_override_constants/margin_right = -1920
-theme_override_constants/margin_bottom = -200
+theme_override_constants/margin_bottom = -300
 
 [node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer/MarginContainer"]
 layout_mode = 2

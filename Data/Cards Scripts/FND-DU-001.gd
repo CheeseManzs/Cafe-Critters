@@ -11,15 +11,15 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func canBePlayed(user: BattleMonster):
-	return true
 	return user.gravyardSize() >= 5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	if canBePlayed(attacker):
-		var choices = await attacker.chooseFromGraveyard()
-		for card in choices:
-			attacker.battleController.graveyard.erase(card)
-			attacker.currentDeck.storedCards.push_back(card)
+		var choices = await attacker.chooseFromGraveyard(5)
+		if len(choices) > 0:
+			for card in choices:
+				attacker.battleController.graveyard.erase(card)
+				attacker.currentDeck.storedCards.push_back(card)
 		await attacker.addMP(1)
 		await attacker.drawCards(1)
 	return 

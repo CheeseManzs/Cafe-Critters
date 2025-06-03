@@ -224,8 +224,7 @@ func _process(delta: float) -> void:
 					sendToDeckEditor()	
 				"graveyard":
 					print("gpos:",global_position.y)
-					if clickable:
-						sendChoice()
+					sendChoice()
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass

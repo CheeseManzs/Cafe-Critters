@@ -943,43 +943,69 @@ func getGraveyard(playerControlled) -> Array:
 			cards.push_back(card)
 	return cards
 
-func displayGraveyard(playerControlled, user: BattleMonster = null, target: BattleMonster = null):
-	#for testing
-	for i in 100:
-		var debugCard: Card = monsterCache.cardCache.get(0).clone()
-		debugCard.originator = getActivePlayerMon()
-		graveyard.push_back(debugCard)
+func displayCardGrid(cardArr, user: BattleMonster = null, target: BattleMonster = null):
+	graveyardDisplay.reset()
+	var cardButtons: Array[CardDisplay] = []
+	graveyardDisplay.open = true
 	
-	var teamGraveyard = getGraveyard(playerControlled)
-	
-	var cardButtons: Array[Card] = []
-	
-	for cID in len(teamGraveyard):
+	for cID in len(cardArr):
 		var newCard: CardDisplay = cardPrefab.instantiate()
-		newCard.setCard(teamGraveyard[cID], cID, self, "graveyard", user, target)
+		newCard.setCard(cardArr[cID], cID, self, "graveyard", user, target)
 		newCard.displayLocation = "graveyard"
 		newCard.canDrag = false
-		newCard.clickable = false 
+		newCard.clickable = true 
 		graveyardDisplay.addCardDisplay(newCard)
+		cardButtons.push_back(newCard)
 	
-	while true:
+	
+	
+	while !graveyardDisplay.isFullyOpen():
 		await get_tree().create_timer(0.1).timeout
+	return cardButtons
+
+func displayGraveyard(playerControlled, user: BattleMonster = null, target: BattleMonster = null):
+	var teamGraveyard = getGraveyard(playerControlled)
+	var cardButtons = await displayCardGrid(teamGraveyard, user, target)
 	
-	return teamGraveyard
+	
+	return cardButtons
 
-func playerChooseFromGraveyard():
-	var choices: Array = await displayGraveyard(true)
-	pass
+func playerChooseFromGraveyard(choiceCount: int = 1):
+	var choiceButtons: Array[CardDisplay] = await displayGraveyard(true)
+	var teamGraveyard = getGraveyard(true)
+	if len(teamGraveyard) == 0:
+		return []
+	var graveyardChoices = []
+	var doneChoosing = false
+	while len(graveyardChoices) < min(choiceCount, len(teamGraveyard)) and !doneChoosing:
+		await gui_choice
+		var choice = teamGraveyard[playerCardID] 
+		if choice in graveyardChoices:
+			choiceButtons[playerCardID].setTextColor(Color.WHITE)
+			graveyardChoices.erase(choice)
+		else:
+			choiceButtons[playerCardID].setTextColor(Color.YELLOW)
+			graveyardChoices.push_back(choice)	
+		print(graveyardChoices)
+	
+	return graveyardChoices
 
-func enemyChooseFromGraveyard():
+func enemyChooseFromGraveyard(choiceCount: int = 1):
 	var choices: Array = await displayGraveyard(false)
+	var teamGraveyard = getGraveyard(false)
+	if len(teamGraveyard) == 0:
+		return []
 	pass
 
-func chooseFromGraveyard(playerControlled: bool):
+func chooseFromGraveyard(playerControlled: bool, choiceCount: int = 1):
+	var results = []
 	if playerControlled:
-		return (await playerChooseFromGraveyard())
+		results = (await playerChooseFromGraveyard(choiceCount))
 	else:
-		return (await enemyChooseFromGraveyard())
+		results = (await enemyChooseFromGraveyard(choiceCount))
+	
+	graveyardDisplay.open = false
+	return results
 	
 
 func getSwitchCost() -> int:
