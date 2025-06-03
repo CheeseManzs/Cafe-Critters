@@ -46,7 +46,7 @@ func _ready() -> void:
 	normalZIndex = z_index
 	scale = Vector2(0.34,0.34)*scaleFactor
 	targetScale = scale
-	if displayLocation == "collection" or displayLocation == "deck edit":
+	if displayLocation == "collection" or displayLocation == "deck edit" or displayLocation == "graveyard":
 		position = position * 0.75
 		pass
 	pass # Replace with function body.
@@ -222,18 +222,24 @@ func _process(delta: float) -> void:
 						sendChoice()
 				"collection":
 					sendToDeckEditor()	
+				"graveyard":
+					print("gpos:",global_position.y)
+					if clickable:
+						sendChoice()
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass
 
 
 func _on_mouse_entered() -> void:
+	print("entered: ", currentlyDragging, ", ", ignoreInput, ", ", displayLocation, ": ", (displayLocation == "collection" or displayLocation == "deck edit" or displayLocation == "graveyard") && !currentlyDragging)
 	if ignoreInput:
 		return
-	if !isHidden && !isDisabled && !currentlyDragging:
+	if !isHidden && !isDisabled && !currentlyDragging && displayLocation != "graveyard":
 		var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 		raise()
-	if (displayLocation == "collection" or displayLocation == "deck edit") && !currentlyDragging:
+	if (displayLocation == "collection" or displayLocation == "deck edit" or displayLocation == "graveyard") && !currentlyDragging:
+		print("scaling!")
 		targetScale = Vector2(0.5, 0.5)*scaleFactor
 		z_index = 3
 	mouseOn = true
@@ -245,7 +251,7 @@ func _on_mouse_exited() -> void:
 		return
 	if !isHidden && !selected:
 		targetPosition = originalPosition
-	if displayLocation == "collection" or displayLocation == "deck edit":
+	if displayLocation == "collection" or displayLocation == "deck edit" or displayLocation == "graveyard":
 		targetScale = Vector2(0.34, 0.34)*scaleFactor
 		z_index = 1
 	mouseOn = false

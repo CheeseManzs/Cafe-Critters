@@ -1,7 +1,7 @@
 class_name BulkDisplay
 extends Control
 
-@export var cardContainer: Control
+@export var cardContainer: GridContainer
 @export var background: Control
 
 static var display_scale = 0.8
@@ -16,4 +16,5 @@ func addCardDisplay(cardDisplay: CardDisplay):
 	subContainer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND
 	cardDisplay.custom_minimum_size = oldSize
 	#cardDisplay.scaleFactor = 1
-	cardDisplay.pivot_offset.x = cardDisplay.size.x / 4
+	cardDisplay.pivot_offset.x = cardDisplay.size.x / 2
+	cardDisplay.position = -cardDisplay.pivot_offset

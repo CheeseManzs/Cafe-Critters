@@ -521,7 +521,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("32_66d1q")
-cardContainer = NodePath("ScrollContainer/Card Container")
+cardContainer = NodePath("ScrollContainer/MarginContainer/Card Container")
 background = NodePath("Background")
 
 [node name="Background" type="Control" parent="Graveyard Display"]
@@ -541,12 +541,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Graveyard Display/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = -1920
+theme_override_constants/margin_bottom = -200
+
+[node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/v_separation = 400
-columns = 6
+columns = 5
 
 [node name="DashParticles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89653, 0, 0)

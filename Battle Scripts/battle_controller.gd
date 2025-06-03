@@ -956,8 +956,8 @@ func displayGraveyard(playerControlled, user: BattleMonster = null, target: Batt
 	
 	for cID in len(teamGraveyard):
 		var newCard: CardDisplay = cardPrefab.instantiate()
-		newCard.setCard(teamGraveyard[cID], cID, self, "collection", user, target)
-		
+		newCard.setCard(teamGraveyard[cID], cID, self, "graveyard", user, target)
+		newCard.displayLocation = "graveyard"
 		newCard.canDrag = false
 		newCard.clickable = false 
 		graveyardDisplay.addCardDisplay(newCard)
