@@ -13,5 +13,7 @@ func addCardDisplay(cardDisplay: CardDisplay):
 	var oldSize = cardDisplay.size
 	cardContainer.add_child(subContainer)
 	subContainer.add_child(cardDisplay)
+	subContainer.size_flags_horizontal = Control.SIZE_SHRINK_CENTER | Control.SIZE_EXPAND
 	cardDisplay.custom_minimum_size = oldSize
-	cardDisplay.scaleFactor = 1
+	#cardDisplay.scaleFactor = 1
+	cardDisplay.pivot_offset.x = cardDisplay.size.x / 4

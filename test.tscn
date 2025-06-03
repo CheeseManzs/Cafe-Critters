@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://dluvrk006dh7y"]
+
+[ext_resource type="PackedScene" uid="uid://ddkls0bkk1r1s" path="res://Prefabs/card_object.tscn" id="1_37kl0"]
+[ext_resource type="Texture2D" uid="uid://bs4wybrrjqghu" path="res://Data/Card Art/stripes.png" id="2_8uh7m"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.9
+anchor_bottom = 1.0
+columns = 3
+
+[node name="Control" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Card Object" parent="GridContainer/Control" instance=ExtResource("1_37kl0")]
+layout_mode = 1
+offset_right = 481.92
+offset_bottom = 669.52
+pivot_offset = Vector2(180, 500)
+
+[node name="Control3" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Card Object" parent="GridContainer/Control3" instance=ExtResource("1_37kl0")]
+layout_mode = 1
+offset_right = 481.92
+offset_bottom = 669.52
+pivot_offset = Vector2(180, 500)
+
+[node name="Control2" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Card Object" parent="GridContainer/Control2" instance=ExtResource("1_37kl0")]
+layout_mode = 1
+offset_right = 481.92
+offset_bottom = 669.52
+pivot_offset = Vector2(180, 500)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8uh7m")
