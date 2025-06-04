@@ -3,7 +3,7 @@ extends Card
 func _init() -> void:
 	cost = 1
 	priority = 0
-	alignment = ALIGNMENT.Jacks [Aggro]
+	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Roll a die. Deal (45% ATK) damage. if you rolled a 6, draw 1."
 	name = "Lottery Lick"

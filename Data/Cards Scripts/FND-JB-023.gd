@@ -3,7 +3,7 @@ extends Card
 func _init() -> void:
 	cost = 1
 	priority = 0
-	alignment = ALIGNMENT.Jacks [Aggro]
+	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "All damage is doubled this turn."
 	name = "Up the Ante"

@@ -40,6 +40,8 @@ for card in cards:
         tag_list.append(tag)
 
     card_obj["Tags"] = str(tag_list)
+
+    card_obj["God"] = card_obj["God"].split(" ")[0]
     
     if card_obj["Simplified Description"] != "" and card_obj["WIP Status"] == "V4 Updated" and card_obj["Code #"] != "":
         print("---")

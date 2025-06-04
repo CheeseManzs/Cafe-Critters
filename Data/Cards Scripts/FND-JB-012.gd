@@ -3,7 +3,7 @@ extends Card
 func _init() -> void:
 	cost = 3
 	priority = 0
-	alignment = ALIGNMENT.Jacks [Aggro]
+	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Roll a die. Deal (50% ATK) damage a number of times equal to the number rolled."
 	name = "Dice's Fury"

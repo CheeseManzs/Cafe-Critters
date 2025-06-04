@@ -3,7 +3,7 @@ extends Card
 func _init() -> void:
 	cost = 0
 	priority = 0
-	alignment = ALIGNMENT.Jacks [Aggro]
+	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Draw 2. If neither of those cards were Attacks, discard your hand."
 	name = "Power Gamble"

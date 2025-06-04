@@ -3,7 +3,7 @@ extends Card
 func _init() -> void:
 	cost = 0
 	priority = 0
-	alignment = ALIGNMENT.Jacks [Aggro]
+	alignment = ALIGNMENT.Jacks
 	role = "Basic"
 	description = "Draw an Attack, then discard 1 at random."
 	name = "Adrenaline Addiction"
