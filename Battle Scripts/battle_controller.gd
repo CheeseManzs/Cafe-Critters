@@ -979,7 +979,10 @@ func playerChooseFromGraveyard(choiceCount: int = 1):
 	var doneChoosing = false
 	while len(graveyardChoices) < min(choiceCount, len(teamGraveyard)) and !doneChoosing:
 		await gui_choice
-		var choice = teamGraveyard[playerCardID] 
+		var choice = teamGraveyard[playerCardID]
+		if multiplayer_game:
+			print("sending choice: ", playerCardID)
+			rpc("send_choice",playerCardID)
 		if choice in graveyardChoices:
 			choiceButtons[playerCardID].setTextColor(Color.WHITE)
 			graveyardChoices.erase(choice)
@@ -991,11 +994,23 @@ func playerChooseFromGraveyard(choiceCount: int = 1):
 	return graveyardChoices
 
 func enemyChooseFromGraveyard(choiceCount: int = 1):
-	var choices: Array = await displayGraveyard(false)
 	var teamGraveyard = getGraveyard(false)
 	if len(teamGraveyard) == 0:
 		return []
-	pass
+	var graveyardChoices = []
+	var doneChoosing = false
+	while len(graveyardChoices) < min(choiceCount, len(teamGraveyard)) and !doneChoosing:
+		if multiplayer_game:
+			var enmChoice = await getNextChoice()
+			print("picked: ", enmChoice)
+			var choice = teamGraveyard[enmChoice] 
+			if choice in graveyardChoices:
+				graveyardChoices.erase(choice)
+			else:
+				graveyardChoices.push_back(choice)	
+		else:
+			graveyardChoices.push_back(teamGraveyard[len(graveyardChoices) - 1])
+	return graveyardChoices
 
 func chooseFromGraveyard(playerControlled: bool, choiceCount: int = 1):
 	var results = []
