@@ -23,9 +23,12 @@ func draw(target: Zone, cardID = 0) -> void:
 	pass
 
 #removes a card from the deck and returns it
-func pullCard(cardID: int) -> Card:
-	var card = storedCards[cardID]
-	storedCards.remove_at(cardID)
+func pullCard(cardID: int, tempArray: Array[Card] = storedCards) -> Card:
+	var card = tempArray[cardID]
+	print("erasing ", card.name)
+	storedCards.erase(card)
+	tempArray.erase(card)
+	print("erasing -> ", len(storedCards))
 	return card.clone()
 
 #remove list of cards
@@ -44,31 +47,36 @@ func exileCards(cards: Array[Card], mon: BattleMonster):
 			mon.exileZone.storedCards.push_back(card)
 
 # draws/removes random cards in bulk and returns an array
-func bulkDraw(count: int) -> Array[Card]:
+func bulkDraw(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if BattleController.multiplayer_game:
 		rng = BattleController.global_rng
 	var cards: Array[Card] = []
-	for i in min(count, len(storedCards)):
-		var cardID = rng.randi_range(0, len(storedCards) - 1)
-		var card = pullCard(cardID)
+	var filterArray = filter.filter(storedCards)
+	print("------erasing-----")
+	for i in min(count, len(filterArray)):
+		var cardID = rng.randi_range(0, len(filterArray) - 1)
+		var card = pullCard(cardID, filterArray)
 		cards.push_back(card)
+	print("--------erasing done--------")
 	return cards
 
 
 #bulk draws with respect to status conditions
-func specialDraw(count: int, battleController: BattleController, mon: BattleMonster) -> Array[Card]:
+func specialDraw(count: int, battleController: BattleController, mon: BattleMonster, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if BattleController.multiplayer_game:
 		rng = BattleController.global_rng
 
 	var cards: Array[Card] = []
-	for i in min(count, len(storedCards)):
+	var drawArray = filter.filter(storedCards)
+	
+	for i in min(count, len(drawArray)):
 		var oldState = rng.state
-		var cardID = rng.randi_range(0, len(storedCards) - 1)
+		var cardID = rng.randi_range(0, len(drawArray) - 1)
 		if oldState == rng.state:
 			print("state not changed! > ",BattleMonster.totalDraws)
-		var card = pullCard(cardID)
+		var card = pullCard(cardID, drawArray)
 		#check for status conditions
 		if mon.hasStatus(Status.EFFECTS.EMPOWER_NEXT):
 			card.statusConditions.push_back(Status.EFFECTS.EMPOWER)
@@ -82,6 +90,7 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 			mon.getStatus(Status.EFFECTS.FATIGUE).addX(-1)
 		#add card to cards array
 		cards.push_back(card)
+	
 	return cards
 	
 #directly transfers cards between zones

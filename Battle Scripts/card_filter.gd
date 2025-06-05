@@ -9,7 +9,7 @@ func _init(whiteList: Array[String] = [], blackList: Array[String] = []) -> void
 
 ## Return true if the card would *not* be filtered out if run through the filter
 func matchesFilter(card: Card) -> bool:
-	var inWhiteList = false
+	var inWhiteList = (len(tagWhiteList) == 0)
 	for tag in card.tags:
 		if tag in tagBlackList:
 			return false

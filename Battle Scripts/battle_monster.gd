@@ -512,8 +512,8 @@ func getRoleCardsInHand(role: String):
 		
 
 #draw cards from deck	
-func drawCards(count: int) -> void:
-	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
+func drawCards(count: int, filter: CardFilter = CardFilter.new()) -> void:
+	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self, filter)
 	currentHand.storedCards += card
 	if playerControlled and len(battleController.playerTeam) > 0 and battleController.getActivePlayerMon() == self:
 		battleController.deckController.updateDeckDisplay(len(currentDeck.storedCards))
