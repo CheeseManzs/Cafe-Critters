@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Lottery Lick"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.45
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)
+	var num = await rollDice(attacker)
+	if num == 6:
+		await attacker.drawCards(1)

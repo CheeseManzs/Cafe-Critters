@@ -9,6 +9,11 @@ func _init() -> void:
 	name = "Lucky Shot"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.9
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var num = await rollDice(attacker)
+	if num > 3:
+		await dealDamage(attacker, defender, 1.25)
+	else:
+		await dealDamage(attacker, defender, 0.9)

@@ -11,4 +11,4 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.addAttackBonus(0.05)

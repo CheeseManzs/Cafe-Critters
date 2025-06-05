@@ -11,4 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var num = await rollDice(attacker)
+	
+	if num >= 5:
+		await giveStatus(defender, Status.EFFECTS.POISON, 5)
+
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.POISON, 5)
