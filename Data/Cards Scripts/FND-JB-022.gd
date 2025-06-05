@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Streak"
 	tags = ['Attack']
 	rarity = RARITY.Rare
+	power = 0.95
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)
+	if len(attacker.playedCardHistory) > 0 && "Attack" in attacker.playedCardHistory[len(attacker.playedCardHistory) - 1].tags:
+		await attacker.addMP(1)

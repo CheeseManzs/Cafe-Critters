@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Martin's Gale"
 	tags = ['Attack']
 	rarity = RARITY.Epic
+	power = 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)
+	var roll = await rollDice(attacker)
+	if roll == 1:
+		await  dealDamage(attacker, attacker)	

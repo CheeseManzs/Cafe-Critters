@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Steel Shuffler"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.45
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var pureDmg = await dealDamage(attacker, defender)
+	if pureDmg > 0:
+		await attacker.currentDeck.storedCards.push_back(self)
+		await attacker.drawCards(1)

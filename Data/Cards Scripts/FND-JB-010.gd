@@ -9,6 +9,11 @@ func _init() -> void:
 	name = "Freaky Shiv"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.05
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveStatus(defender, Status.EFFECTS.FEAR, 5)
+	await dealDamage(attacker, defender)
+
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.FEAR, 5)

@@ -11,4 +11,5 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.battleController.setDamageMultiplier(2)
+	

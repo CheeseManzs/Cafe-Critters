@@ -11,4 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var roll = await rollDice(attacker)
+	if roll in [1,2]:
+		await giveStatus(defender, Status.EFFECTS.POISON, 5)
+	if roll in [3,4]:
+		await giveStatus(defender, Status.EFFECTS.BURN, 5)
+	if roll in [5,6]:
+		await giveStatus(defender, Status.EFFECTS.FEAR, 5)

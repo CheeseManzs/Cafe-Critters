@@ -17,3 +17,9 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	for i in 12:
 		await attacker.exileRandomCard()
 	await giveStatus(attacker, Status.EFFECTS.FOCUS, 5)
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.FOCUS, 5)
+#checks what status will be inflicted on the defender
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return null

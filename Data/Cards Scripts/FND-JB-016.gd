@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Best Offense"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.9
+	shieldPower = 0.3
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var pureDmg = await dealDamage(attacker, defender)
+	if pureDmg > 0:
+		await giveShield(attacker, defender)

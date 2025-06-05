@@ -159,8 +159,8 @@ func localSwap(old: BattleMonster, new: BattleMonster):
 #deal damage
 func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float = power, applyEmpower = true) -> int:
 	var dmg = _calcPower(attacker, defender, _power, applyEmpower)
-	await defender.receiveDamage(dmg, attacker)
-	return dmg
+	var pureDmg = await defender.receiveDamage(dmg, attacker)
+	return pureDmg
 
 #give shield
 func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower, applyEmpower = true):

@@ -1,8 +1,9 @@
 class_name DebugGameManager
 extends Node2D
 
-@export var debugTeamA: Array[Monster]
-@export var debugTeamB: Array[Monster]
+var debugTeamA: Array[Monster] = []
+var debugTeamB: Array[Monster] = []
+@export_multiline var enemyTeamExport: String
 @export var debugPersonality: AIPersonality
 
 # Called when the node enters the scene tree for the first time.
@@ -12,6 +13,7 @@ func _ready() -> void:
 	#debugTeamA[1].level = 8
 	if LoadManager.activeScene == null:
 		LoadManager.activeScene = get_tree().current_scene
+	debugTeamB = ConnectionManager.singleton.teamPacker.decode(enemyTeamExport)
 	pass # Replace with function body.
 
 

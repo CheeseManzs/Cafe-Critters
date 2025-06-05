@@ -9,6 +9,13 @@ func _init() -> void:
 	name = "Opening Pot"
 	tags = ['Attack']
 	rarity = RARITY.Rare
+	power = 0.1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var pureDmg = await dealDamage(attacker, defender)
+	if pureDmg > 0:
+		var roll = await rollDice(attacker)
+		if roll < 4:
+			await attacker.drawCards(1)
+		else:
+			await attacker.drawCards(2)

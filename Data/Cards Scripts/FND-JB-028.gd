@@ -11,4 +11,14 @@ func _init() -> void:
 	rarity = RARITY.Legendary
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	while !attacker.isKO() && !defender.isKO():
+		if !defender.isKO():
+			var roll = await rollDice(defender)
+			if roll == 1:
+				await defender.getActiveTeammate().execute()
+				break
+		if !attacker.isKO():
+			var roll = await rollDice(attacker)
+			if roll == 1:
+				await attacker.getActiveTeammate().execute()
+				break

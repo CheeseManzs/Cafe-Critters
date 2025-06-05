@@ -30,6 +30,8 @@ var battleController: BattleController
 var playerControlled: bool
 #status conditions
 var statusConditions: Array[Status]
+#play history
+var playedCardHistory: Array[Card]
 #extra cards to draw
 var extraDraw = 0
 var attackBonus = 0
@@ -517,13 +519,21 @@ func getOmenCards() -> Array[Card]:
 func getRoleCardsInHand(role: String):
 	return Zone.getRoleCardsInArray(currentHand.storedCards, role)
 		
+func discardHand() -> void:
+	var discardCards = currentHand.storedCards
+	await raiseAnimation()
+	var cardCount = len(discardCards)
+	for i in range(len(discardCards)):
+		await quick_discardAnimation(discardCards[i])
+		await getPassive().onDiscard(self,battleController,discardCards[i])
 
 #draw cards from deck	
-func drawCards(count: int, filter: CardFilter = CardFilter.new()) -> void:
+func drawCards(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self, filter)
 	currentHand.storedCards += card
 	if playerControlled and len(battleController.playerTeam) > 0 and battleController.getActivePlayerMon() == self:
 		battleController.deckController.updateDeckDisplay(len(currentDeck.storedCards))
+	return card
 
 func millCards(count: int) -> void:
 	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
@@ -566,7 +576,7 @@ func checkNullifyDamage():
 		return true
 	return false
 
-func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, damageAnim = true) -> void:
+func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, damageAnim = true, blackListedSources = []) -> void:
 	if isKO():
 		return
 	#check nullify again for true damage
@@ -576,6 +586,11 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		battleController.playSound(battleController.hitSound)
 	#remove damage from hp
 	health -= dmg
+	
+	#save damage dealt this turn
+	if attacker != null:
+		battleController.registerDamage(attacker, dmg)
+	
 	#run camera shake if damage is done
 	if dmg > 0:
 		var cameraMag = 0.6
@@ -605,6 +620,25 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
 	elif dmg > 0 and damageAnim:
 		await dmgAnim()
+	
+	#insurace
+	if health > 0 && dmg <= 0 && attacker != null && attacker.hasStatus(Status.EFFECTS.INSURANCE):
+		#blackListedSources.push_back(Status.EFFECTS.INSURANCE)
+		var insuranceDamage = maxHP*0.15*attacker.getDefense()
+		await trueDamage(insuranceDamage, attacker, shielded, true, blackListedSources)
+	
+	#fear
+	if health > 0 && hasStatus(Status.EFFECTS.FEAR) && Status.EFFECTS.FEAR not in blackListedSources && dmg > 0:
+		await EffectFlair.singleton._runFlair("Fear", Color.MIDNIGHT_BLUE)
+		var fearStatus = getStatus(Status.EFFECTS.FEAR)
+		var fearDamage = maxHP*0.01*fearStatus.X
+		blackListedSources.push_back(Status.EFFECTS.FEAR)
+		await trueDamage(fearDamage, null, shielded, false, blackListedSources)
+		fearStatus.addX(-1)
+	
+	if health > 0 && hasStatus(Status.EFFECTS.FEAR) && Status.EFFECTS.FEAR not in blackListedSources && dmg <= 0:
+		var fearStatus = getStatus(Status.EFFECTS.FEAR)
+		fearStatus.effectDone = true
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):
@@ -614,8 +648,13 @@ func addCounter(eff: Status.EFFECTS, x, y = 0):
 	status.addX(x)
 	status.Y += y
 
+func execute():
+	await trueDamage(maxHP)
+
 #applies general damage
 func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+	#apply damage multiplier
+	dmg *= battleController.damageMultiplier
 	if isKO():
 		return 0
 	if attacker != self && attacker != null:
@@ -643,7 +682,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	else:
 		battleController.playSound(battleController.emptyHitSound)
 	#apply overdamage to monster as true damage
-	trueDamage(pureDmg, null, shielded)
+	await trueDamage(pureDmg, attacker, shielded)
 	
 		
 	await getPassive().onHit(self,battleController)

@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Dice's Fury"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 0.5
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var roll = (await rollDice(attacker))
+	for i in roll:
+		await dealDamage(attacker, defender)

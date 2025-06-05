@@ -90,6 +90,9 @@ func runActions(battleController: Node) -> void:
 			action.targetSelfTeam = !action.targetSelfTeam
 			action.targetID = targetID
 		
+		#add card to play history
+		action.battleMonster.playedCardHistory.push_back(action.card)
+		
 		await action.card.effect(action.battleMonster, action.getTarget())
 		await battleController.addToGraveyard(action.card, action.battleMonster)
 		await battleController.get_tree().create_timer(0.75).timeout

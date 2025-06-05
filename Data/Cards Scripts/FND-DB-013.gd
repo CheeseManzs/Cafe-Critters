@@ -15,3 +15,9 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
 	await giveStatus(attacker, Status.EFFECTS.CANT_PLAY)
 	pass
+
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.CANT_PLAY)
+#checks what status will be inflicted on the defender
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return null

@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Functional Gambling"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
+	shieldPower = 0.4
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	var roll = await rollDice(attacker)
+	if roll == 6:
+		await attacker.addMP(1)

@@ -11,4 +11,4 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.addShield(attacker.battleController.getTotalDamage(attacker))

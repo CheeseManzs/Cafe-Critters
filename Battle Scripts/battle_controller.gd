@@ -100,6 +100,8 @@ var enemyMPGain = 3
 #player/enemy temporary passive MP gain
 var playerMPTempGain = 0
 var enemyMPTempGain = 0
+#damage multiplier
+var damageMultiplier = 1
 #enemy ai object
 var enemyAI: BattleAI
 #add skipping
@@ -119,6 +121,8 @@ var winner: int = 0
 var shownCard: CardDisplay
 var tookDamage = false
 var networkPriority = false
+var playerDamageDealt = 0
+var enemyDamageDealt = 0
 #instantiates a monster
 
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -222,6 +226,11 @@ func playSound(clip: AudioStream, layer: int = -1):
 				layer -= 1
 	audioPlayers[layer].stream = clip
 	audioPlayers[layer].play()
+
+func setDamageMultiplier(newMult: float):
+	damageMultiplier = newMult
+	BattleLog.singleton.log("All faes will now take " + str(damageMultiplier) + " times the damage!")
+	await get_tree().create_timer(1.0).timeout
 
 func basicReset(skipKOCheck = false, resetActiveMons = false):
 	var resetOrder = sortedMonList()
@@ -1219,6 +1228,11 @@ func activeTurn() -> void:
 			await mon.trueDamage(burnDamage)
 			status.addX(-1)
 	
+	#reset damage multiplier
+	damageMultiplier = 1
+	#reset total damage
+	playerDamageDealt = 0
+	enemyDamageDealt = 0 
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 
 	if playerLost():
@@ -1270,6 +1284,20 @@ func toggleDetails() -> void:
 	else:
 		showingDetails = true
 		await detailsPanel.setup(getActivePlayerMon())
+		
+func registerDamage(mon: BattleMonster, dmg: float) -> void:
+	print("registering damage: ", mon.getName(), " for ", dmg)
+	if mon.playerControlled:
+		playerDamageDealt += dmg
+	else:
+		enemyDamageDealt += dmg
+
+func getTotalDamage(mon: BattleMonster) -> float:
+	if mon.playerControlled:
+		return playerDamageDealt
+	else:
+		return enemyDamageDealt
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if EffectFlair.singleton.battleController == null:

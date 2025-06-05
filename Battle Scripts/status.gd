@@ -29,11 +29,13 @@ enum EFFECTS {
 	ENDLESS_BLOWS,
 	POISON,
 	BURN,
+	FEAR,
 	NULLIFY_DAMAGE,
 	PERFECT_PARRY,
 	ATTACK_UP,
 	DEFENSE_UP,
-	CAFFEINATED_OVERDRIVE
+	CAFFEINATED_OVERDRIVE,
+	INSURANCE
 }
 var X: int = 0
 var Y: int = 0
@@ -128,6 +130,8 @@ func toMini() -> String:
 			return "PSN"
 		EFFECTS.BURN:
 			return "BRN"
+		EFFECTS.FEAR:
+			return "FER"
 		EFFECTS.NULLIFY_DAMAGE:
 			return "NLD"
 		EFFECTS.PERFECT_PARRY:
@@ -138,6 +142,8 @@ func toMini() -> String:
 			return "DEF"
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return "CAF"
+		EFFECTS.INSURANCE:
+			return "INS"
 	return "N/A"
 	
 
@@ -193,6 +199,8 @@ func rawToString() -> String:
 			return "Poison"
 		EFFECTS.BURN:
 			return "Burn"
+		EFFECTS.FEAR:
+			return "Fear"
 		EFFECTS.NULLIFY_DAMAGE:
 			return "Nullify Next Hit"
 		EFFECTS.PERFECT_PARRY:
@@ -203,6 +211,8 @@ func rawToString() -> String:
 			return "Defense Up"
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return "Caffeinated Overdrive"
+		EFFECTS.INSURANCE:
+			return "Insurance"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -277,6 +287,10 @@ func carriesOverOnSwitch() -> bool:
 			return true
 		EFFECTS.ENDLESS_BLOWS:
 			return true
+		EFFECTS.FEAR:
+			return true
+		EFFECTS.INSURANCE:
+			return true
 	return false
 
 func newSubTurn() -> void:
@@ -298,6 +312,9 @@ func newSubTurn() -> void:
 			if X < 1:
 				effectDone = true
 		EFFECTS.BURN:
+			if X < 1:
+				effectDone = true
+		EFFECTS.FEAR:
 			if X < 1:
 				effectDone = true
 			return
@@ -355,4 +372,6 @@ func newTurn() -> void:
 		EFFECTS.PERFECT_PARRY:
 			effectDone = true
 		EFFECTS.CAFFEINATED_OVERDRIVE:
+			effectDone = true
+		EFFECTS.INSURANCE:
 			effectDone = true
