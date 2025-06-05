@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Next turn start: Gain 1 mp."
 	name = "Store Power"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Epic
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Roll a die. Gain (40% DEF) block. If you rolled a 6, gain 1 mp."
 	name = "Functional Gambling"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

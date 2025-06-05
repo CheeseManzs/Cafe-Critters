@@ -9,6 +9,14 @@ func _init() -> void:
 	name = "Reckless Swing"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.6
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)
+	var roll = await rollDice(attacker)
+	if roll < 3:
+		await dealDamage(attacker, attacker, 0.2, false)
+	if roll == 6:
+		await defender.discardRandomCard()
+		await defender.drawCards(1)
 	pass

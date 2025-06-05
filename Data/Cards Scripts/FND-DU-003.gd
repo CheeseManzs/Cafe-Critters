@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Slocha"
 	description = "Gain (60% DEF) block. If this card is played with a modified cost, apply Fatigue 2 to opponent."
 	name = "Latte"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
 	shieldPower = 0.6
 

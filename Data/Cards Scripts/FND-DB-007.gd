@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain 1 additional MP per turn for the rest of the game. "
 	name = "Meditate"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

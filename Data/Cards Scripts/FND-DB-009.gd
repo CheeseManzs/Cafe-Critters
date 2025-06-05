@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Your next played card goes first."
 	name = "Speed Up"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

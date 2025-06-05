@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "This fae's Attacks deal (5% ATK) more damage this turn."
 	name = "Brass Knuckles"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

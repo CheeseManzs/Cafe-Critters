@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Roll 2 dice. Gain (8% DEF) block, multiplied by the roll value."
 	name = "DIce Defend"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Take (300% Opponent ATK) damage. Draw 5 and gain 3 MP."
 	name = "Last Chance"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

@@ -122,14 +122,15 @@ func getChance(card: Card, attacker: BattleMonster, defender: BattleMonster):
 	for other in attacker.currentHand.storedCards:
 		if card != other && card.meetsRequirement(other, attacker, defender):
 			fits += 1
-	
+	if total == 0:
+		return 1
 	var perc = fits/total
 	return perc
 
 func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon: BattleMonster, currentMP = 0, targetMP = 0):
 	#setup scoring
 	var score = 0
-	
+	print("scoring...")
 	#get damage from scores
 	var monDamage = card.calcDamage(mon, target)
 	var targDamage = maxDamage(target, mon)
@@ -143,6 +144,7 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	#dont use all the strong attacks while the opponent can still block!
 	if maxBlock(target,mon) > 0:
 		cardDMG = maxDamage(mon,target) - cardDMG
+	
 	
 	var cardDEF = card.calcShield(mon,target)*targDamage
 	
@@ -168,10 +170,8 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	
 	if cardDMG >= targEffHP && activationChance >= 1:
 		score += cardDMG*personality.opportunism
-	
 	#if card.name == "Steady":
 		#print("\n",card.name+": ","\ncardDMG:",+cardDMG,"\nCardDEF:",cardDEF,"\nStatus:",10*(scoreStatus(statusGiven, mon, currentMP)-scoreStatus(statusInflicted, target, targetMP)-scoreStatus(Status.new(statusCured), mon, currentMP)))
-	
 	
 	return score
 
@@ -322,7 +322,7 @@ func scoreMon(mon: BattleMonster, target: BattleMonster) -> Array:
 	for card in available:
 		
 		var score = scoreCard(mon, target, card, activeMon, MP, targetMP)
-		print(card.name+": ", score)
+		print("score of ", card.name+": ", score)
 		if score > maxScore:
 			maxScore = score
 			bestCard = card

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Next turn start: Draw 2."
 	name = "Stock Up"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

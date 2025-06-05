@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Draw 2. If neither of those cards were Attacks, discard your hand."
 	name = "Power Gamble"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "This turn, when your faes' Attacks are blocked, deal (15% DEF) unblockable damage."
 	name = "Insurance"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

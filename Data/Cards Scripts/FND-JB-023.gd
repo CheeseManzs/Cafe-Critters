@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "All damage is doubled this turn."
 	name = "Up the Ante"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

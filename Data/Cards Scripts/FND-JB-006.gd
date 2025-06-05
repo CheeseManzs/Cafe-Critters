@@ -11,4 +11,5 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.drawCards(1, CardFilter.new(["Attack"]))
+	await attacker.discardRandomCard()

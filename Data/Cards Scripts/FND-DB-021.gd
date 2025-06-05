@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Heal target shelved Fae for (35% DEF) HP"
 	name = "Heal"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

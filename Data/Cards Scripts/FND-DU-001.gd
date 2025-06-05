@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Slocha"
 	description = "To play this card, shuffle 5 cards from your graveyard back into their respective fae's deck. Gain 1 MP and draw a card."
 	name = "Stir"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Uncommon
 
 func canBePlayed(user: BattleMonster):

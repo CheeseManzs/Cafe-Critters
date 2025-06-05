@@ -36,6 +36,7 @@ var attackBonus = 0
 var temp_attackBonus = 0
 var defenseBonus = 0
 var gameID = 0
+var parryPower = 0
 var canDraw = true
 
 enum SWITCH_STATE {
@@ -458,6 +459,12 @@ func getDefense():
 func chooseFromGraveyard(cardCount: int):
 	return (await battleController.chooseFromGraveyard(playerControlled, cardCount))
 
+func tryParry(target: BattleMonster):
+	if parryPower > 0:
+		var dmg = ceil(parryPower*getAttack())
+		parryPower = 0
+		await target.receiveDamage(dmg, self)
+
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
 	for status in statusConditions:
@@ -641,6 +648,11 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 		
 	await getPassive().onHit(self,battleController)
 	await attacker.getPassive().onAttack(attacker,battleController)
+	
+	#after attacks, try parrying
+	if attacker != self && attacker != null:
+		await tryParry(attacker)
+	
 	return pureDmg
 
 #get knowledge counter

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain (75% DEF) block. If this fae swapped in this turn, gain (150% DEF) block instead."
 	name = "Tanking"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
 	shieldPower = 0.75
 

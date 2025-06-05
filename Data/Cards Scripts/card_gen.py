@@ -36,7 +36,7 @@ for card in cards:
         index += 1
 
     tag_list = []
-    for tag in card_obj["Tags"].split(","):
+    for tag in card_obj["Tags"].split(", "):
         tag_list.append(tag)
 
     card_obj["Tags"] = str(tag_list)

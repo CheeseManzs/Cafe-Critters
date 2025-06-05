@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain (100% DEF) block."
 	name = "Block"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
 	shieldPower = 1
 

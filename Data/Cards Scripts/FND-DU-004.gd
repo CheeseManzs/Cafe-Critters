@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Slocha"
 	description = "Gain (40% DEF) block. If this card is played with a modified cost, draw a card."
 	name = "Cappucino"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
 	shieldPower = 0.4
 

@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain Defense Up 1."
 	name = "Defense Up"
-	tags = ['Utility', ' Self-Target']
+	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):

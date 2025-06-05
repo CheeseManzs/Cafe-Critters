@@ -7,7 +7,7 @@ func _init() -> void:
 	role = "Basic"
 	description = "Gain (30% DEF) block. If Regenerating, draw 2."
 	name = "Recalibrate"
-	tags = ['Defence', ' Self-Target']
+	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
 	shieldPower = 0.3
 
