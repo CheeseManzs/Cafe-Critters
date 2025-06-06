@@ -340,10 +340,12 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 					replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
-		var tooltip = '[hint="{ratio}"][color={col}]'.format({"ratio": rpl[4], "col": rpl[3]})
+		
 		if rpl[1] == null:
+			var tooltip = '[hint="{ratio}"][color={col}]'.format({"ratio": rpl[4], "col": rpl[3]})
 			description = description.replace(rpl[0],tooltip+rpl[2]+"[/color][/hint]")
 		else:
+			var tooltip = '[hint="{ratio}"][color={col}]'.format({"ratio": rpl[4], "col": rpl[3]})
 			description = description.replace(rpl[0],tooltip+str(rpl[1])+"[/color][/hint]")
 
 static func getOmenCards(battleController: BattleController):

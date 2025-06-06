@@ -26,5 +26,8 @@ func realign():
 	var index = 0
 	for _node in get_children():
 		var node: Node3D = _node
-		node.global_position = getChildPosition(index, totalCount)
+		node.target_position = getChildPosition(index, totalCount) - global_position
+		if !node.setPosition:
+			node.setPosition = true
+			node.position = node.target_position
 		index += 1

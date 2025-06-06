@@ -12,11 +12,15 @@ static var spawnAnimationLength: float = 0.3
 var connectedStatus: Status = null
 var done = false
 var currentX = 0
+var target_position: Vector3
+var setPosition = false
 func _ready() -> void:
 	maxScale = scale
 	scale = maxScale*spawnAnimationCurve.sample(0)
-	
+
 func _process(delta: float) -> void:
+	
+	position = lerp(position, target_position, delta*8)
 	
 	statusText.modulate.a = layout.monsterObject.sprite.modulate.a
 	statusText.outline_modulate.a = layout.monsterObject.sprite.modulate.a

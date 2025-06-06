@@ -24,7 +24,13 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-enemyTeamExport = "Hooliquen (50)
+enemyTeamExport = "Ignetor (50)
+- Attack Up (3)
+- Defense Up (3)
+- Shield Slap (3)
+- Assist (3)
+- Bolster (3)
+Hooliquen (50)
 - Strike (3)
 - Lucky Shot (1)
 - Lottery Lick (1)
