@@ -262,6 +262,8 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return true
+		EFFECTS.INSURANCE:
+			return true
 		EFFECTS.POISON_DIPPED:
 			return true
 	return false
