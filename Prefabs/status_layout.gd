@@ -11,7 +11,7 @@ func removeChildren():
 		await get_tree().create_timer(0.1).timeout
 
 func getChildPosition(childIndex: int, childCount: int):
-	var childDistance: Vector3 = Vector3(1, 0, 0)
+	var childDistance: Vector3 = Vector3(0.5, 0, 0)
 	var scaler: float = childIndex - float(childCount - 1)/2
 	return global_position + childDistance*scaler
 

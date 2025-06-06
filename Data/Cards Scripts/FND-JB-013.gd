@@ -14,5 +14,5 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var pureDmg = await dealDamage(attacker, defender)
 	if pureDmg > 0:
-		await attacker.currentDeck.storedCards.push_back(self)
+		attacker.currentDeck.storedCards.push_back(self)
 		await attacker.drawCards(1)

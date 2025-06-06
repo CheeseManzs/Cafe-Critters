@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 	elif spawnAnimationTime > spawnAnimationLength:
 		spawnAnimationTime = spawnAnimationLength
 		scale = maxScale*spawnAnimationCurve.sample(spawnAnimationTime/spawnAnimationLength)
-	if connectedStatus.effectDone && !done:
+	if (connectedStatus.effectDone || layout.monsterObject.connectedMon.isKO()) && !done:
 		done = true
 	if done:
 		if deleteAnimationTime >= spawnAnimationLength:
