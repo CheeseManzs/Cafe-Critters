@@ -333,6 +333,7 @@ func reset(active = true, forceDraw = false) -> void:
 	shield = 0
 	attackBonus = 0
 	defenseBonus = 0
+	parryPower = 0
 	
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]

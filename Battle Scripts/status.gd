@@ -35,7 +35,8 @@ enum EFFECTS {
 	ATTACK_UP,
 	DEFENSE_UP,
 	CAFFEINATED_OVERDRIVE,
-	INSURANCE
+	INSURANCE,
+	POISON_DIPPED
 }
 var X: int = 0
 var Y: int = 0
@@ -144,6 +145,8 @@ func toMini() -> String:
 			return "CAF"
 		EFFECTS.INSURANCE:
 			return "INS"
+		EFFECTS.POISON_DIPPED:
+			return "PSD"
 	return "N/A"
 	
 
@@ -213,6 +216,8 @@ func rawToString() -> String:
 			return "Caffeinated Overdrive"
 		EFFECTS.INSURANCE:
 			return "Insurance"
+		EFFECTS.POISON_DIPPED:
+			return "Poison Dipped"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -256,6 +261,8 @@ func isPositive() -> bool:
 		EFFECTS.DEFENSE_UP:
 			return true
 		EFFECTS.CAFFEINATED_OVERDRIVE:
+			return true
+		EFFECTS.POISON_DIPPED:
 			return true
 	return false
 
@@ -374,4 +381,6 @@ func newTurn() -> void:
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			effectDone = true
 		EFFECTS.INSURANCE:
+			effectDone = true
+		EFFECTS.POISON_DIPPED:
 			effectDone = true

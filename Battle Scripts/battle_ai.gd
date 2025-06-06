@@ -47,6 +47,12 @@ func maxBlock(mon: BattleMonster, target: BattleMonster):
 	#return highest damage number
 	return blks.max()
 
+func additive_factorial(x: int) -> int:
+	var n: int = 0
+	for i in (x + 1):
+		n += i
+	return n
+
 func factorial(x: int) -> int:
 	var n: int = 1
 	for i in (x + 1):
@@ -57,7 +63,13 @@ func factorial(x: int) -> int:
 func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> float:
 	if status == null:
 		return 0
+	if mon.hasStatus(status.effect):
+		status.X += mon.getStatus(status.effect).X
 	match status.effect:
+		Status.EFFECTS.ATTACK_UP:
+			return mon.attack*0.05
+		Status.EFFECTS.DEFENSE_UP:
+			return mon.defense*0.05
 		Status.EFFECTS.KO:
 			return -100
 		Status.EFFECTS.RIPTIDE:
@@ -88,6 +100,12 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 			return status.X
 		Status.EFFECTS.BARRIER:
 			return mon.health/10.0
+		Status.EFFECTS.FEAR:
+			return -mon.maxHP*additive_factorial(status.X)/10.0
+		Status.EFFECTS.BURN:
+			return -mon.maxHP*additive_factorial(status.X)/10.0
+		Status.EFFECTS.POISON:
+			return -mon.maxHP*additive_factorial(status.X)/10.0
 		Status.EFFECTS.REGEN:
 			var missingHP = mon.maxHP - mon.health
 			return min(missingHP + status.X, factorial(status.X))
@@ -172,8 +190,10 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 		score += cardDMG*personality.opportunism
 	#if card.name == "Steady":
 		#print("\n",card.name+": ","\ncardDMG:",+cardDMG,"\nCardDEF:",cardDEF,"\nStatus:",10*(scoreStatus(statusGiven, mon, currentMP)-scoreStatus(statusInflicted, target, targetMP)-scoreStatus(Status.new(statusCured), mon, currentMP)))
-	
-	return score
+	var cost = card.getRealCost()
+	if cost == 0:
+		cost = 0.5
+	return score/cost
 
 func enemyPossibleSwitch():
 	
