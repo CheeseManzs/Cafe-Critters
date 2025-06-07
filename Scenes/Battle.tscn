@@ -47,7 +47,7 @@
 [ext_resource type="AudioStream" uid="uid://cfyllggc1gdy0" path="res://Audio/BGM/10. Battle! (Nemona).mp3" id="44_6uit3"]
 [ext_resource type="AudioStream" uid="uid://c8rfsnojuuore" path="res://Audio/BGM/Marionette.mp3" id="45_qncyj"]
 [ext_resource type="Script" uid="uid://qyjjk824ex4m" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
-[ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="46_qncyj"]
+[ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="48_66d1q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]
 bg_color = Color(0, 0, 0, 0.423529)
@@ -591,7 +591,7 @@ multiplayerGameIndex = 8
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("46_csjxp")
-backdrop = ExtResource("46_qncyj")
+backdrop = ExtResource("48_66d1q")
 container = NodePath("..")
 
 [connection signal="pressed" from="Control UI/Shelfed Mon View/Skip Button" to="Battle Controller" method="skipTurn"]

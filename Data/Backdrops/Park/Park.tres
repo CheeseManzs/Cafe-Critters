@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Backdrop" load_steps=3 format=3 uid="uid://bp1yp2i7w8684"]
+
+[ext_resource type="PackedScene" uid="uid://t2n3n4a47gom" path="res://Prefabs/Backdrops/Park.tscn" id="1_naupc"]
+[ext_resource type="Script" uid="uid://c1owgu6ve0wmk" path="res://Data/Backdrops/backdrop.gd" id="2_m2tf1"]
+
+[resource]
+script = ExtResource("2_m2tf1")
+backgroundScene = ExtResource("1_naupc")
+metadata/_custom_type_script = "uid://c1owgu6ve0wmk"
