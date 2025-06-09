@@ -36,7 +36,11 @@ enum EFFECTS {
 	DEFENSE_UP,
 	CAFFEINATED_OVERDRIVE,
 	INSURANCE,
-	POISON_DIPPED
+	POISON_DIPPED,
+	CRASHOUT,
+	STEP_BACK,
+	CALL,
+	BLUFF
 }
 var X: int = 0
 var Y: int = 0
@@ -147,6 +151,14 @@ func toMini() -> String:
 			return "INS"
 		EFFECTS.POISON_DIPPED:
 			return "PSD"
+		EFFECTS.CRASHOUT:
+			return "CRT"
+		EFFECTS.STEP_BACK:
+			return "STB"
+		EFFECTS.CALL:
+			return "CAL"
+		EFFECTS.BLUFF:
+			return "BLF"
 	return "N/A"
 	
 
@@ -218,6 +230,14 @@ func rawToString() -> String:
 			return "Insurance"
 		EFFECTS.POISON_DIPPED:
 			return "Poison Dipped"
+		EFFECTS.CRASHOUT:
+			return "Crashout"
+		EFFECTS.STEP_BACK:
+			return "Step Back"
+		EFFECTS.CALL:
+			return "Call"
+		EFFECTS.BLUFF:
+			return "The Bluff"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -266,6 +286,14 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.POISON_DIPPED:
 			return true
+		EFFECTS.CRASHOUT:
+			return true
+		EFFECTS.STEP_BACK:
+			return true
+		EFFECTS.CALL:
+			return true
+		EFFECTS.BLUFF:
+			return true
 	return false
 
 func endsOnSwitch() -> bool:
@@ -300,6 +328,8 @@ func carriesOverOnSwitch() -> bool:
 			return true
 		EFFECTS.INSURANCE:
 			return true
+		EFFECTS.CALL:
+			return true
 	return false
 
 func newSubTurn() -> void:
@@ -326,7 +356,13 @@ func newSubTurn() -> void:
 		EFFECTS.FEAR:
 			if X < 1:
 				effectDone = true
-			return
+		EFFECTS.STEP_BACK:
+			effectDone = true
+		EFFECTS.CALL:
+			effectDone = true
+		EFFECTS.BLUFF:
+			effectDone = true
+	return
 
 func newTurn() -> void:
 	#check effect
@@ -385,4 +421,6 @@ func newTurn() -> void:
 		EFFECTS.INSURANCE:
 			effectDone = true
 		EFFECTS.POISON_DIPPED:
+			effectDone = true
+		EFFECTS.CRASHOUT:
 			effectDone = true

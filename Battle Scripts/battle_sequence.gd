@@ -93,8 +93,26 @@ func runActions(battleController: Node) -> void:
 		#add card to play history
 		action.battleMonster.playedCardHistory.push_back(action.card)
 		
+		
+		
 		await action.card.effect(action.battleMonster, action.getTarget())
-		await battleController.addToGraveyard(action.card, action.battleMonster)
+		
+		#nullifying effects
+		var skipEffect = false
+		
+		if action.getTarget().hasStatus(Status.EFFECTS.CALL) && "Attack" in action.card.tags:
+			BattleLog.log("Call nullified the effects of " + action.card.name+"!")
+			skipEffect = true
+		
+		if action.getTarget().hasStatus(Status.EFFECTS.BLUFF) && "Attack" in action.card.tags:
+			BattleLog.log("Call nullified the effects of " + action.card.name+"!")
+			skipEffect = true
+		
+		if !skipEffect:
+			await battleController.addToGraveyard(action.card, action.battleMonster)
+		
+		action.battleMonster.playedCardThisTurn = true
+		
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#poison dipped

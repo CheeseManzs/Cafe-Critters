@@ -32,6 +32,7 @@ var playerControlled: bool
 var statusConditions: Array[Status]
 #play history
 var playedCardHistory: Array[Card]
+var playedCardThisTurn = false
 #extra cards to draw
 var extraDraw = 0
 var attackBonus = 0
@@ -40,6 +41,7 @@ var defenseBonus = 0
 var gameID = 0
 var parryPower = 0
 var canDraw = true
+
 
 enum SWITCH_STATE {
 	NONE,
@@ -329,6 +331,7 @@ func reset(active = true, forceDraw = false) -> void:
 	if isKO():
 		return
 	canDraw = true
+	playedCardThisTurn = false
 	#reset bonusses
 	shield = 0
 	attackBonus = 0
@@ -450,7 +453,12 @@ func getAttack():
 	if hasStatus(Status.EFFECTS.ATTACK_UP):
 		atkUpBonus = 0.05*getStatus(Status.EFFECTS.ATTACK_UP).X
 	
-	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + getPassive().attackBonus(self,battleController))
+	var cardBonus = 0
+	
+	if hasCardInHand("The Bluff"):
+		cardBonus += 0.2
+	
+	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController))
 
 func getDefense():
 	var defUpBonus = 0
@@ -467,6 +475,12 @@ func tryParry(target: BattleMonster):
 		var dmg = ceil(parryPower*getAttack())
 		parryPower = 0
 		await target.receiveDamage(dmg, self)
+
+func hasCardInHand(cardName: String):
+	for card in currentHand.storedCards:
+		if card.name == cardName:
+			return true
+	return false
 
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
@@ -520,8 +534,8 @@ func getOmenCards() -> Array[Card]:
 func getRoleCardsInHand(role: String):
 	return Zone.getRoleCardsInArray(currentHand.storedCards, role)
 		
-func discardHand() -> void:
-	var discardCards = currentHand.storedCards
+func discardHand(filter: CardFilter = CardFilter.new()) -> void:
+	var discardCards = filter.filter(currentHand.storedCards)
 	await raiseAnimation()
 	var cardCount = len(discardCards)
 	for i in range(len(discardCards)):
@@ -640,6 +654,25 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 	if health > 0 && hasStatus(Status.EFFECTS.FEAR) && Status.EFFECTS.FEAR not in blackListedSources && dmg <= 0:
 		var fearStatus = getStatus(Status.EFFECTS.FEAR)
 		fearStatus.effectDone = true
+	
+	#crashout
+	if health > 0 && attacker.hasStatus(Status.EFFECTS.CRASHOUT) && dmg == 0:
+		var crashoutDmg = attacker.getAttack()*0.25
+		await receiveDamage(crashoutDmg,attacker)
+	
+	#step back
+	if health > 0 && hasStatus(Status.EFFECTS.STEP_BACK) && dmg == 0:
+		await addMP(2)
+		await addAttackBonus(0.2, true)
+	
+	#the bluff
+	if health > 0 && dmg > 0 && hasCardInHand("The Bluff"):
+		var toDiscard: Card = null
+		for card in currentHand.storedCards:
+			if card.name == "The Bluff":
+				toDiscard = card
+				break
+		await discardCard(toDiscard)
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):
