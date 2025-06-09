@@ -169,7 +169,8 @@ func setSettings(settings: NetworkManagerSettings ) -> void:
 	
 	var debTeam: Dictionary[Monster, Array] = {}
 	for mon in playerTeam:
-		debTeam[mon] = mon.deck.storedCards
+		if mon != null:
+			debTeam[mon] = mon.deck.storedCards
 	
 	teamText.text = teamPacker.encode(teamPacker.toCacheArray(debTeam))
 	setTeam()

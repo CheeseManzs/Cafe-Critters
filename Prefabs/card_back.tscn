@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://3pag10s0w2dh"]
 
-[ext_resource type="Script" uid="uid://bi0564rtirmbn" path="res://Battle Scripts/card_back.gd" id="1_38lsm"]
+[ext_resource type="Script" uid="uid://b86b76v58ltix" path="res://Battle Scripts/card_back.gd" id="1_38lsm"]
 [ext_resource type="Texture2D" uid="uid://dh3elalr22ux0" path="res://Graphics/Misc/Card_Back.png" id="2_4gvjk"]
 
 [node name="Card Back" type="Control"]

@@ -161,6 +161,10 @@ func raise(manualBonus: float = 0):
 	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
 	targetPosition = visiblePosition + upVec*100*manualBonus
 
+func lower(manualBonus: float = 0):
+	var upVec = -Vector2(cos(angle + PI/2),sin(angle + PI/2))
+	targetPosition = visiblePosition - 3*upVec*100*manualBonus
+
 func launch():
 	launched = true
 	if !autoSend:

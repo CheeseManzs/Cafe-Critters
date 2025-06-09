@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://d07fdcyc88i5y"]
 
 [ext_resource type="Script" uid="uid://dhukcpk4dcwm4" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
-[ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
+[ext_resource type="Script" uid="uid://dbyasbpm53duu" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
 [ext_resource type="Script" uid="uid://d0f12bk0312l3" path="res://Scenes/network_manager_settings.gd" id="10_7t0me"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="11_ji716"]
 

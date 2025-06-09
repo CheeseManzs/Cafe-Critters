@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bop2bwg2fu0hc"]
 
 [ext_resource type="Texture2D" uid="uid://20l40cwgl1w6" path="res://Placeholder Icons/card icon.png" id="1_374oj"]
-[ext_resource type="Script" uid="uid://cjpqxatxbbn5i" path="res://Battle Scripts/card_choice_ui.gd" id="2_c3ax7"]
+[ext_resource type="Script" uid="uid://b5bwuscsv2m70" path="res://Battle Scripts/card_choice_ui.gd" id="2_c3ax7"]
 
 [node name="Card Button" type="Button"]
 size_flags_horizontal = 3

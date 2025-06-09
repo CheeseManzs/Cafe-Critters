@@ -150,10 +150,7 @@ func raiseAnimation():
 	await battleController.get_tree().create_timer(0.5).timeout
 	
 func lowerAnimation():
-	battleController.setCardSelection(self, false)
-	for display in battleController.cardButtons:
-		display.hideCard()
-		display.ignoreInput = true
+	battleController.hidePlayerChoiceUI(true)
 	await battleController.get_tree().create_timer(0.5).timeout
 
 func quick_discardAnimation(card: Card) -> void:
@@ -541,6 +538,9 @@ func discardHand(filter: CardFilter = CardFilter.new()) -> void:
 	for i in range(len(discardCards)):
 		await quick_discardAnimation(discardCards[i])
 		await getPassive().onDiscard(self,battleController,discardCards[i])
+		currentHand.storedCards.erase(discardCards[i])
+	
+	await lowerAnimation()
 
 #draw cards from deck	
 func drawCards(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
