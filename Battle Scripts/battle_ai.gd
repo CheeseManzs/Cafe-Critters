@@ -127,7 +127,7 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 			var maxDmg = maxDamage(opp, mon)
 			return min(maxDmg,mon.health)/10.0 + maxDmg*personality.aggression/10.0
 		Status.EFFECTS.CRASHOUT:
-			return 100	
+			return 1	
 	return 0
 
 

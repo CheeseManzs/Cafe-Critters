@@ -674,6 +674,7 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		if health > 0 && attacker.hasStatus(Status.EFFECTS.CRASHOUT) && dmg == 0 && Status.EFFECTS.CRASHOUT not in blackListedSources:
 			var crashoutDmg = attacker.getAttack()*0.25
 			blackListedSources.push_back(Status.EFFECTS.CRASHOUT)
+			await battleController.get_tree().create_timer(1.0).timeout
 			await receiveDamage(crashoutDmg,attacker,blackListedSources)
 
 #adds status as counter

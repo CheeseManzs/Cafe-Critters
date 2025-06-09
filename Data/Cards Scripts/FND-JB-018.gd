@@ -9,7 +9,7 @@ func _init() -> void:
 	name = "Step Back"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
-	shieldPower = 2
+	shieldPower = 0.2
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)
