@@ -94,10 +94,7 @@ func runActions(battleController: Node) -> void:
 		action.battleMonster.playedCardHistory.push_back(action.card)
 		
 		
-		
-		await action.card.effect(action.battleMonster, action.getTarget())
-		
-		#nullifying effects
+				#nullifying effects
 		var skipEffect = false
 		
 		if action.getTarget().hasStatus(Status.EFFECTS.CALL) && "Attack" in action.card.tags:
@@ -109,7 +106,9 @@ func runActions(battleController: Node) -> void:
 			skipEffect = true
 		
 		if !skipEffect:
-			await battleController.addToGraveyard(action.card, action.battleMonster)
+			await action.card.effect(action.battleMonster, action.getTarget())
+		
+		await battleController.addToGraveyard(action.card, action.battleMonster)
 		
 		action.battleMonster.playedCardThisTurn = true
 		

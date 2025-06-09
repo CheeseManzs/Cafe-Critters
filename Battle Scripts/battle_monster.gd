@@ -655,12 +655,7 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		var fearStatus = getStatus(Status.EFFECTS.FEAR)
 		fearStatus.effectDone = true
 	
-	#crashout
-	if health > 0 && attacker.hasStatus(Status.EFFECTS.CRASHOUT) && dmg == 0:
-		var crashoutDmg = attacker.getAttack()*0.25
-		await receiveDamage(crashoutDmg,attacker)
-	
-	#step back
+		#step back
 	if health > 0 && hasStatus(Status.EFFECTS.STEP_BACK) && dmg == 0:
 		await addMP(2)
 		await addAttackBonus(0.2, true)
@@ -673,6 +668,13 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 				toDiscard = card
 				break
 		await discardCard(toDiscard)
+	
+	if attacker != null:
+		#crashout
+		if health > 0 && attacker.hasStatus(Status.EFFECTS.CRASHOUT) && dmg == 0 && Status.EFFECTS.CRASHOUT not in blackListedSources:
+			var crashoutDmg = attacker.getAttack()*0.25
+			blackListedSources.push_back(Status.EFFECTS.CRASHOUT)
+			await receiveDamage(crashoutDmg,attacker,blackListedSources)
 
 #adds status as counter
 func addCounter(eff: Status.EFFECTS, x, y = 0):
@@ -686,7 +688,7 @@ func execute():
 	await trueDamage(maxHP)
 
 #applies general damage
-func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
+func receiveDamage(dmg:int, attacker: BattleMonster, blacklistedSources = []) -> int:
 	#apply damage multiplier
 	dmg *= battleController.damageMultiplier
 	if isKO():
@@ -716,7 +718,7 @@ func receiveDamage(dmg:int, attacker: BattleMonster) -> int:
 	else:
 		battleController.playSound(battleController.emptyHitSound)
 	#apply overdamage to monster as true damage
-	await trueDamage(pureDmg, attacker, shielded)
+	await trueDamage(pureDmg, attacker, shielded, true, blacklistedSources)
 	
 		
 	await getPassive().onHit(self,battleController)

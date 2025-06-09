@@ -7,9 +7,9 @@
 
 [sub_resource type="Resource" id="Resource_eb42p"]
 script = ExtResource("6_3vadh")
-aggression = 2.0
-caution = 0.0
-mechanics = 5.0
+aggression = 1.0
+caution = 1.0
+mechanics = 100.0
 standards = 0.0
 opportunism = 10.0
 
@@ -24,42 +24,9 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-enemyTeamExport = "Ignetor (50)
-- Attack Up (3)
-- Defense Up (3)
-- Shield Slap (3)
-- Assist (3)
-- Bolster (3)
-Hooliquen (50)
-- Strike (3)
-- Lucky Shot (1)
-- Lottery Lick (1)
-- Brass Knuckles (1)
-- Poison Dipped (1)
-- Adrenaline Addiction (1)
-- Reckless Swing (1)
-- Better Not (1)
-- Functional Gambling (1)
-- Freaky Shiv (2)
-- Dice Defend (1)
-- Dice's Fury (1)
-- Steel Shuffler (1)
-- Power Gamble (1)
-- Insurance (1)
-- Best Offense (1)
-- Status Roulette (1)
-- Stack Breaker (1)
-- Opening Pot (1)
-- Streak (1)
-- Up the Ante (1)
-- Cash-Out (1)
-- Martin's Gale (1)
-- Toby (1)
-- Attack Up (3)
-- Defense Up (3)
-- Assist (3)
-- Bolster (3)
-- Endless Blows (1)"
+enemyTeamExport = "Ignetor (10)
+- Strike (1)
+- Crashout (1)"
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]

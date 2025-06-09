@@ -14,3 +14,7 @@ func _init() -> void:
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
 	await giveStatus(attacker, Status.EFFECTS.CALL)
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.CALL)

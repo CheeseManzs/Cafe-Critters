@@ -9,9 +9,13 @@ func _init() -> void:
 	name = "Step Back"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
-	shieldPower = 0.2
+	shieldPower = 2
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)
 	await giveStatus(attacker, Status.EFFECTS.STEP_BACK)
 	pass
+
+#checks what status will be given to the user
+func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.STEP_BACK)

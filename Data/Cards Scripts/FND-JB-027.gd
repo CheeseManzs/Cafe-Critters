@@ -14,3 +14,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	if !defender.playedCardThisTurn:
 		await attacker.drawCards(3)
 		await attacker.discardHand(CardFilter.new([],["Attack"]))
+	

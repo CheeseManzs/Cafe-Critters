@@ -126,6 +126,8 @@ func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> floa
 			var opp = battleController.getOpposingMon(mon.playerControlled)
 			var maxDmg = maxDamage(opp, mon)
 			return min(maxDmg,mon.health)/10.0 + maxDmg*personality.aggression/10.0
+		Status.EFFECTS.CRASHOUT:
+			return 100	
 	return 0
 
 
@@ -160,7 +162,7 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	var cardDMG = min(monDamage,target.health + target.shield)
 	
 	#dont use all the strong attacks while the opponent can still block!
-	if maxBlock(target,mon) > 0:
+	if maxBlock(target,mon) > 0 && personality.caution > 0:
 		cardDMG = maxDamage(mon,target) - cardDMG
 	
 	
