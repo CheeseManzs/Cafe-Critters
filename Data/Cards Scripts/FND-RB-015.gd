@@ -9,6 +9,13 @@ func _init() -> void:
 	name = "Spirit Barrier"
 	tags = ['Defence']
 	rarity = RARITY.Uncommon
+	shieldPower = 1.2
+
+func canBePlayed(user: BattleMonster):
+	var defCards = Zone.getTaggedCardsInArray(user.addedToGraveyardThisTurn, "Defence")
+	return len(defCards) > 0
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var defCards = Zone.getTaggedCardsInArray(attacker.addedToGraveyardThisTurn, "Defence")
+	if len(defCards) > 0:
+		await giveShield(attacker, defender)

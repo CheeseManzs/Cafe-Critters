@@ -45,6 +45,7 @@ enum RARITY {
 static var tooltipColors = {
 	"ATK":"77130e",
 	"Opponent Max Health": "e398fa",
+	"Max HP": "e398fa",
 	"DEF":"7FFFD4",
 	"KEY":"gold"
 }
@@ -66,13 +67,17 @@ func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
 	return _calcShield(attacker, defender, atkNum/100.0)
 
-func descOpponentMaxHP(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
-	return int(ceil(defender.maxHP*(atkNum/100.0)))
+func descMaxHP(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return int(ceil(attacker.maxHP*(atkNum/100.0)))
 
+func descOpponentMaxHP(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return descMaxHP(defender, attacker, atkNum)
+	
 var hintStats: Dictionary[String, Callable] = {
 	"ATK": descAttackCalc,
 	"DEF": descShieldCalc,
-	"Opponent Max Health": descOpponentMaxHP
+	"Opponent Max Health": descOpponentMaxHP,
+	"Max HP": descMaxHP
 }
 
 #cost of card
@@ -219,12 +224,12 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
 func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return 0
 
+func canBePlayed(user: BattleMonster):
+	return true
+
 #checks what status will be given to the user
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	return null
-
-func canBePlayed(user: BattleMonster):
-	return true
 
 #checks what status will be inflicted on the defender
 func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
@@ -277,22 +282,27 @@ func applyOmen(attacker: BattleMonster, defender: BattleMonster):
 		return
 	var addBack = []
 	var omenCards = getOmenCardsFromMonster(attacker.battleController, attacker)
-	if len(omenCards) > 0:
-		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
+	var matchingCards = []
 	for card in omenCards:
-		print("omen card: ", card.name,", ",card.originator.playerControlled)
 		if card != self && card.name == name:
-			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-				card.statusConditions.erase(Status.EFFECTS.EMPOWER)
-			BattleLog.singleton.log("Rea used " + card.name + "...")
-			await attacker.battleController.get_tree().create_timer(1.0).timeout
-			card.tags.erase("Omen")
-			await card.effect(attacker, defender)
-			card.tags.push_back("Omen")
-			addBack.push_back(card)
-	#for card in addBack:
-		#attacker.battleController.graveyard.erase(card)
-		#attacker.currentDeck.storedCards.push_back(addBack)
+			matchingCards.push_back(card)
+	if len(matchingCards) > 0:
+		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
+	for card in matchingCards:
+		if card.statusConditions.has(Status.EFFECTS.EMPOWER):
+			card.statusConditions.erase(Status.EFFECTS.EMPOWER)
+		BattleLog.singleton.log("Rea used " + card.name + "...")
+		await attacker.battleController.get_tree().create_timer(1.0).timeout
+		card.tags.erase("Omen")
+		await card.effect(attacker, defender)
+		card.tags.push_back("Omen")
+		addBack.push_back(card)
+		
+	for card in addBack:
+		attacker.battleController.removeFromGraveyardToOwnerDeck(card)
+
+func onEnteredGraveyard(user: BattleMonster):
+	pass
 
 func descSetup():
 	if baseDescription == "null":

@@ -9,6 +9,9 @@ func _init() -> void:
 	name = "Eternal Guardians"
 	tags = ['Defence']
 	rarity = RARITY.Epic
+	shieldPower = 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveShield(attacker, defender)
+	await giveStatus(attacker, Status.EFFECTS.ETERNAL_GUARDIANS)
 	pass

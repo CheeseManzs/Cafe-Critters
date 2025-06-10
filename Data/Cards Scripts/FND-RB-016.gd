@@ -10,5 +10,14 @@ func _init() -> void:
 	tags = ['Utility']
 	rarity = RARITY.Uncommon
 
+func canBePlayed(user: BattleMonster):
+	var utilCards = Zone.getTaggedCardsInArray(user.addedToGraveyardThisTurn, "Utility")
+	return len(utilCards) > 0
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var utilCards = Zone.getTaggedCardsInArray(attacker.addedToGraveyardThisTurn, "Utility")
+	if len(utilCards) > 0:
+		await attacker.drawCards(4)
+		var cardList = await attacker.chooseAndDiscardCards(1)
+		if len(cardList) > 0 && "Utility" not in cardList[0].tags:
+			await attacker.chooseAndDiscardCards(1)

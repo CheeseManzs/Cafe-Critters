@@ -12,14 +12,14 @@ func _init() -> void:
 	power = 0.1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	
+	await applyOmen(attacker, defender)
 	for mon in defender.battleController.getTeam(defender):
 		if mon.isKO():
 			continue
 		var dmg = _calcPower(attacker, defender, power, false)
 		await giveStatus(defender, Status.EFFECTS.FATIGUE, 1)
 		await mon.trueDamage(dmg, attacker)
-	await applyOmen(attacker, defender)
+	
 	pass
 
 func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:

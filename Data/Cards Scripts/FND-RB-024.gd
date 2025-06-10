@@ -10,5 +10,12 @@ func _init() -> void:
 	tags = ['Utility', 'Self-Target']
 	rarity = RARITY.Rare
 
+func canBePlayed(user: BattleMonster):
+	return len(user.currentHand.storedCards) > 3
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.chooseAndDiscardCards(3)
+	var cardFromDeck = await attacker.battleController.chooseFromArray(attacker.currentDeck.storedCards, attacker.playerControlled)
+	if len(cardFromDeck) > 0:
+		attacker.currentDeck.storedCards.erase(cardFromDeck[0])
+		attacker.currentHand.storedCards.push_back(cardFromDeck[0])

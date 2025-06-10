@@ -11,4 +11,6 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await attacker.drawCards(2)
+	var dmg = attacker.maxHP*0.05
+	await attacker.trueDamage(dmg,null,false,false)

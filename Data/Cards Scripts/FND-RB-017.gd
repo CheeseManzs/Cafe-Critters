@@ -11,4 +11,9 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await applyOmen(attacker, defender)
+	await giveStatus(defender, Status.EFFECTS.POISON, 3)
+	
+
+func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
+	return Status.new(Status.EFFECTS.POISON, 3)

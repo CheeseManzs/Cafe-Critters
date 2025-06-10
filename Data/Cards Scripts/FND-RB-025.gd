@@ -7,8 +7,8 @@ func _init() -> void:
 	role = "Basic"
 	description = "Trigger all Omen cards in the graveyard."
 	name = "Toll the Bells"
-	tags = ['Utility', 'Self-Target']
+	tags = ['Utility', 'Self-Target', 'Omen Proc']
 	rarity = RARITY.Epic
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await applyOmen(attacker, defender)

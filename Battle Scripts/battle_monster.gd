@@ -32,6 +32,7 @@ var playerControlled: bool
 var statusConditions: Array[Status]
 #play history
 var playedCardHistory: Array[Card]
+var addedToGraveyardThisTurn: Array[Card]
 var playedCardThisTurn = false
 var wasAttackedThisTurn = false
 var cardsSentToGraveyard = false
@@ -94,6 +95,12 @@ func damageShield(depletionAmount: int) -> int:
 		return overdamage
 	return 0
 
+#remove status
+func removeStatus(eff: Status.EFFECTS):
+	for status in statusConditions:
+		if status.effect == eff:
+			BattleLog.log(getName() + " lost " + status.rawToString())
+			status.effectDone = true
 #check for status condition
 func hasStatus(eff: Status.EFFECTS) -> bool:
 	for i in len(statusConditions):
@@ -109,6 +116,14 @@ func canSwitchOut() -> bool:
 	
 func canSwitchIn() -> bool:
 	return true
+	
+func onSwitchOut() -> void:
+	return
+	
+func onSwitchIn() -> void:
+	if hasStatus(Status.EFFECTS.MISSING_OUT):
+		var dmg = maxHP*0.1
+		trueDamage(dmg, null, false, false)
 
 #returns status effect of specific type
 func getStatus(eff: Status.EFFECTS) -> Status:
@@ -340,6 +355,13 @@ func reset(active = true, forceDraw = false) -> void:
 	playedCardThisTurn = false
 	wasAttackedThisTurn = false
 	cardsSentToGraveyard = 0
+	addedToGraveyardThisTurn = []
+	#eternal guardians
+	if hasStatus(Status.EFFECTS.ETERNAL_GUARDIANS):
+		for card in getTeamGraveyard():
+			if card.name == "Eternal Guardians":
+				var etgShield = getDefense()*0.1
+				await addShield(etgShield)
 	#reset bonusses
 	shield = 0
 	attackBonus = 0
@@ -382,6 +404,12 @@ func standardDraw():
 		drawCards(5 + drawBonus + extraDraw)
 		extraDraw = 0
 		canDraw = false
+
+func chooseAndDiscardCards(count: int) -> Array[Card]:
+	var toDiscard = await battleController.chooseCards(count, playerControlled)
+	for card in toDiscard:
+		await discardCard(card,true,false)
+	return toDiscard
 
 
 func checkStatusForArray0(x) -> bool:
@@ -452,8 +480,10 @@ func addStatusCondition(status: Status, broadcast = false):
 	#enemy instant effects
 	if hasStatus(status.effect):
 		var newStatus = getStatus(status.effect)
-		newStatus.addX(status.X)
-		newStatus.Y += status.Y
+		if status.X > 0:
+			newStatus.addX(status.X)
+		if status.Y > 0:
+			newStatus.Y += status.Y
 	else:
 		statusConditions.push_back(status)
 	
@@ -513,6 +543,7 @@ func addShield(shieldAmount: int) -> void:
 	battleController.playSound(battleController.shieldSound)
 	if shield < 0:
 		shield = 0
+	await battleController.get_tree().create_timer(1.0).timeout
 #does pure damage to the monster
 func addHP(hp: int):
 	BattleLog.singleton.log(rawData.name + " regenerated " + str(hp) + " HP")

@@ -11,6 +11,4 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	var toDiscard = await defender.battleController.chooseCards(1, defender.playerControlled)
-	if len(toDiscard) > 0:
-		await defender.discardCard(toDiscard[0])
+	await defender.chooseAndDiscardCards(1)

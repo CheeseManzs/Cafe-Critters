@@ -11,6 +11,7 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await applyOmen(attacker, defender)
 	var healed = attacker.getDefense()*0.41
 	await attacker.addHP(healed)
-	await applyOmen(attacker, defender)
+	

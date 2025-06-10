@@ -11,8 +11,9 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveStatus(defender, Status.EFFECTS.TRAPPED, 1)
 	await applyOmen(attacker, defender)
+	await giveStatus(defender, Status.EFFECTS.TRAPPED, 1)
+	
 
 func calcStatusInflicted(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	return Status.new(Status.EFFECTS.TRAPPED, 1)

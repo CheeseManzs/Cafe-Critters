@@ -42,7 +42,9 @@ enum EFFECTS {
 	CALL,
 	BLUFF,
 	TRAPPED,
-	FIGHT_OR_FLIGHT
+	FIGHT_OR_FLIGHT,
+	MISSING_OUT,
+	ETERNAL_GUARDIANS
 }
 var X: int = 0
 var Y: int = 0
@@ -165,6 +167,10 @@ func toMini() -> String:
 			return "TRP"
 		EFFECTS.FIGHT_OR_FLIGHT:
 			return "FOF"
+		EFFECTS.MISSING_OUT:
+			return "FMO"
+		EFFECTS.ETERNAL_GUARDIANS:
+			return "ETG"
 	return "N/A"
 	
 
@@ -248,6 +254,10 @@ func rawToString() -> String:
 			return "Trapped"
 		EFFECTS.FIGHT_OR_FLIGHT:
 			return "Fight or Flight"
+		EFFECTS.MISSING_OUT:
+			return "Fear of Missing Out"
+		EFFECTS.ETERNAL_GUARDIANS:
+			return "Eternal Guardians"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -304,6 +314,8 @@ func isPositive() -> bool:
 			return true
 		EFFECTS.BLUFF:
 			return true
+		EFFECTS.ETERNAL_GUARDIANS:
+			return true
 	return false
 
 func endsOnSwitch() -> bool:
@@ -339,6 +351,8 @@ func carriesOverOnSwitch() -> bool:
 		EFFECTS.INSURANCE:
 			return true
 		EFFECTS.CALL:
+			return true
+		EFFECTS.MISSING_OUT:
 			return true
 	return false
 
@@ -437,4 +451,6 @@ func newTurn() -> void:
 		EFFECTS.TRAPPED:
 			addX(-1)
 		EFFECTS.FIGHT_OR_FLIGHT:
+			effectDone = true
+		EFFECTS.MISSING_OUT:
 			effectDone = true

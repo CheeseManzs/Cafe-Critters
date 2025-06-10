@@ -11,11 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func canBePlayed(user: BattleMonster):
-	return len(user.currentHand.storedCards) >= 1
+	return len(user.currentHand.storedCards) > 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	var toDiscard = await defender.battleController.chooseCards(1, defender.playerControlled)
-	if len(toDiscard) > 0:
-		await defender.discardCard(toDiscard[0])
-	await attacker.drawCards(1)
 	await applyOmen(attacker, defender)
+	await attacker.chooseAndDiscardCards(1)
+	await attacker.drawCards(1)
+	

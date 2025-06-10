@@ -6,7 +6,7 @@ func _init() -> void:
 	alignment = ALIGNMENT.Rea
 	role = "Basic"
 	description = "Gain (30% DEF) block for each card placed into a graveyard this turn."
-	name = "Due Dilligence"
+	name = "Grave Shield"
 	tags = ['Defence']
 	rarity = RARITY.Common
 	shieldPower = 0.3

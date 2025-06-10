@@ -11,4 +11,10 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await applyOmen(attacker, defender)
+	var deckChoices = await attacker.battleController.chooseFromArray(attacker.currentDeck.storedCards, attacker.playerControlled)
+	for card in deckChoices:
+		attacker.currentDeck.storedCards.erase(card)
+		attacker.battleController.addToGraveyard(card, attacker)
+	
+	

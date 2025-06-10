@@ -15,6 +15,7 @@ var multiplayer_choice_buffer: Array[int] = []
 var multiplayer_options_buffer: Array = []
 var rng_sync = false
 var multiplayer_loaded_peer = false
+var currentBattleSequence: BattleSequence = null
 static var opponent_id = -1
 #monster object prefab
 static var multiplayer_game = false
@@ -316,6 +317,7 @@ func removeFromGraveyardToOwnerDeck(card: Card):
 func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 	card.originator = user
 	user.cardsSentToGraveyard += 1
+	user.addedToGraveyardThisTurn.push_back(card)
 	if user.playerControlled:
 		playerCardsAddedToGraveyardThisTurn += 1
 	else:
@@ -333,6 +335,8 @@ func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 			var riptideDamage = (0.01*decayStatus.X)*mon.maxHP
 			await mon.trueDamage(riptideDamage,null,false,false)
 			await get_tree().create_timer(0.5).timeout
+	#run on entered graveyard effect
+	await card.onEnteredGraveyard(user)
 
 func addArrayToGraveyard(cards: Array[Card], user: BattleMonster):
 	var first = true
@@ -770,6 +774,7 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 		container.get_child(0).free()
 	
 	await get_tree().create_timer(0.5).timeout
+	await oldMon.onSwitchOut()
 	await oldMon.getPassive().onSwapOut(oldMon, self)
 	await newMon.getPassive().customUI(newMon, self)
 	await newMon.getPassive().onSwapIn(oldMon, self)
@@ -777,6 +782,8 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	
 	oldMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_OUT
 	newMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_IN
+	
+	await newMon.onSwitchIn()
 	
 #swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:
@@ -1037,7 +1044,54 @@ func chooseFromGraveyard(playerControlled: bool, choiceCount: int = 1):
 	
 	graveyardDisplay.open = false
 	return results
+
+func chooseFromArray(array: Array, playerControlled: bool, choiceCount: int = 1):
+	var results = []
+	if playerControlled:
+		results = (await playerChooseFromArray(array, choiceCount))
+	else:
+		results = (await playerChooseFromArray(array, choiceCount))
 	
+	graveyardDisplay.open = false
+	return results
+
+func playerChooseFromArray(array: Array, choiceCount: int = 1):
+	var choiceButtons: Array[CardDisplay] = await displayCardGrid(array)
+	var arrayChoices = []
+	var doneChoosing = false
+	while len(arrayChoices) < min(choiceCount, len(array)) and !doneChoosing:
+		await gui_choice
+		var choice = array[playerCardID]
+		if multiplayer_game:
+			print("sending choice: ", playerCardID)
+			rpc("send_choice",playerCardID)
+		if choice in arrayChoices:
+			choiceButtons[playerCardID].setTextColor(Color.WHITE)
+			arrayChoices.erase(choice)
+		else:
+			choiceButtons[playerCardID].setTextColor(Color.YELLOW)
+			arrayChoices.push_back(choice)	
+		print(arrayChoices)
+	
+	return arrayChoices
+
+func enemyChooseFromArray(array: Array, choiceCount: int = 1):
+	if len(array) == 0:
+		return []
+	var arrayChoices = []
+	var doneChoosing = false
+	while len(arrayChoices) < min(choiceCount, len(array)) and !doneChoosing:
+		if multiplayer_game:
+			var enmChoice = await getNextChoice()
+			print("picked: ", enmChoice)
+			var choice = array[enmChoice] 
+			if choice in arrayChoices:
+				arrayChoices.erase(choice)
+			else:
+				arrayChoices.push_back(choice)	
+		else:
+			arrayChoices.push_back(array[len(arrayChoices) - 1])
+	return arrayChoices
 
 func getSwitchCost() -> int:
 	var baseSwitchCost = 1
@@ -1219,7 +1273,9 @@ func activeTurn() -> void:
 			await get_tree().create_timer(0.3).timeout
 			break
 		var turnSequence = BattleSequence.new(actions)
+		currentBattleSequence = turnSequence
 		await turnSequence.runActions(self)
+		currentBattleSequence = null
 		hidePlayerChoiceUI(true)
 		await get_tree().create_timer(0.25).timeout
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)

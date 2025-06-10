@@ -11,4 +11,7 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await applyOmen(attacker, defender)
+	await attacker.addMP(1)
+	await giveStatus(defender,Status.EFFECTS.MISSING_OUT)
 	pass

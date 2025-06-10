@@ -11,5 +11,6 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveStatus(defender, Status.EFFECTS.FIGHT_OR_FLIGHT, 1)
 	await applyOmen(attacker, defender)
+	await giveStatus(defender, Status.EFFECTS.FIGHT_OR_FLIGHT, 1)
+	

@@ -11,4 +11,17 @@ func _init() -> void:
 	rarity = RARITY.Uncommon
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await applyOmen(attacker, defender)
+	
+	var chosenStatusIndex = attacker.battleController.global_rng.randi_range(0, len(attacker.statusConditions) - 1)
+	var statusList = []
+	for status in attacker.statusConditions:
+		if !status.isPositive() && !status.effectDone:
+			statusList.push_back(status)
+	
+	if len(statusList) > 0:
+		chosenStatusIndex = attacker.battleController.global_rng.randi_range(0, len(statusList) - 1)
+		var chosenStatus = statusList[chosenStatusIndex]
+		attacker.removeStatus(chosenStatus.effect)
+	
+	

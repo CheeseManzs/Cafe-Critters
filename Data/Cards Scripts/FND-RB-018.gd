@@ -9,6 +9,16 @@ func _init() -> void:
 	name = "Due Diligence"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Uncommon
+	shieldPower = 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var sequence: BattleSequence = attacker.battleController.currentBattleSequence
+	var willAttack = false
+	if sequence != null:
+		for action in sequence.actions:
+			if action.battleMonster == defender && "Attack" in action.card.tags:
+				willAttack = true
+				break
+	if willAttack:
+		await giveShield(attacker,defender)
+		await attacker.addMP(1)

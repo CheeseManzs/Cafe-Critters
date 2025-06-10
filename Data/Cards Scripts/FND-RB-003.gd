@@ -12,5 +12,6 @@ func _init() -> void:
 	shieldPower = 0.39
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveShield(attacker, defender)
 	await applyOmen(attacker, defender)
+	await giveShield(attacker, defender)
+	
