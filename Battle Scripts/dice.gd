@@ -50,7 +50,8 @@ func resetRoll():
 	diceColor.indentColor = Color.BLACK
 	global_position = ogPos
 	scale = Vector3(1,1,1)*(1)
-	rigidbody.linear_velocity = Vector3(4*rng.randf_range(-1,1),0,-7 + rng.randf_range(-1,1))
+	var angle = -PI/2 + rng.randf_range(-PI/4,PI/4)
+	rigidbody.linear_velocity = 6*Vector3(cos(angle),0,sin(angle))
 	rigidbody.angular_velocity = Vector3(3*rng.randf_range(-1,1),3*rng.randf_range(-1,1),3*rng.randf_range(-1,1))
 	timer = 0
 	detectSide = true
