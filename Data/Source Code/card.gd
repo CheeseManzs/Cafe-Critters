@@ -44,6 +44,7 @@ enum RARITY {
 
 static var tooltipColors = {
 	"ATK":"77130e",
+	"Opponent Max Health": "e398fa",
 	"DEF":"7FFFD4",
 	"KEY":"gold"
 }
@@ -65,9 +66,13 @@ func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: fl
 func descShieldCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
 	return _calcShield(attacker, defender, atkNum/100.0)
 
+func descOpponentMaxHP(attacker: BattleMonster, defender: BattleMonster, atkNum: float):
+	return int(ceil(defender.maxHP*(atkNum/100.0)))
+
 var hintStats: Dictionary[String, Callable] = {
 	"ATK": descAttackCalc,
-	"DEF": descShieldCalc
+	"DEF": descShieldCalc,
+	"Opponent Max Health": descOpponentMaxHP
 }
 
 #cost of card
@@ -244,7 +249,7 @@ func _omenCalc(attacker: BattleMonster, defender: BattleMonster):
 	var dmg = 0
 	for card in getOmenCards(attacker.battleController):
 		print("omen card: ", card.name, " > ", card.originator == attacker)
-		if card.originator == attacker:
+		if card.originator == attacker && card.name == name:
 			card.tags.erase("Omen")
 			print("adding: ",card.calcDamage(attacker, defender))
 			dmg += ceil(card.calcDamage(attacker, defender))
@@ -276,7 +281,7 @@ func applyOmen(attacker: BattleMonster, defender: BattleMonster):
 		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
 	for card in omenCards:
 		print("omen card: ", card.name,", ",card.originator.playerControlled)
-		if card != self:
+		if card != self && card.name == name:
 			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
 				card.statusConditions.erase(Status.EFFECTS.EMPOWER)
 			BattleLog.singleton.log("Rea used " + card.name + "...")

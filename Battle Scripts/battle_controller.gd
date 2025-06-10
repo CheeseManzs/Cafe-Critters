@@ -123,6 +123,8 @@ var tookDamage = false
 var networkPriority = false
 var playerDamageDealt = 0
 var enemyDamageDealt = 0
+var playerCardsAddedToGraveyardThisTurn = 0
+var enemyCardsAddedToGraveyardThisTurn = 0
 #instantiates a monster
 
 func createMonster(isPlayer, monObj, tID) -> Node3D:
@@ -304,7 +306,7 @@ func _ready() -> void:
 
 # Check if a monster swap is valid
 func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
-	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to)
+	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to) && from.canSwitchOut() && to.canSwitchIn()
 	return valid
 
 func removeFromGraveyardToOwnerDeck(card: Card):
@@ -313,6 +315,11 @@ func removeFromGraveyardToOwnerDeck(card: Card):
 
 func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 	card.originator = user
+	user.cardsSentToGraveyard += 1
+	if user.playerControlled:
+		playerCardsAddedToGraveyardThisTurn += 1
+	else:
+		enemyCardsAddedToGraveyardThisTurn += 1
 	graveyard.push_back(card)
 	card.salvaged = true
 	#search for relevants statusses
@@ -1233,6 +1240,9 @@ func activeTurn() -> void:
 	#reset total damage
 	playerDamageDealt = 0
 	enemyDamageDealt = 0 
+	#reset cards added to graveyard
+	playerCardsAddedToGraveyardThisTurn = 0
+	enemyCardsAddedToGraveyardThisTurn = 0
 	#0 = no one, 1 = player, 2 = enemy
 	winner = 0 
 	if playerLost():

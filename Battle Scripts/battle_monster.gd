@@ -33,6 +33,8 @@ var statusConditions: Array[Status]
 #play history
 var playedCardHistory: Array[Card]
 var playedCardThisTurn = false
+var wasAttackedThisTurn = false
+var cardsSentToGraveyard = false
 #extra cards to draw
 var extraDraw = 0
 var attackBonus = 0
@@ -41,7 +43,6 @@ var defenseBonus = 0
 var gameID = 0
 var parryPower = 0
 var canDraw = true
-
 
 enum SWITCH_STATE {
 	NONE,
@@ -100,6 +101,14 @@ func hasStatus(eff: Status.EFFECTS) -> bool:
 		if status.effect == eff && !status.effectDone:
 			return true
 	return false
+
+func canSwitchOut() -> bool:
+	if hasStatus(Status.EFFECTS.TRAPPED):
+		return false
+	return true
+	
+func canSwitchIn() -> bool:
+	return true
 
 #returns status effect of specific type
 func getStatus(eff: Status.EFFECTS) -> Status:
@@ -329,6 +338,8 @@ func reset(active = true, forceDraw = false) -> void:
 		return
 	canDraw = true
 	playedCardThisTurn = false
+	wasAttackedThisTurn = false
+	cardsSentToGraveyard = 0
 	#reset bonusses
 	shield = 0
 	attackBonus = 0
@@ -390,6 +401,12 @@ func returnStrongarmCard():
 	pickedCard.statusConditions.erase(Status.EFFECTS.STRONGARM)
 	BattleLog.singleton.log(rawData.name + " got " + pickedCard.name + " back!")
 	currentHand.storedCards.push_back(pickedCard)
+
+func onSkip():
+	if hasStatus(Status.EFFECTS.FIGHT_OR_FLIGHT):
+		await EffectFlair.singleton._runFlair("Fight or Flight", Color.DARK_RED)
+		var dmg = 0.1*maxHP*getStatus(Status.EFFECTS.FIGHT_OR_FLIGHT).X
+		await trueDamage(dmg, null,false,false)
 
 func addStatusCondition(status: Status, broadcast = false):
 	if isKO():
@@ -598,6 +615,7 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 	if checkNullifyDamage():
 		return
 	if dmg > 0:
+		wasAttackedThisTurn = true
 		battleController.playSound(battleController.hitSound)
 	#remove damage from hp
 	health -= dmg

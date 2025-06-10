@@ -40,7 +40,9 @@ enum EFFECTS {
 	CRASHOUT,
 	STEP_BACK,
 	CALL,
-	BLUFF
+	BLUFF,
+	TRAPPED,
+	FIGHT_OR_FLIGHT
 }
 var X: int = 0
 var Y: int = 0
@@ -159,6 +161,10 @@ func toMini() -> String:
 			return "CAL"
 		EFFECTS.BLUFF:
 			return "BLF"
+		EFFECTS.TRAPPED:
+			return "TRP"
+		EFFECTS.FIGHT_OR_FLIGHT:
+			return "FOF"
 	return "N/A"
 	
 
@@ -238,6 +244,10 @@ func rawToString() -> String:
 			return "Call"
 		EFFECTS.BLUFF:
 			return "The Bluff"
+		EFFECTS.TRAPPED:
+			return "Trapped"
+		EFFECTS.FIGHT_OR_FLIGHT:
+			return "Fight or Flight"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -423,4 +433,8 @@ func newTurn() -> void:
 		EFFECTS.POISON_DIPPED:
 			effectDone = true
 		EFFECTS.CRASHOUT:
+			effectDone = true
+		EFFECTS.TRAPPED:
+			addX(-1)
+		EFFECTS.FIGHT_OR_FLIGHT:
 			effectDone = true

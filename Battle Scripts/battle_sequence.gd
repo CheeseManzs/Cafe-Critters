@@ -33,8 +33,22 @@ func rearrange() -> void:
 	actions.sort_custom(definiteArrangement) #sort in a definite order first to avoid extra sort action calculations 
 	actions.sort_custom(sortAction)
 
-func runActions(battleController: Node) -> void:
+func runActions(battleController: BattleController) -> void:
 	var i = -1
+	
+	#check if mon skipped
+	var skipList = [false, false]
+	var monList = battleController.sortedActiveMonList()
+	
+	for action in actions:
+		for id in len(monList):
+			if action.battleMonster == monList[id]:
+				skipList[id] = true
+	
+	for skipID in len(skipList):
+		if !skipList[skipID]:
+			await monList[skipID].onSkip()
+			
 	while i+1 < len(actions):
 		i += 1
 		var action = actions[i]
