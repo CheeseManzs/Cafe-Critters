@@ -3,10 +3,11 @@
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3ocnu"]
 sky_top_color = Color(0.674719, 0.787247, 0.922201, 1)
 sky_horizon_color = Color(0.428487, 0.674714, 0.927218, 1)
-sky_energy_multiplier = 1.75
+sky_energy_multiplier = 1.25
 ground_bottom_color = Color(0.643137, 1, 0.615686, 1)
 ground_horizon_color = Color(0.427451, 0.67451, 0.92549, 1)
 ground_curve = 0.125534
+ground_energy_multiplier = 1.25
 
 [sub_resource type="Sky" id="Sky_p7bi2"]
 sky_material = SubResource("ProceduralSkyMaterial_3ocnu")

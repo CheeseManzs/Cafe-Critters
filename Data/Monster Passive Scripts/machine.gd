@@ -116,16 +116,17 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	await createSpecialFlair("Machine", Color.WEB_GRAY)
 	
 	var discardCards = mon.currentHand.storedCards
-	await mon.raiseAnimation()
-	var cardCount = len(discardCards)
-	for i in range(len(discardCards)):
-		await mon.quick_discardAnimation(discardCards[i])
-		await mon.getPassive().onDiscard(mon,battle,discardCards[i])
-	
-	
-	await mon.currentHand.removeCards(discardCards)
-	await battle.get_tree().create_timer(1.0).timeout
-	await setHeat(heat + cardCount, mon, battle)
+	if len(discardCards) > 0:
+		await mon.raiseAnimation()
+		var cardCount = len(discardCards)
+		for i in range(len(discardCards)):
+			await mon.quick_discardAnimation(discardCards[i])
+			await mon.getPassive().onDiscard(mon,battle,discardCards[i])
+		
+		
+		await mon.currentHand.removeCards(discardCards)
+		await battle.get_tree().create_timer(1.0).timeout
+		await setHeat(heat + cardCount, mon, battle)
 	
 	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
 		mon.getStatus(Status.EFFECTS.OVERHEAT).X -= 1

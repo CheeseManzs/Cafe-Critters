@@ -7,10 +7,19 @@ _limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.503356, 1.21965), 0.0, 0.0, 0, 0, Vector2(1, 0.991132), 0.243046, 0.0, 0, 0]
 point_count = 3
 
-[node name="Status Icon" type="Node3D" node_paths=PackedStringArray("statusText")]
+[node name="Status Icon" type="Node3D" node_paths=PackedStringArray("statusText", "filterText")]
 script = ExtResource("1_4pp82")
 statusText = NodePath("Label3D")
+filterText = NodePath("Label3D/Filter Text")
 spawnAnimationCurve = SubResource("Curve_4pp82")
 
 [node name="Label3D" type="Label3D" parent="."]
 text = "STA"
+
+[node name="Filter Text" type="Label3D" parent="Label3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.130506, 0.007)
+render_priority = 10
+outline_render_priority = 9
+modulate = Color(1, 0, 0, 1)
+text = "ATK"
+font_size = 16

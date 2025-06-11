@@ -25,7 +25,7 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
 enemyTeamExport = "Ignetor (50)
-- Strike (1)
+- Strike (10)
 Junkguard (50)
 - Light Strike (1)"
 debugPersonality = SubResource("Resource_eb42p")
@@ -119,12 +119,8 @@ teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
 lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button")]
 defaultPersonality = SubResource("Resource_7t0me")
-defaultTeam = "Rev (50)
-- Corner (1)
-- Wight Grasp (1)
-- Ominous Vision (1)
-- Scavenge (1)
-- Vengeance (1)"
+defaultTeam = "Slocha (50)
+- Block (100)"
 
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Network Manager Settings" method="_on_online_battle_host_pressed"]

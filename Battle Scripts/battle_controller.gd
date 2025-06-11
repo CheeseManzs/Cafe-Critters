@@ -327,7 +327,7 @@ func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 	#search for relevants statusses
 	for mon in (playerTeam + enemyTeam):
 		#riptide
-		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.RIPTIDE):
+		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.RIPTIDE, card):
 			var decayStatus = mon.getStatus(Status.EFFECTS.RIPTIDE)
 			if !multidiscard:
 				print("ow")
@@ -909,12 +909,12 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 				pass
 			## Disables the card if you can't afford it.
 			var strongarmEffect = false
-			if mon.hasStatus(Status.EFFECTS.STRONGARM):
+			if mon.hasStatus(Status.EFFECTS.STRONGARM, card):
 				var strongarmStatus = mon.getStatus(Status.EFFECTS.STRONGARM)
 				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
 					strongarmEffect = true
 			
-			var disableCard = max(0, card.getRealCost()) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY) || strongarmEffect || !card.canBePlayed(mon)
+			var disableCard = max(0, card.getRealCost()) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card) || strongarmEffect || !card.canBePlayed(mon)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 

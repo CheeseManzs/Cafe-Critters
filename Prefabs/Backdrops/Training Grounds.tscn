@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://tuje7acd8ybr"]
+[gd_scene load_steps=14 format=3 uid="uid://tuje7acd8ybr"]
 
 [ext_resource type="Environment" uid="uid://c23v0s4gfkt0e" path="res://Prefabs/BattleEnvironment.tres" id="1_mmour"]
 
@@ -6,6 +6,77 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y1guf"]
 albedo_color = Color(0.277118, 0.159207, 0.0452019, 1)
+
+[sub_resource type="Gradient" id="Gradient_mmour"]
+offsets = PackedFloat32Array(0, 0.0367647, 0.944853, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1hh0c"]
+gradient = SubResource("Gradient_mmour")
+
+[sub_resource type="Curve" id="Curve_n0wd4"]
+_limits = [-20.0, 20.0, 0.0, 1.0]
+_data = [Vector2(0, -0.927696), 0.0, 0.0, 0, 0, Vector2(0.134228, 20), -64.7854, -64.7854, 0, 0, Vector2(0.40604, -20), 0.0, 0.0, 0, 0, Vector2(0.614094, 19.2906), 0.0, 0.0, 0, 0, Vector2(0.842282, -20), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_vvqc6"]
+curve = SubResource("Curve_n0wd4")
+
+[sub_resource type="Curve" id="Curve_mmour"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506711, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1hh0c"]
+curve = SubResource("Curve_mmour")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n0wd4"]
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(-3.965, 1.1, 0)
+emission_shape = 3
+emission_box_extents = Vector3(7.44, 1, 1)
+angle_min = 90.0
+angle_max = 90.0
+spread = 6.685
+initial_velocity_min = 20.0
+initial_velocity_max = 67.5
+gravity = Vector3(0, 0.1, 0)
+radial_accel_min = 5.0
+radial_accel_max = 5.0
+radial_accel_curve = SubResource("CurveTexture_vvqc6")
+scale_curve = SubResource("CurveTexture_1hh0c")
+color_ramp = SubResource("GradientTexture1D_1hh0c")
+turbulence_noise_strength = 0.85
+turbulence_noise_scale = 6.479
+turbulence_noise_speed = Vector3(0, 1, 0)
+turbulence_influence_min = 0.001
+turbulence_influence_max = 0.001
+turbulence_initial_displacement_min = -97.7
+turbulence_initial_displacement_max = 33.3
+
+[sub_resource type="Curve" id="Curve_vvqc6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4puae"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+use_particle_trails = true
+proximity_fade_enabled = true
+proximity_fade_distance = 2.0
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_5voaj"]
+material = SubResource("StandardMaterial3D_4puae")
+shape = 0
+size = 0.15
+section_length = 0.01
+section_segments = 25
+curve = SubResource("Curve_vvqc6")
 
 [node name="BD" type="Node3D"]
 
@@ -22,3 +93,16 @@ shadow_blur = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_mmour")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0191, 0.0303836, -8.25043)
+visible = false
+cast_shadow = 0
+amount = 10
+lifetime = 10.0
+preprocess = 10.0
+visibility_aabb = AABB(-25, -25, -25, 100, 50, 50)
+trail_enabled = true
+trail_lifetime = 1.0
+process_material = SubResource("ParticleProcessMaterial_n0wd4")
+draw_pass_1 = SubResource("RibbonTrailMesh_5voaj")

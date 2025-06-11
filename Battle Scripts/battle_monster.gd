@@ -102,10 +102,10 @@ func removeStatus(eff: Status.EFFECTS):
 			BattleLog.log(getName() + " lost " + status.rawToString())
 			status.effectDone = true
 #check for status condition
-func hasStatus(eff: Status.EFFECTS) -> bool:
+func hasStatus(eff: Status.EFFECTS, card: Card = null) -> bool:
 	for i in len(statusConditions):
 		var status: Status = statusConditions[i]
-		if status.effect == eff && !status.effectDone:
+		if status.effect == eff && !status.effectDone && (card == null || status.filter.matchesFilter(card)):
 			return true
 	return false
 

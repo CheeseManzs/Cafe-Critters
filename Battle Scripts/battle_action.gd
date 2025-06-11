@@ -26,7 +26,7 @@ func _init(p_battleMon: BattleMonster, p_playerControlled: bool, prio: int, targ
 	switching = p_switching
 	costMod = p_costMod
 	
-	if p_battleMon.hasStatus(Status.EFFECTS.PRIORITY):
+	if p_battleMon.hasStatus(Status.EFFECTS.PRIORITY, card):
 		priority += p_battleMon.getStatus(Status.EFFECTS.PRIORITY).X+1
 		print("added ", p_battleMon.getStatus(Status.EFFECTS.PRIORITY).X+1, " to battle action")
 

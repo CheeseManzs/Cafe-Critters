@@ -1,5 +1,12 @@
 class_name CardFilter
 
+static var tagAlias = {
+	"Attack": "ATK",
+	"Defence": "DEF",
+	"Utility": "UTL",
+	"Omen": "OMN"
+}
+
 var tagWhiteList: Array[String] = []
 var tagBlackList: Array[String] = []
 

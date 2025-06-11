@@ -11,7 +11,7 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await giveStatus(attacker, Status.EFFECTS.FOCUS, 1)
+	await giveStatus(attacker, Status.EFFECTS.FOCUS, 1, 0)
 
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster) -> Status:
 	return Status.new(Status.EFFECTS.FOCUS, 1)

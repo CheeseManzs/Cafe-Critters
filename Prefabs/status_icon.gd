@@ -2,6 +2,7 @@ extends Node3D
 class_name StatusIcon
 
 @export var statusText: Label3D
+@export var filterText: Label3D
 @export var spawnAnimationCurve: Curve
 
 var layout: StatusLayout
@@ -42,14 +43,21 @@ func _process(delta: float) -> void:
 			deleteAnimationTime += delta
 			scale = maxScale*spawnAnimationCurve.sample(1 - deleteAnimationTime/spawnAnimationLength)
 	
-
-func setIcon(effect: Status):
+func updateIcon(effect: Status):
 	var extension = " " + str(effect.X)
 	if effect.X == 0:
 		extension = ""
 	currentX = effect.X
 	effect.icon = self
 	statusText.text = effect.toMini() + extension
+	
+	if len(effect.filter.tagWhiteList) > 0:
+		filterText.text = effect.filter.tagAlias[effect.filter.tagWhiteList[0]]
+	else:
+		filterText.text = ""
+
+func setIcon(effect: Status):
+	updateIcon(effect)
 	spawnAnimationTime = 0
 	connectedStatus = effect
 

@@ -68,7 +68,7 @@ func runActions(battleController: BattleController) -> void:
 			continue
 		
 		#if empower next played: empower card
-		if action.battleMonster.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
+		if action.battleMonster.hasStatus(Status.EFFECTS.EMPOWER_PLAYED, action.card):
 			action.battleMonster.getStatus(Status.EFFECTS.EMPOWER_PLAYED).effectDone = true
 			action.card.statusConditions.push_back(Status.EFFECTS.EMPOWER)
 			await battleController.get_tree().create_timer(0.75).timeout
@@ -93,7 +93,7 @@ func runActions(battleController: BattleController) -> void:
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#parrying
-		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY):
+		if !action.card.selfTarget && action.getTarget().hasStatus(Status.EFFECTS.PERFECT_PARRY, action.card):
 			await EffectFlair.singleton._runFlair("Perfect Parry",Color.GOLDENROD)
 			action.getTarget().getStatus(Status.EFFECTS.PERFECT_PARRY).effectDone = true
 			BattleLog.singleton.log(action.getTarget().rawData.name + " parried " + action.card.name)
@@ -111,11 +111,11 @@ func runActions(battleController: BattleController) -> void:
 				#nullifying effects
 		var skipEffect = false
 		
-		if action.getTarget().hasStatus(Status.EFFECTS.CALL) && "Attack" in action.card.tags:
+		if action.getTarget().hasStatus(Status.EFFECTS.CALL, action.card) && "Attack" in action.card.tags:
 			BattleLog.log("Call nullified the effects of " + action.card.name+"!")
 			skipEffect = true
 		
-		if action.getTarget().hasStatus(Status.EFFECTS.BLUFF) && "Attack" in action.card.tags:
+		if action.getTarget().hasStatus(Status.EFFECTS.BLUFF, action.card) && "Attack" in action.card.tags:
 			BattleLog.log("Call nullified the effects of " + action.card.name+"!")
 			skipEffect = true
 		
@@ -129,13 +129,13 @@ func runActions(battleController: BattleController) -> void:
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#poison dipped
-		if "Attack" in action.card.tags && action.battleMonster.hasStatus(Status.EFFECTS.POISON_DIPPED):
+		if "Attack" in action.card.tags && action.battleMonster.hasStatus(Status.EFFECTS.POISON_DIPPED, action.card):
 			var num = await action.card.rollDice(action.battleMonster)
 	
 			if num >= 5:
 				await action.card.giveStatus(action.getTarget(), Status.EFFECTS.POISON, 5)
 		
-		if action.battleMonster.hasStatus(Status.EFFECTS.POISON):
+		if action.battleMonster.hasStatus(Status.EFFECTS.POISON, action.card):
 			var poisonStatus: Status = action.battleMonster.getStatus(Status.EFFECTS.POISON)
 			await EffectFlair.singleton._runFlair("Poison",Color.MEDIUM_PURPLE)
 			var poisonDamage = 0.01*poisonStatus.X*(action.battleMonster.maxHP)

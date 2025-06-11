@@ -16,7 +16,7 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		for i in attacker.getStatus(Status.EFFECTS.ENDLESS_BLOWS).X:
 			await dealDamage(attacker, defender, 0.1)
 	await dealDamage(attacker, defender)
-	await giveStatus(attacker, Status.EFFECTS.ENDLESS_BLOWS, 1,0,false,false)
+	await giveStatus(attacker, Status.EFFECTS.ENDLESS_BLOWS, 1,0,CardFilter.new(),false,false)
 	#add 3 endless blows
 	for i in 3:
 		var newCard = attacker.battleController.monsterCache.getCardByName("Endless Blows").duplicate()

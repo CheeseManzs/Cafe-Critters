@@ -178,13 +178,13 @@ func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = s
 	await attacker.addShield(shield)
 
 #give status
-func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true, applyEmpower = true):
+func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, filter: CardFilter = CardFilter.new(), broadcast = true, applyEmpower = true):
 	var proc_X = X
 	var proc_Y = Y
 	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
 		proc_X = ceil(proc_X*1.5)
 		proc_Y = ceil(proc_Y*1.5)
-	await target.addStatusCondition(Status.new(effect, proc_X, proc_Y),broadcast)
+	await target.addStatusCondition(Status.new(effect, proc_X, proc_Y, filter),broadcast)
 #quick shortcut
 func giveStatus_noempower(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true):
 	await giveStatus(target, effect, X, Y,broadcast, false)

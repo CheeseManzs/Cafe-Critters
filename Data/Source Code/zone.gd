@@ -78,14 +78,14 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 			print("state not changed! > ",BattleMonster.totalDraws)
 		var card = pullCard(cardID, drawArray)
 		#check for status conditions
-		if mon.hasStatus(Status.EFFECTS.EMPOWER_NEXT):
+		if mon.hasStatus(Status.EFFECTS.EMPOWER_NEXT, card):
 			card.statusConditions.push_back(Status.EFFECTS.EMPOWER)
 			mon.getStatus(Status.EFFECTS.EMPOWER_NEXT).effectDone = true
-		if mon.hasStatus(Status.EFFECTS.FOCUS):
+		if mon.hasStatus(Status.EFFECTS.FOCUS, card):
 			card.costMod -= 1
 			if !mon.hasStatus(Status.EFFECTS.CAFFEINATED_OVERDRIVE):
 				mon.getStatus(Status.EFFECTS.FOCUS).addX(-1)
-		if mon.hasStatus(Status.EFFECTS.FATIGUE):
+		if mon.hasStatus(Status.EFFECTS.FATIGUE, card):
 			card.costMod += 1
 			mon.getStatus(Status.EFFECTS.FATIGUE).addX(-1)
 		#add card to cards array

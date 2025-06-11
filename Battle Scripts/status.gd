@@ -50,6 +50,7 @@ var X: int = 0
 var Y: int = 0
 var effectDone = false
 var effect: EFFECTS
+var filter: CardFilter
 
 #ui connections
 var icon: StatusIcon = null
@@ -67,10 +68,11 @@ func appliesToCards() -> bool:
 	else:
 		return false
 
-func _init(eff: EFFECTS, p_X:int = 0, p_Y:int = 0):
+func _init(eff: EFFECTS, p_X:int = 0, p_Y:int = 0, _filter: CardFilter = CardFilter.new()):
 	effect = eff
 	X = p_X
 	Y = p_Y
+	filter = _filter
 
 func addX(delta: int):
 	setX(X + delta)

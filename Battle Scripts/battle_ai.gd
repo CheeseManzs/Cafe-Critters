@@ -19,7 +19,7 @@ func maxDamage(mon: BattleMonster, target: BattleMonster):
 		#calculate damage
 		var dmg = 0
 		
-		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
+		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card)
 		if !ineligible:
 			dmg = card.calcDamage(mon, target)
 		
@@ -38,7 +38,7 @@ func maxBlock(mon: BattleMonster, target: BattleMonster):
 		#calculate damage
 		var blk = 0
 		
-		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY)
+		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card)
 		if !ineligible:
 			blk = card.calcShield(mon, target)
 		

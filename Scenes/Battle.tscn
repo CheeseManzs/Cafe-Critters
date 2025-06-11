@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene load_steps=67 format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" uid="uid://ds6y71to2odr" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" uid="uid://2agtjocn5cbo" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -43,11 +43,13 @@
 [ext_resource type="AudioStream" uid="uid://qi6fn2qcpdnw" path="res://Audio/BGM/2-05 Catus Carnival II.mp3" id="40_2aoel"]
 [ext_resource type="AudioStream" uid="uid://k2kdn7kc4np4" path="res://Audio/BGM/24 - Battle! (Trainer).mp3" id="41_50g80"]
 [ext_resource type="AudioStream" uid="uid://cgs12ybxdasn7" path="res://Audio/BGM/2-29 In the Shadows.mp3" id="42_2ti1b"]
+[ext_resource type="AudioStream" uid="uid://bnd1watq5je1m" path="res://Audio/BGM/1-06. Catus Carnival.mp3" id="42_qj1ib"]
 [ext_resource type="AudioStream" uid="uid://dmbdtpa0pgw4v" path="res://Audio/BGM/114. Showdown! (Nemona).mp3" id="43_6o2cy"]
 [ext_resource type="AudioStream" uid="uid://cfyllggc1gdy0" path="res://Audio/BGM/10. Battle! (Nemona).mp3" id="44_6uit3"]
 [ext_resource type="AudioStream" uid="uid://c8rfsnojuuore" path="res://Audio/BGM/Marionette.mp3" id="45_qncyj"]
 [ext_resource type="Script" uid="uid://qyjjk824ex4m" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
 [ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="48_66d1q"]
+[ext_resource type="AudioStream" uid="uid://bqtsg540mqb3p" path="res://Audio/BGM/Gluttony Fang II.mp3" id="48_vovxs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]
 bg_color = Color(0, 0, 0, 0.423529)
@@ -573,9 +575,8 @@ stream = ExtResource("28_r2avy")
 volume_db = -9.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj")])
-autoSet = 0
-multiplayerGameIndex = 8
+audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("42_qj1ib"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj"), ExtResource("48_vovxs")])
+multiplayerGameIndex = 9
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]
 
