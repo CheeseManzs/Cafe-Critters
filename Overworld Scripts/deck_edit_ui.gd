@@ -226,7 +226,7 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 		if sceneShiftingMode:
 			ConnectionManager.setTeamManual(playerMons)
 		else:
-			OverworldPlayer.singleton.playerTeam = playerMons
+			OverworldPlayer.singleton.setTeam(playerMons)
 	if team[id]:
 		%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
 	else:
