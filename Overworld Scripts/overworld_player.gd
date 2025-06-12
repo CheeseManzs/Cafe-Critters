@@ -1,9 +1,11 @@
+class_name OverworldPlayer
 extends Node3D
 
 signal dialogue_opened
 signal dialogue_passed
 signal dialogue_closed
 
+static var singleton: OverworldPlayer
 @export var playerTeam: Array[Monster]
 @export var playerBox: Array[Monster]
 @export var inventory: Inventory = Inventory.new()
@@ -45,11 +47,19 @@ var doingInventory = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	singleton = self
 	#add_child(inventoryUI)
 	inventory.addItems("ingr_anvi_5", 3)
 	inventory.addItems("ingr_anvi_2", 3)
 	pass # Replace with function body.
+
+func toggleInventory(state):
+	doingInventory = true
+	if state:
+		%InventoryUI.isOpening = true
+		%InventoryUI.updateItems(inventory, 0)
+	else:
+		%InventoryUI.isOpening = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -75,13 +85,7 @@ func _process(delta: float) -> void:
 		doingInventory = false
 	# detects when esc is pressed and toggles the inventory
 	# inventory_ui.gd gets fed the Inventory object, which isn't just a dict lol
-	if Input.is_action_just_pressed("ui_cancel") and doingInventory == false:
-		doingInventory = true
-		if %InventoryUI.isOpening == true:
-			%InventoryUI.isOpening = false
-		else:
-			%InventoryUI.isOpening = true
-			%InventoryUI.updateItems(inventory, 0)
+	
 	
 
 # called every physics frame

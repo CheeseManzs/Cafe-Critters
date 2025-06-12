@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=22 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" uid="uid://dmo1ew5nacb7l" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
@@ -14,6 +14,8 @@
 [ext_resource type="Resource" uid="uid://bvukhld3krhpq" path="res://Data/Text/debug2.tres" id="8_2up65"]
 [ext_resource type="Script" uid="uid://ddk64c36ue0x1" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
 [ext_resource type="Resource" uid="uid://b766tek53g2rb" path="res://Data/Text/multichoice.tres" id="10_cq2ag"]
+[ext_resource type="Script" uid="uid://dgujn8nyjsm3w" path="res://Overworld Scripts/menu_ui.gd" id="15_f7aoj"]
+[ext_resource type="PackedScene" uid="uid://bilfuichpxj00" path="res://Scenes/DeckEditUI.tscn" id="16_fka8p"]
 
 [sub_resource type="Resource" id="Resource_larmy"]
 script = ExtResource("2_b10y7")
@@ -164,6 +166,76 @@ storedSpeech = ExtResource("8_2up65")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.979651)
 storedSpeech = ExtResource("10_cq2ag")
 
+[node name="Menu UI" type="Control" parent="." node_paths=PackedStringArray("menus")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_f7aoj")
+menus = [NodePath("menu_panel"), NodePath("DeckEditUI"), NodePath("../InventoryUI")]
+
+[node name="menu_panel" type="Panel" parent="Menu UI"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1080.0
+offset_right = 546.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VFlowContainer" type="VBoxContainer" parent="Menu UI/menu_panel"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(546, 0)
+
+[node name="Button" type="Button" parent="Menu UI/menu_panel/VFlowContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "Team"
+
+[node name="Button2" type="Button" parent="Menu UI/menu_panel/VFlowContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+text = "Drinks"
+
+[node name="Button3" type="Button" parent="Menu UI/menu_panel/VFlowContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+disabled = true
+text = "Menu"
+
+[node name="Button4" type="Button" parent="Menu UI/menu_panel/VFlowContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 48
+disabled = true
+text = "Menu"
+
+[node name="DeckEditUI" parent="Menu UI" instance=ExtResource("16_fka8p")]
+layout_mode = 1
+offset_top = -1080.0
+offset_bottom = -1080.0
+sceneShiftingMode = false
+
 [connection signal="dialogue_closed" from="Player" to="Control UI/DialogPanel" method="_on_player_dialogue_closed"]
 [connection signal="dialogue_closed" from="Player" to="Control UI/DialogPortrait" method="_on_player_dialogue_closed"]
 [connection signal="dialogue_opened" from="Player" to="Control UI/DialogPanel" method="_on_player_dialogue_opened"]
@@ -172,3 +244,5 @@ storedSpeech = ExtResource("10_cq2ag")
 [connection signal="dialogue_passed" from="Player" to="Control UI/DialogPortrait" method="_on_player_dialogue_passed"]
 [connection signal="closeDialog" from="Control UI/DialogPanel" to="Player" method="_on_panel_close_dialog"]
 [connection signal="startingBattle" from="Control UI/DialogPanel" to="Player" method="_on_dialog_panel_starting_battle"]
+[connection signal="pressed" from="Menu UI/menu_panel/VFlowContainer/Button" to="Menu UI" method="setMenu" binds= ["DeckEditUI", true]]
+[connection signal="pressed" from="Menu UI/menu_panel/VFlowContainer/Button2" to="Menu UI" method="setMenu" binds= ["InventoryUI", true]]

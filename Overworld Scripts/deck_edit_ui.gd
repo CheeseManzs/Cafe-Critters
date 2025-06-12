@@ -7,6 +7,7 @@ extends Control
 @export var enemyMons: Array[Monster]
 @export var cache: MonsterCache
 @export var searchBar: LineEdit
+@export var sceneShiftingMode: bool = true
 
 var allCards: Array[Card]
 var allMonsters: Array[Monster]
@@ -36,12 +37,12 @@ func _ready() -> void:
 	
 	# sets up the buttons that let you choose monster slots
 	var fullMons = playerMons + enemyMons
-	for i in range(6):
+	var iRange = 6
+	if sceneShiftingMode == false:
+		iRange = 3
+		%MonsterButtons.columns = 3
+	for i in range(iRange):
 		var temp = Button.new()
-		if fullMons[i] == null:
-			temp.text = "Monster" + str(i + 1)
-		else:
-			temp.text = fullMons[i].name
 		# stores the monster's "id" as a meta variable, which then gets
 		# retrieved by the onclick to be used later! clever
 		temp.set_meta("id", i)
@@ -49,7 +50,8 @@ func _ready() -> void:
 			temp.disabled = true
 		temp.pressed.connect(_monster_button_pressed.bind(temp.get_meta("id")))
 		%MonsterButtons.add_child(temp)
-		
+	
+	manageMonsterButtons()
 	
 	# sets up a "change monster" button
 	var temp = Button.new()
@@ -101,10 +103,11 @@ func _ready() -> void:
 	%MonsterButtons.add_child(temp)
 	
 	# return to title :3
-	temp = Button.new()
-	temp.text = "back to title"
-	temp.pressed.connect(toTitle.bind())
-	%MonsterButtons.add_child(temp)
+	if sceneShiftingMode:
+		temp = Button.new()
+		temp.text = "back to title"
+		temp.pressed.connect(toTitle.bind())
+		%MonsterButtons.add_child(temp)
 		
 	pass # Replace with function body.
 
@@ -223,6 +226,8 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 		%HelperTitle.text = "Currently Editing: Monster " + str(startingID + 1)
 		for child in %RightGridContainer.get_children():
 			child.queue_free() 
+	
+	manageMonsterButtons()
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
@@ -347,17 +352,30 @@ func exportMons():
 			tempDict[mon] = mon.deck.storedCards
 	%PortText.text = cache.encode(cache.toCacheArray(tempDict))
 	pass
-	
+
+func manageMonsterButton(num):
+	var button: Button = %MonsterButtons.get_child(num)
+	if playerMons[num] != null:
+		button.text = playerMons[num].name
+		button.icon = playerMons[num].sprite
+		button.expand_icon = false
+		button.add_theme_constant_override("icon_max_width", 32)
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
+	else:
+		button.text = "Monster" + str(num+1)
+		button.icon = null
+
+func manageMonsterButtons():
+	for num in len(playerMons):
+		manageMonsterButton(num)
+
 func importMons():
 	playerMons = cache.decode(%PortText.text)
 	while len(playerMons) < 3:
 		playerMons.push_back(null)
 	rebuildMonsters(storedID)
-	for num in len(playerMons):
-		if playerMons[num] != null:
-			%MonsterButtons.get_child(num).text = playerMons[num].name
-		else:
-			%MonsterButtons.get_child(num).text = "Monster" + str(num+1)
+	manageMonsterButtons()
 	pass
 
 func clearDeck():
