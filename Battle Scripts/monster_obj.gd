@@ -88,17 +88,15 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 	lockToIntendedPosition = true
 
 func removeStatusIcon(status: Status):
-	var newIcon: StatusIcon = statusIconPrefab.instantiate()
-	statusList.add_child(newIcon)
-	newIcon.setIcon(status)
-	statusList.realign()
+	statusList.statusArray.erase(status)
+	status.icon.done = true
 
 func addStatusIcon(status: Status):
 	var newIcon: StatusIcon = statusIconPrefab.instantiate()
 	statusList.add_child(newIcon)
 	newIcon.setIcon(status)
 	statusList.realign()
-
+	
 func updateStatusConditions():
 	for status in connectedMon.statusConditions:
 		if !status.effectDone and status not in statusList.statusArray:
@@ -110,6 +108,7 @@ func updateStatusConditions():
 	
 	for status in statusList.statusArray:
 		if status not in connectedMon.statusConditions:
+			print("not in "+connectedMon.getName()+": ", status.toString())
 			statusList.statusArray.erase(status)
 			if is_instance_valid(status.icon):
 				status.icon.done = true

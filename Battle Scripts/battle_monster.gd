@@ -531,8 +531,9 @@ func hasCardInHand(cardName: String):
 func carryStatusConditions(target: BattleMonster) -> void:
 	for status in statusConditions.duplicate():
 		if status.carriesOverOnSwitch():
-			target.statusConditions.push_back(status)
 			statusConditions.erase(status)
+			getMonsterDisplay().removeStatusIcon(status)
+			target.addStatusCondition(status,false)
 	getMonsterDisplay().updateStatusConditions()
 	target.getMonsterDisplay().updateStatusConditions()
 
