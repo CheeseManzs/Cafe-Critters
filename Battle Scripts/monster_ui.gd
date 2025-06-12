@@ -72,7 +72,7 @@ func _process(delta: float) -> void:
 		goalInterpolation(connectedBar, goalValue,delta)
 	goalInterpolation(shieldBar, shieldGoalValue,delta*0.75)
 	
-	healthLabel.text = str(int(ceil(connectedBar.value*connectedMon.maxHP/100)))+"/"+str(connectedMon.maxHP)
+	healthLabel.text = "[color=light blue]"+str(connectedMon.getMP())+" MP[/color]   " + str(int(ceil(connectedBar.value*connectedMon.maxHP/100)))+"/"+str(connectedMon.maxHP)
 	if connectedMon.shield > 0:
 		var shieldIntp = connectedMon.shield
 		healthLabel.text += " + [color=#"+Card.tooltipColors["DEF"]+"]"+str(shieldIntp)+"[/color]"

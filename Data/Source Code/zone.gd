@@ -33,14 +33,17 @@ func pullCard(cardID: int, tempArray: Array[Card] = storedCards) -> Card:
 
 #remove list of cards
 func removeCards(cards: Array[Card]):
-	for card in cards:
+	
+	for card in cards.duplicate():
+		print("removing " + card.name)
 		if storedCards.has(card):
-			storedCards.remove_at(storedCards.find(card))
+			storedCards.erase(card)
+			print("removed!")
 			if card.originator != null:
 				await card.originator.battleController.addToGraveyard(card, card.originator)
 
 func exileCards(cards: Array[Card], mon: BattleMonster):
-	for card in cards:
+	for card in cards.duplicate():
 		if storedCards.has(card):
 			BattleLog.singleton.log("found card to exile")
 			storedCards.remove_at(storedCards.find(card))
