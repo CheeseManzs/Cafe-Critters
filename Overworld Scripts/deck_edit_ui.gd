@@ -28,7 +28,11 @@ func _ready() -> void:
 	allMonsters = cache.cache
 	allCards = cache.cardCache
 	
-	playerMons = ConnectionManager.playerTeam
+	if sceneShiftingMode:
+		playerMons = ConnectionManager.playerTeam
+	else:
+		playerMons = OverworldPlayer.singleton.playerTeam
+	
 	while len(playerMons) < 3:
 		playerMons.push_back(null)
 	
@@ -219,7 +223,10 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 	if setCards:
 		rebuildCards()
 	if playerMons != null && len(playerMons) > 0:
-		ConnectionManager.setTeamManual(playerMons)
+		if sceneShiftingMode:
+			ConnectionManager.setTeamManual(playerMons)
+		else:
+			OverworldPlayer.singleton.playerTeam = playerMons
 	if team[id]:
 		%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
 	else:
