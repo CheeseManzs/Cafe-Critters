@@ -14,3 +14,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await applyOmen(attacker, defender)
 	await attacker.addMP(1)
 	
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	return battleAI.STANDARD_BONUS

@@ -1158,7 +1158,7 @@ func activeTurn() -> void:
 	
 	
 	#reset temporary values
-	totalReset(false)
+	await totalReset(false)
 	
 	
 	

@@ -15,3 +15,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await attacker.addMP(1)
 	await giveStatus(defender,Status.EFFECTS.MISSING_OUT)
 	pass
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	return 0.1*defender.maxHP*(attacker.getMP() - defender.getMP())

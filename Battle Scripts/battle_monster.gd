@@ -409,6 +409,7 @@ func chooseAndDiscardCards(count: int) -> Array[Card]:
 	var toDiscard = await battleController.chooseCards(count, playerControlled)
 	for card in toDiscard:
 		await discardCard(card,true,false)
+	await battleController.get_tree().create_timer(1.0).timeout
 	return toDiscard
 
 

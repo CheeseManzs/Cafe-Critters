@@ -15,3 +15,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveShield(attacker, defender)
 	await giveStatus(attacker, Status.EFFECTS.ETERNAL_GUARDIANS)
 	pass
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	return 0.1*attacker.getDefense()*(attacker.health/max(1,battleAI.maxDamage(defender, attacker)))

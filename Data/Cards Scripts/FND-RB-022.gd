@@ -16,5 +16,8 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	for card in deckChoices:
 		attacker.currentDeck.storedCards.erase(card)
 		attacker.battleController.addToGraveyard(card, attacker)
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	return battleAI.STANDARD_BONUS
 	
 	

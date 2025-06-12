@@ -2,19 +2,11 @@ extends PassiveAbility
 
 func _init() -> void:
 	name = "Refreshing Tea"
-	desc = "Whenver Slocha Empowers, gain Focus 1 and apply Fatigue 1."
+	desc = "Whenver Slocha plays a card with modified cost, draw a card, then discard a card."
 
-func onStatus(mon: BattleMonster, battle: BattleController, status: Status) -> void:
-	if status.effect == Status.EFFECTS.EMPOWER_PLAYED:
-		await createFlair(mon)
-		await mon.addStatusCondition(Status.new(Status.EFFECTS.FOCUS, 1), true)
-		await battle.getOpposingMon(mon.playerControlled).addStatusCondition(Status.new(Status.EFFECTS.FATIGUE, 1), true)
-	return
-
+#runs when a monster attacks
 func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> void:
-	pass
-	#if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-	#	await EffectFlair.singleton._runFlair(mon.rawData.name,Color.SADDLE_BROWN)
-	#	await mon.addStatusCondition(Status.new(Status.EFFECTS.FOCUS, 1), true)
-	#	await battle.getOpposingMon(mon.playerControlled).addStatusCondition(Status.new(Status.EFFECTS.FATIGUE, 1), true)
-	#return
+	if card.playedCost != card.cost:
+		await createFlair(mon)
+		await mon.drawCards(1)
+		await mon.chooseAndDiscardCards(1)

@@ -24,4 +24,12 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		var chosenStatus = statusList[chosenStatusIndex]
 		attacker.removeStatus(chosenStatus.effect)
 	
-	
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	var avg = 0
+	var total = 0
+	for status in attacker.statusConditions:
+		if !status.isPositive():
+			avg += battleAI.scoreStatus(status, attacker, attacker.getMP())
+	if total > 0:
+		avg /= float(total)
+	return avg

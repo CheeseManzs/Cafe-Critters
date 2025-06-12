@@ -221,7 +221,7 @@ func calcShield(attacker: BattleMonster, defender: BattleMonster) -> int:
 	return _calcShield(attacker, defender, shieldPower)
 
 #for ai damage calculations
-func calcBonus(attacker: BattleMonster, defender: BattleMonster) -> int:
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
 	return 0
 
 func canBePlayed(user: BattleMonster):

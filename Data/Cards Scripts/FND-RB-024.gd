@@ -19,3 +19,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	if len(cardFromDeck) > 0:
 		attacker.currentDeck.storedCards.erase(cardFromDeck[0])
 		attacker.currentHand.storedCards.push_back(cardFromDeck[0])
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI):
+	return battleAI.STANDARD_BONUS

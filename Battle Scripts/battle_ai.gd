@@ -3,6 +3,7 @@ class_name BattleAI
 var battleController: BattleController
 
 var personality: AIPersonality
+var STANDARD_BONUS = 100
 
 
 func _init(controller: BattleController, p_person: AIPersonality) -> void:
@@ -156,14 +157,8 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	var targDamage = maxDamage(target, mon)
 	#effective hp of target
 	var targEffHP = min(monDamage,target.health + target.shield)
-	if target.hasStatus(Status.EFFECTS.BARRIER):
-		targEffHP += target.getStatus(Status.EFFECTS.BARRIER).X
 	
 	var cardDMG = min(monDamage,target.health + target.shield)
-	
-	#dont use all the strong attacks while the opponent can still block!
-	if maxBlock(target,mon) > 0 && personality.caution > 0:
-		cardDMG = maxDamage(mon,target) - cardDMG
 	
 	
 	var cardDEF = card.calcShield(mon,target)*targDamage
@@ -183,6 +178,8 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	
 	if statusGiven != null:
 		score += 10*scoreStatus(statusGiven, mon, currentMP)*personality.mechanics
+		if mon.hasStatus(statusGiven.effect, card) && statusGiven.X == 0:
+			score -= 100
 	if statusInflicted != null:
 		score += -10*scoreStatus(statusInflicted, target, targetMP)*personality.mechanics*activationChance
 	if statusCured != Status.EFFECTS.NONE:
@@ -192,6 +189,8 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 		score += cardDMG*personality.opportunism
 	#if card.name == "Steady":
 		#print("\n",card.name+": ","\ncardDMG:",+cardDMG,"\nCardDEF:",cardDEF,"\nStatus:",10*(scoreStatus(statusGiven, mon, currentMP)-scoreStatus(statusInflicted, target, targetMP)-scoreStatus(Status.new(statusCured), mon, currentMP)))
+	
+	score += card.calcBonus(mon, target, self)
 	var cost = card.getRealCost()
 	if cost == 0:
 		cost = 0.5
@@ -245,7 +244,7 @@ func enemyShouldSwitch():
 	for otherMon in battleController.enemyTeam:
 		if otherMon == mon || !battleController.validSwap(mon, otherMon):
 			continue
-		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon(), 1)[1]*personality.caution
+		var pot = scoreMonPotential(otherMon,battleController.getActivePlayerMon(), 1)[1]*min(1, personality.caution)/10.0
 		print("sw/pot: ",scoreToBeat,"/",pot,"|",100*(1 + personality.standards))
 		if pot > scoreToBeat && pot >= 100*(1 + personality.standards):
 			print("found switch!")
@@ -258,7 +257,9 @@ func enemyChooseHand(count: int, requirement: Callable = func(x): return true) -
 	var mon: BattleMonster = battleController.getActiveEnemyMon()
 	var cards: Array[Card] = mon.currentHand.storedCards
 	var chosen: Array[Card] = []
+	var scores = {}
 	for card in cards:
+		scores[card] = scoreCard(mon,battleController.getOpposingMon(mon.playerControlled),card,mon)
 		if len(chosen) < count && requirement.call(card):
 			chosen.push_back(card)
 	return chosen

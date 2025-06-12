@@ -12,10 +12,10 @@ func _init() -> void:
 	power = 0.45
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	var chosen = await attacker.battleController.chooseShelfedMon(1, attacker.playerControlled)
-	if len(chosen) > 0:
-		var switchTarget: BattleMonster = chosen[0]
-		await dealDamage(switchTarget, defender, power)
+	if attacker.playerControlled:
+		await attacker.battleController.promptPlayerSwitch()
 	else:
-		await dealDamage(attacker, defender, power)
+		await attacker.battleController.promptEnemySwitch()
+	
+	await dealDamage(attacker.getActiveTeammate(), defender, power)
 		

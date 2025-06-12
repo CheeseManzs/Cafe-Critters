@@ -21,3 +21,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 		var cardList = await attacker.chooseAndDiscardCards(1)
 		if len(cardList) > 0 && "Utility" not in cardList[0].tags:
 			await attacker.chooseAndDiscardCards(1)
+
+func calcBonus(attacker: BattleMonster, defender: BattleMonster, battleAI: BattleAI) -> int:
+	return battleAI.STANDARD_BONUS*2
