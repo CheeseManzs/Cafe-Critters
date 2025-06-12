@@ -257,11 +257,17 @@ func enemyChooseHand(count: int, requirement: Callable = func(x): return true) -
 	var mon: BattleMonster = battleController.getActiveEnemyMon()
 	var cards: Array[Card] = mon.currentHand.storedCards
 	var chosen: Array[Card] = []
-	var scores = {}
+	var scores = []
 	for card in cards:
-		scores[card] = scoreCard(mon,battleController.getOpposingMon(mon.playerControlled),card,mon)
-		if len(chosen) < count && requirement.call(card):
-			chosen.push_back(card)
+		var score = scoreCard(mon,battleController.getOpposingMon(mon.playerControlled),card,mon)
+		scores.push_back(score) 
+	
+	for i in min(count, len(cards)):
+		var minScore = scores.min()
+		var card = cards[scores.find(minScore)]
+		scores.erase(minScore)
+		chosen.push_back(card)
+	
 	return chosen
 		
 
