@@ -24,6 +24,7 @@ static var totalDraws = 0
 #monster's current shield
 @export var shield: int
 @export var passive: PassiveAbility
+@export var heldItem: HeldItem
 #battle controller that instantiated the monster
 var battleController: BattleController
 #is monster owned by player
@@ -252,6 +253,7 @@ func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	if removeFromHand:
 		await currentHand.removeCards([card])
 	await getPassive().onDiscard(self, battleController, card)
+	await getHeldItem().getPassive().onDiscard(self, battleController, card)
 
 func pickRandomCard() -> Card:
 	battleController.hidePlayerChoiceUI(true)
@@ -460,10 +462,12 @@ func addStatusCondition(status: Status, broadcast = false):
 		BattleCamera.singleton.disableFocus()
 	
 	await getPassive().onStatus(self,battleController, status)
+	await getHeldItem().getPassive().onStatus(self,battleController, status)
 	#if effect is ko, suspend or strongarm then it occurs immediately
 	match status.effect:
 		Status.EFFECTS.KO:
 			await getPassive().onSelfKO(self,battleController)
+			await getHeldItem().getPassive().onSelfKO(self,battleController)
 		Status.EFFECTS.SUSPEND:
 			var toBanish = await battleController.chooseCards(status.X,playerControlled)
 			
@@ -503,14 +507,14 @@ func getAttack():
 	if hasCardInHand("The Bluff"):
 		cardBonus += 0.2
 	
-	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController))
+	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController) + getHeldItem().getPassive().attackBonus(self,battleController))
 
 func getDefense():
 	var defUpBonus = 0
 	if hasStatus(Status.EFFECTS.DEFENSE_UP):
 		defUpBonus = 0.05*getStatus(Status.EFFECTS.DEFENSE_UP).X
 	
-	return defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController))
+	return defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))
 
 func chooseFromGraveyard(cardCount: int):
 	return (await battleController.chooseFromGraveyard(playerControlled, cardCount))
@@ -588,6 +592,7 @@ func discardHand(filter: CardFilter = CardFilter.new()) -> void:
 	for i in range(len(discardCards)):
 		await quick_discardAnimation(discardCards[i])
 		await getPassive().onDiscard(self,battleController,discardCards[i])
+		await getHeldItem().getPassive().onDiscard(self,battleController,discardCards[i])
 		currentHand.storedCards.erase(discardCards[i])
 	
 	await lowerAnimation()
@@ -683,6 +688,7 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		BattleLog.log(rawData.name + " has been KO'd")
 		if attacker != null:
 			await attacker.getPassive().onOtherKO(attacker,battleController)
+			await getHeldItem().getPassive().onOtherKO(attacker,battleController)
 		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
 	elif dmg > 0 and damageAnim:
 		await dmgAnim()
@@ -774,7 +780,9 @@ func receiveDamage(dmg:int, attacker: BattleMonster, blacklistedSources = []) ->
 	
 		
 	await getPassive().onHit(self,battleController)
+	await getHeldItem().getPassive().onHit(self,battleController)
 	await attacker.getPassive().onAttack(attacker,battleController)
+	await attacker.getHeldItem().getPassive().onAttack(attacker,battleController)
 	
 	#after attacks, try parrying
 	if attacker != self && attacker != null:
@@ -847,4 +855,7 @@ func removeMP(mpAmount: int) -> void:
 #returns monster's current ability
 func getPassive() -> PassiveAbility:
 	return passive
-	
+
+#returns monster's current held item
+func getHeldItem() -> HeldItem:
+	return heldItem

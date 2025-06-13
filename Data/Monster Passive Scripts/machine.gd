@@ -122,6 +122,7 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 		for i in range(len(discardCards)):
 			await mon.quick_discardAnimation(discardCards[i])
 			await mon.getPassive().onDiscard(mon,battle,discardCards[i])
+			await mon.getHeldItem().getPassive().onDiscard(mon,battle,discardCards[i])
 		
 		
 		await mon.currentHand.removeCards(discardCards)

@@ -20,3 +20,6 @@ var bonusAlignment: Monster.ALIGNMENT
 var baseStats = [0, 0, 0, 0]
 
 var passive: PassiveAbility
+
+func getPassive() -> PassiveAbility:
+	return passive

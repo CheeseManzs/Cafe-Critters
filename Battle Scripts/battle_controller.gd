@@ -756,7 +756,9 @@ func getActiveEnemyMon() -> BattleMonster:
 
 func universalPreswap(oldMon: BattleMonster, newMon: BattleMonster):
 	await newMon.getPassive().onSwapIn_beforeSwap(newMon, oldMon, self)
+	await newMon.getHeldItem().getPassive().onSwapIn_beforeSwap(newMon, oldMon, self)
 	await oldMon.getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
+	await oldMon.getHeldItem().getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
 
 func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	for statuscond in oldMon.statusConditions:
@@ -775,9 +777,16 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	
 	await get_tree().create_timer(0.5).timeout
 	await oldMon.onSwitchOut()
+	
 	await oldMon.getPassive().onSwapOut(oldMon, self)
+	await oldMon.getHeldItem().getPassive().onSwapOut(oldMon, self)
+	
 	await newMon.getPassive().customUI(newMon, self)
+	await newMon.getHeldItem().getPassive().customUI(newMon, self)
+	
 	await newMon.getPassive().onSwapIn(oldMon, self)
+	await newMon.getHeldItem().getPassive().customUI(newMon, self)
+	
 	await oldMon.carryStatusConditions(newMon)
 	
 	oldMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_OUT
@@ -1095,12 +1104,12 @@ func enemyChooseFromArray(array: Array, choiceCount: int = 1):
 
 func getSwitchCost() -> int:
 	var baseSwitchCost = 1
-	var switchCost = baseSwitchCost + getActivePlayerMon().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost)
+	var switchCost = baseSwitchCost + getActivePlayerMon().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost) + getActivePlayerMon().getHeldItem().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost)
 		
 	for _shelvedMon in sortedMonList():
 		var shelvedMon: BattleMonster = _shelvedMon
 		if shelvedMon != getActivePlayerMon():
-			switchCost += shelvedMon.getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost)
+			switchCost += shelvedMon.getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost) + shelvedMon.getHeldItem().getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost)
 	return switchCost
 
 ## seems to be the main gameplay loop? looks like it's what calls everything else
@@ -1155,6 +1164,7 @@ func activeTurn() -> void:
 
 	for mon in sortedMonList():
 		await mon.getPassive().initPassive(mon,self)
+		await mon.getHeldItem().getPassive().initPassive(mon,self)
 	
 	
 	#reset temporary values
@@ -1172,6 +1182,7 @@ func activeTurn() -> void:
 	
 	for mon in sortedActiveMonList():
 			await mon.getPassive().onTurnStart(mon, self)
+			await mon.getHeldItem().getPassive().onTurnStart(mon, self)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
@@ -1179,6 +1190,7 @@ func activeTurn() -> void:
 		for mon in sortedActiveMonList():
 			mon.switchState = BattleMonster.SWITCH_STATE.NONE
 			await mon.getPassive().onSubTurnStart(mon, self)
+			await mon.getHeldItem().getPassive().onSubTurnStart(mon, self)
 		
 		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
@@ -1212,6 +1224,7 @@ func activeTurn() -> void:
 		
 		for sorted_mon in sortedActiveMonList():
 			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
+			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
 		
 		firstSubTurn = false
 			
@@ -1309,6 +1322,7 @@ func activeTurn() -> void:
 	if winner == 0:
 		for mon in sortedActiveMonList():
 			await mon.getPassive().onTurnEnd(mon, self)
+			await mon.getHeldItem().getPassive().onTurnEnd(mon, self)
 		inTurn = false
 	else:
 		await endBattle(winner)

@@ -193,6 +193,7 @@ static func rollDice(roller: BattleMonster):
 	var rolledNum = await Dice.singleton.roll()
 	BattleLog.singleton.log(roller.rawData.name + " rolled a " + str(rolledNum)+"!")
 	var transformedNum = roller.getPassive().diceTransform(roller, roller.battleController, rolledNum)
+	transformedNum = roller.getHeldItem().getPassive().diceTransform(roller, roller.battleController, rolledNum)
 	if transformedNum != rolledNum:
 		await roller.getPassive().createFlair(roller)
 		BattleLog.singleton.log(roller.rawData.name + " turned the " + str(rolledNum) + " into a " + str(transformedNum) + "!")
