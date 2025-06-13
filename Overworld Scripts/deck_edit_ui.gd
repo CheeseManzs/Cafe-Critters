@@ -502,3 +502,16 @@ func setDrinkTier(id: int) -> void:
 		%DrinkTier.get_popup().set_item_checked(i, false)
 	%DrinkTier.get_popup().toggle_item_checked(id)
 	team[internalID].heldItem.tier = id
+
+
+func _on_level_number_text_submitted(new_text: String) -> void:
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+	setLabels(team[internalID])
+	pass # Replace with function body.
