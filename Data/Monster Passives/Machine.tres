@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="MachineAbility" load_steps=3 format=3 uid="uid://omxc075hyt7"]
+[gd_resource type="Resource" script_class="MachineAbility" load_steps=4 format=3 uid="uid://omxc075hyt7"]
 
 [ext_resource type="Script" uid="uid://cl0esrvlm4rko" path="res://Data/Monster Passive Scripts/machine.gd" id="1_r11m2"]
 [ext_resource type="PackedScene" uid="uid://mlpij3jshlch" path="res://Prefabs/heat_bar.tscn" id="1_wai20"]
+[ext_resource type="AudioStream" uid="uid://di0yhg3suowot" path="res://Audio/8bit-SFX-Library/Player/jump-8.wav" id="3_boo64"]
 
 [resource]
 script = ExtResource("1_r11m2")
 heatGaugePrefab = ExtResource("1_wai20")
+startUpSound = ExtResource("3_boo64")
+flairColour = Color(0, 0, 0, 1)

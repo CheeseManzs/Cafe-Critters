@@ -785,7 +785,7 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	await newMon.getHeldItem().getPassive().customUI(newMon, self)
 	
 	await newMon.getPassive().onSwapIn(oldMon, self)
-	await newMon.getHeldItem().getPassive().customUI(newMon, self)
+	await newMon.getHeldItem().getPassive().onSwapIn(oldMon, self)
 	
 	await oldMon.carryStatusConditions(newMon)
 	
