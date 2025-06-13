@@ -25,6 +25,9 @@ static var SCALING: Dictionary[TIER, float] = {
 	TIER.Extreme: 1
 }
 
+static var SAME_AFFINITY_BONUS = 0.2
+static var EXTRA_AFFINITY_PENALTY = 0.1
+
 @export var alignments: Array[Monster.ALIGNMENT]
 
 @export var statWeights: Array[float] = [0, 0, 0, 0] #HP, ATK, DEF, SPE
@@ -42,6 +45,9 @@ func getBoost(level: int) -> Array[int]:
 	var scalingFactor = SCALING[tier]*level
 	
 	var continuousScaledStats: Array[float] = Util.abstractScale(scaledStats, scalingFactor)
+	
+	
+	
 	#hp scaling
 	continuousScaledStats[0] *= 4
 	

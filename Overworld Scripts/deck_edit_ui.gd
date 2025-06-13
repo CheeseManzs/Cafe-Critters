@@ -122,7 +122,7 @@ func _ready() -> void:
 	%DrinkAlignment.get_popup().hide_on_checkable_item_selection = false
 	%DrinkTier.get_popup().id_pressed.connect(setDrinkTier)
 	%DrinkTier.get_popup().hide_on_checkable_item_selection = false
-	%DrinkApply.button_down.connect(setDrinkWeights)
+	%DrinkApply.button_down.connect(applyDrink)
 	pass # Replace with function body.
 
 func setDrinkDisplay(heldItem: HeldItem):
@@ -130,6 +130,7 @@ func setDrinkDisplay(heldItem: HeldItem):
 	%ATKWeight.text = str(heldItem.statWeights[1])
 	%DEFWeight.text = str(heldItem.statWeights[2])
 	%SPDWeight.text = str(heldItem.statWeights[3])
+	%ItemPassive.text = heldItem.passive.name
 	for itemIndex in %DrinkAlignment.item_count:
 		%DrinkAlignment.get_popup().set_item_checked(itemIndex, itemIndex in heldItem.alignments)
 	for itemIndex in %DrinkTier.item_count:
@@ -255,6 +256,7 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 		for child in %RightGridContainer.get_children():
 			child.queue_free() 
 	
+	setDrinkDisplay(playerMons[storedID].heldItem)
 	manageMonsterButtons()
 
 func toggleMonsters():
@@ -465,7 +467,7 @@ func setDrinkAlignment(id: int) -> void:
 		team[internalID].heldItem.alignments.append(id)
 	pass
 
-func setDrinkWeights() -> void:
+func applyDrink() -> void:
 	var team
 	var internalID
 	if storedID > 2: 
@@ -484,6 +486,7 @@ func setDrinkWeights() -> void:
 		float(%DEFWeight.text),
 		float(%SPDWeight.text)
 	]
+	setHI.passive = cache.getPassiveByName(%ItemPassive.text)
 	print("drink string: ", setHI.toString())
 	print("decoded: ", setHI.fromString(setHI.toString(), cache).toString())
 	rebuildMonsters(storedID)

@@ -233,7 +233,6 @@ startTime = 1.0
 
 [node name="DrinkPanel" type="Panel" parent="."]
 unique_name_in_owner = true
-visible = false
 z_index = 123
 layout_mode = 1
 anchors_preset = -1
@@ -242,13 +241,18 @@ anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.3
 
-[node name="DrinkAlignment" type="MenuButton" parent="DrinkPanel"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="DrinkPanel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.3
-anchor_right = 0.33
-anchor_bottom = 0.7
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DrinkAlignment" type="MenuButton" parent="DrinkPanel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
 text = "God Alignment"
 flat = false
 item_count = 9
@@ -280,93 +284,82 @@ popup/item_8/text = "Blanc"
 popup/item_8/checkable = 1
 popup/item_8/id = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DrinkPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.33
-anchor_right = 0.66
-anchor_bottom = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="DrinkPanel/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+alignment = 1
 
-[node name="Control" type="Control" parent="DrinkPanel/VBoxContainer"]
+[node name="Control" type="Control" parent="DrinkPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HPWeight" type="LineEdit" parent="DrinkPanel/VBoxContainer/Control"]
+[node name="HPWeight" type="LineEdit" parent="DrinkPanel/HBoxContainer/VBoxContainer/Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -34.2813
-offset_top = -15.5
-offset_right = 34.2813
-offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "HP Weight"
 
-[node name="Control2" type="Control" parent="DrinkPanel/VBoxContainer"]
+[node name="Control2" type="Control" parent="DrinkPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ATKWeight" type="LineEdit" parent="DrinkPanel/VBoxContainer/Control2"]
+[node name="ATKWeight" type="LineEdit" parent="DrinkPanel/HBoxContainer/VBoxContainer/Control2"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -34.2813
-offset_top = -15.5
-offset_right = 34.2813
-offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "ATK Weight"
 
-[node name="Control3" type="Control" parent="DrinkPanel/VBoxContainer"]
+[node name="Control3" type="Control" parent="DrinkPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DEFWeight" type="LineEdit" parent="DrinkPanel/VBoxContainer/Control3"]
+[node name="DEFWeight" type="LineEdit" parent="DrinkPanel/HBoxContainer/VBoxContainer/Control3"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -34.2813
-offset_top = -15.5
-offset_right = 34.2813
-offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "DEF Weight"
 
-[node name="Control4" type="Control" parent="DrinkPanel/VBoxContainer"]
+[node name="Control4" type="Control" parent="DrinkPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SPDWeight" type="LineEdit" parent="DrinkPanel/VBoxContainer/Control4"]
+[node name="SPDWeight" type="LineEdit" parent="DrinkPanel/HBoxContainer/VBoxContainer/Control4"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -34.2813
-offset_top = -15.5
-offset_right = 34.2813
-offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "SPD Weight"
 
-[node name="DrinkTier" type="MenuButton" parent="DrinkPanel"]
+[node name="Secondary Settings" type="VBoxContainer" parent="DrinkPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="ItemPassive" type="LineEdit" parent="DrinkPanel/HBoxContainer/Secondary Settings"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.66
-anchor_top = 0.3
-anchor_right = 1.0
-anchor_bottom = 0.7
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+placeholder_text = "Infused Passive"
+
+[node name="DrinkTier" type="MenuButton" parent="DrinkPanel/HBoxContainer/Secondary Settings"]
+unique_name_in_owner = true
+layout_mode = 2
 text = "Tier"
 flat = false
 item_count = 5
@@ -387,19 +380,9 @@ popup/item_4/text = "Extreme"
 popup/item_4/checkable = 2
 popup/item_4/id = 4
 
-[node name="DrinkApply" type="Button" parent="DrinkPanel"]
+[node name="DrinkApply" type="Button" parent="DrinkPanel/HBoxContainer/Secondary Settings"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -137.0
-offset_top = -37.0
-offset_right = -26.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 2
 text = "Apply Drink"
 
 [connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
