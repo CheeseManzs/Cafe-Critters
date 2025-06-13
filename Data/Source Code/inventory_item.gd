@@ -34,6 +34,8 @@ enum ALIGNMENT {
 @export var rarity: int
 @export var god: ALIGNMENT
 
+@export var baseStats: Array[int]
+
 func _init(zInd = 0, p_name = "", p_sprite = null, p_tab = 0, p_desc = "", p_rar = 0):
 	index = zInd
 	name = p_name

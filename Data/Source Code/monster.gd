@@ -30,6 +30,7 @@ enum ROLE {
 @export var sprite: Texture
 @export var spriteScale: float = 1
 @export var passive: PassiveAbility
+@export var heldItem: HeldItem
 @export var deck: Zone
 
 # variables related to what cards they have and gain access to.

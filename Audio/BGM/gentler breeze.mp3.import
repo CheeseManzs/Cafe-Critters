@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bj3wp55lmuyjb"
+path="res://.godot/imported/gentler breeze.mp3-9c183bea00f521fcf97a168b98251651.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/gentler breeze.mp3"
+dest_files=["res://.godot/imported/gentler breeze.mp3-9c183bea00f521fcf97a168b98251651.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

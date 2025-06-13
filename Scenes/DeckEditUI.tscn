@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bilfuichpxj00"]
+[gd_scene load_steps=10 format=3 uid="uid://bilfuichpxj00"]
 
 [ext_resource type="Script" uid="uid://dwsr5ddo2atr5" path="res://Overworld Scripts/deck_edit_ui.gd" id="1_tbx7c"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="3_rfpxp"]
 [ext_resource type="Resource" uid="uid://cjnsk71nyutp" path="res://Data/Caches/Monster Cache.tres" id="4_dpoq2"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="4_ptn7t"]
+[ext_resource type="Texture2D" uid="uid://c2mq6n8jrfj88" path="res://Graphics/Monsters/Rev_old.png" id="5_bu876"]
 [ext_resource type="AudioStream" uid="uid://dc4bi82ompo3e" path="res://Audio/BGM/15. Team Snagem Battle - Colosseum Round 1 Battle.mp3" id="5_g2il1"]
 [ext_resource type="Script" uid="uid://dg51ouo1x4r4u" path="res://Battle Scripts/audiolist.gd" id="6_hqyyq"]
 [ext_resource type="AudioStream" uid="uid://cbx76p6vjq5bt" path="res://Audio/BGM/Gentle Breeze.mp3" id="7_bu876"]
+[ext_resource type="AudioStream" uid="uid://bj3wp55lmuyjb" path="res://Audio/BGM/gentler breeze.mp3" id="9_gd7y3"]
 
 [node name="DeckEditUI" type="Control" node_paths=PackedStringArray("searchBar")]
 layout_mode = 3
@@ -181,7 +183,7 @@ unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
-anchor_right = 1.0
+anchor_right = 0.7
 anchor_bottom = 1.0
 theme_override_font_sizes/normal_font_size = 35
 vertical_alignment = 1
@@ -199,14 +201,49 @@ theme_override_font_sizes/font_size = 35
 placeholder_text = "N/A"
 max_length = 2
 
+[node name="ChangeDrinkButton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
+theme_override_font_sizes/font_size = 24
+text = "Edit Drink"
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.92
+anchor_top = 0.1
+anchor_right = 1.035
+anchor_bottom = 0.9
+texture = ExtResource("5_bu876")
+expand_mode = 2
+
 [node name="BGM Player" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_g2il1")
 volume_db = -20.0
 parameters/looping = true
 script = ExtResource("6_hqyyq")
-audioList = Array[AudioStream]([ExtResource("7_bu876")])
+audioList = Array[AudioStream]([ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("9_gd7y3")])
 autoSet = 0
 startTime = 1.0
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.18
+
+[node name="MenuButton" type="MenuButton" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.33
+anchor_bottom = 1.0
+text = "God Alignment"
 
 [connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
 [connection signal="text_submitted" from="CardGridHSplit/VSplitContainer/Card Search Bar" to="." method="_on_card_search_bar_text_submitted"]
