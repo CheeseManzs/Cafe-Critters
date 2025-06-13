@@ -113,6 +113,11 @@ func _ready() -> void:
 		temp.pressed.connect(toTitle.bind())
 		%MonsterButtons.add_child(temp)
 		
+	# hooks up all the menuButton popups to signals
+	%DrinkAlignment.get_popup().id_pressed.connect(setDrinkAlignment)
+	%DrinkAlignment.get_popup().hide_on_checkable_item_selection = false
+	%DrinkTier.get_popup().id_pressed.connect(setDrinkTier)
+	%DrinkTier.get_popup().hide_on_checkable_item_selection = false
 	pass # Replace with function body.
 
 
@@ -415,3 +420,44 @@ func _on_card_search_bar_text_submitted(new_text: String) -> void:
 	print("triggered for ", new_text)
 	rebuildCards() # Replace with function body.
 	return
+
+
+func toggleDrinkMenu() -> void:
+	%DrinkPanel.visible = !%DrinkPanel.visible
+	pass # Replace with function body.
+
+func setDrinkAlignment(id: int) -> void:
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+	if !team[internalID].heldItem:
+		team[internalID].heldItem = HeldItem.new()
+		pass # do a thing that creates a held item for the monster lol!
+	%DrinkAlignment.get_popup().toggle_item_checked(id)
+	if team[internalID].heldItem.alignments.find(id) >= 0:
+		team[internalID].heldItem.alignments.erase(id)
+	else:
+		team[internalID].heldItem.alignments.append(id)
+	pass
+
+func setDrinkTier(id: int) -> void:
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+	if !team[internalID].heldItem:
+		team[internalID].heldItem = HeldItem.new()
+		pass # do a thing that creates a held item for the monster lol!
+	for i in range(5):
+		%DrinkTier.get_popup().set_item_checked(i, false)
+	%DrinkTier.get_popup().toggle_item_checked(id)
+	team[internalID].heldItem.tier = id

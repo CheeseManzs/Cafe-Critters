@@ -31,7 +31,7 @@ static var SCALING: Dictionary[TIER, float] = {
 
 @export var passive: PassiveAbility
 
-@export var tier: TIER
+@export var tier: TIER = 0
 
 static func abstractSum(arr: Array):
 	var x = arr[0]

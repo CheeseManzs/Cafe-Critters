@@ -202,6 +202,7 @@ placeholder_text = "N/A"
 max_length = 2
 
 [node name="ChangeDrinkButton" type="Button" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.72
@@ -211,7 +212,8 @@ anchor_bottom = 0.8
 theme_override_font_sizes/font_size = 24
 text = "Edit Drink"
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="DrinkIcon" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.92
@@ -227,23 +229,148 @@ volume_db = -20.0
 parameters/looping = true
 script = ExtResource("6_hqyyq")
 audioList = Array[AudioStream]([ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("7_bu876"), ExtResource("9_gd7y3")])
-autoSet = 0
 startTime = 1.0
 
-[node name="Panel2" type="Panel" parent="."]
+[node name="DrinkPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 123
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7
 anchor_top = 0.1
 anchor_right = 0.95
-anchor_bottom = 0.18
+anchor_bottom = 0.3
 
-[node name="MenuButton" type="MenuButton" parent="Panel2"]
+[node name="DrinkAlignment" type="MenuButton" parent="DrinkPanel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
+anchor_top = 0.3
 anchor_right = 0.33
-anchor_bottom = 1.0
+anchor_bottom = 0.7
 text = "God Alignment"
+flat = false
+item_count = 9
+popup/item_0/text = "Default"
+popup/item_0/checkable = 1
+popup/item_0/id = 0
+popup/item_1/text = "Mise"
+popup/item_1/checkable = 1
+popup/item_1/id = 1
+popup/item_2/text = "Rea"
+popup/item_2/checkable = 1
+popup/item_2/id = 2
+popup/item_3/text = "Anvi"
+popup/item_3/checkable = 1
+popup/item_3/id = 3
+popup/item_4/text = "Sec"
+popup/item_4/checkable = 1
+popup/item_4/id = 4
+popup/item_5/text = "Eco"
+popup/item_5/checkable = 1
+popup/item_5/id = 5
+popup/item_6/text = "Jacks"
+popup/item_6/checkable = 1
+popup/item_6/id = 6
+popup/item_7/text = "Kress"
+popup/item_7/checkable = 1
+popup/item_7/id = 7
+popup/item_8/text = "Blanc"
+popup/item_8/checkable = 1
+popup/item_8/id = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DrinkPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33
+anchor_right = 0.66
+anchor_bottom = 1.0
+
+[node name="Control" type="Control" parent="DrinkPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HPWeight" type="TextEdit" parent="DrinkPanel/VBoxContainer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "HP Weight"
+
+[node name="Control2" type="Control" parent="DrinkPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ATKWeight" type="TextEdit" parent="DrinkPanel/VBoxContainer/Control2"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "ATK Weight"
+
+[node name="Control3" type="Control" parent="DrinkPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DEFWeight" type="TextEdit" parent="DrinkPanel/VBoxContainer/Control3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "DEF Weight"
+
+[node name="Control4" type="Control" parent="DrinkPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SPDWeight" type="TextEdit" parent="DrinkPanel/VBoxContainer/Control4"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "SPD Weight"
+
+[node name="DrinkTier" type="MenuButton" parent="DrinkPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.66
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.7
+text = "Tier"
+flat = false
+item_count = 5
+popup/item_0/text = "Mild"
+popup/item_0/checkable = 2
+popup/item_0/checked = true
+popup/item_0/id = 0
+popup/item_1/text = "Balanced"
+popup/item_1/checkable = 2
+popup/item_1/id = 1
+popup/item_2/text = "Strong"
+popup/item_2/checkable = 2
+popup/item_2/id = 2
+popup/item_3/text = "Intense"
+popup/item_3/checkable = 2
+popup/item_3/id = 3
+popup/item_4/text = "Extreme"
+popup/item_4/checkable = 2
+popup/item_4/id = 4
 
 [connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
 [connection signal="text_submitted" from="CardGridHSplit/VSplitContainer/Card Search Bar" to="." method="_on_card_search_bar_text_submitted"]
+[connection signal="button_up" from="Control/ChangeDrinkButton" to="." method="toggleDrinkMenu"]
