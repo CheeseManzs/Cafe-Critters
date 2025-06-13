@@ -64,12 +64,18 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	#copy data for raw data
 	level = rawData.level
 	shield = 0
-
-	maxHP = rawData.getHealth()
+	
+	heldItem = data.heldItem
+	if heldItem == null:
+		heldItem = HeldItem.NONE.duplicate()
+		
+	var itemBoosts: Array[int] = heldItem.getBoost(data)
+	
+	maxHP = rawData.getHealth() + itemBoosts[0]
 	health = maxHP
-	defense = rawData.getDefense()
-	attack = rawData.getAttack()
-	speed = rawData.getSpeed()
+	attack = rawData.getAttack() + itemBoosts[1]
+	defense = rawData.getDefense() + itemBoosts[2]
+	speed = rawData.getSpeed() + itemBoosts[3]
 	passive = rawData.passive.duplicate()
 	
 	if rawData.deck.storedCards.size() == 0:

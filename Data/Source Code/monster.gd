@@ -140,4 +140,7 @@ func getAttack(inputLevel = level):
 
 func getSpeed(inputLevel = level):
 	return getStat(inputLevel, rawSpeed)
+
+func getStatArray(inputLevel = level) -> Array:
+	return [getHealth(inputLevel), getAttack(inputLevel), getDefense(inputLevel), getSpeed(inputLevel)]
 	
