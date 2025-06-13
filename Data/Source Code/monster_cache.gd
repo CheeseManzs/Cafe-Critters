@@ -3,6 +3,7 @@ extends Resource
 
 @export var cache: Array[Monster]
 @export var cardCache: Array[Card]
+@export var passiveCache: Array[PassiveAbility]
 @export var cardFolderPath: String
 @export var cardScriptsPath: String
 
@@ -16,7 +17,7 @@ func toCacheArray(monArr: Dictionary[Monster, Array]) -> Array[Array]:
 		var monID = mon.id
 		var monCards = monArr[mon]
 		var idArr = getCardIDs(monCards)
-		var packedArr = [mon.id, idArr, mon.level]
+		var packedArr = [mon.id, idArr, mon.level, mon.heldItem]
 		cacheArr.push_back(packedArr)
 	return cacheArr
 	
@@ -58,7 +59,7 @@ static func countCardDuplicates(arr: Array[Card]) -> Dictionary:
 	
 func encode(cacheArr: Array[Array]) -> String:
 	var monsterArray = toMonsterArray(cacheArr)
-	var decodeFormat = "{name} ({level}){cards}"
+	var decodeFormat = "{name} ({level}){item}{cards}"
 	var cardFormat = "\n- {cardname} ({cardcount})"
 	var pasteString = "```"
 	for mon in monsterArray:
@@ -66,6 +67,9 @@ func encode(cacheArr: Array[Array]) -> String:
 		print("mon name to export: ", name)
 		var level = mon.level
 		var cards = ""
+		var item = ""
+		if !mon.getHeldItem().isNone():
+			item = " + " + mon.getHeldItem().toString()
 		var cardArr = []
 		for card in mon.deck.storedCards:
 			cardArr.append(card.name)
@@ -73,7 +77,7 @@ func encode(cacheArr: Array[Array]) -> String:
 		for card in duplicates.keys():
 			cards += cardFormat.format({"cardname":card,"cardcount":duplicates[card]})
 		
-		var obj = {"name":name,"level":level,"cards":cards}
+		var obj = {"name":name,"level":level,"item":item,"cards":cards}
 		var monString = decodeFormat.format(obj)
 		print(monString)
 		pasteString = pasteString + "\n"+monString
@@ -112,12 +116,23 @@ func decode(decoding: String) -> Array[Monster]:
 			var monData: Array[String]
 			monData.assign(line.split(" ("))
 			monData[1] = monData[1].replace(")","")
+			if " + " in monData[1]:
+				var itemData = monData[1].split(" + ")
+				monData = [monData[0], itemData[0], itemData[1]]
 			var monName = monData[0]
 			print("mon data: ",monData[1])
 			var monLevel = int(monData[1])
+			
 			currentMon = getMonsterByName(monName)
 			currentMon.level = monLevel
+			currentMon.heldItem = HeldItem.new()
+			
+			if len(monData) > 2:
+				var monItem = HeldItem.fromString(monData[2], self)
+				currentMon.heldItem = monItem
+			
 			currentMon.deck.storedCards = []
+				
 			team.push_back(currentMon)
 	
 	return team
@@ -131,6 +146,7 @@ func toMonsterArray(cacheArr: Array[Array]) -> Array[Monster]:
 		var mon = getMonster(packed[0])
 		mon.deck.storedCards = getCards(monDeck)
 		mon.level = packed[2]
+		mon.heldItem = packed[3]
 		monArr.push_back(mon)
 	return monArr
 	
@@ -263,6 +279,12 @@ func getCardIDsByName(cards: Array[String]) -> Array[int]:
 		var id = getCardIDByName(card)
 		arr.push_back(id)
 	return arr
+
+func getPassiveByName(passiveName: String) -> PassiveAbility:
+	for passive in passiveCache:
+		if passive.name == passiveName:
+			return passive
+	return passiveCache[0]
 
 static func defaultMonsterDict(mons: Array[Monster]) -> Dictionary[Monster, Array]:
 	var debTeam: Dictionary[Monster, Array] = {}

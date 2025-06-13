@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_7umar"]
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_lxcvb"]
-[ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Refreshing Tea.tres" id="3_j28od"]
+[ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Caffeine Core.tres" id="3_j28od"]
 [ext_resource type="Resource" uid="uid://c6uo8laoo77ns" path="res://Data/Cards/Strike.tres" id="6_3i8vl"]
 [ext_resource type="Texture2D" uid="uid://bvcwyd1tpsspr" path="res://Graphics/Monsters/small_slocha.png" id="16_jyqkw"]
 

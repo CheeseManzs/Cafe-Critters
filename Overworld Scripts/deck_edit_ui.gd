@@ -484,6 +484,8 @@ func setDrinkWeights() -> void:
 		float(%DEFWeight.text),
 		float(%SPDWeight.text)
 	]
+	print("drink string: ", setHI.toString())
+	print("decoded: ", setHI.fromString(setHI.toString(), cache).toString())
 	rebuildMonsters(storedID)
 
 func setDrinkTier(id: int) -> void:

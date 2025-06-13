@@ -129,6 +129,11 @@ static func getStat(inputLevel, growth):
 	print("lv. ",inputLevel," with base ",growth,": ", s)
 	return s
 
+func getHeldItem() -> HeldItem:
+	if heldItem == null:
+		heldItem = HeldItem.new()
+	return heldItem
+
 func getHealth(inputLevel = level): 
 	return 4*getStat(inputLevel, rawHealth)
 	

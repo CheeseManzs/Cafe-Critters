@@ -1,7 +1,7 @@
 extends PassiveAbility
 
 func _init() -> void:
-	name = "Refreshing Tea"
+	name = "Caffeine Core"
 	desc = "Whenver Slocha plays a card with modified cost, draw a card, then discard a card."
 
 #runs when a monster attacks
