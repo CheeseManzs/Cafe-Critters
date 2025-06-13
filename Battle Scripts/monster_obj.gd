@@ -89,7 +89,8 @@ func contactReturn(timeMax, originalPos, deltaPos, dashFraction) -> void:
 
 func removeStatusIcon(status: Status):
 	statusList.statusArray.erase(status)
-	status.icon.done = true
+	if is_instance_valid(status.icon):
+		status.icon.done = true
 
 func addStatusIcon(status: Status):
 	var newIcon: StatusIcon = statusIconPrefab.instantiate()

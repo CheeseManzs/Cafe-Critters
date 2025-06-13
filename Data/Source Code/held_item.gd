@@ -18,11 +18,11 @@ enum SCALETYPE {
 }
 
 static var SCALING: Dictionary[TIER, float] = {
-	TIER.Mild: 0.25,
-	TIER.Balanced: 0.4,
-	TIER.Strong: 0.6,
-	TIER.Intense: 0.75,
-	TIER.Extreme: 1
+	TIER.Mild: 0.2,
+	TIER.Balanced: 0.3,
+	TIER.Strong: 0.4,
+	TIER.Intense: 0.5,
+	TIER.Extreme: 0.75
 }
 
 static var SAME_AFFINITY_BONUS = 0.2
@@ -36,22 +36,30 @@ static var EXTRA_AFFINITY_PENALTY = 0.1
 
 @export var tier: TIER = 0
 
-func getBoost(level: int) -> Array[int]:
+func getBoost(mon: Monster) -> Array[int]:
 	var totalLength: float = Util.abstractSum(statWeights)
 	if totalLength == 0:
 		return [0, 0, 0, 0]
 	
 	var scaledStats: Array[float] = Util.abstractScale(statWeights, 1.0/totalLength)
-	var scalingFactor = SCALING[tier]*level
+	var scalingFactor = SCALING[tier]*mon.level
 	
 	var continuousScaledStats: Array[float] = Util.abstractScale(scaledStats, scalingFactor)
 	
-	
+	var percentageBoost = 0
+	if mon.alignment in alignments:
+		percentageBoost += SAME_AFFINITY_BONUS/len(alignments)
+		
+	percentageBoost -= max(0, len(alignments) - 2)*EXTRA_AFFINITY_PENALTY
+	continuousScaledStats = Util.abstractScale(continuousScaledStats, max(0, 1 + percentageBoost))
 	
 	#hp scaling
-	continuousScaledStats[0] *= 4
+	continuousScaledStats[0] *= 2
+	
 	
 	var discreteScaledStats: Array[int]
+	
+	
 	
 	
 	discreteScaledStats.assign(Util.abstractTransformByElement(continuousScaledStats, Util.toInt))

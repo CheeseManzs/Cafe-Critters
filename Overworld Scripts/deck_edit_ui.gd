@@ -425,7 +425,7 @@ func toTitle():
 
 func setLabels(mon: Monster):
 	mon.level = int(%LevelNumber.text)
-	var boost = mon.heldItem.getBoost(mon.level)
+	var boost = mon.heldItem.getBoost(mon)
 	%StatsLabel.text = str(int(mon.getHealth() + boost[0])) + " HP, " + \
 	str(int(mon.getAttack() + boost[1])) + " ATK, \n" + \
 	str(int(mon.getDefense() + boost[2])) + " DEF, " + \
