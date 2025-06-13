@@ -69,7 +69,7 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	if heldItem == null:
 		heldItem = HeldItem.NONE.duplicate()
 		
-	var itemBoosts: Array[int] = heldItem.getBoost(data)
+	var itemBoosts: Array[int] = heldItem.getBoost(level)
 	
 	maxHP = rawData.getHealth() + itemBoosts[0]
 	health = maxHP

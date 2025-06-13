@@ -371,6 +371,21 @@ popup/item_4/text = "Extreme"
 popup/item_4/checkable = 2
 popup/item_4/id = 4
 
+[node name="DrinkApply" type="Button" parent="DrinkPanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -137.0
+offset_top = -37.0
+offset_right = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Apply Drink"
+
 [connection signal="toggled" from="StrictModeButton" to="." method="toggleStrict"]
 [connection signal="text_submitted" from="CardGridHSplit/VSplitContainer/Card Search Bar" to="." method="_on_card_search_bar_text_submitted"]
 [connection signal="button_up" from="Control/ChangeDrinkButton" to="." method="toggleDrinkMenu"]

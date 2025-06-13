@@ -33,6 +33,10 @@ func _ready() -> void:
 	else:
 		playerMons = OverworldPlayer.singleton.playerTeam.duplicate(true)
 	
+	for mon in playerMons:
+		if mon.heldItem == null:
+			mon.heldItem = HeldItem.NONE.duplicate()
+	
 	while len(playerMons) < 3:
 		playerMons.push_back(null)
 	
@@ -118,7 +122,19 @@ func _ready() -> void:
 	%DrinkAlignment.get_popup().hide_on_checkable_item_selection = false
 	%DrinkTier.get_popup().id_pressed.connect(setDrinkTier)
 	%DrinkTier.get_popup().hide_on_checkable_item_selection = false
+	%DrinkApply.button_down.connect(setDrinkWeights)
 	pass # Replace with function body.
+
+func setDrinkDisplay(heldItem: HeldItem):
+	%HPWeight.text = str(heldItem.statWeights[0])
+	%ATKWeight.text = str(heldItem.statWeights[1])
+	%DEFWeight.text = str(heldItem.statWeights[2])
+	%SPDWeight.text = str(heldItem.statWeights[3])
+	for itemIndex in %DrinkAlignment.item_count:
+		%DrinkAlignment.get_popup().set_item_checked(itemIndex, itemIndex in heldItem.alignments)
+	for itemIndex in %DrinkTier.item_count:
+		print("items: ", itemIndex, ", ", int(heldItem.tier))
+		%DrinkTier.get_popup().set_item_checked(itemIndex, itemIndex == int(heldItem.tier))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -267,6 +283,8 @@ func _monster_button_pressed(id):
 		pass
 	
 	storedID = id
+	print("item owner: ", team[storedID].name)
+	setDrinkDisplay(team[storedID].heldItem)
 	rebuildMonsters(storedID)
 	%MonsterButtons.get_node("ChangeMonsterButton").disabled = false
 	
@@ -339,7 +357,8 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 		else:
 			crd.setTextColor(Color.RED)
 		
-	if mon != null and item.alignment not in [mon.alignment, item.ALIGNMENT.Default]:
+	var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.heldItem.alignments
+	if mon != null and item.alignment not in allAlignments:
 		if strictMode and !loose:
 			return true
 		else:
@@ -402,12 +421,13 @@ func clearDeck():
 func toTitle():
 	LoadManager.loadScene("Title")
 
-func setLabels(mon):
+func setLabels(mon: Monster):
 	mon.level = int(%LevelNumber.text)
-	%StatsLabel.text = str(int(mon.getHealth())) + " HP, " + \
-	str(int(mon.getAttack())) + " ATK, \n" + \
-	str(int(mon.getDefense())) + " DEF, " + \
-	str(int(mon.getSpeed())) + " SPD"
+	var boost = mon.heldItem.getBoost(mon.level)
+	%StatsLabel.text = str(int(mon.getHealth() + boost[0])) + " HP, " + \
+	str(int(mon.getAttack() + boost[1])) + " ATK, \n" + \
+	str(int(mon.getDefense() + boost[2])) + " DEF, " + \
+	str(int(mon.getSpeed() + boost[3])) + " SPD"
 
 func toggleStrict(toggled_on: bool) -> void:
 	strictMode = !strictMode
@@ -444,6 +464,27 @@ func setDrinkAlignment(id: int) -> void:
 	else:
 		team[internalID].heldItem.alignments.append(id)
 	pass
+
+func setDrinkWeights() -> void:
+	var team
+	var internalID
+	if storedID > 2: 
+		team = enemyMons
+		internalID = storedID - 3
+	else:
+		team = playerMons 
+		internalID = storedID
+	if !team[internalID].heldItem:
+		team[internalID].heldItem = HeldItem.new()
+		pass # do a thing that creates a held item for the monster lol!
+	var setHI: HeldItem = team[internalID].heldItem
+	setHI.statWeights = [
+		float(%HPWeight.text),
+		float(%ATKWeight.text),
+		float(%DEFWeight.text),
+		float(%SPDWeight.text)
+	]
+	rebuildMonsters(storedID)
 
 func setDrinkTier(id: int) -> void:
 	var team

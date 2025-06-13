@@ -19,10 +19,10 @@ enum SCALETYPE {
 
 static var SCALING: Dictionary[TIER, float] = {
 	TIER.Mild: 0.25,
-	TIER.Balanced: 0.5,
-	TIER.Strong: 1,
-	TIER.Intense: 1.5,
-	TIER.Extreme: 2
+	TIER.Balanced: 0.4,
+	TIER.Strong: 0.6,
+	TIER.Intense: 0.75,
+	TIER.Extreme: 1
 }
 
 @export var alignments: Array[Monster.ALIGNMENT]
@@ -67,13 +67,13 @@ static func abstractTransformByElement(arr: Array, T: Callable) -> Array:
 static func toInt(x) -> int:
 	return int(x)
 
-func getBoost(mon: Monster) -> Array[int]:
+func getBoost(level: int) -> Array[int]:
 	var totalLength: float = abstractSum(statWeights)
 	if totalLength == 0:
 		return [0, 0, 0, 0]
 	
 	var scaledStats: Array[float] = abstractScale(statWeights, 1.0/totalLength)
-	var scalingFactor = SCALING[tier]*mon.level
+	var scalingFactor = SCALING[tier]*level
 	
 	var continuousScaledStats: Array[float] = abstractScale(scaledStats, scalingFactor)
 	var discreteScaledStats: Array[int]
