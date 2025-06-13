@@ -37,7 +37,7 @@ default_font_size = 36
 [node name="OverworldTest" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903244, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85662, 0.26378, 0)
 playerTeam = Array[ExtResource("2_fsjqw")]([ExtResource("3_gbstl")])
 inventory = SubResource("Resource_larmy")
 
@@ -94,7 +94,8 @@ offset_top = 15.0
 offset_right = -15.0
 offset_bottom = -15.0
 theme_override_font_sizes/normal_font_size = 36
-text = "like these text boxes are fucking massive. really really massive. granted, i haven't figured out how to resize this text yet but that's besides the point. orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+bbcode_enabled = true
+text = "like these [wave]text boxes[/wave] are fucking massive. really really massive. granted, i haven't figured out how to resize this text yet but that's besides the point. orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 Why do we use it?
 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).

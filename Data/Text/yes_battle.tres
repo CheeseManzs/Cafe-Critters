@@ -16,7 +16,7 @@ opportunism = 1000.0
 
 [sub_resource type="Resource" id="Resource_0xpit"]
 script = ExtResource("2_uyoyy")
-text = "No. No. fuck you. i'm not gonna stand for this fucking vanilla apologist behaviour. no. there is only one way to settle this. with a duel. to the death. fuck you. "
+text = "No. No. [wave]fuck you.[/wave] i'm not gonna stand for this fucking vanilla apologist behaviour. no. there is only one way to settle this. with a duel. to the death. fuck you. "
 speakerName = "?!?!?!?!"
 speakerSprite = ExtResource("3_ryyfr")
 conditionalNames = Array[String]([])

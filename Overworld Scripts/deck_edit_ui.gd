@@ -31,7 +31,7 @@ func _ready() -> void:
 	if sceneShiftingMode:
 		playerMons = ConnectionManager.playerTeam
 	else:
-		playerMons = OverworldPlayer.singleton.playerTeam
+		playerMons = OverworldPlayer.singleton.playerTeam.duplicate(true)
 	
 	while len(playerMons) < 3:
 		playerMons.push_back(null)
