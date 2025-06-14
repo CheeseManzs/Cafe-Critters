@@ -6,7 +6,8 @@ signal dialogue_passed
 signal dialogue_closed
 
 static var singleton: OverworldPlayer
-@export var playerTeam: Array[Monster]
+@export_multiline var defaultTeam: String
+var playerTeam: Array[Monster]
 @export var playerBox: Array[Monster]
 @export var inventory: Inventory = Inventory.new()
 
@@ -48,6 +49,7 @@ var doingInventory = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	singleton = self
+	playerTeam = ConnectionManager.singleton.teamPacker.decode(defaultTeam)
 	#add_child(inventoryUI)
 	inventory.addItems("ingr_anvi_5", 3)
 	inventory.addItems("ingr_anvi_2", 3)

@@ -102,10 +102,13 @@ func doDialog() -> void:
 func doEffect(effect, metadata):
 	match effect:
 		0:
-			for item in metadata[0]:
-				print(item.name)
 			var enemyArray: Array[Monster] = []
-			enemyArray.assign(metadata[0])
+			if type_string(typeof(metadata[0])):
+				var teamString = FileAccess.open("res://Data/Team Data/"+metadata[0]+".txt", FileAccess.READ).get_as_text()
+				enemyArray.assign(ConnectionManager.singleton.teamPacker.decode(teamString))
+			else:
+				enemyArray.assign(metadata[0])
+			
 			startingBattle.emit(enemyArray, metadata[1])
 			print(metadata[0])
 			#BattleController.startBattle(, metadata[0], metadata[1])

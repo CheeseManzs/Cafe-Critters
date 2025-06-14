@@ -134,8 +134,9 @@ func getHeldItem() -> HeldItem:
 		heldItem = HeldItem.new()
 	return heldItem
 
-func getHealth(inputLevel = level): 
-	return 4*getStat(inputLevel, rawHealth)
+func getHealth(inputLevel = level):
+	var hpScaling = Util.linearMap(float(inputLevel)/float(MAX_LEVEL), 1.5, 4)
+	return ceil(hpScaling)*getStat(inputLevel, rawHealth)
 	
 func getDefense(inputLevel = level): 
 	return getStat(inputLevel, rawDefense)

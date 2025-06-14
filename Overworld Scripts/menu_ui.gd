@@ -4,14 +4,17 @@ static var lastDelta = 0
 static var tree: SceneTree
 var states: Dictionary[Control, bool] = {}
 
+static var MENU_TRANSITION_TIME: float
 static var lerpControl: Dictionary[Object, bool] = {}
 
-static func smooth(x):
-	var y = sin(x*PI/2.0)**2
+static func smooth(x, antidegree: float = 1):
+	var y = sin(x*PI/2.0)**(2/antidegree)
 	return y
 
 static func lerpAnimation(obj, property: String, from, to, time: float):
 	var t: float = 0
+	if obj.get(property) == to:
+		return
 	if obj in lerpControl.keys():
 		lerpControl[obj] = false
 		while obj in lerpControl.keys():
@@ -21,7 +24,7 @@ static func lerpAnimation(obj, property: String, from, to, time: float):
 	while t < time:
 		if !lerpControl[obj]:
 			break
-		var x = from + (to - from)*smooth(t/time)
+		var x = from + (to - from)*smooth(t/time, 2)
 		obj.set(property, x)
 		print("lerping: ", x)
 		t += lastDelta
@@ -42,37 +45,37 @@ func _process(delta: float) -> void:
 
 func panelLogic(menu: Control):
 	states[menu] = !states[menu]
-	call("_"+menu.name, menu, states[menu])
+	await call("_"+menu.name, menu, states[menu])
 
 func setPanelLogic(menu: Control, forcedState: bool):
 	states[menu] = forcedState
-	call("_"+menu.name, menu, states[menu])
+	await call("_"+menu.name, menu, states[menu])
 
 func toggleMenu(_name: String):
 	for menu in states.keys():
 		if _name == menu.name:
-			panelLogic(menu)
+			await panelLogic(menu)
 
 func setMenu(_name: String, forcedState: bool):
 	for menu in states.keys():
 		if _name == menu.name:
-			setPanelLogic(menu, forcedState)
+			await setPanelLogic(menu, forcedState)
 
 #methods
 func _menu_panel(node: Control, state: bool) -> void:
 	if state:
-		setMenu("DeckEditUI",false)
-		setMenu("InventoryUI",false)
-		lerpAnimation(node,"position", node.position, Vector2(1920-node.size.x, node.position.y), 0.5)
+		await setMenu("DeckEditUI",false)
+		await setMenu("InventoryUI",false)
+		await lerpAnimation(node,"position", node.position, Vector2(1920-node.size.x, node.position.y), 0.5)
 	else:
-		lerpAnimation(node,"position", node.position, Vector2(1920, node.position.y), 0.5)
+		await lerpAnimation(node,"position", node.position, Vector2(1920, node.position.y), 0.5)
 
 func _DeckEditUI(node: Control, state: bool) -> void:
 	if state:
 		setMenu("menu_panel",false)
-		lerpAnimation(node,"position", node.position, Vector2(node.position.x, 0), 0.5)
+		await lerpAnimation(node,"position", node.position, Vector2(node.position.x, 0), 0.5)
 	else:
-		lerpAnimation(node,"position", node.position, Vector2(node.position.x, -1080), 0.5)
+		await lerpAnimation(node,"position", node.position, Vector2(node.position.x, -1080), 0.5)
 
 func _InventoryUI(node: Control, state: bool) -> void:
 	if state:

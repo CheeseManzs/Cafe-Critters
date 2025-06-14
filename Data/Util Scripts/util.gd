@@ -1,5 +1,8 @@
 class_name Util
 
+static func linearMap(x: float, low, high):
+	return low + x*(high - low)
+
 static func abstractSum(arr: Array):
 	var x = arr[0]
 	for elementIndex in len(arr):

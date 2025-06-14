@@ -285,6 +285,8 @@ func _monster_button_pressed(id):
 		pass
 	
 	storedID = id
+	if team[storedID] == null:
+		return
 	print("item owner: ", team[storedID].name)
 	setDrinkDisplay(team[storedID].heldItem)
 	rebuildMonsters(storedID)
