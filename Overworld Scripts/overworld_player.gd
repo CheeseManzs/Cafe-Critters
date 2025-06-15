@@ -41,6 +41,10 @@ var inDialog = false
 var inventoryUI# = load("res://Prefabs/inventory_ui.tscn").instantiate()
 var doingInventory = false
 
+static var INPUT_FLAGS = {
+	"movement": true
+}
+
 @onready var spriteNode = $CharacterBody3D/CollisionShape3D/Sprite3D
 @onready var characterNode = $CharacterBody3D
 @onready var cameraNode = $Camera3D
@@ -128,18 +132,19 @@ func doMovement(delta: float) -> void:
 	
 	# tracks movement keys and ensures the game knows which way they're facing and which direction 
 	# they should be moving
-	if Input.is_action_pressed("ui_right"):
-		directionLR = "right"
-		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
-		directionLR = "left"
-		direction.x -= 1
-	if Input.is_action_pressed("ui_down"):
-		directionUD = "down"
-		direction.z += 1
-	if Input.is_action_pressed("ui_up"):
-		directionUD = "up"
-		direction.z -= 1
+	if INPUT_FLAGS["movement"]:
+		if Input.is_action_pressed("ui_right"):
+			directionLR = "right"
+			direction.x += 1
+		if Input.is_action_pressed("ui_left"):
+			directionLR = "left"
+			direction.x -= 1
+		if Input.is_action_pressed("ui_down"):
+			directionUD = "down"
+			direction.z += 1
+		if Input.is_action_pressed("ui_up"):
+			directionUD = "up"
+			direction.z -= 1
 
 	# turns direction vector into a unit vector.
 	if direction != Vector3.ZERO:

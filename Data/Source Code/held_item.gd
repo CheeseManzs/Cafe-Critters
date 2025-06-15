@@ -77,7 +77,8 @@ func toString():
 	return '{{tier}|{passive}|{alignments}|{statWeights}}'.format({'tier':_tier,'alignments':_alignments,'passive':_passive,'statWeights':_statWeights})
 
 static func fromString(itemString: String, cache: MonsterCache):
-	var data = itemString.substr(1,len(itemString)-2).split("|")
+	var strippedString = itemString.strip_edges()
+	var data = strippedString.substr(1,len(strippedString)-2).split("|")
 	var _alignments: Array[Monster.ALIGNMENT] = []
 	for al in JSON.parse_string(data[2]):
 		_alignments.push_back(Util.stringToAlignment[al])

@@ -36,9 +36,9 @@ default_font_size = 36
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85662, 0.26378, 0)
-defaultTeam = "Inkhor (5)
+defaultTeam = "Ignetor (5)
 - Strike (3)
-- Attack Up (2)"
+- Quick Strike (2)"
 inventory = SubResource("Resource_larmy")
 
 [node name="Camera3D" type="Camera3D" parent="."]

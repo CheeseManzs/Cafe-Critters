@@ -42,6 +42,10 @@ func _process(delta: float) -> void:
 	for menu in states.keys():
 		if Input.is_action_just_pressed(menu.name):
 			panelLogic(menu)
+	
+	OverworldPlayer.INPUT_FLAGS["movement"] = !states[menus[0]]
+	
+	
 
 func panelLogic(menu: Control):
 	states[menu] = !states[menu]
