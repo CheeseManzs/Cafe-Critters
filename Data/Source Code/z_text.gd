@@ -10,7 +10,8 @@ extends Resource
 enum EFFECTS {
 	START_BATTLE, # metadata is an array holding the enemy team and a personality
 	SCREENSHAKE, # metedata is empty
-	FLIP_SPEAKER # metadata is empty
+	FLIP_SPEAKER, # metadata is empty
+	GIVE, #metadata is an array of items to be given
 }
 
 
@@ -24,7 +25,7 @@ enum EFFECTS {
 # ConditionalLines refers to ZDialog/ZText objects that play after the player makes the respective choice.
 # e.g. the first option plays the first conditionalLine, the second plays the second
 @export var conditionalNames: Array[String]
-@export var conditionalLines: Array[Resource]
+@export var conditionalLines: Array[ZDialog]
 
 # arrays for effects that activate.
 # they get passed to dialogue_box.gd, which interprets the Effect based on the metadata
@@ -34,12 +35,12 @@ enum EFFECTS {
 @export var endMetadata: Array
 
 # placeholder variables.
-var emptyLines: Array[Resource] = []
+var emptyLines: Array[ZDialog] = []
 var emptyNames: Array[String] = []
 var emptyEffects: Array[EFFECTS] = []
 
-func _init(p_text = "", p_speakerName = "", p_speakerSprite = null, c_names = emptyNames, 
-		c_lines = emptyLines, p_SS = emptyEffects, p_ES = emptyEffects):
+func _init(p_text = "", p_speakerName = "", p_speakerSprite = null, c_names = emptyNames.duplicate(), 
+		c_lines = emptyLines.duplicate(), p_SS = emptyEffects.duplicate(), p_ES = emptyEffects.duplicate()):
 	text = p_text
 	speakerName = p_speakerName
 	speakerSprite = p_speakerSprite

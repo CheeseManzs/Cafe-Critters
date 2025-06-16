@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ZDialog" load_steps=8 format=3 uid="uid://bru483uysg0mq"]
+[gd_resource type="Resource" script_class="ZDialog" load_steps=7 format=3 uid="uid://bru483uysg0mq"]
 
 [ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_0r624"]
 [ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="2_uyoyy"]
@@ -19,23 +19,12 @@ text = "No. No. [wave]fuck you.[/wave] i'm not gonna stand for this fucking vani
 speakerName = "?!?!?!?!"
 speakerSprite = ExtResource("3_ryyfr")
 conditionalNames = Array[String]([])
-conditionalLines = Array[Resource]([])
+conditionalLines = Array[ExtResource("1_0r624")]([])
 startEffects = Array[int]([])
 startMetadata = []
 endEffects = Array[int]([0])
 endMetadata = [["test", SubResource("Resource_oqfi5")]]
 
-[sub_resource type="Resource" id="Resource_vcle6"]
-script = ExtResource("2_uyoyy")
-text = ""
-speakerName = ""
-conditionalNames = Array[String]([])
-conditionalLines = Array[Resource]([])
-startEffects = Array[int]([])
-startMetadata = []
-endEffects = Array[int]([])
-endMetadata = []
-
 [resource]
 script = ExtResource("1_0r624")
-texts = Array[ExtResource("2_uyoyy")]([SubResource("Resource_0xpit"), SubResource("Resource_vcle6")])
+texts = Array[ExtResource("2_uyoyy")]([SubResource("Resource_0xpit")])

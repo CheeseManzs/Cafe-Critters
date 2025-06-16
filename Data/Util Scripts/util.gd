@@ -34,8 +34,15 @@ static func abstractTransformByElement(arr: Array, T: Callable) -> Array:
 		x[elementIndex] = T.call(x[elementIndex])
 	return x
 
+static func abstractVector3ByElement(vec: Vector3, T: Callable) -> Vector3:
+	return Vector3(T.call(vec.x),T.call(vec.y),T.call(vec.z))
+
+
 static func toInt(x) -> int:
 	return int(x)
+
+static func reciprocal(x) -> float:
+	return 1.0/x;
 
 static func reverseDictionary(dict: Dictionary) -> Dictionary:
 	var newDict = {}

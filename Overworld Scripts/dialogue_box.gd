@@ -96,7 +96,7 @@ func doDialog() -> void:
 	$DialogText.text = currentScript.texts[currentLine].text
 	$NamePanel/NameText.text = currentScript.texts[currentLine].speakerName
 	%DialogPortrait.texture = currentScript.texts[currentLine].speakerSprite
-	for i in range(currentScript.texts[currentLine].startEffects.size()):
+	for i in range(len(currentScript.texts[currentLine].startEffects)):
 		doEffect(currentScript.texts[currentLine].startEffects[i], currentScript.texts[currentLine].startMetadata[i])
 
 func doEffect(effect, metadata):
@@ -117,6 +117,8 @@ func doEffect(effect, metadata):
 			pass
 		2:
 			pass
+		3:
+			await OverworldPlayer.singleton.receiveGift(metadata[0])
 	pass
 
 func _on_player_dialogue_opened(dLine: ZDialog) -> void:

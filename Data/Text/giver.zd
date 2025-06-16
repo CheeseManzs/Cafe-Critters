@@ -1,0 +1,18 @@
+Fros Cena: Hello! Am I right? {Yes, No}
+	{Yes} 
+	Fros Cena: Woo!
+	Fros Cena: That's Awesome! Are you sure? {Yes, No, Maybe?}
+		{Yes}
+		Fros Cena: Tubular!
+		{No}
+		Fros Cena: Oh....
+		Frosmoth: How dare you deceive him like that, prepare for a battle! (START_BATTLE)
+			START_BATTLE: "test"
+			START_BATTLE: AIPersonality()
+		{Maybe?}
+		Fros Cena: What?
+		Frosmoth: Why don't you just make up your mind, idiot!
+	{No}
+	Fros Cena: Aw...
+	Frosmoth: Why did you say that to him. Jerk.
+Look at all the text!

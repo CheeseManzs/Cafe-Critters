@@ -1,7 +1,7 @@
 extends Node3D
 
 # storedSpeech should ALWAYS be a ZDialog or ZText resource.
-@export var storedSpeech: Resource = Resource.new()
+@export var storedSpeech: Resource = ZDialog.new()
 var storedSpeech2: ZDialog
 
 # Called when the node enters the scene tree for the first time.

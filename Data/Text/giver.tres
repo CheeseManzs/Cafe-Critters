@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ZDialog" load_steps=3 format=3 uid="uid://pktxbuqtx272"]
+
+[ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_ji6mo"]
+[ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="2_2yk0d"]
+
+[resource]
+script = ExtResource("1_ji6mo")
+texts = Array[ExtResource("2_2yk0d")]([])
+metadata/_custom_type_script = "uid://j2bcgl8rpmpy"

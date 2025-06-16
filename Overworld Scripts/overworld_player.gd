@@ -109,6 +109,10 @@ func _physics_process(delta: float) -> void:
 	cameraNode.position = cameraNode.position.lerp(characterNode.position + cameraOffset, delta * 5)
 	#cameraNode.position += Vector3(0, 0, 0.001)
 	
+func receiveGift(gift: Gift):
+	match gift.giftType:
+		Gift.GIFT_TYPE.MONSTER:
+			pass
 
 func doMovement(delta: float) -> void:
 	# movement direction tracking
