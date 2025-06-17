@@ -40,7 +40,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	lastDelta = delta
 	for menu in states.keys():
-		if Input.is_action_just_pressed(menu.name):
+		if InputMap.has_action(menu.name) && Input.is_action_just_pressed(menu.name):
 			panelLogic(menu)
 	
 	OverworldPlayer.INPUT_FLAGS["movement"] = !states[menus[0]]

@@ -1,8 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=20 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" uid="uid://dmo1ew5nacb7l" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
-[ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="2_k2bt7"]
 [ext_resource type="PackedScene" uid="uid://bu4gn85pmp7u6" path="res://Prefabs/npc.tscn" id="4_0u6w4"]
 [ext_resource type="Resource" uid="uid://cer35didxcsso" path="res://Data/Text/debug1.tres" id="4_iydnk"]
 [ext_resource type="Script" uid="uid://dpg3tu4ie4umn" path="res://Overworld Scripts/dialogue_box.gd" id="4_jqs3p"]
@@ -13,6 +12,7 @@
 [ext_resource type="Script" uid="uid://ddk64c36ue0x1" path="res://Overworld Scripts/dialog_responses.gd" id="8_p6pse"]
 [ext_resource type="Script" uid="uid://bs42yet42hpp2" path="res://Data/Source Code/zdialog_parser.gd" id="11_f7aoj"]
 [ext_resource type="Script" uid="uid://dgujn8nyjsm3w" path="res://Overworld Scripts/menu_ui.gd" id="15_f7aoj"]
+[ext_resource type="Script" uid="uid://b0g01g5umkkwd" path="res://Scenes/gridmap_mesh_manager.gd" id="15_fka8p"]
 [ext_resource type="PackedScene" uid="uid://bilfuichpxj00" path="res://Scenes/DeckEditUI.tscn" id="16_fka8p"]
 [ext_resource type="MeshLibrary" uid="uid://b1dxpyexkkyuw" path="res://test_mesh_lib.tres" id="16_h6v4y"]
 
@@ -32,35 +32,6 @@ script = ExtResource("11_f7aoj")
 fileName = "battler"
 metadata/_custom_type_script = "uid://bs42yet42hpp2"
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_yai33"]
-size = Vector3(10, 1, 10)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efsyt"]
-albedo_texture = ExtResource("2_k2bt7")
-uv1_triplanar = true
-texture_filter = 0
-point_size = 114.5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fka8p"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_8w3rj"]
-material = SubResource("StandardMaterial3D_fka8p")
-size = Vector3(10, 1, 10)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_76uc8"]
-size = Vector3(10, 1, 3)
-
-[sub_resource type="BoxMesh" id="BoxMesh_f7aoj"]
-material = SubResource("StandardMaterial3D_fka8p")
-size = Vector3(10, 1, 3.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fka8p"]
-size = Vector3(5, 1, 5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_h6v4y"]
-material = SubResource("StandardMaterial3D_fka8p")
-size = Vector3(6, 1, 6)
-
 [node name="OverworldTest" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_d1eak")]
@@ -79,7 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.436582, 0)
 omni_range = 1.1827
 
 [node name="NPC" parent="." instance=ExtResource("4_0u6w4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0.84, -2.48072)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13814, 0.34, -2.48072)
 storedSpeech = ExtResource("4_iydnk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -179,15 +150,15 @@ script = ExtResource("8_p6pse")
 unique_name_in_owner = true
 
 [node name="NPC2" parent="." instance=ExtResource("4_0u6w4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58006, 0.84, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58006, 0.34, 0)
 storedSpeech = ExtResource("8_2up65")
 
 [node name="NPC4" parent="." instance=ExtResource("4_0u6w4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4861, 0.84, -1.0156)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4861, 0.34, -1.0156)
 storedSpeech = SubResource("Resource_fka8p")
 
 [node name="NPC3" parent="." instance=ExtResource("4_0u6w4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.74304, 0.84, -0.020349)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.74304, 0.34, -0.020349)
 storedSpeech = SubResource("Resource_76uc8")
 
 [node name="Menu UI" type="Control" parent="." node_paths=PackedStringArray("menus")]
@@ -260,41 +231,14 @@ offset_top = -1080.0
 offset_bottom = -1080.0
 sceneShiftingMode = false
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_yai33")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-material_override = SubResource("StandardMaterial3D_efsyt")
-mesh = SubResource("BoxMesh_8w3rj")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("BoxShape3D_76uc8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-material_override = SubResource("StandardMaterial3D_efsyt")
-mesh = SubResource("BoxMesh_f7aoj")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
-shape = SubResource("BoxShape3D_fka8p")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3"]
-material_override = SubResource("StandardMaterial3D_efsyt")
-mesh = SubResource("BoxMesh_h6v4y")
-
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("16_h6v4y")
 cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(65527, 4, 0, 65528, 4, 0, 65529, 4, 0, 65522, 3, 0, 65523, 2, 0, 65524, 2, 0, 65524, 3, 0, 65523, 3, 0, 65522, 2, 0, 65525, 2, 0, 65525, 3, 0, 65525, 1, 0, 65525, 0, 0, 65525, 65535, 0, 65515, 0, 0, 65515, 65535, 0, 65515, 65534, 0, 65516, 65534, 0, 65516, 65533, 0, 65517, 65533, 0, 65518, 65533, 0, 65518, 65534, 0, 65519, 65534, 0, 65519, 65535, 0, 65518, 65535, 0, 65518, 0, 0, 65518, 1, 1, 65517, 1, 1, 65516, 1, 0, 65517, 0, 0, 65517, 65535, 0, 65516, 65535, 0, 65516, 0, 0, 65517, 65534, 0, 65516, 2, 0, 65516, 3, 0, 65516, 4, 0, 65516, 5, 0, 65516, 6, 0, 65516, 7, 0, 65518, 2, 1, 65518, 3, 1, 65518, 4, 1, 65518, 5, 1, 65517, 2, 1, 65517, 3, 1, 65517, 4, 1, 65517, 5, 1, 65517, 6, 1, 65518, 6, 1, 65519, 0, 1, 65519, 1, 1, 65519, 2, 1, 65519, 3, 1, 65519, 4, 1, 65519, 5, 1)
+"cells": PackedInt32Array(-21, 65535, 1, -20, 65535, 655361, -21, 0, 1, -20, 0, 1, -19, 0, 1, -18, 0, 1, -17, 0, 1, -16, 0, 1, -15, 0, 1, -14, 0, 1, -13, 0, 1, -13, 1, 1, -14, 1, 1048577, -15, 1, 1048577, -16, 1, 1048577, -17, 1, 1048577, -18, 1, 1048577, -18, 2, 1048577, -19, 2, 1048577, -19, 1, 1048577, -20, 1, 1048577, -21, 1, 1048577, -21, 2, 1048577, -17, 2, 1048577, -16, 2, 1048577, -15, 2, 1048577, -14, 2, 655361, -13, 2, 1048577, -20, 2, 1048577, -19, 65535, 1048577, -18, 65535, 1048577, -17, 65535, 1048577, -16, 65535, 1048577, -15, 65535, 1048577, -14, 65535, 1048577, -13, 65535, 1, -13, 65534, 1048577, -14, 65534, 1048577, -15, 65534, 1048577, -16, 65534, 1048577, -17, 65534, 1048577, -18, 65534, 1048577, -19, 65534, 1048577, -20, 65534, 1048577, -21, 65534, 1048577, -22, 65534, 1, -22, 65535, 1, -22, 0, 1, -22, 1, 1, -22, 2, 1, -22, 3, 655361, -21, 3, 655361, -20, 3, 655361, -19, 3, 655361, -18, 3, 655361, -17, 3, 655361, -16, 3, 655361, -15, 3, 655361, -14, 3, 655361, -13, 3, 655361, -12, 65534, 1, -11, 65534, 1, -10, 65534, 1, -9, 65534, 1, -8, 65534, 1, -7, 65534, 1, -6, 65534, 1, -5, 65534, 1, -4, 65534, 1, -3, 65534, 1, -2, 65534, 1, -1, 65534, 1, -65536, 65534, 1, -65535, 65534, 1, -65534, 65534, 1, -65534, 65535, 1, -65533, 65535, 1, -65532, 65535, 1, -65532, 65534, 1, -65533, 65534, 1, -65532, 65533, 1, -65533, 65533, 1, -65534, 65533, 1, -65535, 65533, 1, -65535, 65532, 1, -65536, 65532, 1, -1, 65532, 1, -1, 65533, 1, -65536, 65533, 1, -2, 65533, 1, -3, 65533, 1, -4, 65533, 1, -4, 65532, 1, -5, 65533, 1, -5, 65532, 1, -6, 65533, 1, -7, 65533, 1, -8, 65533, 1, -9, 65533, 1, -10, 65533, 1, -3, 65532, 1, -2, 65532, 1, -12, 65535, 1, -11, 65535, 1, -10, 65535, 1, -9, 65535, 1, -8, 65535, 1, -7, 65535, 1, -6, 65535, 1, -5, 65535, 1, -4, 65535, 1, -3, 65535, 1, -2, 65535, 1, -1, 65535, 1, -65536, 65535, 1, -65535, 65535, 1, -12, 0, 1, -11, 0, 1, -10, 0, 1, -9, 0, 1, -8, 0, 1, -7, 0, 1, -6, 0, 1, -5, 0, 1, -4, 0, 1, -3, 0, 1, -2, 0, 1, -1, 0, 1, -65536, 0, 1, -65535, 0, 1, -65534, 0, 1, -65533, 0, 1, -65532, 0, 1, -12, 1, 1, -11, 1, 1, -10, 1, 1, -9, 1, 1, -8, 1, 1, -7, 1, 1, -6, 1, 1, -5, 1, 1, -4, 1, 1, -3, 1, 1, -2, 1, 1, -1, 1, 1, -65536, 1, 1, -65535, 1, 1, -65534, 1, 1, -65533, 1, 1, -65532, 1, 1, -12, 2, 1, -11, 2, 1, -10, 2, 1, -9, 2, 1, -8, 2, 1, -7, 2, 1, -6, 2, 1, -5, 2, 1, -4, 2, 1, -3, 2, 1, -3, 3, 1, -2, 3, 1, -2, 2, 1, -1, 3, 1, -65536, 3, 1, -65535, 2, 1, -65535, 3, 1, -65536, 2, 1, -1, 2, 1, -65534, 2, 1, -65533, 2, 1, -65532, 2, 1, -65531, 2, 1, -65531, 1, 1, -65531, 0, 1, -65531, 65535, 1, -65531, 65534, 1, -65531, 65533, 1, -65531, 65532, 1, -65532, 65532, 1, -65533, 65532, 1, -65534, 65532, 1, -65534, 3, 1, -65533, 3, 1, -65532, 3, 1, -65531, 3, 1, -4, 3, 1, -5, 3, 1, -6, 3, 1, -7, 3, 1, -8, 3, 1, -9, 3, 1, -12, 3, 1, -11, 3, 1, -10, 3, 1, -11, 65533, 1, -12, 65533, 1, -13, 65533, 1, -14, 65533, 1, -15, 65533, 1, -16, 65533, 1, -17, 65533, 1, -18, 65533, 1, -19, 65533, 1, -20, 65533, 1, -21, 65533, 1, -22, 65533, 1)
 }
+script = ExtResource("15_fka8p")
+metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [connection signal="dialogue_closed" from="Player" to="Control UI/DialogPanel" method="_on_player_dialogue_closed"]
 [connection signal="dialogue_closed" from="Player" to="Control UI/DialogPortrait" method="_on_player_dialogue_closed"]
