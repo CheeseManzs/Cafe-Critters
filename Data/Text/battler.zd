@@ -1,0 +1,8 @@
+Mr. Battle, Frosmoth: Hey kid, do you wanna have a battle? {Let's Go!, No Thanks}
+	{Let's Go!}
+	Mr. Battle, Frosmoth: Im warning you! I'm pretty tough. (START_BATTLE)
+		START_BATTLE: "test_advanced"
+		START_BATTLE: AIPersonality(10.0, 0.0, 0.0, 1.0, 10.0)
+	Mr. Battle, Frosmoth: Whew! That was a good battle!
+	{No Thanks}
+	Mr. Battle, Frosmoth: Hmph. Suit Yourself!

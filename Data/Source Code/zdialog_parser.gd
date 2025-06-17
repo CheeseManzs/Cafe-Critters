@@ -5,7 +5,8 @@ extends Resource
 
 static func classAlias(classPath: String):
 	var aliasDict = {
-		"AIPersonality": "res://Battle Scripts/ai_personality.gd"
+		"AIPersonality": "res://Battle Scripts/ai_personality.gd",
+		"Gift": "res://Data/Source Code/gift_types.gd"
 	}
 	if classPath in aliasDict:
 		var aliasName = aliasDict[classPath]
@@ -96,9 +97,10 @@ static func getZText(line: String, lineArray: Array[String], index: int) -> ZTex
 						var md = metadataString
 						#parse metadata
 						if md.contains("("):
-							var mdData = md.split("(")
+							var splitIndex = md.find("(")
+							var mdData = [md.substr(0, splitIndex), md.substr(splitIndex+1, len(md) - 1)]
 							var className = mdData[0]
-							var classData = mdData[1].replace(")","").strip_edges()
+							var classData = mdData[1].strip_edges().trim_suffix(")")
 							var classObjects = []
 							if len(classData) > 0:
 								for obj in classData.split(", "):

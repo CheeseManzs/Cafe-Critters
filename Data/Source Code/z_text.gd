@@ -11,7 +11,7 @@ enum EFFECTS {
 	START_BATTLE, # metadata is an array holding the enemy team and a personality
 	SCREENSHAKE, # metedata is empty
 	FLIP_SPEAKER, # metadata is empty
-	GIVE, #metadata is an array of items to be given
+	GIFT, #metadata is an array of items to be given
 }
 
 

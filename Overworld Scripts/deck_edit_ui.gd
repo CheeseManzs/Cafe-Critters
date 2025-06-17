@@ -21,6 +21,18 @@ var currentDeckZone = Zone.new()
 var cardObject : PackedScene = load("res://Prefabs/card_object.tscn")
 
 # Called when the node enters the scene tree for the first time.
+
+func initialize() -> void:
+	if sceneShiftingMode:
+		playerMons = ConnectionManager.playerTeam
+	else:
+		playerMons = OverworldPlayer.singleton.playerTeam.duplicate(true)
+	buildCards()
+	buildMonsters()
+	for i in len(playerMons):
+		if playerMons[i] != null:
+			manageMonsterButton(i)
+	
 func _ready() -> void:
 	
 	cache.loadCards()
@@ -276,21 +288,18 @@ func _monster_button_pressed(id):
 	# only runs when going from one deck to another
 	# currentDeckZone is the "live" version of the current deck
 	# so it needs to be copies into the monster's real deck, as a "save" operation
-	if id == storedID and team[internalID]:
+	if internalID >= 0 && internalID < len(team) and id == storedID and team[internalID]:
 		team[internalID].deck.storedCards = currentDeckZone.storedCards.duplicate()
-		
 	
-	if team[internalID]:
-		#setLabels(team[internalID])
-		pass
-	
-	storedID = id
-	if team[storedID] == null:
+	if id < len(team) && team[id]:
+		storedID = id
+	if storedID < 0 || storedID >= len(team) || team[storedID] == null:
 		return
 	print("item owner: ", team[storedID].name)
 	setDrinkDisplay(team[storedID].heldItem)
 	rebuildMonsters(storedID)
-	%MonsterButtons.get_node("ChangeMonsterButton").disabled = false
+	if sceneShiftingMode:
+		%MonsterButtons.get_node("ChangeMonsterButton").disabled = false
 	
 	
 	
@@ -360,13 +369,14 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 			return true
 		else:
 			crd.setTextColor(Color.RED)
-		
-	var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.getHeldItem().alignments
-	if mon != null and item.alignment not in allAlignments:
-		if strictMode and !loose:
-			return true
-		else:
-			crd.setTextColor(Color.RED)
+	
+	if mon != null:
+		var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.getHeldItem().alignments
+		if mon != null and item.alignment not in allAlignments:
+			if strictMode and !loose:
+				return true
+			else:
+				crd.setTextColor(Color.RED)
 		
 	if mon != null && mon.name in [item.role]: #signature card
 		crd.setTextColor(Color.YELLOW)

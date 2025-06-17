@@ -77,6 +77,7 @@ func _menu_panel(node: Control, state: bool) -> void:
 func _DeckEditUI(node: Control, state: bool) -> void:
 	if state:
 		setMenu("menu_panel",false)
+		node.initialize()
 		await lerpAnimation(node,"position", node.position, Vector2(node.position.x, 0), 0.5)
 	else:
 		await lerpAnimation(node,"position", node.position, Vector2(node.position.x, -1080), 0.5)

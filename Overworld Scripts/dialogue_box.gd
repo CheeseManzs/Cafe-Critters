@@ -104,7 +104,7 @@ func doEffect(effect, metadata):
 		0:
 			var enemyArray: Array[Monster] = []
 			if type_string(typeof(metadata[0])):
-				var teamString = FileAccess.open("res://Data/Team Data/"+metadata[0]+".txt", FileAccess.READ).get_as_text()
+				var teamString = FileAccess.open("res://Data/Team Data/"+metadata[0]+".fae", FileAccess.READ).get_as_text()
 				enemyArray.assign(ConnectionManager.singleton.teamPacker.decode(teamString))
 			else:
 				enemyArray.assign(metadata[0])

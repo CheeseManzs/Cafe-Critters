@@ -108,11 +108,25 @@ func _physics_process(delta: float) -> void:
 	# move the camera
 	cameraNode.position = cameraNode.position.lerp(characterNode.position + cameraOffset, delta * 5)
 	#cameraNode.position += Vector3(0, 0, 0.001)
-	
+func addMonstersToTeam(mons: Array[Monster]):
+	for mon in mons:
+		var addNew = true
+		for index in len(playerTeam):
+			if playerTeam[index] == null:
+				playerTeam[index] = mon
+				addNew = false
+				break
+		
+		if addNew && len(playerTeam) < 3:
+			playerTeam.push_back(mon)	
+		elif addNew:
+			playerBox.push_back(mon)
+
 func receiveGift(gift: Gift):
 	match gift.giftType:
 		Gift.GIFT_TYPE.MONSTER:
-			pass
+			var newMon = ConnectionManager.singleton.teamPacker.decode(gift.code)
+			addMonstersToTeam(newMon)
 
 func doMovement(delta: float) -> void:
 	# movement direction tracking

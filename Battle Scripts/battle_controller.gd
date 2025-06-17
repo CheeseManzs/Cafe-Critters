@@ -1403,7 +1403,8 @@ static func syncedRandInArray(arr: Array):
 
 static func startBattle(p_playerTeam: Array[Monster], p_enemyTeam: Array[Monster], p_enemyPersonality: AIPersonality, _opponent_id: int = -1) -> void:
 	
-
+	if len(p_playerTeam) == 0:
+		return
 	
 	playerBattleTeam = p_playerTeam
 	enemyBattleTeam = p_enemyTeam

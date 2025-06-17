@@ -1,9 +1,27 @@
-Fros Cena: Hello! Am I right? {Yes, No}
+Albert, Fros Cena: Hello! Am I right? {Yes, No}
 	{Yes} 
 	Fros Cena: Woo!
 	Fros Cena: That's Awesome! Are you sure? {Yes, No, Maybe?}
 		{Yes}
-		Fros Cena: Tubular!
+		Fros Cena: Good. You passed the test...
+		Fros Cena: Now, what do you value in a teammate? {Speed, Power, Durability, Bullshit}
+			{Speed}
+			Fros Cena: Ah yes. Being the first to act is important for a clean victory.
+			Fros Cena: This Fae might help you with that. (GIFT)
+				GIFT: Gift("MONSTER", "Rev (5)")
+			{Power}
+			Fros Cena: Good choice. The easiest way to win is by mastering the basics of a direct victory!
+			Fros Cena: This Fae might help you with that. (GIFT)
+				GIFT: Gift("MONSTER", "Ignetor (5)")
+			{Durability}
+			Fros Cena: Good pick. While power might be more straight forward, a support that can take a hit can employ a much stronger strategy.
+			Fros Cena: This Fae might help you with that. (GIFT)
+				GIFT: Gift("MONSTER", "Slocha (5)")
+			{Bullshit}
+			Fros Cena: Interesting choice. You can plan around strategy but you can never out-do luck.
+			Fros Cena: This Fae might help you with that. (GIFT)
+				GIFT: Gift("MONSTER", "Hooliquen (5)")
+			
 		{No}
 		Fros Cena: Oh....
 		Frosmoth: How dare you deceive him like that, prepare for a battle! (START_BATTLE)
