@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="ZDialog" load_steps=9 format=3 uid="uid://b766tek53g2rb"]
+[gd_resource type="Resource" script_class="ZDialog" load_steps=7 format=3 uid="uid://b766tek53g2rb"]
 
 [ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_2tu7o"]
 [ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="2_a0kq5"]
 [ext_resource type="Texture2D" uid="uid://dm2w3qptoxqi5" path="res://Graphics/Monsters/placeholder4.png" id="3_7fg7e"]
-[ext_resource type="Resource" uid="uid://8rkfyfa8uil8" path="res://Data/Text/no_battle.tres" id="4_mlcvp"]
-[ext_resource type="Resource" uid="uid://bru483uysg0mq" path="res://Data/Text/yes_battle.tres" id="5_g7q3u"]
 
 [sub_resource type="Resource" id="Resource_rihey"]
 script = ExtResource("2_a0kq5")
@@ -36,7 +34,7 @@ text = "Would you rather have strawberry or vanilla? Yeah sure this is a non-seq
 speakerName = "???"
 speakerSprite = ExtResource("3_7fg7e")
 conditionalNames = Array[String](["Strawberry, for sure.", "Vanilla! YummY!"])
-conditionalLines = Array[Resource]([ExtResource("4_mlcvp"), ExtResource("5_g7q3u")])
+conditionalLines = Array[ExtResource("1_2tu7o")]([])
 startEffects = Array[int]([])
 startMetadata = []
 endEffects = Array[int]([])
