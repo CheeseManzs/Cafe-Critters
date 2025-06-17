@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ZText" load_steps=3 format=3 uid="uid://cer35didxcsso"]
+[gd_resource type="Resource" script_class="ZText" load_steps=4 format=3 uid="uid://cer35didxcsso"]
 
+[ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_a5ug2"]
 [ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="1_h3kgu"]
 [ext_resource type="Texture2D" uid="uid://cwc0cakh6t54i" path="res://Graphics/Overworld/Frosmoth.png" id="2_uqgjf"]
 
@@ -9,7 +10,7 @@ text = "very very long piece of text that i use to text very long dialogue very 
 speakerName = "Frosmoth"
 speakerSprite = ExtResource("2_uqgjf")
 conditionalNames = Array[String]([])
-conditionalLines = Array[Resource]([])
+conditionalLines = Array[ExtResource("1_a5ug2")]([])
 startEffects = Array[int]([])
 startMetadata = []
 endEffects = Array[int]([])
