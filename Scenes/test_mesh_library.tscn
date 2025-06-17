@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://danm1mmy1l0e1"]
+
+[ext_resource type="Texture2D" uid="uid://cp8hhpfxuevvv" path="res://Graphics/Overworld/dirt.png" id="1_dvxlj"]
+[ext_resource type="Texture2D" uid="uid://c81japy86ugc4" path="res://Graphics/Overworld/grass.png" id="2_thiyr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cxpir"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7mpw"]
+albedo_texture = ExtResource("1_dvxlj")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8uus4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_n0ksl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u14ll"]
+albedo_texture = ExtResource("2_thiyr")
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y588w"]
+
+[node name="TestMeshLibrary" type="Node3D"]
+
+[node name="Dirt" type="Node3D" parent="."]
+
+[node name="Dirt" type="MeshInstance3D" parent="Dirt"]
+mesh = SubResource("BoxMesh_cxpir")
+surface_material_override/0 = SubResource("StandardMaterial3D_h7mpw")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Dirt/Dirt"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dirt/Dirt/StaticBody3D"]
+shape = SubResource("BoxShape3D_8uus4")
+
+[node name="Grass" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07544, 0, 0)
+
+[node name="Grass" type="MeshInstance3D" parent="Grass"]
+mesh = SubResource("BoxMesh_n0ksl")
+surface_material_override/0 = SubResource("StandardMaterial3D_u14ll")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Grass/Grass"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grass/Grass/StaticBody3D"]
+shape = SubResource("BoxShape3D_y588w")

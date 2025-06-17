@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dvh8p2llv8wm6"]
+[gd_scene load_steps=28 format=3 uid="uid://dvh8p2llv8wm6"]
 
 [ext_resource type="PackedScene" uid="uid://byi5kwmyhaj0s" path="res://Prefabs/overworld_player.tscn" id="1_d1eak"]
 [ext_resource type="Script" uid="uid://dmo1ew5nacb7l" path="res://Data/Source Code/inventory.gd" id="2_b10y7"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bs42yet42hpp2" path="res://Data/Source Code/zdialog_parser.gd" id="11_f7aoj"]
 [ext_resource type="Script" uid="uid://dgujn8nyjsm3w" path="res://Overworld Scripts/menu_ui.gd" id="15_f7aoj"]
 [ext_resource type="PackedScene" uid="uid://bilfuichpxj00" path="res://Scenes/DeckEditUI.tscn" id="16_fka8p"]
+[ext_resource type="MeshLibrary" uid="uid://b1dxpyexkkyuw" path="res://test_mesh_lib.tres" id="16_h6v4y"]
 
 [sub_resource type="Resource" id="Resource_larmy"]
 script = ExtResource("2_b10y7")
@@ -55,23 +56,6 @@ size = Vector3(5, 1, 5)
 [sub_resource type="BoxMesh" id="BoxMesh_h6v4y"]
 material = SubResource("StandardMaterial3D_fka8p")
 size = Vector3(6, 1, 6)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7aoj"]
-albedo_texture = ExtResource("2_k2bt7")
-uv1_triplanar = true
-texture_filter = 0
-
-[sub_resource type="BoxMesh" id="BoxMesh_fka8p"]
-material = SubResource("StandardMaterial3D_f7aoj")
-
-[sub_resource type="MeshLibrary" id="MeshLibrary_h6v4y"]
-item/0/name = "dirt"
-item/0/mesh = SubResource("BoxMesh_fka8p")
-item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-item/0/mesh_cast_shadow = 1
-item/0/shapes = []
-item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-item/0/navigation_layers = 1
 
 [node name="OverworldTest" type="Node3D"]
 
@@ -302,10 +286,10 @@ material_override = SubResource("StandardMaterial3D_efsyt")
 mesh = SubResource("BoxMesh_h6v4y")
 
 [node name="GridMap" type="GridMap" parent="."]
-mesh_library = SubResource("MeshLibrary_h6v4y")
+mesh_library = ExtResource("16_h6v4y")
 cell_size = Vector3(1, 1, 1)
 data = {
-"cells": PackedInt32Array(65527, 4, 0, 65528, 4, 0, 65529, 4, 0, 65522, 3, 0, 65523, 2, 0, 65524, 2, 0, 65524, 3, 0, 65523, 3, 0, 65522, 2, 0, 65525, 2, 0, 65525, 3, 0, 65525, 1, 0, 65525, 0, 0, 65525, 65535, 0, 65515, 0, 0, 65515, 65535, 0, 65515, 65534, 0, 65516, 65534, 0, 65516, 65533, 0, 65517, 65533, 0, 65518, 65533, 0, 65518, 65534, 0, 65519, 65534, 0, 65519, 65535, 0, 65518, 65535, 0, 65518, 0, 0, 65518, 1, 0, 65517, 1, 0, 65516, 1, 0, 65517, 0, 0, 65517, 65535, 0, 65516, 65535, 0, 65516, 0, 0, 65517, 65534, 0, 65516, 2, 0, 65516, 3, 0, 65516, 4, 0, 65516, 5, 0, 65516, 6, 0, 65516, 7, 0)
+"cells": PackedInt32Array(65527, 4, 0, 65528, 4, 0, 65529, 4, 0, 65522, 3, 0, 65523, 2, 0, 65524, 2, 0, 65524, 3, 0, 65523, 3, 0, 65522, 2, 0, 65525, 2, 0, 65525, 3, 0, 65525, 1, 0, 65525, 0, 0, 65525, 65535, 0, 65515, 0, 0, 65515, 65535, 0, 65515, 65534, 0, 65516, 65534, 0, 65516, 65533, 0, 65517, 65533, 0, 65518, 65533, 0, 65518, 65534, 0, 65519, 65534, 0, 65519, 65535, 0, 65518, 65535, 0, 65518, 0, 0, 65518, 1, 1, 65517, 1, 1, 65516, 1, 0, 65517, 0, 0, 65517, 65535, 0, 65516, 65535, 0, 65516, 0, 0, 65517, 65534, 0, 65516, 2, 0, 65516, 3, 0, 65516, 4, 0, 65516, 5, 0, 65516, 6, 0, 65516, 7, 0, 65518, 2, 1, 65518, 3, 1, 65518, 4, 1, 65518, 5, 1, 65517, 2, 1, 65517, 3, 1, 65517, 4, 1, 65517, 5, 1, 65517, 6, 1, 65518, 6, 1, 65519, 0, 1, 65519, 1, 1, 65519, 2, 1, 65519, 3, 1, 65519, 4, 1, 65519, 5, 1)
 }
 
 [connection signal="dialogue_closed" from="Player" to="Control UI/DialogPanel" method="_on_player_dialogue_closed"]
