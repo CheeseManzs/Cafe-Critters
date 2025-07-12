@@ -1,18 +1,6 @@
 class_name Monster
 extends Resource
 
-enum ALIGNMENT {
-	Default,
-	Mise,
-	Rea,
-	Anvi,
-	Sec,
-	Eco,
-	Jacks,
-	Kress,
-	Blanc
-}
-
 #list of roles
 enum ROLE {
 	Point,
@@ -24,7 +12,7 @@ enum ROLE {
 @export var id: int
 @export var name: String
 @export var tags: Array[String]
-@export var alignment: ALIGNMENT
+@export var alignment: Card.ALIGNMENT
 @export var role: String
 @export var dexEntry: String
 @export var sprite: Texture

@@ -776,7 +776,7 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 		container.get_child(0).free()
 	
 	await get_tree().create_timer(0.5).timeout
-	await oldMon.onSwitchOut()
+	await oldMon.onSwitchOut(newMon)
 	
 	await oldMon.getPassive().onSwapOut(oldMon, self)
 	await oldMon.getHeldItem().getPassive().onSwapOut(oldMon, self)
@@ -792,7 +792,7 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	oldMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_OUT
 	newMon.switchState = BattleMonster.SWITCH_STATE.SWITCHED_IN
 	
-	await newMon.onSwitchIn()
+	await newMon.onSwitchIn(oldMon)
 	
 #swaps active player mon to new mon at index newID
 func playerSwap(newID) -> void:

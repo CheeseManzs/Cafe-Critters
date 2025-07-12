@@ -25,19 +25,7 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
 enemyTeamExport = "Ignetor (50)
-- Cleave (3)
-- Attack Up (3)
-- Sneak Attack (3)
-Slocha (50)
-- Heal (3)
-- Block (3)
-- Shield Slap (3)
-- Prime (3)
-- Assist (3)
-- Sneak Attack (3)
-Hooliquen (50)
-- Up the Ante (3)
-- Sneak Attack (3)"
+- Attack Up (5)"
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]

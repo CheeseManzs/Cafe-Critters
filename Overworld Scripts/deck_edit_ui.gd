@@ -372,6 +372,8 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 	
 	if mon != null:
 		var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.getHeldItem().alignments
+		if Monster.ALIGNMENT.Kress in mon.getHeldItem().alignments:
+			print("kress!")
 		if mon != null and item.alignment not in allAlignments:
 			if strictMode and !loose:
 				return true

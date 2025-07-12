@@ -9,6 +9,12 @@ func _init() -> void:
 	name = "High Note"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.7
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var extraPower = 0
+	if len(attacker.playedCardCurrentTurnHistory) >= 3:
+		extraPower = 0.5
+	await dealDamage(attacker, defender, power + extraPower)
+	
+		

@@ -105,7 +105,7 @@ func runActions(battleController: BattleController) -> void:
 			action.targetID = targetID
 		
 		#add card to play history
-		action.battleMonster.playedCardHistory.push_back(action.card)
+		await action.battleMonster.addCardToHistory(action.card)
 		
 		
 				#nullifying effects

@@ -33,6 +33,7 @@ var playerControlled: bool
 var statusConditions: Array[Status]
 #play history
 var playedCardHistory: Array[Card]
+var playedCardCurrentTurnHistory: Array[Card] # cards played this turn
 var addedToGraveyardThisTurn: Array[Card]
 var playedCardThisTurn = false
 var wasAttackedThisTurn = false
@@ -89,6 +90,10 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 		damagePopupPrefab = load("res://Prefabs/damage_popup.tscn")
 	
 
+func addCardToHistory(card: Card):
+	playedCardHistory.push_back(card)
+	playedCardCurrentTurnHistory.push_back(card)
+
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:
 	#remove damage from shield
@@ -124,13 +129,19 @@ func canSwitchOut() -> bool:
 func canSwitchIn() -> bool:
 	return true
 	
-func onSwitchOut() -> void:
+func onSwitchOut(switchingIn: BattleMonster) -> void:
+	if hasStatus(Status.EFFECTS.DUETING):
+		await switchingIn.createCardAndAddToHand("Inspiration")
+		await removeStatus(Status.EFFECTS.DUETING)
 	return
 	
-func onSwitchIn() -> void:
+func onSwitchIn(switchingOut: BattleMonster) -> void:
 	if hasStatus(Status.EFFECTS.MISSING_OUT):
 		var dmg = maxHP*0.1
 		trueDamage(dmg, null, false, false)
+
+func createCardAndAddToHand(cardName: String):
+	await currentHand.storedCards.push_back(battleController.monsterCache.getCardByName(cardName).duplicate())
 
 #returns status effect of specific type
 func getStatus(eff: Status.EFFECTS) -> Status:
@@ -364,6 +375,7 @@ func reset(active = true, forceDraw = false) -> void:
 	wasAttackedThisTurn = false
 	cardsSentToGraveyard = 0
 	addedToGraveyardThisTurn = []
+	playedCardCurrentTurnHistory = []
 	#eternal guardians
 	if hasStatus(Status.EFFECTS.ETERNAL_GUARDIANS):
 		for card in getTeamGraveyard():

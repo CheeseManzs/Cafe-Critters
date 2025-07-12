@@ -44,7 +44,8 @@ enum EFFECTS {
 	TRAPPED,
 	FIGHT_OR_FLIGHT,
 	MISSING_OUT,
-	ETERNAL_GUARDIANS
+	ETERNAL_GUARDIANS,
+	DUETING
 }
 var X: int = 0
 var Y: int = 0
@@ -173,6 +174,8 @@ func toMini() -> String:
 			return "FMO"
 		EFFECTS.ETERNAL_GUARDIANS:
 			return "ETG"
+		EFFECTS.DUETING:
+			return "DTG"
 	return "N/A"
 	
 
@@ -260,6 +263,8 @@ func rawToString() -> String:
 			return "Fear of Missing Out"
 		EFFECTS.ETERNAL_GUARDIANS:
 			return "Eternal Guardians"
+		EFFECTS.DUETING:
+			return "Dueting"
 	return "None"
 
 #converts status object to string in the from [STATUS] [X]/[Y]
@@ -317,6 +322,8 @@ func isPositive() -> bool:
 		EFFECTS.BLUFF:
 			return true
 		EFFECTS.ETERNAL_GUARDIANS:
+			return true
+		EFFECTS.DUETING:
 			return true
 	return false
 

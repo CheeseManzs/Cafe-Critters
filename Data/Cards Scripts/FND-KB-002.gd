@@ -9,6 +9,8 @@ func _init() -> void:
 	name = "Note of Harmony"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
+	shieldPower = 0.3
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	await attacker.drawCards(1)

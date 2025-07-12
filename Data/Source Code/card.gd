@@ -11,6 +11,7 @@ enum ALIGNMENT {
 	Eco,
 	Jacks,
 	Blanc,
+	Kress
 }
 
 static var alignmentToString = {
@@ -21,7 +22,8 @@ static var alignmentToString = {
 	ALIGNMENT.Sec: "Sec",
 	ALIGNMENT.Eco: "Eco",
 	ALIGNMENT.Jacks: "Jacks",
-	ALIGNMENT.Blanc: "Blanc"
+	ALIGNMENT.Blanc: "Blanc",
+	ALIGNMENT.Blanc: "Kress"
 }
 
 #list of roles
@@ -51,14 +53,15 @@ static var tooltipColors = {
 }
 
 static var alignemColors = {
-	ALIGNMENT.Default: "ffffff",
-	ALIGNMENT.Mise:"79c3ed",
-	ALIGNMENT.Rea:"d197f0",
-	ALIGNMENT.Anvi:"e89420",
-	ALIGNMENT.Sec:"f5e07a",
-	ALIGNMENT.Eco:"9dfc74",
-	ALIGNMENT.Jacks:"#fa8282",
-	ALIGNMENT.Blanc:"c9c9c7",
+	ALIGNMENT.Default: 	"#ffffff",
+	ALIGNMENT.Mise:		"#79c3ed",
+	ALIGNMENT.Rea:		"#d197f0",
+	ALIGNMENT.Anvi:		"#e89420",
+	ALIGNMENT.Sec:		"#f5e07a",
+	ALIGNMENT.Eco:		"#9dfc74",
+	ALIGNMENT.Jacks:	"#fa8282",
+	ALIGNMENT.Blanc:	"#c9c9c7",
+	ALIGNMENT.Kress:	"#f7bed6"
 }
 
 func descAttackCalc(attacker: BattleMonster, defender: BattleMonster, atkNum: float):

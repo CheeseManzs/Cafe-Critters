@@ -9,6 +9,8 @@ func _init() -> void:
 	name = "Note of Dissonance"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.3
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await dealDamage(attacker, defender)
+	await attacker.drawCards(1)

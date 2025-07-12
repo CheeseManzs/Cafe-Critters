@@ -9,6 +9,11 @@ func _init() -> void:
 	name = "Sonic Boom"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	var extraPower = 0
+	if len(attacker.playedCardCurrentTurnHistory) >= 5:
+		extraPower = 0.15
+	var dmg = _calcPower(attacker,defender, power + extraPower, false)
+	await defender.trueDamage(dmg, attacker)
