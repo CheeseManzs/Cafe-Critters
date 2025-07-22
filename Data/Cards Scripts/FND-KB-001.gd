@@ -11,5 +11,5 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await BattleLog.singleton.log("Nothing Happened...")
+	await BattleLog.singleton.log("Nothing happened...")
 	pass

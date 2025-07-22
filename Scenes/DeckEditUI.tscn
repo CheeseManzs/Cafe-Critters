@@ -140,6 +140,7 @@ placeholder_text = "Import/Export team here..."
 
 [node name="MonsterSelectPanel" type="Panel" parent="."]
 visible = false
+self_modulate = Color(0.997493, 0.408159, 0, 1)
 z_index = 10
 layout_mode = 1
 anchors_preset = -1
@@ -148,13 +149,18 @@ anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MonsterGridContainer" type="GridContainer" parent="MonsterSelectPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MonsterSelectPanel"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MonsterGridContainer" type="GridContainer" parent="MonsterSelectPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/h_separation = 200
 theme_override_constants/v_separation = 20
 

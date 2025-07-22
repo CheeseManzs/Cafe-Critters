@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d0su80so1ucnv"]
+
+[ext_resource type="Script" uid="uid://csplcy03t6fug" path="res://Data/Monster Passive Scripts/passive_phantavision.gd" id="1_s2coy"]
+
+[resource]
+script = ExtResource("1_s2coy")
+flairColour = Color(1.01075e-06, 0.457652, 0.257552, 1)
+metadata/_custom_type_script = "uid://divyfp6lwcp8w"

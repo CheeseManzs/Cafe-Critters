@@ -24,8 +24,21 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-enemyTeamExport = "Ignetor (50)
-- Attack Up (5)"
+enemyTeamExport = "Ignetor (50) + {Extreme|Revenerator|[\"AN\"]|[1.0,0.12,0.0,0.0]}
+- Attack Up (3)
+- Sneak Attack (3)
+- Strike (3)
+Slocha (50) + {Extreme|Revenerator|[\"DE\"]|[1.0,0.0,0.0,0.0]}
+- Heal (3)
+- Shield Slap (3)
+- Prime (3)
+- Assist (3)
+- Sneak Attack (3)
+- Bolster (3)
+Hooliquen (50) + {Extreme|Machine|[\"JA\"]|[0.0,0.0,0.0,1.0]}
+- Up the Ante (3)
+- Sneak Attack (3)
+- Assist (3)"
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]

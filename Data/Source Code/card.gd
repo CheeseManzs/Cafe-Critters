@@ -10,8 +10,8 @@ enum ALIGNMENT {
 	Sec,
 	Eco,
 	Jacks,
-	Blanc,
-	Kress
+	Kress,
+	Blanc
 }
 
 static var alignmentToString = {
@@ -23,7 +23,7 @@ static var alignmentToString = {
 	ALIGNMENT.Eco: "Eco",
 	ALIGNMENT.Jacks: "Jacks",
 	ALIGNMENT.Blanc: "Blanc",
-	ALIGNMENT.Blanc: "Kress"
+	ALIGNMENT.Kress: "Kress"
 }
 
 #list of roles

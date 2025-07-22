@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MonsterCache" load_steps=20 format=3 uid="uid://cjnsk71nyutp"]
+[gd_resource type="Resource" script_class="MonsterCache" load_steps=22 format=3 uid="uid://cjnsk71nyutp"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_ntfgn"]
 [ext_resource type="Script" uid="uid://djslq1q2bn8dc" path="res://Data/Source Code/monster_cache.gd" id="2_mcreu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://bbmecjegxa3d3" path="res://Data/Monsters/Slocha.tres" id="7_xmuw6"]
 [ext_resource type="Resource" uid="uid://bhvtitdwabhi8" path="res://Data/Monsters/Inkhor.tres" id="8_4e5nh"]
 [ext_resource type="Resource" uid="uid://cpf4dy38n68y2" path="res://Data/Monsters/Ignetor.tres" id="8_gbt8i"]
+[ext_resource type="Resource" uid="uid://bu2tcsc8dc3xf" path="res://Data/Monsters/Phantavision.tres" id="9_f8nik"]
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="9_qlmob"]
 [ext_resource type="Script" uid="uid://divyfp6lwcp8w" path="res://Data/Monster Passive Scripts/passive.gd" id="10_vjmtw"]
@@ -19,11 +20,12 @@
 [ext_resource type="Resource" uid="uid://chqbec4re4vwv" path="res://Data/Monster Passives/Scrap Engine.tres" id="16_jccxm"]
 [ext_resource type="Resource" uid="uid://bxpcg2fwclvyi" path="res://Data/Monster Passives/Snake's Jackpot.tres" id="17_s1kfp"]
 [ext_resource type="Resource" uid="uid://b8muftsmeq6hk" path="res://Data/Monster Passives/Sore Loser.tres" id="18_gmp1x"]
+[ext_resource type="Resource" uid="uid://d0su80so1ucnv" path="res://Data/Monster Passives/Paralyzing Gaze.tres" id="20_nhpkx"]
 
 [resource]
 script = ExtResource("2_mcreu")
-cache = Array[ExtResource("1_ntfgn")]([ExtResource("7_xmuw6"), ExtResource("6_sdfuw"), ExtResource("8_gbt8i"), ExtResource("9_jpghj"), ExtResource("6_0yj3b"), ExtResource("7_7lq5t"), ExtResource("8_4e5nh")])
+cache = Array[ExtResource("1_ntfgn")]([ExtResource("7_xmuw6"), ExtResource("6_sdfuw"), ExtResource("8_gbt8i"), ExtResource("9_jpghj"), ExtResource("6_0yj3b"), ExtResource("7_7lq5t"), ExtResource("8_4e5nh"), ExtResource("9_f8nik")])
 cardCache = Array[ExtResource("9_qlmob")]([])
-passiveCache = Array[ExtResource("10_vjmtw")]([ExtResource("11_f8nik"), ExtResource("12_nhpkx"), ExtResource("13_wdoc7"), ExtResource("14_8q4qs"), ExtResource("15_qxqag"), ExtResource("16_jccxm"), ExtResource("17_s1kfp"), ExtResource("18_gmp1x")])
+passiveCache = Array[ExtResource("10_vjmtw")]([ExtResource("11_f8nik"), ExtResource("13_wdoc7"), ExtResource("12_nhpkx"), ExtResource("14_8q4qs"), ExtResource("15_qxqag"), ExtResource("16_jccxm"), ExtResource("17_s1kfp"), ExtResource("18_gmp1x"), ExtResource("20_nhpkx")])
 cardFolderPath = "res://Data/Cards/"
 cardScriptsPath = "res://Data/Cards Scripts/"

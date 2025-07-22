@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="Monster" load_steps=10 format=3 uid="uid://bu2tcsc8dc3xf"]
+
+[ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_kwpqp"]
+[ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_5xyf2"]
+[ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_l7smy"]
+[ext_resource type="Resource" uid="uid://d0su80so1ucnv" path="res://Data/Monster Passives/Paralyzing Gaze.tres" id="2_q4rri"]
+[ext_resource type="Script" uid="uid://diqiqevndqbls" path="res://Data/Source Code/held_item.gd" id="3_vshyk"]
+[ext_resource type="Texture2D" uid="uid://duchfvg75mkdc" path="res://Graphics/Monsters/phantavision.png" id="4_l7smy"]
+
+[sub_resource type="Resource" id="Resource_vshyk"]
+script = ExtResource("1_kwpqp")
+name = ""
+storedCards = Array[ExtResource("2_l7smy")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[sub_resource type="Resource" id="Resource_jyki7"]
+script = ExtResource("3_vshyk")
+alignments = Array[int]([])
+statWeights = Array[float]([0.0, 0.0, 0.0, 0.0])
+tier = 0
+metadata/_custom_type_script = "uid://diqiqevndqbls"
+
+[sub_resource type="Resource" id="Resource_4two0"]
+script = ExtResource("1_kwpqp")
+name = ""
+storedCards = Array[ExtResource("2_l7smy")]([])
+metadata/_custom_type_script = "uid://ck6kibtk6piq4"
+
+[resource]
+script = ExtResource("2_5xyf2")
+id = 8
+name = "Phantavision"
+tags = Array[String]([])
+alignment = 5
+role = ""
+dexEntry = "Its gaze paralyzes anyone that makes contact. There are rumours of people spending their lives trapped by a Phantavision."
+sprite = ExtResource("4_l7smy")
+spriteScale = 0.03
+passive = ExtResource("2_q4rri")
+heldItem = SubResource("Resource_jyki7")
+deck = SubResource("Resource_vshyk")
+startingCardPool = SubResource("Resource_4two0")
+levelupCards = Array[ExtResource("1_kwpqp")]([])
+rawHealth = 16
+rawAttack = 3
+rawDefense = 5
+rawSpeed = 2
+levelingType = ""
+levelingItems = Array[String]([])
+statHealth = []
+statAttack = []
+statDefense = []
+statSpeed = []
+level = 1
+battleOffset = Vector2(0, 0)
+metadata/_custom_type_script = "uid://c4ll0oxv5iqop"

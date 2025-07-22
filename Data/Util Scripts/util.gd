@@ -50,16 +50,16 @@ static func reverseDictionary(dict: Dictionary) -> Dictionary:
 		newDict[dict[key]] = key
 	return newDict
 
-static var alignmentToString: Dictionary[Monster.ALIGNMENT, String] = {
-	Monster.ALIGNMENT.Default: 	"DE",
-	Monster.ALIGNMENT.Mise: 	"MI",
-	Monster.ALIGNMENT.Rea: 		"RE",
-	Monster.ALIGNMENT.Anvi: 	"AN",
-	Monster.ALIGNMENT.Sec: 		"SE",
-	Monster.ALIGNMENT.Eco: 		"EC",
-	Monster.ALIGNMENT.Jacks: 	"JA",
-	Monster.ALIGNMENT.Kress: 	"KR",
-	Monster.ALIGNMENT.Blanc: 	"BL"
+static var alignmentToString: Dictionary[Card.ALIGNMENT, String] = {
+	Card.ALIGNMENT.Default: 	"DE",
+	Card.ALIGNMENT.Mise: 	"MI",
+	Card.ALIGNMENT.Rea: 		"RE",
+	Card.ALIGNMENT.Anvi: 	"AN",
+	Card.ALIGNMENT.Sec: 		"SE",
+	Card.ALIGNMENT.Eco: 		"EC",
+	Card.ALIGNMENT.Jacks: 	"JA",
+	Card.ALIGNMENT.Kress: 	"KR",
+	Card.ALIGNMENT.Blanc: 	"BL"
 }
 
 static var itemTierToString: Dictionary[HeldItem.TIER, String] = {

@@ -75,7 +75,7 @@ func _ready() -> void:
 	
 	# sets up a "change monster" button
 	var temp = Button.new()
-	temp.text = "change monster"
+	temp.text = "Change Monster"
 	temp.pressed.connect(toggleMonsters.bind())
 	temp.disabled = true
 	temp.name = "ChangeMonsterButton"
@@ -94,7 +94,7 @@ func _ready() -> void:
 		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		
-		tempLabel.text = monster.name + "\n" + str(monster.ALIGNMENT.keys()[monster.alignment]) \
+		tempLabel.text = monster.name + "\n" + str(Card.ALIGNMENT.keys()[monster.alignment]) \
 		+ "\n" + str(monster.role) + "\n" + str(monster.passive.desc) + "\n" \
 		+ str(monster.rawHealth * 4) + "/" + str(monster.rawAttack) + "/" \
 		+ str(monster.rawDefense) + "/" + str(monster.rawSpeed)
@@ -103,29 +103,39 @@ func _ready() -> void:
 		tempContainer.add_theme_constant_override("separation", 20)
 		tempContainer.add_child(temp)
 		tempContainer.add_child(tempLabel)
-		$MonsterSelectPanel/MonsterGridContainer.add_child(tempContainer)
-		
+		$MonsterSelectPanel/ScrollContainer/MonsterGridContainer.add_child(tempContainer)
+	
 	# sets up 2 buttons for importing/exporting teams
 	temp = Button.new()
-	temp.text = "export deck"
+	temp.text = "Export Deck"
 	temp.pressed.connect(exportMons.bind())
 	%MonsterButtons.add_child(temp)
 	
 	temp = Button.new()
-	temp.text = "import deck"
+	temp.text = "Import Deck"
 	temp.pressed.connect(importMons.bind())
 	%MonsterButtons.add_child(temp)
 	
 	# sets up button to empty a deck
 	temp = Button.new()
-	temp.text = "clear deck"
+	temp.text = "Clear Deck"
 	temp.pressed.connect(clearDeck.bind())
 	%MonsterButtons.add_child(temp)
 	
 	# return to title :3
 	if sceneShiftingMode:
 		temp = Button.new()
-		temp.text = "back to title"
+		temp.text = "Add Monster"
+		temp.pressed.connect(addMon.bind())
+		%MonsterButtons.add_child(temp)
+		
+		temp = Button.new()
+		temp.text = "Remove Monster"
+		temp.pressed.connect(removeMon.bind())
+		%MonsterButtons.add_child(temp)
+	
+		temp = Button.new()
+		temp.text = "Back to Title"
 		temp.pressed.connect(toTitle.bind())
 		%MonsterButtons.add_child(temp)
 		
@@ -136,6 +146,32 @@ func _ready() -> void:
 	%DrinkTier.get_popup().hide_on_checkable_item_selection = false
 	%DrinkApply.button_down.connect(applyDrink)
 	pass # Replace with function body.
+
+func addMon():
+	var addID = 0
+	while addID < len(playerMons) and playerMons[addID] != null:
+		addID += 1
+	print("add id: ", addID)
+	if addID > 2:
+		return
+	storedID = addID
+	toggleMonsters()
+
+func removeMon():
+	if playerMons[storedID] == null:
+		return
+	playerMons[storedID] = null
+	var currentID = storedID
+
+	while currentID+1 <= len(playerMons)-1:
+		playerMons[currentID] = playerMons[currentID+1]
+		playerMons[currentID+1] = null
+		currentID += 1
+	
+	while playerMons[storedID] == null and storedID > 0:
+		storedID -= 1
+	
+	_monster_button_pressed(storedID)
 
 func setDrinkDisplay(heldItem: HeldItem):
 	%HPWeight.text = str(heldItem.statWeights[0])
@@ -210,6 +246,7 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 		team = playerMons
 	for child in %LeftGridContainer.get_children():
 		child.queue_free() 
+	
 	if team[id] != null:
 		if team[id].deck.storedCards.size() == 0 and setupMonster == true:
 			team[id].deck.storedCards = team[id].startingCardPool.storedCards
@@ -264,15 +301,22 @@ func rebuildMonsters(id, setCards = true, setupMonster = false):
 	if team[id]:
 		%HelperTitle.text = "Currently Editing: " + team[id].name + " (" + str(currentDeckZone.storedCards.size()) + "/40)"
 	else:
-		%HelperTitle.text = "Currently Editing: Monster " + str(startingID + 1)
+		%HelperTitle.text = "Slot " + str(startingID + 1)
 		for child in %RightGridContainer.get_children():
 			child.queue_free() 
 	
-	setDrinkDisplay(playerMons[storedID].heldItem)
+	
 	manageMonsterButtons()
+	
+	if playerMons[storedID] == null:
+		return
+	setDrinkDisplay(playerMons[storedID].getHeldItem())
+	
+	
 
 func toggleMonsters():
 	$MonsterSelectPanel.visible = !$MonsterSelectPanel.visible
+	print("vis: ", $MonsterSelectPanel.visible)
 
 # selects a monster slot and loads their deck if possible so you can edit it
 func _monster_button_pressed(id):
@@ -293,11 +337,15 @@ func _monster_button_pressed(id):
 	
 	if id < len(team) && team[id]:
 		storedID = id
+		
+	if storedID < len(playerMons):
+		rebuildMonsters(storedID)
+	
 	if storedID < 0 || storedID >= len(team) || team[storedID] == null:
 		return
 	print("item owner: ", team[storedID].name)
 	setDrinkDisplay(team[storedID].heldItem)
-	rebuildMonsters(storedID)
+	
 	if sceneShiftingMode:
 		%MonsterButtons.get_node("ChangeMonsterButton").disabled = false
 	
@@ -372,8 +420,6 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 	
 	if mon != null:
 		var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.getHeldItem().alignments
-		if Monster.ALIGNMENT.Kress in mon.getHeldItem().alignments:
-			print("kress!")
 		if mon != null and item.alignment not in allAlignments:
 			if strictMode and !loose:
 				return true

@@ -141,7 +141,7 @@ func onSwitchIn(switchingOut: BattleMonster) -> void:
 		trueDamage(dmg, null, false, false)
 
 func createCardAndAddToHand(cardName: String):
-	await currentHand.storedCards.push_back(battleController.monsterCache.getCardByName(cardName).duplicate())
+	currentHand.storedCards.push_back(battleController.monsterCache.getCardByName(cardName).duplicate())
 
 #returns status effect of specific type
 func getStatus(eff: Status.EFFECTS) -> Status:
