@@ -94,8 +94,10 @@ func _ready() -> void:
 		temp.mouse_exited.connect(_exitTexButton.bind(temp))
 		temp.pressed.connect(_monster_select_pressed.bind(monster))
 		
-		tempLabel.text = monster.name + "\n" + str(Card.ALIGNMENT.keys()[monster.alignment]) \
-		+ "\n" + str(monster.role) + "\n" + str(monster.passive.desc) + "\n" \
+		tempLabel.bbcode_enabled = true
+		
+		tempLabel.text = monster.name + "\n[color={col}]".format({"col": Card.alignemColors[monster.alignment]}) + str(Card.ALIGNMENT.keys()[monster.alignment]) \
+		+ "[/color]\n" + str(monster.passive.desc) + "\n" \
 		+ str(monster.rawHealth * 4) + "/" + str(monster.rawAttack) + "/" \
 		+ str(monster.rawDefense) + "/" + str(monster.rawSpeed)
 		tempLabel.custom_minimum_size = Vector2(1200, 120)

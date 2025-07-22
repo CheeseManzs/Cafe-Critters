@@ -140,7 +140,7 @@ placeholder_text = "Import/Export team here..."
 
 [node name="MonsterSelectPanel" type="Panel" parent="."]
 visible = false
-self_modulate = Color(0.997493, 0.408159, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
 z_index = 10
 layout_mode = 1
 anchors_preset = -1
