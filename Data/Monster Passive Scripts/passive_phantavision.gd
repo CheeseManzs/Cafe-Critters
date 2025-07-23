@@ -11,6 +11,6 @@ func onTurnStart(mon: BattleMonster, battle: BattleController) -> void:
 	
 	if turnCounter == 0:
 		await createFlair(mon)
-		var trapStatus = Status.new(Status.EFFECTS.TRAPPED)
+		var trapStatus = Status.new(Status.EFFECTS.TRAPPED, 1)
 		await battle.getOpposingMon(mon.playerControlled).addStatusCondition(trapStatus,true)
 	
