@@ -13,7 +13,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var extraPower = 0
-	if len(attacker.playedCardCurrentTurnHistory) >= 5:
+	if len(attacker.playedCardLastTurnHistory) >= 5:
 		extraPower = 0.15
 	var dmg = _calcPower(attacker,defender, power + extraPower, false)
 	await defender.trueDamage(dmg, attacker)

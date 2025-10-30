@@ -33,7 +33,8 @@ var playerControlled: bool
 var statusConditions: Array[Status]
 #play history
 var playedCardHistory: Array[Card]
-var playedCardCurrentTurnHistory: Array[Card] # cards played this turn
+var playedCardLastTurnHistory: Array[Card] = []# cards played last turn
+var playedCardCurrentTurnHistory: Array[Card] = [] # cards played this turn
 var addedToGraveyardThisTurn: Array[Card]
 var playedCardThisTurn = false
 var wasAttackedThisTurn = false
@@ -92,7 +93,7 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 
 func addCardToHistory(card: Card):
 	playedCardHistory.push_back(card)
-	playedCardCurrentTurnHistory.push_back(card)
+	playedCardLastTurnHistory.push_back(card)
 
 #applies damage to shield and returns overdamage
 func damageShield(depletionAmount: int) -> int:
@@ -150,6 +151,12 @@ func getStatus(eff: Status.EFFECTS) -> Status:
 		if status.effect == eff && !status.effectDone:
 			return status
 	return null
+
+func getRandomStatus() -> Status:
+	if len(statusConditions) == 0:
+		return null
+	var randIndex = battleController.global_rng.randi_range(0,len(statusConditions) - 1)
+	return statusConditions[randIndex]
 
 func binaryBoostAnim(score, message = ""):
 	var obj: MonsterDisplay = getMonsterDisplay()
@@ -375,6 +382,7 @@ func reset(active = true, forceDraw = false) -> void:
 	wasAttackedThisTurn = false
 	cardsSentToGraveyard = 0
 	addedToGraveyardThisTurn = []
+	playedCardLastTurnHistory = playedCardCurrentTurnHistory
 	playedCardCurrentTurnHistory = []
 	#eternal guardians
 	if hasStatus(Status.EFFECTS.ETERNAL_GUARDIANS):
@@ -519,21 +527,29 @@ func getAttack():
 	var atkUpBonus = 0
 	if hasStatus(Status.EFFECTS.ATTACK_UP):
 		atkUpBonus = 0.05*getStatus(Status.EFFECTS.ATTACK_UP).X
+	if hasStatus(Status.EFFECTS.ATTACK_DOWN):
+		atkUpBonus -= 0.05*getStatus(Status.EFFECTS.ATTACK_DOWN).X
 	
 	var cardBonus = 0
 	
 	if hasCardInHand("The Bluff"):
 		cardBonus += 0.2
 	
-	return attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController) + getHeldItem().getPassive().attackBonus(self,battleController))
+	var atk = attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController) + getHeldItem().getPassive().attackBonus(self,battleController))
+
+	return max(1, atk)
 
 func getDefense():
 	var defUpBonus = 0
 	if hasStatus(Status.EFFECTS.DEFENSE_UP):
 		defUpBonus = 0.05*getStatus(Status.EFFECTS.DEFENSE_UP).X
+	if hasStatus(Status.EFFECTS.DEFENSE_UP):
+		defUpBonus -= 0.05*getStatus(Status.EFFECTS.DEFENSE_DOWN).X
 	
-	return defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))
-
+	var def = defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))
+	
+	return max(1, def)
+	
 func chooseFromGraveyard(cardCount: int):
 	return (await battleController.chooseFromGraveyard(playerControlled, cardCount))
 

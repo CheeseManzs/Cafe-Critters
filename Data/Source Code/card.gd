@@ -160,6 +160,9 @@ func getRealCost() -> int:
 func getCostMod() -> int:
 	return costMod
 
+func earlyEffect(attacker: BattleMonster, defender: BattleMonster):
+	return 0
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
 

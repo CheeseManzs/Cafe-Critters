@@ -9,6 +9,14 @@ func _init() -> void:
 	name = "Meditative Melody"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
+	shieldPower = 0.3
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	
+	if len(attacker.playedCardLastTurnHistory) >= 3:
+		var hpGiven = attacker.getDefense()*shieldPower
+		await attacker.addHP(hpGiven)
+	
+	if len(attacker.playedCardLastTurnHistory) >= 5:
+		await attacker.drawCards(1)

@@ -9,6 +9,10 @@ func _init() -> void:
 	name = "Frequency Isolation"
 	tags = ['Defence', 'Self-Target']
 	rarity = RARITY.Common
+	shieldPower = 0.8
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveShield(attacker, defender)
+	if len(attacker.playedCardLastTurnHistory) >= 3:
+		await attacker.removeStatus(attacker.getRandomStatus().effect)
+	

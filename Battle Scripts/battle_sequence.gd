@@ -49,6 +49,10 @@ func runActions(battleController: BattleController) -> void:
 		if !skipList[skipID]:
 			await monList[skipID].onSkip()
 			
+	for action in actions:
+		if action.card != null:
+			await action.card.earlyEffect(action.battleMonster, action.getTarget())
+			
 	while i+1 < len(actions):
 		i += 1
 		var action = actions[i]

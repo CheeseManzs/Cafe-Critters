@@ -10,5 +10,12 @@ func _init() -> void:
 	tags = ['Utility']
 	rarity = RARITY.Common
 
+func earlyEffect(attacker: BattleMonster, defender: BattleMonster):
+	if len(attacker.playedCardLastTurnHistory) >= 3:
+		priority = 1
+	else:
+		priority = 0
+
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	pass
+	await giveStatus(defender, Status.EFFECTS.ATTACK_DOWN, 1)
+	await giveStatus(defender, Status.EFFECTS.DEFENSE_DOWN, 1)

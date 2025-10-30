@@ -34,6 +34,8 @@ enum EFFECTS {
 	PERFECT_PARRY,
 	ATTACK_UP,
 	DEFENSE_UP,
+	ATTACK_DOWN,
+	DEFENSE_DOWN,
 	CAFFEINATED_OVERDRIVE,
 	INSURANCE,
 	POISON_DIPPED,
@@ -152,6 +154,10 @@ func toMini() -> String:
 			return "ATK"
 		EFFECTS.DEFENSE_UP:
 			return "DEF"
+		EFFECTS.ATTACK_DOWN:
+			return "AKD"
+		EFFECTS.DEFENSE_DOWN:
+			return "DFD"
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return "CAF"
 		EFFECTS.INSURANCE:
@@ -241,6 +247,10 @@ func rawToString() -> String:
 			return "Attack Up"
 		EFFECTS.DEFENSE_UP:
 			return "Defense Up"
+		EFFECTS.ATTACK_UP:
+			return "Attack Down"
+		EFFECTS.DEFENSE_UP:
+			return "Defense Down"
 		EFFECTS.CAFFEINATED_OVERDRIVE:
 			return "Caffeinated Overdrive"
 		EFFECTS.INSURANCE:
