@@ -543,7 +543,7 @@ func getDefense():
 	var defUpBonus = 0
 	if hasStatus(Status.EFFECTS.DEFENSE_UP):
 		defUpBonus = 0.05*getStatus(Status.EFFECTS.DEFENSE_UP).X
-	if hasStatus(Status.EFFECTS.DEFENSE_UP):
+	if hasStatus(Status.EFFECTS.DEFENSE_DOWN):
 		defUpBonus -= 0.05*getStatus(Status.EFFECTS.DEFENSE_DOWN).X
 	
 	var def = defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))

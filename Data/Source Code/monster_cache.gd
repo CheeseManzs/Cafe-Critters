@@ -88,6 +88,8 @@ func encode(cacheArr: Array[Array]) -> String:
 		
 
 func decode(decoding: String) -> Array[Monster]:
+	print("decoding: ")
+	print(decoding)
 	if len(decoding) == 0:
 		return []
 	
@@ -107,6 +109,7 @@ func decode(decoding: String) -> Array[Monster]:
 			cardData[1] = cardData[1].replace(")","")
 			var cardName = cardData[0]
 			var cardCount = int(cardData[1])
+			print("getting " + cardName + " from " + line)
 			var card = getCard(getCardIDByName(cardName))
 			if currentMon == null:
 				return []
@@ -221,12 +224,13 @@ func loadScripts():
 	var filename = dir.get_next()
 	while filename != "":
 		print("checking ",filename)
-		var valid = filename.ends_with(".gd") && filename.contains("FND-")
+		var valid = (filename.ends_with(".gd") || filename.ends_with(".gd.remap")) && filename.contains("FND-")
 		if valid:
 			print("loading ",filename)
 			var absPath = cardScriptsPath+filename
+			absPath = absPath.replace(".remap","")
 			var card = Card.new()
-			card.set_script(load(absPath))
+			card.set_script(ResourceLoader.load(absPath))
 			card._init()
 			print(filename, " > ", card.name)
 			print(filename, " is null: ", (card == null))

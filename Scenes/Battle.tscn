@@ -572,10 +572,11 @@ draw_pass_1 = SubResource("QuadMesh_exho7")
 
 [node name="BGM Player" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("28_r2avy")
-volume_db = -9.0
+volume_db = -25.0
 parameters/looping = true
 script = ExtResource("31_hrdfj")
 audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("42_qj1ib"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj"), ExtResource("48_vovxs")])
+autoSet = 10
 multiplayerGameIndex = 9
 
 [node name="SFX1" type="AudioStreamPlayer" parent="."]

@@ -24,7 +24,12 @@ metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_uu8m1")
-enemyTeamExport = "Ignetor (50) + {Extreme|Revenerator|[\"AN\"]|[1.0,0.12,0.0,0.0]}
+enemyTeamExport = "Phantavision (50) + {Mild|Unremarkable|[\"RE\"]|[0.0,0.0,0.0,0.0]}
+- Paranoia (3)
+- Corner (3)
+- Prime (3)
+- Store Power (3)
+Ignetor (50) + {Extreme|Revenerator|[\"AN\"]|[1.0,0.12,0.0,0.0]}
 - Attack Up (3)
 - Sneak Attack (3)
 - Strike (3)
@@ -34,11 +39,7 @@ Slocha (50) + {Extreme|Revenerator|[\"DE\"]|[1.0,0.0,0.0,0.0]}
 - Prime (3)
 - Assist (3)
 - Sneak Attack (3)
-- Bolster (3)
-Hooliquen (50) + {Extreme|Machine|[\"JA\"]|[0.0,0.0,0.0,1.0]}
-- Up the Ante (3)
-- Sneak Attack (3)
-- Assist (3)"
+- Bolster (3)"
 debugPersonality = SubResource("Resource_eb42p")
 
 [node name="Control UI" type="Control" parent="."]
@@ -130,20 +131,27 @@ teamPacker = ExtResource("11_ji716")
 debugManager = NodePath("..")
 lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Join)"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Battle Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Overworld Button"), NodePath("../Control UI/HBoxContainer/VBoxContainer2/Deck Editor Button")]
 defaultPersonality = SubResource("Resource_7t0me")
-defaultTeam = "Ignetor (50)
-- Cleave (3)
+defaultTeam = "```
+Rev (50)
+- Corner (3)
+- Ominous Vision (3)
+- Scavenge (3)
+- Strike (3)
+- Block (3)
+- Light Strike (3)
+- Light Block (3)
+Inkhor (50)
+- Strike (1)
 - Attack Up (3)
-- Sneak Attack (3)
-Slocha (50)
-- Heal (3)
+- Defense Up (3)
+- Bolster (3)
+- Recycle (3)
+Junkguard (50)
+- Defense Up (3)
 - Block (3)
 - Shield Slap (3)
-- Prime (3)
-- Assist (3)
-- Sneak Attack (3)
-Hooliquen (50)
-- Up the Ante (3)
-- Sneak Attack (3)"
+- Tanking (3)
+```"
 
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Battle Button" to="." method="loadScene" binds= ["Battle"]]
 [connection signal="pressed" from="Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)" to="Network Manager Settings" method="_on_online_battle_host_pressed"]
