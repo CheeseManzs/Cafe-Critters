@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://p6q8cguee21j"]
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://p6q8cguee21j"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_j726d"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_bjdx7"]
@@ -9,8 +9,6 @@
 
 [sub_resource type="Resource" id="Resource_3wnx5"]
 script = ExtResource("1_j726d")
-name = ""
-storedCards = Array[ExtResource("2_bjdx7")]([])
 metadata/_custom_type_script = "uid://ck6kibtk6piq4"
 
 [sub_resource type="Resource" id="Resource_s13md"]
@@ -22,26 +20,16 @@ storedCards = Array[ExtResource("2_bjdx7")]([ExtResource("6_3wnx5")])
 script = ExtResource("2_ll0hc")
 id = 5
 name = "Snake Eyes"
-tags = Array[String]([])
 alignment = 6
 role = "Point"
-dexEntry = ""
 sprite = ExtResource("3_ll0hc")
 spriteScale = 0.019
 passive = ExtResource("3_bjdx7")
 deck = SubResource("Resource_3wnx5")
 startingCardPool = SubResource("Resource_s13md")
-levelupCards = Array[ExtResource("1_j726d")]([])
 rawHealth = 7
 rawAttack = 11
 rawDefense = 7
 rawSpeed = 11
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
 level = 1
-battleOffset = Vector2(0, 0)
 metadata/_custom_type_script = "uid://c4ll0oxv5iqop"

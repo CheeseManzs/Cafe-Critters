@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://cpf4dy38n68y2"]
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://cpf4dy38n68y2"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_517cx"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_8ybf3"]
@@ -9,8 +9,6 @@
 
 [sub_resource type="Resource" id="Resource_rsf8y"]
 script = ExtResource("1_517cx")
-name = ""
-storedCards = Array[ExtResource("2_h8b7h")]([])
 
 [sub_resource type="Resource" id="Resource_7ku6v"]
 script = ExtResource("1_517cx")
@@ -24,22 +22,13 @@ name = "Ignetor"
 tags = Array[String](["Machine"])
 alignment = 3
 role = "Forward"
-dexEntry = ""
 sprite = ExtResource("12_e728s")
 spriteScale = 0.667
 passive = ExtResource("9_p6ryl")
 deck = SubResource("Resource_rsf8y")
 startingCardPool = SubResource("Resource_7ku6v")
-levelupCards = Array[ExtResource("1_517cx")]([])
 rawHealth = 5
 rawAttack = 12
 rawDefense = 10
 rawSpeed = 4
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
 level = 50
-battleOffset = Vector2(0, 0)

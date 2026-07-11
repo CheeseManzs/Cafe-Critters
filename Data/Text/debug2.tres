@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ZDialog" load_steps=6 format=3 uid="uid://bvukhld3krhpq"]
+[gd_resource type="Resource" script_class="ZDialog" format=3 uid="uid://bvukhld3krhpq"]
 
 [ext_resource type="Script" uid="uid://j2bcgl8rpmpy" path="res://Data/Source Code/z_dialog.gd" id="1_kiem3"]
 [ext_resource type="Script" uid="uid://brscqhcfm45di" path="res://Data/Source Code/z_text.gd" id="2_oe66b"]
@@ -9,24 +9,12 @@ script = ExtResource("2_oe66b")
 text = "hey! check out this cool feature!"
 speakerName = "John Cena"
 speakerSprite = ExtResource("3_nyaus")
-conditionalNames = Array[String]([])
-conditionalLines = Array[ExtResource("1_kiem3")]([])
-startEffects = Array[int]([])
-startMetadata = []
-endEffects = Array[int]([])
-endMetadata = []
 
 [sub_resource type="Resource" id="Resource_yhk3b"]
 script = ExtResource("2_oe66b")
 text = "We can write these by hand! This honestly just kinda feels tedious but it's probably fine(?)"
 speakerName = "John Cena"
 speakerSprite = ExtResource("3_nyaus")
-conditionalNames = Array[String]([])
-conditionalLines = Array[ExtResource("1_kiem3")]([])
-startEffects = Array[int]([])
-startMetadata = []
-endEffects = Array[int]([])
-endMetadata = []
 
 [resource]
 script = ExtResource("1_kiem3")

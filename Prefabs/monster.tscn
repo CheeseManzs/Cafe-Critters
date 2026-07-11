@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dnrf07o2xqjni"]
+[gd_scene format=3 uid="uid://dnrf07o2xqjni"]
 
 [ext_resource type="Script" uid="uid://o7ay4tsfe8sc" path="res://Battle Scripts/monster_obj.gd" id="1_8ie6h"]
 [ext_resource type="Resource" uid="uid://bepmuf4wv2p6v" path="res://Data/Monsters/ph_mon1.tres" id="2_cy5to"]
@@ -316,7 +316,7 @@ sections = 4
 section_segments = 2
 curve = SubResource("Curve_bdgis")
 
-[node name="Monster" type="Node3D" node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles", "sprite", "statusList")]
+[node name="Monster" type="Node3D" unique_id=1813049197 node_paths=PackedStringArray("shieldParticles", "boostParticles", "unboostParticles", "empowerParticles", "sprite", "statusList")]
 script = ExtResource("1_8ie6h")
 shieldParticles = NodePath("Shield Particles")
 boostParticles = NodePath("Boost Particles")
@@ -328,22 +328,22 @@ statusIconPrefab = ExtResource("5_vrexm")
 metadata/Monster_Data = ExtResource("2_cy5to")
 metadata/playerControlled = true
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=941240181]
 alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("3_ugrdx")
 
-[node name="Shield Particles" type="GPUParticles3D" parent="."]
+[node name="Shield Particles" type="GPUParticles3D" parent="." unique_id=2040249584]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.340789, 0)
 emitting = false
 amount = 100
 lifetime = 4.0
 trail_enabled = true
-trail_lifetime = 0.01
+trail_lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_wdg5y")
 draw_pass_1 = SubResource("RibbonTrailMesh_svi53")
 
-[node name="Empower Particles" type="GPUParticles3D" parent="."]
+[node name="Empower Particles" type="GPUParticles3D" parent="." unique_id=321062645]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
 emitting = false
 amount = 5
@@ -354,7 +354,7 @@ trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_40ngf")
 draw_pass_1 = SubResource("RibbonTrailMesh_m0xty")
 
-[node name="Boost Particles" type="GPUParticles3D" parent="."]
+[node name="Boost Particles" type="GPUParticles3D" parent="." unique_id=1691902053]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
 emitting = false
 amount = 30
@@ -362,11 +362,11 @@ lifetime = 0.6
 one_shot = true
 local_coords = true
 trail_enabled = true
-trail_lifetime = 0.01
+trail_lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_4yrva")
 draw_pass_1 = SubResource("RibbonTrailMesh_8ci5b")
 
-[node name="Unboost Particles" type="GPUParticles3D" parent="."]
+[node name="Unboost Particles" type="GPUParticles3D" parent="." unique_id=2000201860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.145758, 0)
 emitting = false
 amount = 30
@@ -374,11 +374,11 @@ lifetime = 0.6
 one_shot = true
 local_coords = true
 trail_enabled = true
-trail_lifetime = 0.01
+trail_lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_2c1q0")
 draw_pass_1 = SubResource("RibbonTrailMesh_h6eo3")
 
-[node name="Status List" type="Node3D" parent="." node_paths=PackedStringArray("monsterObject")]
+[node name="Status List" type="Node3D" parent="." unique_id=741670099 node_paths=PackedStringArray("monsterObject")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("4_og4gj")
 monsterObject = NodePath("..")

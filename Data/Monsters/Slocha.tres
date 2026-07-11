@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://bbmecjegxa3d3"]
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://bbmecjegxa3d3"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_7umar"]
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_qo6j8"]
@@ -9,8 +9,6 @@
 
 [sub_resource type="Resource" id="Resource_jeqqs"]
 script = ExtResource("1_qo6j8")
-name = ""
-storedCards = Array[ExtResource("2_lxcvb")]([])
 
 [sub_resource type="Resource" id="Resource_j55i4"]
 script = ExtResource("1_qo6j8")
@@ -22,25 +20,15 @@ resource_local_to_scene = true
 script = ExtResource("1_7umar")
 id = 2
 name = "Slocha"
-tags = Array[String]([])
-alignment = 0
 role = "Point"
 dexEntry = "the coffee on its back is rumoured to cause immortality. these rumours have never once been substantiated."
 sprite = ExtResource("16_jyqkw")
-spriteScale = 1.0
 passive = ExtResource("3_j28od")
 deck = SubResource("Resource_jeqqs")
 startingCardPool = SubResource("Resource_j55i4")
-levelupCards = Array[ExtResource("1_qo6j8")]([])
 rawHealth = 12
 rawAttack = 8
 rawDefense = 12
 rawSpeed = 4
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
 level = 50
 battleOffset = Vector2(0, -2)

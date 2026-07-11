@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=8 format=3 uid="uid://ld42hgtnipls"]
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://ld42hgtnipls"]
 
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_mkiur"]
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="2_dbcrm"]
@@ -16,24 +16,14 @@ storedCards = Array[ExtResource("2_vs0ux")]([ExtResource("3_uxiga")])
 script = ExtResource("2_dbcrm")
 id = 4
 name = "Rev"
-tags = Array[String]([])
 alignment = 2
 role = "Guard"
-dexEntry = ""
 sprite = ExtResource("3_fsk0c")
 spriteScale = 0.028
 passive = ExtResource("5_g2my1")
 deck = SubResource("Resource_uxiga")
-levelupCards = Array[ExtResource("1_mkiur")]([])
 rawHealth = 7
 rawAttack = 7
 rawDefense = 7
 rawSpeed = 16
-levelingType = ""
-levelingItems = Array[String]([])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
 level = 50
-battleOffset = Vector2(0, 0)

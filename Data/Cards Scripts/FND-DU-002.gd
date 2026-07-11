@@ -19,3 +19,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 func calcStatusGiven(attacker: BattleMonster, defender: BattleMonster):
 	if attacker.hasStatus(Status.EFFECTS.FOCUS) || attacker.hasStatus(Status.EFFECTS.FATIGUE):
 		return Status.new(Status.EFFECTS.FOCUS, 2)
+	return null

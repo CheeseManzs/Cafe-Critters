@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d07fdcyc88i5y"]
+[gd_scene format=3 uid="uid://d07fdcyc88i5y"]
 
 [ext_resource type="Script" uid="uid://dhukcpk4dcwm4" path="res://Controller Scripts/title.gd" id="1_uu8m1"]
 [ext_resource type="Script" uid="uid://b05gspdpjvbuc" path="res://Battle Scripts/ai_personality.gd" id="6_3vadh"]
@@ -8,21 +8,14 @@
 [sub_resource type="Resource" id="Resource_eb42p"]
 script = ExtResource("6_3vadh")
 aggression = 5.0
-caution = 1.0
-mechanics = 1.0
 standards = 2.0
 opportunism = 10.0
 
 [sub_resource type="Resource" id="Resource_7t0me"]
 script = ExtResource("6_3vadh")
-aggression = 1.0
-caution = 1.0
-mechanics = 1.0
-standards = 0.0
-opportunism = 1.0
 metadata/_custom_type_script = "uid://b05gspdpjvbuc"
 
-[node name="Title" type="Node2D"]
+[node name="Title" type="Node2D" unique_id=1845438863]
 script = ExtResource("1_uu8m1")
 enemyTeamExport = "Phantavision (50) + {Mild|Unremarkable|[\"RE\"]|[0.0,0.0,0.0,0.0]}
 - Paranoia (3)
@@ -42,7 +35,7 @@ Slocha (50) + {Extreme|Revenerator|[\"DE\"]|[1.0,0.0,0.0,0.0]}
 - Bolster (3)"
 debugPersonality = SubResource("Resource_eb42p")
 
-[node name="Control UI" type="Control" parent="."]
+[node name="Control UI" type="Control" parent="." unique_id=400986445]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,7 +45,7 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control UI"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI" unique_id=1349602237]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -67,62 +60,62 @@ bbcode_enabled = true
 text = "[center]Café Critters[/center]
 [center][color=gold]Debug Test[/color][/center]"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control UI"]
-layout_mode = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="Control UI" unique_id=526134781]
+layout_mode = 0
 offset_top = 270.0
 offset_right = 1920.0
 offset_bottom = 863.0
 alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control UI/HBoxContainer" unique_id=653669844]
 layout_mode = 2
 
-[node name="Battle Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="Battle Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=1992151966]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Battle"
 
-[node name="Online Battle (Host)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="Online Battle (Host)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=797916267]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Host"
 
-[node name="Online Battle (Join)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="Online Battle (Join)" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=621940131]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Join"
 
-[node name="IP Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="IP Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=775227116]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 text = "Not Connected"
 
-[node name="Overworld Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="Overworld Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=243391086]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Debug Overworld"
 
-[node name="Deck Editor Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2"]
+[node name="Deck Editor Button" type="Button" parent="Control UI/HBoxContainer/VBoxContainer2" unique_id=356672816]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Deck Editor"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/HBoxContainer" unique_id=311823357]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 
-[node name="Team Selection Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer"]
+[node name="Team Selection Box" type="TextEdit" parent="Control UI/HBoxContainer/VBoxContainer" unique_id=1441470471]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 3
 text = "Connecting..."
 
-[node name="Network Manager Settings" type="Node" parent="." node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
+[node name="Network Manager Settings" type="Node" parent="." unique_id=510192146 node_paths=PackedStringArray("ipDisplay", "ipText", "teamText", "debugManager", "lockedButtons")]
 script = ExtResource("10_7t0me")
 ipDisplay = NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Battle (Host)")
 ipText = NodePath("../Control UI/HBoxContainer/VBoxContainer2/IP Box")

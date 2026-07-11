@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Monster" load_steps=9 format=3 uid="uid://b3rp3vvccagnq"]
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://b3rp3vvccagnq"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_i2xwq"]
 [ext_resource type="Texture2D" uid="uid://duc8et87moyqr" path="res://Graphics/Monsters/temp_hooliquen.png" id="2_1jaoc"]
@@ -9,8 +9,6 @@
 
 [sub_resource type="Resource" id="Resource_y5cq6"]
 script = ExtResource("2_j0ra4")
-name = ""
-storedCards = Array[ExtResource("3_rwnvh")]([])
 
 [sub_resource type="Resource" id="Resource_5u6vm"]
 script = ExtResource("2_j0ra4")
@@ -21,25 +19,17 @@ storedCards = Array[ExtResource("3_rwnvh")]([ExtResource("6_ungb0")])
 script = ExtResource("1_i2xwq")
 id = 1
 name = "Hooliquen"
-tags = Array[String]([])
 alignment = 6
 role = "Forward"
 dexEntry = "stabs people with its spear. objectively evil. if you meet one on the street, run away and don't look back."
 sprite = ExtResource("2_1jaoc")
-spriteScale = 1.0
 passive = ExtResource("5_jb0h0")
 deck = SubResource("Resource_y5cq6")
 startingCardPool = SubResource("Resource_5u6vm")
-levelupCards = Array[ExtResource("2_j0ra4")]([])
 rawHealth = 9
 rawAttack = 7
 rawDefense = 5
 rawSpeed = 11
 levelingType = "elemental"
 levelingItems = Array[String](["drnk_generic_1", "drnk_jacks_1", "drnk_generic_2", "drnk_jacks_2", "drnk_generic_3", "drnk_jacks_3"])
-statHealth = []
-statAttack = []
-statDefense = []
-statSpeed = []
 level = 50
-battleOffset = Vector2(0, 0)
