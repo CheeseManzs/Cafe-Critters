@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 	scale = lerp(scale, Vector2(1, 1),delta*16)
 	mpText.text = "[center]"+str(battleController.playerMP)+"[/center]"
 	var dt: float = battleController.playerMP - mpFill.value
-	var normalDT: float = dt/abs(dt)
+	var normalDT: float = dt/abs(dt) if dt != 0 else 0
 	mpFill.value += normalDT*delta
 
 	if abs(mpFill.value - battleController.playerMP) < delta*6:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://ndn4xwrerfcs"]
+[gd_scene format=3 uid="uid://ndn4xwrerfcs"]
 
 [ext_resource type="Script" uid="uid://ds6y71to2odr" path="res://Battle Scripts/battle_camera.gd" id="1_2fux1"]
 [ext_resource type="Script" uid="uid://2agtjocn5cbo" path="res://Battle Scripts/battle_controller.gd" id="2_q8xso"]
@@ -135,9 +135,9 @@ turbulence_influence_max = 0.05
 material = SubResource("StandardMaterial3D_myw15")
 size = Vector2(0.1, 0.005)
 
-[node name="Battle" type="Node3D"]
+[node name="Battle" type="Node3D" unique_id=776685142]
 
-[node name="Battle Controller" type="Node3D" parent="." node_paths=PackedStringArray("dashParticles", "detailsPanel", "graveyardDisplay", "audioPlayers", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
+[node name="Battle Controller" type="Node3D" parent="." unique_id=248677206 node_paths=PackedStringArray("dashParticles", "detailsPanel", "graveyardDisplay", "audioPlayers", "playerUI", "enemyUI", "shelfedMonUI", "skipButton", "deckController")]
 script = ExtResource("2_q8xso")
 monsterCache = ExtResource("2_ta4pc")
 dashParticles = NodePath("../DashParticles")
@@ -160,14 +160,14 @@ skipButton = NodePath("../Control UI/Shelfed Mon View/Skip Button")
 cardPrefab = ExtResource("8_8v3xb")
 deckController = NodePath("../Control UI/Deck Pivot")
 
-[node name="Control UI" type="Control" parent="."]
+[node name="Control UI" type="Control" parent="." unique_id=411436948]
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 
-[node name="Battle Log" type="VBoxContainer" parent="Control UI"]
+[node name="Battle Log" type="VBoxContainer" parent="Control UI" unique_id=1045348964]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -179,24 +179,24 @@ grow_horizontal = 0
 script = ExtResource("9_hlkm1")
 logPrefab = ExtResource("10_lhlt3")
 
-[node name="Player Mon Details" parent="Control UI" instance=ExtResource("12_7i88x")]
+[node name="Player Mon Details" parent="Control UI" unique_id=842148581 instance=ExtResource("12_7i88x")]
 custom_minimum_size = Vector2(500, 75)
-layout_mode = 2
+layout_mode = 0
 offset_left = 55.0
 offset_top = 45.0
 offset_right = 555.0
 offset_bottom = 120.0
 
-[node name="Enemy Mon Details2" parent="Control UI" instance=ExtResource("12_7i88x")]
+[node name="Enemy Mon Details2" parent="Control UI" unique_id=448976612 instance=ExtResource("12_7i88x")]
 custom_minimum_size = Vector2(500, 75)
-layout_mode = 2
+layout_mode = 0
 offset_left = 1794.0
 offset_top = 45.0
 offset_right = 2294.0
 offset_bottom = 120.0
 enemy = true
 
-[node name="Details Panel" type="Panel" parent="Control UI" node_paths=PackedStringArray("titleLabel", "canvasContainer", "displayContainer")]
+[node name="Details Panel" type="Panel" parent="Control UI" unique_id=1972844162 node_paths=PackedStringArray("titleLabel", "canvasContainer", "displayContainer")]
 clip_contents = true
 layout_mode = 1
 offset_left = 560.0
@@ -210,7 +210,7 @@ canvasContainer = NodePath("VBoxContainer/HBoxContainer/Control")
 cardDiplay = ExtResource("15_jwwdp")
 displayContainer = NodePath("VBoxContainer/HBoxContainer/VBoxContainer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel" unique_id=2051687428]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,15 +221,15 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Control UI/Details Panel/VBoxContainer"]
+[node name="Panel" type="Panel" parent="Control UI/Details Panel/VBoxContainer" unique_id=1213559341]
 custom_minimum_size = Vector2(800, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6xl4r")
 
-[node name="Title" type="RichTextLabel" parent="Control UI/Details Panel/VBoxContainer/Panel"]
-clip_contents = false
+[node name="Title" type="RichTextLabel" parent="Control UI/Details Panel/VBoxContainer/Panel" unique_id=343576283]
 custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
+clip_contents = false
+layout_mode = 0
 offset_top = 4.0
 offset_right = 800.0
 offset_bottom = 84.0
@@ -237,21 +237,21 @@ theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[center]Koraidon[/center]"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control UI/Details Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control UI/Details Panel/VBoxContainer" unique_id=1640908833]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer"]
-clip_contents = true
+[node name="Control" type="Control" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer" unique_id=2016093002]
 custom_minimum_size = Vector2(300, 400)
+clip_contents = true
 layout_mode = 2
 script = ExtResource("16_l5g38")
 textObj = ExtResource("17_pjlun")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Details Panel/VBoxContainer/HBoxContainer" unique_id=974916525]
 custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 
-[node name="Special Flair" type="Control" parent="Control UI" node_paths=PackedStringArray("label", "panelBG")]
+[node name="Special Flair" type="Control" parent="Control UI" unique_id=1314536689 node_paths=PackedStringArray("label", "panelBG")]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 14
@@ -266,9 +266,9 @@ script = ExtResource("18_bnklp")
 label = NodePath("Panel/VBoxContainer/RichTextLabel")
 panelBG = NodePath("Panel")
 
-[node name="Panel" type="Panel" parent="Control UI/Special Flair"]
-clip_contents = true
+[node name="Panel" type="Panel" parent="Control UI/Special Flair" unique_id=1488773374]
 custom_minimum_size = Vector2(0, 100)
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -278,7 +278,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ifipm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Special Flair/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control UI/Special Flair/Panel" unique_id=2127081917]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -288,7 +288,7 @@ grow_vertical = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control UI/Special Flair/Panel/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control UI/Special Flair/Panel/VBoxContainer" unique_id=1913053983]
 custom_minimum_size = Vector2(1920, 85)
 layout_mode = 2
 mouse_filter = 2
@@ -300,7 +300,7 @@ bbcode_enabled = true
 text = "[center][shake level=15 rate=100][b]Reckless[/b][/shake][/center]"
 scroll_active = false
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Control UI/Special Flair/Panel"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Control UI/Special Flair/Panel" unique_id=1078691388]
 position = Vector2(-20, 50)
 amount = 200
 lifetime = 5.0
@@ -319,7 +319,7 @@ scale_curve_y = SubResource("Curve_hwsx7")
 color = Color(1, 1, 1, 0.533333)
 color_ramp = SubResource("Gradient_2c5nb")
 
-[node name="Background" type="TextureRect" parent="Control UI"]
+[node name="Background" type="TextureRect" parent="Control UI" unique_id=508398162]
 z_index = -3
 layout_mode = 0
 offset_right = 1920.0
@@ -329,7 +329,7 @@ texture = ExtResource("18_8s1nw")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI/Background"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI/Background" unique_id=1405749990]
 show_behind_parent = true
 layout_mode = 0
 offset_top = 32.0
@@ -337,17 +337,17 @@ offset_right = 1920.0
 offset_bottom = 674.0
 mouse_filter = 2
 
-[node name="SubViewport" type="SubViewport" parent="Control UI/Background/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Control UI/Background/SubViewportContainer" unique_id=1555838132]
 handle_input_locally = false
 size = Vector2i(1920, 642)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="Control UI/Background/SubViewportContainer/SubViewport" node_paths=PackedStringArray("moveParticles")]
+[node name="Camera3D" type="Camera3D" parent="Control UI/Background/SubViewportContainer/SubViewport" unique_id=1114237565 node_paths=PackedStringArray("moveParticles")]
 transform = Transform3D(1, 0, 0, 0, 0.996077, 0.0884949, 0, -0.0884949, 0.996077, 0, 0.902906, 2.13112)
 script = ExtResource("1_2fux1")
 moveParticles = NodePath("CamDashParticles")
 
-[node name="CamDashParticles" type="GPUParticles3D" parent="Control UI/Background/SubViewportContainer/SubViewport/Camera3D"]
+[node name="CamDashParticles" type="GPUParticles3D" parent="Control UI/Background/SubViewportContainer/SubViewport/Camera3D" unique_id=169857804]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171837, -1.93416)
 amount = 10000
 lifetime = 0.3
@@ -356,7 +356,7 @@ visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
 process_material = SubResource("ParticleProcessMaterial_bd3ru")
 draw_pass_1 = SubResource("QuadMesh_o1je0")
 
-[node name="Panel" type="Panel" parent="Control UI/Background"]
+[node name="Panel" type="Panel" parent="Control UI/Background" unique_id=1700057941]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -369,7 +369,7 @@ grow_vertical = 2
 scale = Vector2(0.333, 0.333)
 theme_override_styles/panel = SubResource("StyleBoxTexture_4b0ij")
 
-[node name="MP Fill" type="Control" parent="Control UI"]
+[node name="MP Fill" type="Control" parent="Control UI" unique_id=442894308]
 anchors_preset = 0
 offset_left = 738.0
 offset_top = 512.0
@@ -378,8 +378,8 @@ offset_bottom = 851.0
 scale = Vector2(0.343, 0.343)
 pivot_offset = Vector2(223, 169)
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Control UI/MP Fill"]
-layout_mode = 2
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control UI/MP Fill" unique_id=1077009728]
+layout_mode = 0
 offset_left = 3.44824
 offset_right = 449.448
 offset_bottom = 339.0
@@ -390,7 +390,7 @@ fill_mode = 3
 texture_progress = ExtResource("20_u32s6")
 tint_progress = Color(0, 0, 0.368627, 0.619608)
 
-[node name="MP Container" type="VBoxContainer" parent="Control UI" node_paths=PackedStringArray("battleController", "mpFill", "mpText")]
+[node name="MP Container" type="VBoxContainer" parent="Control UI" unique_id=2111507519 node_paths=PackedStringArray("battleController", "mpFill", "mpText")]
 layout_mode = 0
 offset_left = 913.0
 offset_top = 630.0
@@ -404,19 +404,19 @@ mpFill = NodePath("../MP Fill/TextureProgressBar")
 mpText = NodePath("MP Text")
 player = true
 
-[node name="MP Text" type="RichTextLabel" parent="Control UI/MP Container"]
+[node name="MP Text" type="RichTextLabel" parent="Control UI/MP Container" unique_id=1127356812]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.148602, 0.376505, 0.97244, 1)
-theme_override_constants/outline_size = 20
 theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 20
 theme_override_fonts/normal_font = ExtResource("21_nisc0")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "[center]6[/center]"
 scroll_active = false
 
-[node name="Turn Text Container" type="VBoxContainer" parent="Control UI" node_paths=PackedStringArray("battleController", "label")]
+[node name="Turn Text Container" type="VBoxContainer" parent="Control UI" unique_id=488345848 node_paths=PackedStringArray("battleController", "label")]
 layout_mode = 0
 offset_left = 909.0
 offset_top = 9.0
@@ -428,25 +428,25 @@ script = ExtResource("23_qnbl5")
 battleController = NodePath("../../Battle Controller")
 label = NodePath("Turn Text")
 
-[node name="Turn Text" type="RichTextLabel" parent="Control UI/Turn Text Container"]
+[node name="Turn Text" type="RichTextLabel" parent="Control UI/Turn Text Container" unique_id=671055975]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.270172, 0.152513, 0.0106439, 1)
 theme_override_colors/font_outline_color = Color(0.67451, 0.529412, 0.0941176, 1)
-theme_override_constants/outline_size = 10
 theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 10
 theme_override_fonts/normal_font = ExtResource("21_nisc0")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "[center]6[/center]"
 scroll_active = false
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control UI" unique_id=159892860]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="SubViewport" type="SubViewport" parent="Control UI/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Control UI/SubViewportContainer" unique_id=1477078381]
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 3
@@ -454,28 +454,28 @@ screen_space_aa = 1
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="Dice Camera" type="Camera3D" parent="Control UI/SubViewportContainer/SubViewport"]
+[node name="Dice Camera" type="Camera3D" parent="Control UI/SubViewportContainer/SubViewport" unique_id=9222120]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 100, -14.134, 0)
 environment = SubResource("Environment_7estt")
 projection = 1
 size = 10.0
 
-[node name="SubWorld" type="Node3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera"]
+[node name="SubWorld" type="Node3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera" unique_id=244964080]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.81097e-07, -6.43075)
 
-[node name="Dice" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld" instance=ExtResource("24_wcq6s")]
+[node name="Dice" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld" unique_id=1618932251 instance=ExtResource("24_wcq6s")]
 transform = Transform3D(0.853796, 0.353489, -0.382201, -2.27565e-08, 0.734145, 0.678993, 0.520607, -0.579722, 0.62681, 0, -6.32587, 2.62245)
 
-[node name="Node3D" type="Node3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld"]
+[node name="Node3D" type="Node3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld" unique_id=640117764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40759e-07, 3.22019)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld/Node3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld/Node3D" unique_id=987056049]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld/Node3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Control UI/SubViewportContainer/SubViewport/Dice Camera/SubWorld/Node3D/StaticBody3D" unique_id=1240970643]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.531113, -1.8763, -6.20004)
 shape = SubResource("BoxShape3D_e7phk")
 
-[node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI"]
+[node name="Shelfed Mon View" type="VBoxContainer" parent="Control UI" unique_id=783314364]
 z_index = 1
 layout_mode = 0
 offset_left = 128.0
@@ -483,28 +483,28 @@ offset_top = 175.0
 offset_right = 428.0
 offset_bottom = 435.0
 
-[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+[node name="Shelfed Mon UI" parent="Control UI/Shelfed Mon View" unique_id=1217815710 node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 custom_minimum_size = Vector2(300, 66.655)
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+[node name="Shelfed Mon UI2" parent="Control UI/Shelfed Mon View" unique_id=1214101233 node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 custom_minimum_size = Vector2(300, 66.655)
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
+[node name="Shelfed Mon UI3" parent="Control UI/Shelfed Mon View" unique_id=1707587435 node_paths=PackedStringArray("battleController") instance=ExtResource("13_dhyla")]
 custom_minimum_size = Vector2(300, 66.655)
 layout_mode = 2
 battleController = NodePath("../../../Battle Controller")
 
-[node name="Skip Button" type="Button" parent="Control UI/Shelfed Mon View"]
+[node name="Skip Button" type="Button" parent="Control UI/Shelfed Mon View" unique_id=1054745389]
 z_index = 40
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Skip"
 
-[node name="Deck Pivot" type="Control" parent="Control UI"]
+[node name="Deck Pivot" type="Control" parent="Control UI" unique_id=833235343]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -517,7 +517,7 @@ grow_vertical = 0
 script = ExtResource("22_wgwlo")
 cardBackPrefab = ExtResource("5_1cnu7")
 
-[node name="Graveyard Display" type="Control" parent="." node_paths=PackedStringArray("cardContainer", "background")]
+[node name="Graveyard Display" type="Control" parent="." unique_id=1866670539 node_paths=PackedStringArray("cardContainer", "background")]
 z_index = 1000
 layout_mode = 3
 anchors_preset = 15
@@ -531,7 +531,7 @@ cardContainer = NodePath("ScrollContainer/MarginContainer/Card Container")
 background = NodePath("Background")
 openingCurve = SubResource("Curve_66d1q")
 
-[node name="Background" type="Control" parent="Graveyard Display"]
+[node name="Background" type="Control" parent="Graveyard Display" unique_id=767014636]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -540,7 +540,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Graveyard Display"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Graveyard Display" unique_id=66484098]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -548,21 +548,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Graveyard Display/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Graveyard Display/ScrollContainer" unique_id=1046854651]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 300
 theme_override_constants/margin_right = -1920
 theme_override_constants/margin_bottom = -300
 
-[node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer/MarginContainer"]
+[node name="Card Container" type="GridContainer" parent="Graveyard Display/ScrollContainer/MarginContainer" unique_id=242894882]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/v_separation = 400
 columns = 5
 
-[node name="DashParticles" type="GPUParticles3D" parent="."]
+[node name="DashParticles" type="GPUParticles3D" parent="." unique_id=1293155532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.89653, 0, 0)
 amount = 25
 lifetime = 0.1
@@ -570,26 +570,25 @@ preprocess = 0.5
 process_material = SubResource("ParticleProcessMaterial_3478b")
 draw_pass_1 = SubResource("QuadMesh_exho7")
 
-[node name="BGM Player" type="AudioStreamPlayer" parent="."]
+[node name="BGM Player" type="AudioStreamPlayer" parent="." unique_id=339091908]
 stream = ExtResource("28_r2avy")
-volume_db = -25.0
+volume_db = -10.569
 parameters/looping = true
 script = ExtResource("31_hrdfj")
 audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("42_qj1ib"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj"), ExtResource("48_vovxs")])
-autoSet = 10
-multiplayerGameIndex = 9
+multiplayerGameIndex = -1
 
-[node name="SFX1" type="AudioStreamPlayer" parent="."]
+[node name="SFX1" type="AudioStreamPlayer" parent="." unique_id=1328530875]
 
-[node name="SFX2" type="AudioStreamPlayer" parent="."]
+[node name="SFX2" type="AudioStreamPlayer" parent="." unique_id=843142881]
 
-[node name="SFX3" type="AudioStreamPlayer" parent="."]
+[node name="SFX3" type="AudioStreamPlayer" parent="." unique_id=851086156]
 
-[node name="SFX4" type="AudioStreamPlayer" parent="."]
+[node name="SFX4" type="AudioStreamPlayer" parent="." unique_id=1974133432]
 
-[node name="SFX5" type="AudioStreamPlayer" parent="."]
+[node name="SFX5" type="AudioStreamPlayer" parent="." unique_id=437648113]
 
-[node name="BG Manager" type="Control" parent="." node_paths=PackedStringArray("container")]
+[node name="BG Manager" type="Control" parent="." unique_id=1438586107 node_paths=PackedStringArray("container")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("46_csjxp")
