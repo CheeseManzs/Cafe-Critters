@@ -349,7 +349,7 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 
 	for rawKeywordString in Keyword.keywords:
 		var spaces = rawKeywordString.count(" ")
-		for ending in ["","."]:
+		for ending in ["",".",":"]:
 			var keywordString = rawKeywordString + ending
 			var atkDescInd = description.find(keywordString)
 			while atkDescInd != -1:
