@@ -6,12 +6,14 @@ uid="uid://cpqpycj36a2ia"
 
 [deps]
 
-files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Role.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Priority.translation", "res://Data/Cards Scripts/card_list.Simplified Description.translation", "res://Data/Cards Scripts/card_list.Card Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation", "res://Data/Cards Scripts/card_list.Implemented.translation", "res://Data/Cards Scripts/card_list.Column 1.translation", "res://Data/Cards Scripts/card_list.Column 2.translation"]
+files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Archetype.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Speed.translation", "res://Data/Cards Scripts/card_list.Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation"]
 
 source_file="res://Data/Cards Scripts/card_list.csv"
-dest_files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Role.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Priority.translation", "res://Data/Cards Scripts/card_list.Simplified Description.translation", "res://Data/Cards Scripts/card_list.Card Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation", "res://Data/Cards Scripts/card_list.Implemented.translation", "res://Data/Cards Scripts/card_list.Column 1.translation", "res://Data/Cards Scripts/card_list.Column 2.translation"]
+dest_files=["res://Data/Cards Scripts/card_list.Name.translation", "res://Data/Cards Scripts/card_list.God.translation", "res://Data/Cards Scripts/card_list.Rarity.translation", "res://Data/Cards Scripts/card_list.Tags.translation", "res://Data/Cards Scripts/card_list.Archetype.translation", "res://Data/Cards Scripts/card_list.Cost.translation", "res://Data/Cards Scripts/card_list.Speed.translation", "res://Data/Cards Scripts/card_list.Description.translation", "res://Data/Cards Scripts/card_list.WIP Status.translation"]
 
 [params]
 
 compress=true
 delimiter=0
+unescape_keys=false
+unescape_translations=true

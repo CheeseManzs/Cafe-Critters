@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dsn4qtpfxkf7"
+
+[deps]
+
+files=["res://Data/Cards Scripts/card_keywords.Take the top X cards of your deck and put it into your graveyard.translation"]
+
+source_file="res://Data/Cards Scripts/card_keywords.csv"
+dest_files=["res://Data/Cards Scripts/card_keywords.Take the top X cards of your deck and put it into your graveyard.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

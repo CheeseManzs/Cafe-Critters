@@ -10,8 +10,7 @@ func _init() -> void:
 \tcost = {card["Cost"]}
 \tpriority = {card["Priority"]}
 \talignment = ALIGNMENT.{card["God"]}
-\trole = "{card["Role"]}"
-\tdescription = "{card["Simplified Description"]}"
+\tdescription = "{card["Description"]}"
 \tname = "{card["Name"]}"
 \ttags = {card["Tags"]}
 \trarity = RARITY.{card["Rarity"]}
@@ -24,13 +23,17 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
         o.write(filetext)
         o.close()
         print("wrote to " + filename)
+    else:
+        print(f"{filename} already exists")
 
 card_file = open("card_list.csv")
 cards = csv.reader(card_file, delimiter=',', quotechar='"')
+
 for card in cards:
-    keys = "Code #,Name,God,Rarity,Tags,Role,Cost,Priority,Simplified Description,Card Description,WIP Status,Implemented".split(",")
+    keys = "Code #,Name,God,Rarity,Tags,Archetype,Cost,Priority,Description,WIP Status,Implemented".split(",")
     card_obj = {}
     index = 0
+
     for key in keys:
         card_obj[key] = card[index]
         index += 1
@@ -42,8 +45,8 @@ for card in cards:
     card_obj["Tags"] = str(tag_list)
 
     card_obj["God"] = card_obj["God"].split(" ")[0]
-    
-    if card_obj["Simplified Description"] != "" and card_obj["WIP Status"] == "V4 Updated" and card_obj["Code #"] != "":
+
+    if card_obj["Description"] != "" and card_obj["Code #"] != "":
         print("---")
         print(card_obj)
         gen_program(card_obj)
