@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddw7raemmtnam"]
+[gd_scene format=3 uid="uid://ddw7raemmtnam"]
 
 [ext_resource type="Script" uid="uid://b8446xekuy6w7" path="res://Prefabs/VFX/effect.gd" id="1_stce1"]
 
@@ -24,12 +24,12 @@ point_count = 3
 offsets = PackedFloat32Array(0.267606, 0.638498, 1)
 colors = PackedColorArray(0.835294, 0, 0, 1, 0.834752, 0.761992, 1.54018e-06, 1, 1, 1, 1, 1)
 
-[node name="Impact" type="Node3D" node_paths=PackedStringArray("particleEmitter")]
+[node name="Impact" type="Node3D" unique_id=272044019 node_paths=PackedStringArray("particleEmitter")]
 transform = Transform3D(1, 0, 0, 0, -0.0838692, -0.996477, 0, 0.996477, -0.0838692, 0, 0, 0)
 script = ExtResource("1_stce1")
 particleEmitter = NodePath("CPUParticles3D")
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=868991812]
 emitting = false
 amount = 50
 lifetime = 0.5

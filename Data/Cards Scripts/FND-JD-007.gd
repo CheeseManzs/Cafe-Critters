@@ -8,6 +8,11 @@ func _init() -> void:
 	name = "???"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.8
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	pass
+	
+func onBlackjack(attacker: BattleMonster):
+	await dealDamage(attacker, attacker.battleController.getActiveEnemyMon())
 	pass

@@ -166,6 +166,17 @@ func earlyEffect(attacker: BattleMonster, defender: BattleMonster):
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	return 0
 
+func onDiscarded(attacker: BattleMonster):
+	return 0
+	
+func onBlackjack(attacker: BattleMonster):
+	return 0
+
+func onForge():
+	power += 0.05
+	shieldPower += 0.05
+	return 0
+
 func localSwap(old: BattleMonster, new: BattleMonster):
 	if old.playerControlled:
 		await old.battleController.playerSwap(old.battleController.playerTeam.find(new))

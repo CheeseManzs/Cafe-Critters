@@ -8,6 +8,14 @@ func _init() -> void:
 	name = "Oops!"
 	tags = ['Attack']
 	rarity = RARITY.Common
+	power = 0.75
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await dealDamage(attacker, defender)
 	pass
+	
+func onDiscarded(attacker: BattleMonster):
+	cost = 0
+	var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
+	await newSequence.runActions(attacker.battleController)
+	cost = 3

@@ -237,6 +237,13 @@ func discardAnimation(card: Card) -> void:
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
 
+func forgeAnimation(card: Card): 
+	for display in battleController.cardButtons:
+		if display.card == card || (display.card.name == card.name):
+			# dude imagine if it like exploded with a bunch of sparks or something
+			break
+	pass
+
 func exileCard(card: Card, discardAnim = true):
 	if card == null:
 		return
@@ -280,8 +287,19 @@ func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	BattleLog.singleton.log(rawData.name + " discarded " + card.name)
 	if removeFromHand:
 		await currentHand.removeCards([card])
+	await card.onDiscarded(self)
 	await getPassive().onDiscard(self, battleController, card)
 	await getHeldItem().getPassive().onDiscard(self, battleController, card)
+
+func forgeCard(card: Card, count: int, playAnimation = true):
+	if card == null:
+		return
+	if playAnimation:
+		await forgeAnimation(card)
+	BattleLog.singleton.log(rawData.name + " forged " + card.name + " " + str(count) + " times")
+	await card.onForge()
+	#await getPassive().onDiscard(self, battleController, card)
+	#await getHeldItem().getPassive().onDiscard(self, battleController, card)
 
 func pickRandomCard() -> Card:
 	battleController.hidePlayerChoiceUI(true)
@@ -434,6 +452,12 @@ func chooseAndDiscardCards(count: int) -> Array[Card]:
 	await battleController.get_tree().create_timer(1.0).timeout
 	return toDiscard
 
+func chooseAndForgeCard(count: int) -> Array[Card]:
+	var toForge = await battleController.chooseCards(1, playerControlled)
+	for card in toForge:
+		await forgeCard(card, count)
+	await battleController.get_tree().create_timer(1.0).timeout
+	return toForge
 
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
@@ -588,9 +612,7 @@ func discardHand(filter: CardFilter = CardFilter.new()) -> void:
 	var cardCount = len(discardCards)
 	for i in range(len(discardCards)):
 		await quick_discardAnimation(discardCards[i])
-		await getPassive().onDiscard(self,battleController,discardCards[i])
-		await getHeldItem().getPassive().onDiscard(self,battleController,discardCards[i])
-		currentHand.storedCards.erase(discardCards[i])
+		await discardCard(discardCards[i], true, false)
 	
 	await lowerAnimation()
 

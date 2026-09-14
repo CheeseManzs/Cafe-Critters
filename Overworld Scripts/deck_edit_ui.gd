@@ -431,7 +431,7 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 	if mon != null && mon.name in [item.role]: #signature card
 		crd.setTextColor(Color.YELLOW)
 	crd.setFaceColor(Color.from_string(Card.alignemColors[item.alignment], Color.WHITE))
-	crd.get_node("Front/Role").text = item.role[0]
+	#crd.get_node("Front/Role").text = item.role[0]
 pass
 
 func _enterTexButton(button: TextureButton):

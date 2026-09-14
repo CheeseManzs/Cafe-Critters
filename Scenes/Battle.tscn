@@ -153,6 +153,7 @@ powerUpSound = ExtResource("8_bafus")
 powerDownSound = ExtResource("9_io5bv")
 shieldSound = ExtResource("10_6cxts")
 flairSound = ExtResource("11_10eg1")
+currentTurn = null
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]

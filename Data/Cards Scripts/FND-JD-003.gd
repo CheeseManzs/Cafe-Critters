@@ -8,6 +8,10 @@ func _init() -> void:
 	name = "I'm Out"
 	tags = ['Defence']
 	rarity = RARITY.Uncommon
+	shieldPower = 0.2
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	var handSize = attacker.currentHand.storedCards.size()
+	await attacker.discardHand()
+	await giveShield(attacker, defender, shieldPower * handSize)
 	pass

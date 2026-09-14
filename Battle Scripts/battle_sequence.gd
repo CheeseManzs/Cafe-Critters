@@ -48,6 +48,7 @@ func runActions(battleController: BattleController) -> void:
 	for skipID in len(skipList):
 		if !skipList[skipID]:
 			await monList[skipID].onSkip()
+			print("what")
 			
 	for action in actions:
 		if action.card != null:

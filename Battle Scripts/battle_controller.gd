@@ -1174,6 +1174,7 @@ func activeTurn() -> void:
 		BattleLog.singleton.log("Enemy has " + str(enemyMP) + " MP!")
 		for mon in sortedActiveMonList():
 			mon.switchState = BattleMonster.SWITCH_STATE.NONE
+			print("subturn started")
 			await mon.getPassive().onSubTurnStart(mon, self)
 			await mon.getHeldItem().getPassive().onSubTurnStart(mon, self)
 		
@@ -1206,6 +1207,11 @@ func activeTurn() -> void:
 		if endTurn:
 			break
 		
+		for sorted_mon in sortedActiveMonList():
+			print("subturn ended")
+			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
+			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
+		
 		firstSubTurn = false
 			
 		
@@ -1230,6 +1236,7 @@ func activeTurn() -> void:
 				continue
 			shelfUI.switchButton.disabled = (shelfUI.connectedMon.isKO()) || playerMP < switchCost
 		if !skipChoosingPhase:
+			print("awaiting gui_choice")
 			await gui_choice
 			rpc("set_enemy_choice",playerCardID,playerSwitchID,skipChoice)
 			
