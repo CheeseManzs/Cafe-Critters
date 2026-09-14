@@ -7,6 +7,8 @@ extends Control
 @export var descLabel: RichTextLabel
 @export var manaLabel: RichTextLabel
 @export var artTexture: TextureRect
+@export var forgeParticles: PackedScene
+@export var forgeShaders: Shader
 
 static var currentlyDragging = false
 var scaleFactor = 1
@@ -39,6 +41,7 @@ var normalZIndex = 0
 var handSize = 0
 var targetScale: Vector2 = Vector2(1, 1)
 var costMod = 0
+var shaderBrightness = 1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	size = Vector2(720,1000)
@@ -232,6 +235,12 @@ func _process(delta: float) -> void:
 	if isDisabled:
 		setTextColor(Color.FIREBRICK)
 	pass
+	
+	$Front.set_instance_shader_parameter("brightness", shaderBrightness)
+	shaderBrightness *= 1.0 - 0.999 * delta
+	shaderBrightness -= 7 * delta
+	if shaderBrightness > 1.1: print(shaderBrightness)
+	shaderBrightness = max(shaderBrightness, 1.0)
 
 
 func _on_mouse_entered() -> void:
@@ -282,3 +291,14 @@ func setTextColor(col: Color):
 
 func setFaceColor(col: Color):
 	$Front.self_modulate = col
+
+func playForgeAnimation():
+	var vfxNode = forgeParticles.instantiate()
+	$Front.add_child(vfxNode)
+	vfxNode.get_child(0).emitting = true
+	if randf() > 0.5:
+		rotation = 0.1
+	else: rotation = -0.1
+	if shaderBrightness == 1.0:
+		shaderBrightness = 5.0
+	pass

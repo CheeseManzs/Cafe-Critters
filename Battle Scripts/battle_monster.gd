@@ -238,10 +238,22 @@ func discardAnimation(card: Card) -> void:
 	await battleController.get_tree().create_timer(0.5).timeout
 
 func forgeAnimation(card: Card): 
+	
+	
 	for display in battleController.cardButtons:
-		if display.card == card || (display.card.name == card.name):
+		if display.card == card:
 			# dude imagine if it like exploded with a bunch of sparks or something
+			display.autoSend = false
+			display.raise(2)
+			await battleController.get_tree().create_timer(0.5).timeout
+			battleController.playSound(battleController.forgeSound)
+			display.playForgeAnimation()
+			await battleController.get_tree().create_timer(0.5).timeout
 			break
+			
+	
+	battleController.hidePlayerChoiceUI(true)		
+	await battleController.get_tree().create_timer(0.5).timeout
 	pass
 
 func exileCard(card: Card, discardAnim = true):

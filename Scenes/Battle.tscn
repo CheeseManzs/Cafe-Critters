@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://djivfi2bj70bg" path="res://Prefabs/log_panel.tscn" id="10_lhlt3"]
 [ext_resource type="AudioStream" uid="uid://va304s1ohk01" path="res://Audio/8bit-SFX-Library/Collide/explode-3.wav" id="11_10eg1"]
 [ext_resource type="PackedScene" uid="uid://bcw4ey42763fd" path="res://Prefabs/mon_ui.tscn" id="12_7i88x"]
+[ext_resource type="AudioStream" uid="uid://bd7ikkix3b3te" path="res://Audio/Anvil_land.ogg" id="12_vovxs"]
 [ext_resource type="PackedScene" uid="uid://41n3lcbxvppv" path="res://Prefabs/shelfed_mon_ui.tscn" id="13_dhyla"]
 [ext_resource type="Script" uid="uid://chusy5pumwd3i" path="res://Battle Scripts/details_panel.gd" id="14_vbwqc"]
 [ext_resource type="PackedScene" uid="uid://324kcflyuqea" path="res://Prefabs/card_display.tscn" id="15_jwwdp"]
@@ -153,7 +154,7 @@ powerUpSound = ExtResource("8_bafus")
 powerDownSound = ExtResource("9_io5bv")
 shieldSound = ExtResource("10_6cxts")
 flairSound = ExtResource("11_10eg1")
-currentTurn = null
+forgeSound = ExtResource("12_vovxs")
 playerUI = [NodePath("../Control UI/Player Mon Details")]
 enemyUI = [NodePath("../Control UI/Enemy Mon Details2")]
 shelfedMonUI = [NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI2"), NodePath("../Control UI/Shelfed Mon View/Shelfed Mon UI3")]

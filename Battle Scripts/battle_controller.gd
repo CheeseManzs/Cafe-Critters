@@ -39,6 +39,8 @@ static var multiplayer_id = 0
 @export var shieldSound: AudioStream
 @export var flairSound: AudioStream
 
+@export var forgeSound: AudioStream
+
 var showingDetails = false
 #current turn, 0 is player, 1 is enemy
 @export var currentTurn: int

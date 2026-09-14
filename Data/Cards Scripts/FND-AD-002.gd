@@ -1,7 +1,7 @@
 extends Card
 
 func _init() -> void:
-	cost = 3
+	cost = 0
 	priority = 0
 	alignment = ALIGNMENT.Anvi
 	description = "Forge 1."
