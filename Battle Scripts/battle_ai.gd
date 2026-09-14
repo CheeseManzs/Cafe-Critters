@@ -20,7 +20,7 @@ func maxDamage(mon: BattleMonster, target: BattleMonster):
 		#calculate damage
 		var dmg = 0
 		
-		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card)
+		var ineligible = card.cost > currentMP || mon.statusBlockingCard(card)
 		if !ineligible:
 			dmg = card.calcDamage(mon, target)
 		
@@ -39,7 +39,7 @@ func maxBlock(mon: BattleMonster, target: BattleMonster):
 		#calculate damage
 		var blk = 0
 		
-		var ineligible = card.cost > currentMP || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card)
+		var ineligible = card.cost > currentMP || mon.statusBlockingCard(card)
 		if !ineligible:
 			blk = card.calcShield(mon, target)
 		
@@ -64,72 +64,7 @@ func factorial(x: int) -> int:
 func scoreStatus(status: Status, mon: BattleMonster, currentMP: int = 0) -> float:
 	if status == null:
 		return 0
-	if mon.hasStatus(status.effect):
-		status.X += mon.getStatus(status.effect).X
-	match status.effect:
-		Status.EFFECTS.ATTACK_UP:
-			return mon.attack*0.05
-		Status.EFFECTS.DEFENSE_UP:
-			return mon.defense*0.05
-		Status.EFFECTS.KO:
-			return -100
-		Status.EFFECTS.RIPTIDE:
-			return -status.X
-		Status.EFFECTS.EMPOWER:
-			return 0
-		Status.EFFECTS.EMPOWER_NEXT:
-			return 0
-		Status.EFFECTS.EMPOWER_PLAYED:
-			if mon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
-				return 0
-			return 3
-		Status.EFFECTS.FOCUS:
-			return status.X
-		Status.EFFECTS.FATIGUE:
-			return -status.X
-		Status.EFFECTS.SUSPEND:
-			return -status.X
-		Status.EFFECTS.DREDGE:
-			return 0
-		Status.EFFECTS.FLOTSAM:
-			return 0
-		Status.EFFECTS.SALVAGE:
-			return 0
-		Status.EFFECTS.PITCH:
-			return 0
-		Status.EFFECTS.KNOWLEDGE:
-			return status.X
-		Status.EFFECTS.BARRIER:
-			return mon.health/10.0
-		Status.EFFECTS.FEAR:
-			return -mon.maxHP*additive_factorial(status.X)/10.0
-		Status.EFFECTS.BURN:
-			return -mon.maxHP*additive_factorial(status.X)/10.0
-		Status.EFFECTS.POISON:
-			return -mon.maxHP*additive_factorial(status.X)/10.0
-		Status.EFFECTS.REGEN:
-			var missingHP = mon.maxHP - mon.health
-			return min(missingHP + status.X, factorial(status.X))
-		Status.EFFECTS.RECKLESS:
-			return -1
-		Status.EFFECTS.STRONGARM:
-			return len(mon.currentHand.storedCards)
-		Status.EFFECTS.CANT_PLAY:
-			var oppurtunityCost = 0
-			for potentialCard in mon.currentHand.storedCards:
-				oppurtunityCost += 1
-			return -oppurtunityCost
-		Status.EFFECTS.NULLIFY_DAMAGE:
-			var opp = battleController.getOpposingMon(mon.playerControlled)
-			var maxDmg = maxDamage(opp, mon)
-			return min(maxDmg,mon.health)/10.0
-		Status.EFFECTS.PERFECT_PARRY:
-			var opp = battleController.getOpposingMon(mon.playerControlled)
-			var maxDmg = maxDamage(opp, mon)
-			return min(maxDmg,mon.health)/10.0 + maxDmg*personality.aggression/10.0
-		Status.EFFECTS.CRASHOUT:
-			return 1	
-	return 0
+	return status.aiScore()
 
 
 #gets the chance that a card will successfully occur
@@ -168,8 +103,6 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	var statusCured: Status.EFFECTS = card.calcStatusCured(mon, target)
 	var activationChance = getChance(card, mon, target)
 	
-	if activeMon != null && activeMon.hasStatus(Status.EFFECTS.EMPOWER_PLAYED):
-		cardDMG *= 1.5
 	#add scores
 	score += cardDMG*personality.aggression*activationChance
 	score += cardDEF*personality.caution
@@ -183,7 +116,7 @@ func scoreCard(mon: BattleMonster, target: BattleMonster, card: Card, activeMon:
 	if statusInflicted != null:
 		score += -10*scoreStatus(statusInflicted, target, targetMP)*personality.mechanics*activationChance
 	if statusCured != Status.EFFECTS.NONE:
-		score += -10*scoreStatus(Status.new(statusCured), mon, currentMP)*personality.mechanics
+		pass#FIX FUNCTIONALITY LATER#score += -10*scoreStatus(Status.new(statusCured), mon, currentMP)*personality.mechanics
 	
 	if cardDMG >= targEffHP && activationChance >= 1:
 		score += cardDMG*personality.opportunism
@@ -231,9 +164,9 @@ func enemySwitch():
 	return -1
 
 func enemyShouldSwitch():
-	if battleController.getActiveEnemyMon().hasStatus(Status.EFFECTS.KO):
+	if battleController.getActiveEnemyMon().isKO():
 		return true
-	if battleController.getActivePlayerMon() == null || battleController.getActivePlayerMon().hasStatus(Status.EFFECTS.KO):
+	if battleController.getActivePlayerMon() == null || battleController.getActivePlayerMon().isKO():
 		return false
 	var shouldSwich = false
 	#get active monster

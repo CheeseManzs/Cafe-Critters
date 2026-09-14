@@ -173,27 +173,25 @@ func localSwap(old: BattleMonster, new: BattleMonster):
 		await old.battleController.enemySwap(old.battleController.enemyTeam.find(new))
 
 #deal damage
-func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float = power, applyEmpower = true) -> int:
-	var dmg = _calcPower(attacker, defender, _power, applyEmpower)
+func dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float = power) -> int:
+	return await _dealDamage(attacker, defender, _power)
+
+static func _dealDamage(attacker: BattleMonster, defender: BattleMonster, _power: float) -> int:
+	var dmg = _calcPower(attacker, defender, _power)
 	var pureDmg = await defender.receiveDamage(dmg, attacker)
 	return pureDmg
 
 #give shield
-func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower, applyEmpower = true):
-	var shield = _calcShield(attacker, defender, _sp, applyEmpower)
+func giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float = shieldPower):
+	await _giveShield(attacker, defender, _sp)
+
+static func _giveShield(attacker: BattleMonster, defender: BattleMonster, _sp: float):
+	var shield = _calcShield(attacker, defender, _sp)
 	await attacker.addShield(shield)
 
 #give status
-func giveStatus(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, filter: CardFilter = CardFilter.new(), broadcast = true, applyEmpower = true):
-	var proc_X = X
-	var proc_Y = Y
-	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
-		proc_X = ceil(proc_X*1.5)
-		proc_Y = ceil(proc_Y*1.5)
-	await target.addStatusCondition(Status.new(effect, proc_X, proc_Y, filter),broadcast)
-#quick shortcut
-func giveStatus_noempower(target: BattleMonster, effect: Status.EFFECTS, X: float = 0, Y: float = 0, broadcast = true):
-	await giveStatus(target, effect, X, Y,broadcast, false)
+func giveStatus(target: BattleMonster, effect: Status, filter: CardFilter = CardFilter.new(), broadcast = true, applyEmpower = true):
+	await target.addStatusCondition(effect,broadcast)
 
 static func rollDice(roller: BattleMonster):
 	var rolledNum = await Dice.singleton.roll()
@@ -206,17 +204,13 @@ static func rollDice(roller: BattleMonster):
 	return transformedNum
 
 #for dynamic damage calculations
-func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float, applyEmpower = true) -> int:
+static func _calcPower(attacker: BattleMonster, defender: BattleMonster, _power: float) -> int:
 	var dmg = ceil(_power*attacker.getAttack())
-	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
-		dmg = ceil(dmg*1.5)
 	return dmg
 
 #for dynamic shield calculations
-func _calcShield(attacker: BattleMonster, defender: BattleMonster, _sp: float, applyEmpower = true) -> int:
+static func _calcShield(attacker: BattleMonster, defender: BattleMonster, _sp: float) -> int:
 	var shield = ceil(_sp*attacker.getDefense())
-	if statusConditions.has(Status.EFFECTS.EMPOWER) && applyEmpower:
-		shield = ceil(shield*1.5)
 	return shield
 
 #for ai damage calculations
@@ -269,45 +263,6 @@ func _omenCalc(attacker: BattleMonster, defender: BattleMonster):
 	return dmg
 
 #utility functions
-func applyReckless(attacker: BattleMonster, defender: BattleMonster):
-	await EffectFlair.singleton._runFlair("Reckless")
-	#add reckless status
-	var recklessStatus: Status = Status.new(Status.EFFECTS.RECKLESS,1,0)
-	attacker.addStatusCondition(recklessStatus)
-	
-	var discardedCard = await attacker.discardRandomCard()
-	
-	if discardedCard == null:
-		BattleLog.singleton.log("No card to discard...")
-	var meetsConditions = discardedCard != null && meetsRequirement(discardedCard, attacker, defender)
-	if meetsConditions:
-		await attacker.getPassive().onConditional(attacker, attacker.battleController, self)
-	return meetsConditions
-
-func applyOmen(attacker: BattleMonster, defender: BattleMonster):
-	if !(tags.has("Omen") || tags.has("Proc Omen")):
-		return
-	var addBack = []
-	var omenCards = getOmenCardsFromMonster(attacker.battleController, attacker)
-	var matchingCards = []
-	for card in omenCards:
-		if card != self && card.name == name:
-			matchingCards.push_back(card)
-	if len(matchingCards) > 0:
-		await EffectFlair.singleton._runFlair("Omen", Color.BLACK)
-	for card in matchingCards:
-		if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-			card.statusConditions.erase(Status.EFFECTS.EMPOWER)
-		BattleLog.singleton.log("Rea used " + card.name + "...")
-		await attacker.battleController.get_tree().create_timer(1.0).timeout
-		card.tags.erase("Omen")
-		await card.effect(attacker, defender)
-		card.tags.push_back("Omen")
-		addBack.push_back(card)
-		
-	for card in addBack:
-		attacker.battleController.removeFromGraveyardToOwnerDeck(card)
-
 func onEnteredGraveyard(user: BattleMonster):
 	pass
 

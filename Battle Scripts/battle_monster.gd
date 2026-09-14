@@ -123,23 +123,27 @@ func hasStatus(eff: Status.EFFECTS, card: Card = null) -> bool:
 	return false
 
 func canSwitchOut() -> bool:
-	if hasStatus(Status.EFFECTS.TRAPPED):
-		return false
+	for status in statusConditions:
+		if status.trapped:
+			return false
+	
 	return true
 	
 func canSwitchIn() -> bool:
 	return true
 	
 func onSwitchOut(switchingIn: BattleMonster) -> void:
-	if hasStatus(Status.EFFECTS.DUETING):
-		await switchingIn.createCardAndAddToHand("Inspiration")
-		await removeStatus(Status.EFFECTS.DUETING)
+	for status in statusConditions:
+		await status.onSwitchOut(self)
+		await status.flag_onSwitchOut(self)
+		await status.global_onSwitchOut(self)
 	return
 	
 func onSwitchIn(switchingOut: BattleMonster) -> void:
-	if hasStatus(Status.EFFECTS.MISSING_OUT):
-		var dmg = maxHP*0.1
-		trueDamage(dmg, null, false, false)
+	for status in statusConditions:
+		await status.onSwitchIn(self)
+		await status.flag_onSwitchIn(self)
+		await status.global_onSwitchIn(self)
 
 func createCardAndAddToHand(cardName: String):
 	currentHand.storedCards.push_back(battleController.monsterCache.getCardByName(cardName).duplicate())
@@ -384,29 +388,20 @@ func reset(active = true, forceDraw = false) -> void:
 	addedToGraveyardThisTurn = []
 	playedCardLastTurnHistory = playedCardCurrentTurnHistory
 	playedCardCurrentTurnHistory = []
-	#eternal guardians
-	if hasStatus(Status.EFFECTS.ETERNAL_GUARDIANS):
-		for card in getTeamGraveyard():
-			if card.name == "Eternal Guardians":
-				var etgShield = getDefense()*0.1
-				await addShield(etgShield)
+
 	#reset bonusses
 	shield = 0
 	attackBonus = 0
 	defenseBonus = 0
 	parryPower = 0
 	
-	for i in len(statusConditions):
-		var status: Status = statusConditions[i]
-		status.newTurn()
 	#update status icon
 	getMonsterDisplay().updateStatusConditions()
-	#heal from regen
-	if hasStatus(Status.EFFECTS.REGEN):
-		var regenStatus: Status = getStatus(Status.EFFECTS.REGEN)
-		var regenAmount: int = regenStatus.X*0.01*maxHP
-		await addHP(regenAmount)
-		regenStatus.addX(-1)
+	
+	for status in statusConditions:
+		await status.onNewTurn(self)
+		await status.flag_onNewTurn(self)
+		await status.global_onNewTurn(self)
 	
 	#remove removable status effects
 	for status in statusConditions:
@@ -428,7 +423,6 @@ func reset(active = true, forceDraw = false) -> void:
 func standardDraw():
 	if canDraw:
 		var drawBonus = 0
-		drawBonus += floor(getKnowledge()/3.0)
 		drawCards(5 + drawBonus + extraDraw)
 		extraDraw = 0
 		canDraw = false
@@ -444,26 +438,9 @@ func chooseAndDiscardCards(count: int) -> Array[Card]:
 func checkStatusForArray0(x) -> bool:
 	return statusConditions.has(x[0])
 
-func returnStrongarmCard():
-	var exileList = []
-
-	for card in exileZone.storedCards:
-		if card.statusConditions.has(Status.EFFECTS.STRONGARM):
-			exileList.push_back(card)
-	if len(exileList) == 0:
-		return
-	await EffectFlair.singleton._runFlair("Strongarm", Color.ROYAL_BLUE)
-	var rng = BattleController.global_rng
-	var pickedCard: Card = exileList[rng.randi_range(0,len(exileList) - 1)]
-	pickedCard.statusConditions.erase(Status.EFFECTS.STRONGARM)
-	BattleLog.singleton.log(rawData.name + " got " + pickedCard.name + " back!")
-	currentHand.storedCards.push_back(pickedCard)
-
 func onSkip():
-	if hasStatus(Status.EFFECTS.FIGHT_OR_FLIGHT):
-		await EffectFlair.singleton._runFlair("Fight or Flight", Color.DARK_RED)
-		var dmg = 0.1*maxHP*getStatus(Status.EFFECTS.FIGHT_OR_FLIGHT).X
-		await trueDamage(dmg, null,false,false)
+	for status in statusConditions:
+		await status.onSkip(self)
 
 func addStatusCondition(status: Status, broadcast = false):
 	if isKO():
@@ -473,9 +450,9 @@ func addStatusCondition(status: Status, broadcast = false):
 	
 	if broadcast:
 		await BattleCamera.singleton.focusMonster(self)
-		var printText = rawData.name + " was afflicted with " + status.toString()
-		if status.isPositive():
-			printText = rawData.name + " was embued with " + status.toString()
+		var printText = rawData.name + " was afflicted with " + status.name
+		if status.isPositive:
+			printText = rawData.name + " was embued with " + status.name
 			battleController.playSound(battleController.powerUpSound)
 			obj.boostParticles.emitting = true
 		else:
@@ -489,32 +466,14 @@ func addStatusCondition(status: Status, broadcast = false):
 	
 	await getPassive().onStatus(self,battleController, status)
 	await getHeldItem().getPassive().onStatus(self,battleController, status)
-	#if effect is ko, suspend or strongarm then it occurs immediately
-	match status.effect:
-		Status.EFFECTS.KO:
-			await getPassive().onSelfKO(self,battleController)
-			await getHeldItem().getPassive().onSelfKO(self,battleController)
-		Status.EFFECTS.SUSPEND:
-			var toBanish = await battleController.chooseCards(status.X,playerControlled)
-			
-			battleController.banishArray(toBanish)
-			await currentHand.removeCards(toBanish)
-			
-			var graveAction: ConditionalAction = ConditionalAction.new(
-				battleController,
-				battleController.addArrayToGraveyard,
-				checkStatusForArray0,
-				toBanish,
-				[self]
-			)
-			battleController.conditionalActions.push_back(graveAction)
-	#enemy instant effects
+
+	await status.onApplied(self)
+	
+	# Effect stacking
 	if hasStatus(status.effect):
 		var newStatus = getStatus(status.effect)
 		if status.X > 0:
 			newStatus.addX(status.X)
-		if status.Y > 0:
-			newStatus.Y += status.Y
 	else:
 		statusConditions.push_back(status)
 	
@@ -525,10 +484,9 @@ func getSpeed():
 	
 func getAttack():
 	var atkUpBonus = 0
-	if hasStatus(Status.EFFECTS.ATTACK_UP):
-		atkUpBonus = 0.05*getStatus(Status.EFFECTS.ATTACK_UP).X
-	if hasStatus(Status.EFFECTS.ATTACK_DOWN):
-		atkUpBonus -= 0.05*getStatus(Status.EFFECTS.ATTACK_DOWN).X
+	
+	for status in statusConditions:
+		atkUpBonus += (status.atkBoost - 1)
 	
 	var cardBonus = 0
 	
@@ -541,10 +499,9 @@ func getAttack():
 
 func getDefense():
 	var defUpBonus = 0
-	if hasStatus(Status.EFFECTS.DEFENSE_UP):
-		defUpBonus = 0.05*getStatus(Status.EFFECTS.DEFENSE_UP).X
-	if hasStatus(Status.EFFECTS.DEFENSE_DOWN):
-		defUpBonus -= 0.05*getStatus(Status.EFFECTS.DEFENSE_DOWN).X
+	
+	for status in statusConditions:
+		defUpBonus += (status.defBoost - 1)
 	
 	var def = defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))
 	
@@ -565,10 +522,16 @@ func hasCardInHand(cardName: String):
 			return true
 	return false
 
+func statusBlockingCard(card: Card):
+	for status in statusConditions:
+		if status.p_cannotPlay(self, card):
+			return true
+	return false
+
 #carries status
 func carryStatusConditions(target: BattleMonster) -> void:
 	for status in statusConditions.duplicate():
-		if status.carriesOverOnSwitch():
+		if status.carriesOnSwitch:
 			statusConditions.erase(status)
 			getMonsterDisplay().removeStatusIcon(status)
 			target.addStatusCondition(status,false)
@@ -633,14 +596,16 @@ func discardHand(filter: CardFilter = CardFilter.new()) -> void:
 
 #draw cards from deck	
 func drawCards(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
-	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self, filter)
+	var card: Array[Card] = await currentDeck.specialDraw(count, battleController, self, filter)
+	
 	currentHand.storedCards += card
 	if playerControlled and len(battleController.playerTeam) > 0 and battleController.getActivePlayerMon() == self:
 		battleController.deckController.updateDeckDisplay(len(currentDeck.storedCards))
+	
 	return card
 
 func millCards(count: int) -> void:
-	var card: Array[Card] = currentDeck.specialDraw(count, battleController, self)
+	var card: Array[Card] = await currentDeck.specialDraw(count, battleController, self)
 	await battleController.addArrayToGraveyard(card, self)
 	
 func shuffleCardIntoDeck(card: Card, index: int) -> void:
@@ -674,10 +639,10 @@ func getMonsterDisplay() -> MonsterDisplay:
 		return battleController.enemyObjs[battleController.enemyTeam.find(self)]
 
 func checkNullifyDamage():
-	if hasStatus(Status.EFFECTS.NULLIFY_DAMAGE):
-		getStatus(Status.EFFECTS.NULLIFY_DAMAGE).effectDone = true
-		BattleLog.singleton.log(rawData.name + " dodged the attack!")
-		return true
+	for status in statusConditions:
+		if status.nullifyDamage:
+			BattleLog.singleton.log(rawData.name + " dodged the attack!")
+			return true
 	return false
 
 func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, damageAnim = true, blackListedSources = []) -> void:
@@ -723,58 +688,18 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		if attacker != null:
 			await attacker.getPassive().onOtherKO(attacker,battleController)
 			await getHeldItem().getPassive().onOtherKO(attacker,battleController)
-		await addStatusCondition(Status.new(Status.EFFECTS.KO), false)
+		await addStatusCondition(Status_KO.new(), false)
 	elif dmg > 0 and damageAnim:
 		await dmgAnim()
 	
-	#insurace
-	if health > 0 && dmg <= 0 && attacker != null && attacker.hasStatus(Status.EFFECTS.INSURANCE):
-		#blackListedSources.push_back(Status.EFFECTS.INSURANCE)
-		var insuranceDamage = maxHP*0.15*attacker.getDefense()
-		await trueDamage(insuranceDamage, attacker, shielded, true, blackListedSources)
-	
-	#fear
-	if health > 0 && hasStatus(Status.EFFECTS.FEAR) && Status.EFFECTS.FEAR not in blackListedSources && dmg > 0:
-		await EffectFlair.singleton._runFlair("Fear", Color.MIDNIGHT_BLUE)
-		var fearStatus = getStatus(Status.EFFECTS.FEAR)
-		var fearDamage = maxHP*0.01*fearStatus.X
-		blackListedSources.push_back(Status.EFFECTS.FEAR)
-		await trueDamage(fearDamage, null, shielded, false, blackListedSources)
-		fearStatus.addX(-1)
-	
-	if health > 0 && hasStatus(Status.EFFECTS.FEAR) && Status.EFFECTS.FEAR not in blackListedSources && dmg <= 0:
-		var fearStatus = getStatus(Status.EFFECTS.FEAR)
-		fearStatus.effectDone = true
-	
-		#step back
-	if health > 0 && hasStatus(Status.EFFECTS.STEP_BACK) && dmg == 0:
-		await addMP(2)
-		await addAttackBonus(0.2, true)
-	
-	#the bluff
-	if health > 0 && dmg > 0 && hasCardInHand("The Bluff"):
-		var toDiscard: Card = null
-		for card in currentHand.storedCards:
-			if card.name == "The Bluff":
-				toDiscard = card
-				break
-		await discardCard(toDiscard)
-	
-	if attacker != null:
-		#crashout
-		if health > 0 && attacker.hasStatus(Status.EFFECTS.CRASHOUT) && dmg == 0 && Status.EFFECTS.CRASHOUT not in blackListedSources:
-			var crashoutDmg = attacker.getAttack()*0.25
-			blackListedSources.push_back(Status.EFFECTS.CRASHOUT)
-			await battleController.get_tree().create_timer(1.0).timeout
-			await receiveDamage(crashoutDmg,attacker,blackListedSources)
 
-#adds status as counter
-func addCounter(eff: Status.EFFECTS, x, y = 0):
-	if !hasStatus(eff):
-		await addStatusCondition(Status.new(eff,0,0), true)
-	var status: Status = getStatus(eff)
-	status.addX(x)
-	status.Y += y
+	if health > 0 && dmg > 0 && attacker != null:
+		for status in statusConditions:
+			status.onAttacked(self, attacker)
+	
+	if health > 0 && dmg <= 0 && attacker != null:
+		for status in statusConditions:
+			status.onBlocked(self, attacker)
 
 func execute():
 	await trueDamage(maxHP)
@@ -794,14 +719,13 @@ func receiveDamage(dmg:int, attacker: BattleMonster, blacklistedSources = []) ->
 		battleController.playSound(battleController.emptyHitSound)
 		return 0
 	#apply barrier
-	if hasStatus(Status.EFFECTS.BARRIER):
-		var status = getStatus(Status.EFFECTS.BARRIER)
-		BattleLog.log("Damage to " + rawData.name + " was reduced by " + status.toString())
-		dmg -= status.X
-		if dmg < 0:
-			dmg = 0
-		status.X = 0
-		status.effectDone = true
+	for status in statusConditions:
+		var reduction = status.damageReduction
+		if reduction > 0:
+			BattleLog.log("Damage to " + rawData.name + " was reduced by " + status.name)
+			dmg -= reduction
+			await status.onReducedDamage(self, reduction)
+
 	#damage shield and calculate overdamage
 	var shielded = (shield > 0)
 	var pureDmg = damageShield(dmg)
@@ -824,11 +748,6 @@ func receiveDamage(dmg:int, attacker: BattleMonster, blacklistedSources = []) ->
 	
 	return pureDmg
 
-#get knowledge counter
-func getKnowledge() -> int:
-	if hasStatus(Status.EFFECTS.KNOWLEDGE):
-		return getStatus(Status.EFFECTS.KNOWLEDGE).X
-	return 0
 #adds mp to the monster's team
 func addMP(mpAmount: int, broadcast = true) -> void:
 	#log mp adding

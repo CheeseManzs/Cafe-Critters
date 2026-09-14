@@ -110,6 +110,9 @@ func onHeal(mon: BattleMonster, battle: BattleController, card: Card) -> void:
 func onDiscard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
 	return
 
+func onCardEntersGraveyard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
+	return
+
 #runs when a mon is KO'd
 func onSelfKO(mon: BattleMonster, battle: BattleController) -> void:
 	return

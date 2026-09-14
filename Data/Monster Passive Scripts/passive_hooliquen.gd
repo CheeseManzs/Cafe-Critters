@@ -2,9 +2,12 @@ extends PassiveAbility
 
 func _init() -> void:
 	name = "Sore Loser"
-	desc = "Whenever Hooliquen discards a card with Attack > 100%, gain Priority 2."
+	desc = "When one or more cards enter your graveyard and they were not played from hand, deal (ATK 10%) damage."
 
-func onDiscard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
-	if card.calcDamage(mon, battle.getOpposingMon(mon.playerControlled)) > mon.getAttack():
+
+
+func onCardEntersGraveyard(mon: BattleMonster, battle: BattleController, card: Card) -> void:
+	if card not in mon.playedCardCurrentTurnHistory:
 		await createFlair(mon)
-		await mon.addStatusCondition(Status.new(Status.EFFECTS.PRIORITY,2), true)
+		var victim = battle.getOpposingMon(mon.playerControlled)
+		await Card._dealDamage(mon, victim, 0.1)

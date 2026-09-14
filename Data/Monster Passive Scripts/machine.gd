@@ -20,7 +20,7 @@ func heatProgress():
 	return (heat - minHeat)/(maxHeat - minHeat + 0.0)
 
 func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
-	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+	if mon.hasStatus(Status.EFFECTS.BURNOUT):
 		return
 	if newHeat > heat:
 		BattleLog.singleton.log(mon.rawData.name + "'s heat rose to " + str(min(maxHeat, newHeat)))
@@ -40,7 +40,7 @@ func setHeat(newHeat, mon: BattleMonster, battle: BattleController):
 
 	if newHeat > maxHeat:
 		resetHeat = true
-		await mon.addStatusCondition(Status.new(Status.EFFECTS.OVERHEAT),true)
+		await mon.addStatusCondition(Status_Burnout.new(),true)
 
 
 func createGuage(mon: BattleMonster, battle: BattleController):
@@ -62,7 +62,7 @@ func activateAbility(mon: BattleMonster, battle: BattleController) -> void:
 
 func loseHeat(mon: BattleMonster, battle: BattleController) -> void:
 	if lostHeat:
-		if !mon.hasStatus(Status.EFFECTS.OVERHEAT):
+		if !mon.hasStatus(Status.EFFECTS.BURNOUT):
 			await setHeat(heat - 1, mon, battle)
 		lostHeat = false
 	return
@@ -70,14 +70,14 @@ func loseHeat(mon: BattleMonster, battle: BattleController) -> void:
 func onSubTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 	await loseHeat(mon, battle)
 	
-func overHeatBonus(mon: BattleMonster, battle: BattleController):
-	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+func BURNOUTBonus(mon: BattleMonster, battle: BattleController):
+	if mon.hasStatus(Status.EFFECTS.BURNOUT):
 		return 0.25
 	else:
 		return 0
 
 func heatBoost(mon: BattleMonster, battle: BattleController):
-	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
+	if mon.hasStatus(Status.EFFECTS.BURNOUT):
 		return 0
 	if heat < 5:
 		return 0.05*heat
@@ -85,20 +85,20 @@ func heatBoost(mon: BattleMonster, battle: BattleController):
 		return 0.5
 
 func getBonusScale(mon: BattleMonster):
-	if !mon.hasStatus(Status.EFFECTS.OVERHEAT):
+	if !mon.hasStatus(Status.EFFECTS.BURNOUT):
 		bonusScale = 1
 	else:
 		bonusScale = 0
 	return bonusScale
 
 func attackBonus(mon: BattleMonster, battle: BattleController) -> float:
-	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
+	return (BURNOUTBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
 	
 func defenseBonus(mon: BattleMonster, battle: BattleController) -> float:
-	return (overHeatBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
+	return (BURNOUTBonus(mon, battle) + heatBoost(mon, battle))*getBonusScale(mon)
 
 func beforeAttack(mon: BattleMonster, battle: BattleController, card: Card) -> void:
-	if !mon.hasStatus(Status.EFFECTS.OVERHEAT) && (card.power > 0 || card.shieldPower > 0):
+	if !mon.hasStatus(Status.EFFECTS.BURNOUT) && (card.power > 0 || card.shieldPower > 0):
 		BattleLog.log(mon.rawData.name + "'s " + card.name + " is heating up!")
 		lostHeat = true
 	return
@@ -129,9 +129,9 @@ func onTurnEnd(mon: BattleMonster, battle: BattleController) -> void:
 		await battle.get_tree().create_timer(1.0).timeout
 		await setHeat(heat + cardCount, mon, battle)
 	
-	if mon.hasStatus(Status.EFFECTS.OVERHEAT):
-		mon.getStatus(Status.EFFECTS.OVERHEAT).X -= 1
-		if mon.getStatus(Status.EFFECTS.OVERHEAT).X < -1:
-			mon.getStatus(Status.EFFECTS.OVERHEAT).effectDone = true
+	if mon.hasStatus(Status.EFFECTS.BURNOUT):
+		mon.getStatus(Status.EFFECTS.BURNOUT).X -= 1
+		if mon.getStatus(Status.EFFECTS.BURNOUT).X < -1:
+			mon.getStatus(Status.EFFECTS.BURNOUT).effectDone = true
 			await setHeat(0,mon,battle)
 	return

@@ -307,7 +307,7 @@ func _ready() -> void:
 
 # Check if a monster swap is valid
 func validSwap(from: BattleMonster, to: BattleMonster) -> bool:
-	var valid: bool = !to.hasStatus(Status.EFFECTS.KO) && (from != to) && from.canSwitchOut() && to.canSwitchIn()
+	var valid: bool = !to.isKO() && (from != to) && from.canSwitchOut() && to.canSwitchIn()
 	return valid
 
 func removeFromGraveyardToOwnerDeck(card: Card):
@@ -324,17 +324,10 @@ func addToGraveyard(card: Card, user: BattleMonster, multidiscard = false):
 		enemyCardsAddedToGraveyardThisTurn += 1
 	graveyard.push_back(card)
 	card.salvaged = true
-	#search for relevants statusses
+	#activate status event
 	for mon in (playerTeam + enemyTeam):
-		#riptide
-		if !mon.isKO() && mon.hasStatus(Status.EFFECTS.RIPTIDE, card):
-			var decayStatus = mon.getStatus(Status.EFFECTS.RIPTIDE)
-			if !multidiscard:
-				print("ow")
-				await EffectFlair.singleton._runFlair("Riptide", Color.LIGHT_SEA_GREEN)
-			var riptideDamage = (0.01*decayStatus.X)*mon.maxHP
-			await mon.trueDamage(riptideDamage,null,false,false)
-			await get_tree().create_timer(0.5).timeout
+		for status in mon.statusConditions:
+			await status.onCardSentToGraveyard(mon, card)
 	#run on entered graveyard effect
 	await card.onEnteredGraveyard(user)
 
@@ -642,7 +635,7 @@ func promptPlayerSwitch() -> void:
 			
 	for shelfUI in shelfedMonUI:
 		if shelfUI.connectedMon != null:
-			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO))
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.isKO())
 	await gui_choice
 	rpc("send_choice",playerSwitchID)
 	await playerSwap(playerSwitchID)
@@ -677,7 +670,7 @@ func enemyDeclare(canSwitch = false) -> Array[BattleAction]:
 		var trySwitch = false
 		var mon: BattleMonster = enemyTeam[activeEnemyMon + i]
 		BattleLog.log("Should switch: " + str(enemyAI.enemyShouldSwitch()))
-		if !(enemyAI.enemyShouldSwitch() || mon.hasStatus(Status.EFFECTS.KO)) && len(getActiveEnemyMon().playableCards()) > 0:
+		if !(enemyAI.enemyShouldSwitch() || mon.isKO()) && len(getActiveEnemyMon().playableCards()) > 0:
 			#choose card if mon has not fainted
 			if len(mon.playableCards()) == 0:
 				BattleLog.singleton.log(mon.rawData.name + " has an empty hand!")
@@ -761,12 +754,6 @@ func universalPreswap(oldMon: BattleMonster, newMon: BattleMonster):
 	await oldMon.getHeldItem().getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
 
 func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
-	for statuscond in oldMon.statusConditions:
-		var status: Status = statuscond
-		if status.endsOnSwitch():
-			status.effectDone = true
-	
-	
 	var container: VBoxContainer
 	if oldMon.playerControlled:
 		container = playerUI[0].externalGaugeContainer
@@ -913,17 +900,13 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 			#cardButton.show()
 			#cardButton.text = card.name + " (" + str(card.cost) + " MP)"
 			#cardButton.tooltip_text = card.description
-			if card.statusConditions.has(Status.EFFECTS.EMPOWER):
-				#cardButton.text += " (EMP)"
-				pass
-			## Disables the card if you can't afford it.
-			var strongarmEffect = false
-			if mon.hasStatus(Status.EFFECTS.STRONGARM, card):
-				var strongarmStatus = mon.getStatus(Status.EFFECTS.STRONGARM)
-				if strongarmStatus.effectDone == false && uiIndex != 0 && len(cardButtons) - (uiIndex+1) < strongarmStatus.X:
-					strongarmEffect = true
+			for status in mon.statusConditions:
+				card.description = status.modifyCardDesc(card)
+			# Disables the card if you can't afford it.
 			
-			var disableCard = max(0, card.getRealCost()) > playerMP || mon.hasStatus(Status.EFFECTS.KO) || mon.hasStatus(Status.EFFECTS.CANT_PLAY, card) || strongarmEffect || !card.canBePlayed(mon)
+			var blockedByStatus = mon.statusBlockingCard(card)
+			
+			var disableCard = max(0, card.getRealCost()) > playerMP || mon.isKO() || blockedByStatus || !card.canBePlayed(mon)
 			if disableCard && !allSelectable:
 				cardButton.isDisabled = true
 
@@ -1183,6 +1166,8 @@ func activeTurn() -> void:
 	for mon in sortedActiveMonList():
 			await mon.getPassive().onTurnStart(mon, self)
 			await mon.getHeldItem().getPassive().onTurnStart(mon, self)
+			for status in mon.statusConditions:
+				await status.onNewTurn(mon)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
@@ -1210,9 +1195,8 @@ func activeTurn() -> void:
 			enemyActions = enemyDeclare(true)
 		
 		for sortedMon in sortedMonList():
-			for i in len(sortedMon.statusConditions):
-				var status: Status = sortedMon.statusConditions[i]
-				status.newSubTurn()
+			for status in sortedMon.statusConditions:
+				await status.onNewSubTurn(sortedMon)
 			#update status display
 			sortedMon.getMonsterDisplay().updateStatusConditions()
 		
@@ -1221,10 +1205,6 @@ func activeTurn() -> void:
 		
 		if endTurn:
 			break
-		
-		for sorted_mon in sortedActiveMonList():
-			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
-			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
 		
 		firstSubTurn = false
 			
@@ -1248,7 +1228,7 @@ func activeTurn() -> void:
 			if shelfUI.connectedMon == null:
 				shelfUI.switchButton.disabled = true
 				continue
-			shelfUI.switchButton.disabled = (shelfUI.connectedMon.hasStatus(Status.EFFECTS.KO)) || playerMP < switchCost
+			shelfUI.switchButton.disabled = (shelfUI.connectedMon.isKO()) || playerMP < switchCost
 		if !skipChoosingPhase:
 			await gui_choice
 			rpc("set_enemy_choice",playerCardID,playerSwitchID,skipChoice)
@@ -1293,16 +1273,18 @@ func activeTurn() -> void:
 		await get_tree().create_timer(0.25).timeout
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		
+		for sorted_mon in sortedActiveMonList():
+			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
+			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
+			for status in sorted_mon.statusConditions:
+				await status.onSubTurnEnd(sorted_mon)
+		
 	
 	
 	for sortedMon in sortedMonList():
 		var mon: BattleMonster = sortedMon
-		if mon.hasStatus(Status.EFFECTS.BURN):
-			var status = mon.getStatus(Status.EFFECTS.BURN)
-			await EffectFlair.singleton._runFlair("Burn", Color.ORANGE_RED)
-			var burnDamage = (0.01*status.X)*mon.maxHP
-			await mon.trueDamage(burnDamage)
-			status.addX(-1)
+		for status in mon.statusConditions:
+			await status.onTurnEnd(mon)
 	
 	#reset damage multiplier
 	damageMultiplier = 1

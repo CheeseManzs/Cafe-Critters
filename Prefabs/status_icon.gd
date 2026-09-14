@@ -49,7 +49,7 @@ func updateIcon(effect: Status):
 		extension = ""
 	currentX = effect.X
 	effect.icon = self
-	statusText.text = effect.toMini() + extension
+	statusText.text = effect.p_nameMini() + extension
 	
 	if len(effect.filter.tagWhiteList) > 0:
 		filterText.text = effect.filter.tagAlias[effect.filter.tagWhiteList[0]]
