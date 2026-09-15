@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MonsterCache" load_steps=22 format=3 uid="uid://cjnsk71nyutp"]
+[gd_resource type="Resource" script_class="MonsterCache" format=3 uid="uid://cjnsk71nyutp"]
 
 [ext_resource type="Script" uid="uid://c4ll0oxv5iqop" path="res://Data/Source Code/monster.gd" id="1_ntfgn"]
 [ext_resource type="Script" uid="uid://djslq1q2bn8dc" path="res://Data/Source Code/monster_cache.gd" id="2_mcreu"]

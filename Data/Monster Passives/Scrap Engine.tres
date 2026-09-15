@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://chqbec4re4vwv"]
+[gd_resource type="Resource" format=3 uid="uid://chqbec4re4vwv"]
 
 [ext_resource type="Script" path="res://Data/Monster Passive Scripts/passive_junkguard.gd" id="1_2a0ge"]
 [ext_resource type="PackedScene" uid="uid://mlpij3jshlch" path="res://Prefabs/heat_bar.tscn" id="1_pkrsw"]

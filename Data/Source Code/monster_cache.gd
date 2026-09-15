@@ -3,7 +3,6 @@ extends Resource
 
 @export var cache: Array[Monster]
 @export var cardCache: Array[Card]
-@export var passiveCache: Array[PassiveAbility]
 @export var cardFolderPath: String
 @export var cardScriptsPath: String
 
@@ -283,12 +282,6 @@ func getCardIDsByName(cards: Array[String]) -> Array[int]:
 		var id = getCardIDByName(card)
 		arr.push_back(id)
 	return arr
-
-func getPassiveByName(passiveName: String) -> PassiveAbility:
-	for passive in passiveCache:
-		if passive.name == passiveName:
-			return passive
-	return passiveCache[0]
 
 static func defaultMonsterDict(mons: Array[Monster]) -> Dictionary[Monster, Array]:
 	var debTeam: Dictionary[Monster, Array] = {}

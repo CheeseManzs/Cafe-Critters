@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cqa81xs22tyhm"]
+[gd_resource type="Resource" format=3 uid="uid://cqa81xs22tyhm"]
 
 [ext_resource type="Script" uid="uid://6ki5mbmlg1wa" path="res://Data/Monster Passive Scripts/unremarkable.gd" id="1_gmvw2"]
 

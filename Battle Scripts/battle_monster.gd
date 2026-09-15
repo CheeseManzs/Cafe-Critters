@@ -23,7 +23,6 @@ static var totalDraws = 0
 @export var speed: int
 #monster's current shield
 @export var shield: int
-@export var passive: PassiveAbility
 @export var heldItem: HeldItem
 #battle controller that instantiated the monster
 var battleController: BattleController
@@ -78,7 +77,6 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	attack = rawData.getAttack() + itemBoosts[1]
 	defense = rawData.getDefense() + itemBoosts[2]
 	speed = rawData.getSpeed() + itemBoosts[3]
-	passive = rawData.passive.duplicate()
 	
 	if rawData.deck.storedCards.size() == 0:
 		rawData.deck = rawData.startingCardPool.clone()
@@ -300,9 +298,7 @@ func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	if removeFromHand:
 		await currentHand.removeCards([card])
 	await card.onDiscarded(self)
-	await getPassive().onDiscard(self, battleController, card)
-	await getHeldItem().getPassive().onDiscard(self, battleController, card)
-
+	
 func forgeCard(card: Card, count: int, playAnimation = true):
 	if card == null:
 		return
@@ -310,8 +306,6 @@ func forgeCard(card: Card, count: int, playAnimation = true):
 		await forgeAnimation(card)
 	BattleLog.singleton.log(rawData.name + " forged " + card.name + " " + str(count) + " times")
 	await card.onForge()
-	#await getPassive().onDiscard(self, battleController, card)
-	#await getHeldItem().getPassive().onDiscard(self, battleController, card)
 
 func pickRandomCard() -> Card:
 	battleController.hidePlayerChoiceUI(true)
@@ -367,14 +361,9 @@ func exileRandomCard() -> Card:
 	return picked
 
 func addHeat(x):
-	if getPassive() is MachineAbility:
-		var passive: MachineAbility = getPassive()
-		await passive.setHeat(passive.heat + x, self, battleController)
+	pass
 		
 func getHeat():
-	if getPassive() is MachineAbility:
-		var passive: MachineAbility = getPassive()
-		return passive.heat
 	return 0
 
 func playableCards() -> Array[Card]:
@@ -500,9 +489,7 @@ func addStatusCondition(status: Status, broadcast = false):
 		await battleController.get_tree().create_timer(0.5).timeout
 		BattleCamera.singleton.disableFocus()
 	
-	await getPassive().onStatus(self,battleController, status)
-	await getHeldItem().getPassive().onStatus(self,battleController, status)
-
+	
 	await status.onApplied(self)
 	
 	# Effect stacking
@@ -529,7 +516,7 @@ func getAttack():
 	if hasCardInHand("The Bluff"):
 		cardBonus += 0.2
 	
-	var atk = attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus + getPassive().attackBonus(self,battleController) + getHeldItem().getPassive().attackBonus(self,battleController))
+	var atk = attack*(1 + attackBonus + temp_attackBonus + atkUpBonus + cardBonus)
 
 	return max(1, atk)
 
@@ -539,7 +526,7 @@ func getDefense():
 	for status in statusConditions:
 		defUpBonus += (status.defBoost - 1)
 	
-	var def = defense*(1 + defenseBonus + defUpBonus + getPassive().defenseBonus(self,battleController) + getHeldItem().getPassive().defenseBonus(self,battleController))
+	var def = defense*(1 + defenseBonus + defUpBonus)
 	
 	return max(1, def)
 	
@@ -719,9 +706,6 @@ func trueDamage(dmg: int, attacker: BattleMonster = null, shielded = false, dama
 		health = 0
 		#add knocked out status
 		BattleLog.log(rawData.name + " has been KO'd")
-		if attacker != null:
-			await attacker.getPassive().onOtherKO(attacker,battleController)
-			await getHeldItem().getPassive().onOtherKO(attacker,battleController)
 		await addStatusCondition(Status_KO.new(), false)
 	elif dmg > 0 and damageAnim:
 		await dmgAnim()
@@ -769,12 +753,6 @@ func receiveDamage(dmg:int, attacker: BattleMonster, blacklistedSources = []) ->
 		battleController.playSound(battleController.emptyHitSound)
 	#apply overdamage to monster as true damage
 	await trueDamage(pureDmg, attacker, shielded, true, blacklistedSources)
-	
-		
-	await getPassive().onHit(self,battleController)
-	await getHeldItem().getPassive().onHit(self,battleController)
-	await attacker.getPassive().onAttack(attacker,battleController)
-	await attacker.getHeldItem().getPassive().onAttack(attacker,battleController)
 	
 	#after attacks, try parrying
 	if attacker != self && attacker != null:
@@ -837,11 +815,6 @@ func removeMP(mpAmount: int) -> void:
 	#if enemy, remove mp from enemy
 	else:
 		battleController.enemyMP -= mpAmount
-	
-
-#returns monster's current ability
-func getPassive() -> PassiveAbility:
-	return passive
 
 #returns monster's current held item
 func getHeldItem() -> HeldItem:

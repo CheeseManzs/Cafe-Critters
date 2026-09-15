@@ -84,7 +84,6 @@ func runActions(battleController: BattleController) -> void:
 				BattleLog.log(status.name + " nullified the effects of " + action.card.name+"!")
 				skipEffect = true
 		
-		await action.battleMonster.getPassive().beforeAttack(action.battleMonster,action.battleController, action.card)
 		await battleController.get_tree().create_timer(0.75).timeout
 		
 		#add card to play history

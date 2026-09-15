@@ -17,7 +17,6 @@ enum ROLE {
 @export var dexEntry: String
 @export var sprite: Texture
 @export var spriteScale: float = 1
-@export var passive: PassiveAbility
 @export var heldItem: HeldItem
 @export var deck: Zone
 

@@ -750,10 +750,7 @@ func getActiveEnemyMon() -> BattleMonster:
 
 
 func universalPreswap(oldMon: BattleMonster, newMon: BattleMonster):
-	await newMon.getPassive().onSwapIn_beforeSwap(newMon, oldMon, self)
-	await newMon.getHeldItem().getPassive().onSwapIn_beforeSwap(newMon, oldMon, self)
-	await oldMon.getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
-	await oldMon.getHeldItem().getPassive().onSwapOut_beforeSwap(newMon, oldMon, self)
+	pass
 
 func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	var container: VBoxContainer
@@ -766,15 +763,6 @@ func universalSwap(oldMon: BattleMonster, newMon: BattleMonster):
 	
 	await get_tree().create_timer(0.5).timeout
 	await oldMon.onSwitchOut(newMon)
-	
-	await oldMon.getPassive().onSwapOut(oldMon, self)
-	await oldMon.getHeldItem().getPassive().onSwapOut(oldMon, self)
-	
-	await newMon.getPassive().customUI(newMon, self)
-	await newMon.getHeldItem().getPassive().customUI(newMon, self)
-	
-	await newMon.getPassive().onSwapIn(oldMon, self)
-	await newMon.getHeldItem().getPassive().onSwapIn(oldMon, self)
 	
 	await oldMon.carryStatusConditions(newMon)
 	
@@ -1089,12 +1077,8 @@ func enemyChooseFromArray(array: Array, choiceCount: int = 1):
 
 func getSwitchCost() -> int:
 	var baseSwitchCost = 1
-	var switchCost = baseSwitchCost + getActivePlayerMon().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost) + getActivePlayerMon().getHeldItem().getPassive().switchCostModifier_active(getActivePlayerMon(), self, baseSwitchCost)
+	var switchCost = baseSwitchCost
 		
-	for _shelvedMon in sortedMonList():
-		var shelvedMon: BattleMonster = _shelvedMon
-		if shelvedMon != getActivePlayerMon():
-			switchCost += shelvedMon.getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost) + shelvedMon.getHeldItem().getPassive().switchCostModifier_shelved(shelvedMon, self, getActivePlayerMon(), switchCost)
 	return switchCost
 
 ## seems to be the main gameplay loop? looks like it's what calls everything else
@@ -1146,11 +1130,12 @@ func activeTurn() -> void:
 	
 	#check abilities
 	#post reset actions
-
-	for mon in sortedMonList():
-		await mon.getPassive().initPassive(mon,self)
-		await mon.getHeldItem().getPassive().initPassive(mon,self)
 	
+	# you can probably apply the passives as status effects here
+	#for mon in sortedMonList():
+		#await mon.getPassive().initPassive(mon,self)
+		#await mon.getHeldItem().getPassive().initPassive(mon,self)
+	#
 	
 	#reset temporary values
 	await totalReset(false)
@@ -1166,10 +1151,8 @@ func activeTurn() -> void:
 	var firstSubTurn = true
 	
 	for mon in sortedActiveMonList():
-			await mon.getPassive().onTurnStart(mon, self)
-			await mon.getHeldItem().getPassive().onTurnStart(mon, self)
-			for status in mon.statusConditions:
-				await status.onNewTurn(mon)
+		for status in mon.statusConditions:
+			await status.onNewTurn(mon)
 	
 	while !getActivePlayerMon().isKO() && !getActiveEnemyMon().isKO() && (playerCanPlay || enemyCanPlay):
 		
@@ -1177,8 +1160,12 @@ func activeTurn() -> void:
 		for mon in sortedActiveMonList():
 			mon.switchState = BattleMonster.SWITCH_STATE.NONE
 			print("subturn started")
-			await mon.getPassive().onSubTurnStart(mon, self)
-			await mon.getHeldItem().getPassive().onSubTurnStart(mon, self)
+		
+		for sortedMon in sortedMonList():
+			for status in sortedMon.statusConditions:
+				await status.onNewSubTurn(sortedMon)
+			#update status display
+			sortedMon.getMonsterDisplay().updateStatusConditions()
 		
 		createDeckDisplay()	
 		playerCanPlay = !(len(getActivePlayerMon().playableCards()) == 0 && playerMP == 0)
@@ -1197,22 +1184,13 @@ func activeTurn() -> void:
 		if !multiplayer_game:
 			enemyActions = enemyDeclare(true)
 		
-		for sortedMon in sortedMonList():
-			for status in sortedMon.statusConditions:
-				await status.onNewSubTurn(sortedMon)
-			#update status display
-			sortedMon.getMonsterDisplay().updateStatusConditions()
+		
 		
 		
 		var actions: Array[BattleAction] = []
 		
 		if endTurn:
 			break
-		
-		for sorted_mon in sortedActiveMonList():
-			print("subturn ended")
-			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
-			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
 		
 		firstSubTurn = false
 			
@@ -1283,17 +1261,12 @@ func activeTurn() -> void:
 		print("state of rng_",multiplayer.get_unique_id(),":",global_rng.state)
 		
 		for sorted_mon in sortedActiveMonList():
-			await sorted_mon.getPassive().onSubTurnEnd(sorted_mon, self)
-			await sorted_mon.getHeldItem().getPassive().onSubTurnEnd(sorted_mon, self)
 			for status in sorted_mon.statusConditions:
 				await status.onSubTurnEnd(sorted_mon)
 		
 	
 	
-	for sortedMon in sortedMonList():
-		var mon: BattleMonster = sortedMon
-		for status in mon.statusConditions:
-			await status.onTurnEnd(mon)
+	
 	
 	#reset damage multiplier
 	damageMultiplier = 1
@@ -1311,9 +1284,10 @@ func activeTurn() -> void:
 		winner = 1
 	
 	if winner == 0:
-		for mon in sortedActiveMonList():
-			await mon.getPassive().onTurnEnd(mon, self)
-			await mon.getHeldItem().getPassive().onTurnEnd(mon, self)
+		for sortedMon in sortedMonList():
+			var mon: BattleMonster = sortedMon
+			for status in mon.statusConditions:
+				await status.onTurnEnd(mon)
 		inTurn = false
 	else:
 		await endBattle(winner)

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bxpcg2fwclvyi"]
+[gd_resource type="Resource" format=3 uid="uid://bxpcg2fwclvyi"]
 
 [ext_resource type="Script" path="res://Data/Monster Passive Scripts/passive_snakeeyes.gd" id="1_2pmsf"]
 

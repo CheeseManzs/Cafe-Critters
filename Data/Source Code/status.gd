@@ -135,6 +135,9 @@ func onBlocked(user: BattleMonster, attacker: BattleMonster):
 func onReducedDamage(user: BattleMonster, reduction: int):
 	pass
 
+## Triggers when a card’s conditional effect is triggered
+func onConditional(user: BattleMonster, card: Card):
+	pass
 
 
 # Global Events
@@ -166,10 +169,10 @@ func flag_onNewTurn(user: BattleMonster):
 	pass
 
 # Properties
-func p_atkBoost() -> float:
+func p_atkBoost(user: BattleMonster = null) -> float:
 	return 1
 
-func p_defBoost() -> float:
+func p_defBoost(user: BattleMonster = null) -> float:
 	return 1
 
 func p_nameMini() -> String:

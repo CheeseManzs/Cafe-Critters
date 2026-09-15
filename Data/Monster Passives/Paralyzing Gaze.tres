@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d0su80so1ucnv"]
+[gd_resource type="Resource" format=3 uid="uid://d0su80so1ucnv"]
 
 [ext_resource type="Script" uid="uid://csplcy03t6fug" path="res://Data/Monster Passive Scripts/passive_phantavision.gd" id="1_s2coy"]
 

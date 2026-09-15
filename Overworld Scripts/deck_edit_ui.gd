@@ -97,7 +97,7 @@ func _ready() -> void:
 		tempLabel.bbcode_enabled = true
 		
 		tempLabel.text = monster.name + "\n[color={col}]".format({"col": Card.alignemColors[monster.alignment]}) + str(Card.ALIGNMENT.keys()[monster.alignment]) \
-		+ "[/color]\n" + str(monster.passive.desc) + "\n" \
+		#+ "[/color]\n" + str(monster.passive.desc) + "\n" \
 		+ str(monster.rawHealth * 4) + "/" + str(monster.rawAttack) + "/" \
 		+ str(monster.rawDefense) + "/" + str(monster.rawSpeed)
 		tempLabel.custom_minimum_size = Vector2(1200, 120)
@@ -180,7 +180,7 @@ func setDrinkDisplay(heldItem: HeldItem):
 	%ATKWeight.text = str(heldItem.statWeights[1])
 	%DEFWeight.text = str(heldItem.statWeights[2])
 	%SPDWeight.text = str(heldItem.statWeights[3])
-	%ItemPassive.text = heldItem.passive.name
+	#%ItemPassive.text = heldItem.passive.name
 	for itemIndex in %DrinkAlignment.item_count:
 		%DrinkAlignment.get_popup().set_item_checked(itemIndex, itemIndex in heldItem.alignments)
 	for itemIndex in %DrinkTier.item_count:
@@ -548,7 +548,7 @@ func applyDrink() -> void:
 		float(%DEFWeight.text),
 		float(%SPDWeight.text)
 	]
-	setHI.passive = cache.getPassiveByName(%ItemPassive.text)
+	#setHI.passive = cache.getPassiveByName(%ItemPassive.text)
 	print("drink string: ", setHI.toString())
 	print("decoded: ", setHI.fromString(setHI.toString(), cache).toString())
 	rebuildMonsters(storedID)
