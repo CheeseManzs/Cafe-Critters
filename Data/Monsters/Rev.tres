@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_vs0ux"]
 [ext_resource type="Texture2D" uid="uid://bb7jieshcir82" path="res://Graphics/Monsters/Rev.png" id="3_fsk0c"]
 [ext_resource type="Resource" uid="uid://c6uo8laoo77ns" path="res://Data/Cards/Strike.tres" id="3_uxiga"]
-[ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="5_g2my1"]
 
 [sub_resource type="Resource" id="Resource_uxiga"]
 script = ExtResource("1_mkiur")
@@ -20,7 +19,6 @@ alignment = 2
 role = "Guard"
 sprite = ExtResource("3_fsk0c")
 spriteScale = 0.028
-passive = ExtResource("5_g2my1")
 deck = SubResource("Resource_uxiga")
 rawHealth = 7
 rawAttack = 7

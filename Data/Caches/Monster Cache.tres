@@ -12,20 +12,9 @@
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="9_qlmob"]
 [ext_resource type="Script" uid="uid://divyfp6lwcp8w" path="res://Data/Monster Passive Scripts/passive.gd" id="10_vjmtw"]
-[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="11_f8nik"]
-[ext_resource type="Resource" uid="uid://dhh8e4td6gqo7" path="res://Data/Monster Passives/Combustion Engine.tres" id="12_nhpkx"]
-[ext_resource type="Resource" uid="uid://omxc075hyt7" path="res://Data/Monster Passives/Machine.tres" id="13_wdoc7"]
-[ext_resource type="Resource" uid="uid://cfiru7jf6ek5w" path="res://Data/Monster Passives/Caffeine Core.tres" id="14_8q4qs"]
-[ext_resource type="Resource" uid="uid://dutyrms8vcug1" path="res://Data/Monster Passives/Revenerator.tres" id="15_qxqag"]
-[ext_resource type="Resource" uid="uid://chqbec4re4vwv" path="res://Data/Monster Passives/Scrap Engine.tres" id="16_jccxm"]
-[ext_resource type="Resource" uid="uid://bxpcg2fwclvyi" path="res://Data/Monster Passives/Snake's Jackpot.tres" id="17_s1kfp"]
-[ext_resource type="Resource" uid="uid://b8muftsmeq6hk" path="res://Data/Monster Passives/Sore Loser.tres" id="18_gmp1x"]
-[ext_resource type="Resource" uid="uid://d0su80so1ucnv" path="res://Data/Monster Passives/Paralyzing Gaze.tres" id="20_nhpkx"]
 
 [resource]
 script = ExtResource("2_mcreu")
 cache = Array[ExtResource("1_ntfgn")]([ExtResource("7_xmuw6"), ExtResource("6_sdfuw"), ExtResource("8_gbt8i"), ExtResource("9_jpghj"), ExtResource("6_0yj3b"), ExtResource("7_7lq5t"), ExtResource("8_4e5nh"), ExtResource("9_f8nik")])
-cardCache = Array[ExtResource("9_qlmob")]([])
-passiveCache = Array[ExtResource("10_vjmtw")]([ExtResource("11_f8nik"), ExtResource("13_wdoc7"), ExtResource("12_nhpkx"), ExtResource("14_8q4qs"), ExtResource("15_qxqag"), ExtResource("16_jccxm"), ExtResource("17_s1kfp"), ExtResource("18_gmp1x"), ExtResource("20_nhpkx")])
 cardFolderPath = "res://Data/Cards/"
 cardScriptsPath = "res://Data/Cards Scripts/"

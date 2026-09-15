@@ -1,7 +1,0 @@
-[gd_resource type="Resource" format=3 uid="uid://b8muftsmeq6hk"]
-
-[ext_resource type="Script" uid="uid://8tq7fmp08n7u" path="res://Data/Monster Passive Scripts/passive_hooliquen.gd" id="1_w3wte"]
-
-[resource]
-script = ExtResource("1_w3wte")
-flairColour = Color(0.545098, 0, 0, 1)
