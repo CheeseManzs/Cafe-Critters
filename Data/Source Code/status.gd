@@ -11,7 +11,8 @@ enum EFFECTS {
 	FOCUS,
 	FATIGUE,
 	ROOTED,
-	BURNOUT
+	BURNOUT,
+	FORGED,
 }
 var X: int = 0
 var effectDone = false
@@ -135,6 +136,9 @@ func onBlocked(user: BattleMonster, attacker: BattleMonster):
 func onReducedDamage(user: BattleMonster, reduction: int):
 	pass
 
+## Triggers when a status is applied to a card
+func card_onApplied(card: Card):
+	pass
 
 
 # Global Events

@@ -12,6 +12,7 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	var handSize = attacker.currentHand.storedCards.size()
+	print(shieldPower)
 	await attacker.discardHand()
 	await giveShield(attacker, defender, shieldPower * handSize)
 	pass

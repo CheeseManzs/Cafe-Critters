@@ -237,8 +237,8 @@ func _process(delta: float) -> void:
 	pass
 	
 	$Front.set_instance_shader_parameter("brightness", shaderBrightness)
-	shaderBrightness *= 1.0 - 0.999 * delta
-	shaderBrightness -= 7 * delta
+	shaderBrightness *= 1.0 - 1.5 * delta
+	shaderBrightness -= 10 * delta
 	if shaderBrightness > 1.1: print(shaderBrightness)
 	shaderBrightness = max(shaderBrightness, 1.0)
 
@@ -299,6 +299,5 @@ func playForgeAnimation():
 	if randf() > 0.5:
 		rotation = 0.1
 	else: rotation = -0.1
-	if shaderBrightness == 1.0:
-		shaderBrightness = 5.0
+	shaderBrightness = 5.0
 	pass
