@@ -235,7 +235,7 @@ func discardAnimation(card: Card) -> void:
 	battleController.hidePlayerChoiceUI(true)		
 	await battleController.get_tree().create_timer(0.5).timeout
 
-func forgeAnimation(card: Card): 
+func forgeAnimation(card: Card, times: int): 
 	
 	
 	for display in battleController.cardButtons:
@@ -244,9 +244,11 @@ func forgeAnimation(card: Card):
 			display.autoSend = false
 			display.raise(2)
 			await battleController.get_tree().create_timer(0.5).timeout
-			battleController.playSound(battleController.forgeSound)
-			display.playForgeAnimation()
-			await battleController.get_tree().create_timer(0.5).timeout
+			for i in range(times):
+				battleController.playSound(battleController.forgeSound)
+				display.playForgeAnimation()
+				await battleController.get_tree().create_timer(0.2).timeout
+			await battleController.get_tree().create_timer(0.3).timeout
 			break
 			
 	
@@ -303,9 +305,12 @@ func forgeCard(card: Card, count: int, playAnimation = true):
 	if card == null:
 		return
 	if playAnimation:
-		await forgeAnimation(card)
+		await forgeAnimation(card, count)
 	BattleLog.singleton.log(rawData.name + " forged " + card.name + " " + str(count) + " times")
-	await card.onForge()
+	for i in range(count):
+		await card.onForged()
+	#await getPassive().onDiscard(self, battleController, card)
+	#await getHeldItem().getPassive().onDiscard(self, battleController, card)
 
 func pickRandomCard() -> Card:
 	battleController.hidePlayerChoiceUI(true)

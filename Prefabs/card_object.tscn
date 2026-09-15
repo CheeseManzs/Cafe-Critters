@@ -38,7 +38,7 @@ forgeParticles = ExtResource("2_xvkii")
 [node name="Front" type="TextureRect" parent="." unique_id=76004430]
 texture_filter = 4
 material = SubResource("ShaderMaterial_qawa7")
-instance_shader_parameters/brightness = 10.0
+instance_shader_parameters/brightness = 1.0
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

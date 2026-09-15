@@ -106,7 +106,7 @@ var rarity: RARITY
 var power: float = 0
 var shieldPower: float = 0
 
-var statusConditions: Array[Status.EFFECTS] = []
+var statusConditions: Array[Status] = []
 var tags: Array[String] = []
 var originator: BattleMonster = null #the monster that owns this card
 var selfTarget: bool = false
@@ -172,10 +172,29 @@ func onDiscarded(attacker: BattleMonster):
 func onBlackjack(attacker: BattleMonster):
 	return 0
 
-func onForge():
-	power += 0.05
-	shieldPower += 0.05
+func onForged():
+	gainCardStatus(Status_Forged.new())
 	return 0
+
+func hasStatus(eff: Status.EFFECTS) -> bool:
+	for i in len(statusConditions):
+		var status: Status = statusConditions[i]
+		if statusConditions[i].effect == eff:
+			return true
+	return false
+
+func gainCardStatus(status: Status):
+	if hasStatus(status.effect):
+		if status.isNumerable:
+			for i in len(statusConditions):
+				if statusConditions[i].effect == status.effect:
+					statusConditions[i].X += status.X
+					status.card_onApplied(self)
+			pass
+	else: 
+		statusConditions.append(status)
+		status.card_onApplied(self)
+	pass
 
 func localSwap(old: BattleMonster, new: BattleMonster):
 	if old.playerControlled:
@@ -365,4 +384,6 @@ func clone():
 	newCard.costMod = costMod
 	if statusConditions != null:
 		newCard.statusConditions += statusConditions
+		for i in range(newCard.statusConditions.size()):
+			newCard.statusConditions[i].card_onApplied(newCard)
 	return newCard
