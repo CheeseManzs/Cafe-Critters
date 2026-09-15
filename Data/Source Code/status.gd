@@ -143,6 +143,10 @@ func onConditional(user: BattleMonster, card: Card):
 func card_onApplied(card: Card):
 	pass
 
+func card_modifyHintRatio(statName: String) -> int:
+	return 0
+	pass
+
 
 # Global Events
 func global_onSwitchOut(user: BattleMonster):

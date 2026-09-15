@@ -22,6 +22,7 @@ static var keywords = [
 "Recycle",
 "Fold",
 "ATK/DEF",
+"Forged",
 ]
 
 static var keywordDescriptions = {
@@ -45,6 +46,7 @@ static var keywordDescriptions = {
 "Recycle": "Put to the bottom of your deck",
 "Fold": "Effect when Discarded",
 "ATK/DEF": "10% boost in associatrd stat for each stack of X",
+"Forged": "Deals 5% ATK more damage and grants 5% DEF more block"
 }
 
 static func getDescription(keywordString) -> String:

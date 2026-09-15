@@ -892,6 +892,9 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 			#cardButton.tooltip_text = card.description
 			for status in mon.statusConditions:
 				card.description = status.modifyCardDesc(card)
+			for status in card.statusConditions:
+				card.description = status.modifyCardDesc(card)
+				print("nananana")
 			# Disables the card if you can't afford it.
 			
 			var blockedByStatus = mon.statusBlockingCard(card)

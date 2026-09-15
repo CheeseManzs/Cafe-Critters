@@ -15,3 +15,11 @@ func p_nameFull() -> String:
 func card_onApplied(card: Card):
 	card.power += 0.05 * X
 	card.shieldPower += 0.05 * X
+
+func modifyCardDesc(card: Card) -> String:
+	return card.description + " \nForged " + str(X) + " times."
+	
+func card_modifyHintRatio(statName: String) -> int:
+	if statName == "ATK": return 5 * X
+	if statName == "DEF": return 5 * X
+	return 0

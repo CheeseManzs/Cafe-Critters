@@ -299,6 +299,11 @@ func descSetup():
 	if baseDescription == "null":
 		baseDescription = description
 	description = baseDescription
+	if originator:
+		for status in originator.statusConditions:
+			description = status.modifyCardDesc(self)
+	for status in statusConditions:
+		description = status.modifyCardDesc(self)
 
 func setDescription(attacker: BattleMonster, defender: BattleMonster):
 	descSetup()
@@ -324,26 +329,37 @@ func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 				print("found "+str(statInd)+": " + str(atkDescInd))
 				var fullHint = getSurroundingHint(description, atkDescInd)
 				var atkNum = int(fullHint)
+				for status in statusConditions:
+					atkNum += status.card_modifyHintRatio(statName)
 				var calc = hintStats[statName].call(currentAttacker, currentDefender, atkNum)
 				var toReplace = fullHint
+				var hintText = toReplace.replace("(","").replace(")","")
+				for status in statusConditions:
+					if status.card_modifyHintRatio(statName) != 0:
+						if status.card_modifyHintRatio(statName) < 0:
+							hintText += " - "
+						else: hintText += " + "
+						hintText += str(abs(status.card_modifyHintRatio(statName)))
+						hintText += "% " + statName + " (" + status.name + ")"
 				atkDescInd = description.find(statInd, atkDescInd+1)
 				if !replaceList.has(toReplace):
-					replaceBin.push_back([toReplace,calc, "", tooltipColors[statName],toReplace.replace("(","").replace(")","")])
+					replaceBin.push_back([toReplace,calc, "", tooltipColors[statName],hintText])
 					replaceList.push_back(toReplace)
 
 	for rawKeywordString in Keyword.keywords:
 		var spaces = rawKeywordString.count(" ")
 		for ending in ["",".",":"]:
-			var keywordString = rawKeywordString + ending
-			var atkDescInd = description.find(keywordString)
-			while atkDescInd != -1:
-				var toReplace = keywordString
-				var resetInd = atkDescInd
-				print("toReplace: ", "1:",toReplace,"2:",getSurroundingWord(description,resetInd,spaces),"|")
-				atkDescInd = description.find(toReplace, atkDescInd+1)
-				if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd,spaces).trim_prefix(" ") == toReplace:
-					replaceBin.push_back([toReplace,null,toReplace,tooltipColors["KEY"],Keyword.getDescription(rawKeywordString)])
-					replaceList.push_back(toReplace)
+			for beginning in ["", "\n"]:
+				var keywordString = beginning + rawKeywordString + ending
+				var atkDescInd = description.find(keywordString)
+				while atkDescInd != -1:
+					var toReplace = keywordString
+					var resetInd = atkDescInd
+					print("toReplace: ", "1:",toReplace,"2:",getSurroundingWord(description,resetInd,spaces),"|")
+					atkDescInd = description.find(toReplace, atkDescInd+1)
+					if !replaceList.has(toReplace) && getSurroundingWord(description,resetInd,spaces).trim_prefix(" ") == toReplace:
+						replaceBin.push_back([toReplace,null,toReplace,tooltipColors["KEY"],Keyword.getDescription(rawKeywordString)])
+						replaceList.push_back(toReplace)
 	
 	for rpl in replaceBin:
 		

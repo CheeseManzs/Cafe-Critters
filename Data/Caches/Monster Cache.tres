@@ -11,7 +11,6 @@
 [ext_resource type="Resource" uid="uid://bu2tcsc8dc3xf" path="res://Data/Monsters/Phantavision.tres" id="9_f8nik"]
 [ext_resource type="Resource" uid="uid://ld42hgtnipls" path="res://Data/Monsters/Rev.tres" id="9_jpghj"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="9_qlmob"]
-[ext_resource type="Script" uid="uid://divyfp6lwcp8w" path="res://Data/Monster Passive Scripts/passive.gd" id="10_vjmtw"]
 
 [resource]
 script = ExtResource("2_mcreu")
