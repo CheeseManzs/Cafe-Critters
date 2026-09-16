@@ -15,6 +15,7 @@ func p_nameFull() -> String:
 func card_onApplied(card: Card):
 	card.power += 0.05 * X
 	card.shieldPower += 0.05 * X
+	card.resetDescription()
 
 func modifyCardDesc(card: Card) -> String:
 	return card.description + " \nForged " + str(X) + " times."

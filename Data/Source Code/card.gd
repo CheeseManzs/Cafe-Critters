@@ -109,6 +109,8 @@ var shieldPower: float = 0
 var statusConditions: Array[Status] = []
 var tags: Array[String] = []
 var originator: BattleMonster = null #the monster that owns this card
+var storedAttacker: BattleMonster = null ## initialized when description is created
+var storedTarget: BattleMonster = null ## initialized when description is created
 var selfTarget: bool = false
 var salvaged: bool = false
 
@@ -306,8 +308,14 @@ func descSetup():
 		description = status.modifyCardDesc(self)
 
 func setDescription(attacker: BattleMonster, defender: BattleMonster):
+	storedAttacker = attacker
+	storedTarget = defender
 	descSetup()
 	genericDescription(attacker, defender)
+	
+func resetDescription():
+	descSetup()
+	genericDescription(storedAttacker, storedTarget)
 
 func genericDescription(attacker: BattleMonster, defender: BattleMonster):
 	var replaceBin = []

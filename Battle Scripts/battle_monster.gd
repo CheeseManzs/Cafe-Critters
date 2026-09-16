@@ -236,8 +236,6 @@ func discardAnimation(card: Card) -> void:
 	await battleController.get_tree().create_timer(0.5).timeout
 
 func forgeAnimation(card: Card, times: int): 
-	
-	
 	for display in battleController.cardButtons:
 		if display.card == card:
 			# dude imagine if it like exploded with a bunch of sparks or something
@@ -247,13 +245,15 @@ func forgeAnimation(card: Card, times: int):
 			for i in range(times):
 				battleController.playSound(battleController.forgeSound)
 				display.playForgeAnimation()
+				await card.onForged()
+				display.descLabel.text = card.description
 				await battleController.get_tree().create_timer(0.2).timeout
 			await battleController.get_tree().create_timer(0.3).timeout
 			break
 			
 	
 	battleController.hidePlayerChoiceUI(true)		
-	await battleController.get_tree().create_timer(0.5).timeout
+	await battleController.get_tree().create_timer(0.2).timeout
 	pass
 
 func exileCard(card: Card, discardAnim = true):
@@ -307,8 +307,6 @@ func forgeCard(card: Card, count: int, playAnimation = true):
 	if playAnimation:
 		await forgeAnimation(card, count)
 	BattleLog.singleton.log(rawData.name + " forged " + card.name + " " + str(count) + " times")
-	for i in range(count):
-		await card.onForged()
 	#await getPassive().onDiscard(self, battleController, card)
 	#await getHeldItem().getPassive().onDiscard(self, battleController, card)
 

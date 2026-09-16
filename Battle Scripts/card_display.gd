@@ -297,7 +297,7 @@ func playForgeAnimation():
 	$Front.add_child(vfxNode)
 	vfxNode.get_child(0).emitting = true
 	if randf() > 0.5:
-		rotation = 0.1
-	else: rotation = -0.1
+		rotation += 0.1
+	else: rotation -= -0.1
 	shaderBrightness = 5.0
 	pass

@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://ck6kibtk6piq4" path="res://Data/Source Code/zone.gd" id="1_il4dp"]
 [ext_resource type="Texture2D" uid="uid://ccfnlaufe72rd" path="res://Graphics/Monsters/placeholder2.png" id="2_343v3"]
 [ext_resource type="Script" uid="uid://dvojf61xkmwk0" path="res://Data/Source Code/card.gd" id="2_tklcb"]
-[ext_resource type="Resource" uid="uid://cqa81xs22tyhm" path="res://Data/Monster Passives/Unremarkable.tres" id="3_h68tp"]
 
 [sub_resource type="Resource" id="Resource_470u8"]
 script = ExtResource("1_il4dp")
@@ -15,7 +14,6 @@ script = ExtResource("1_clwfr")
 name = "Qnibi"
 alignment = 3
 sprite = ExtResource("2_343v3")
-passive = ExtResource("3_h68tp")
 deck = SubResource("Resource_470u8")
 rawHealth = 10
 rawAttack = 10
