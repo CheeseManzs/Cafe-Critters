@@ -102,3 +102,6 @@ func runActions(battleController: BattleController) -> void:
 		for status in action.battleMonster.statusConditions:
 			await status.onCardPlayed(action.battleMonster, action.card)
 		
+		# check blackjack
+		#await action.battleMonster.currentDeck.storedCards[0].onBlackjack()
+		

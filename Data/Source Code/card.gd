@@ -1,6 +1,7 @@
 class_name Card
 extends Resource
 
+
 #list of god alignments
 enum ALIGNMENT {
 	Default,
@@ -406,8 +407,17 @@ func clone():
 	newCard.name = name
 	newCard.statusConditions = []
 	newCard.costMod = costMod
+	newCard.storedAttacker = storedAttacker
+	newCard.storedTarget = storedTarget
 	if statusConditions != null:
 		newCard.statusConditions += statusConditions
 		for i in range(newCard.statusConditions.size()):
 			newCard.statusConditions[i].card_onApplied(newCard)
 	return newCard
+	#var newCard: Card = get_script().new()
+	#newCard.copy_from_resource(self)
+	#if statusConditions != null:
+		#newCard.statusConditions += statusConditions
+		#for i in range(newCard.statusConditions.size()):
+			#newCard.statusConditions[i].card_onApplied(newCard)
+	#return newCard
