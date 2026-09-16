@@ -81,6 +81,8 @@ func _init(data: Monster, controller: BattleController = null, p_playerControlle
 	if rawData.deck.storedCards.size() == 0:
 		rawData.deck = rawData.startingCardPool.clone()
 	currentDeck = rawData.deck.clone()
+	for card in currentDeck.storedCards:
+		card.owner = self
 	exileZone = Zone.new()
 	playerControlled = p_playerControlled
 	hardReset()
@@ -648,6 +650,12 @@ func getActiveTeammate():
 		return battleController.getActivePlayerMon()
 	else:
 		return battleController.getActiveEnemyMon()
+
+func getActiveEnemy():
+	if playerControlled:
+		return battleController.getActiveEnemyMon()
+	else:
+		return battleController.getActivePlayerMon()
 
 func promptSwitch():
 	if playerControlled:
