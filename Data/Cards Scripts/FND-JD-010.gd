@@ -8,6 +8,10 @@ func _init() -> void:
 	name = "Face Card"
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
+	power = 1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	pass
+
+func onBlackjack(attacker: BattleMonster):
+	await dealDamage(attacker, attacker.getActiveEnemy())
