@@ -45,7 +45,8 @@ static var keywordDescriptions = {
 "Rooted": "Buffs for how long they've been in?",
 "Recycle": "Put to the bottom of your deck",
 "Fold": "Effect when Discarded",
-"ATK/DEF": "10% boost in associatrd stat for each stack of X",
+"ATK+": "Increases Attack stat by 10% per stack",
+"DEF+": "Increases Defense stat by 10% per stack",
 "Forged": "Deals 5% ATK more damage and grants 5% DEF more block"
 }
 

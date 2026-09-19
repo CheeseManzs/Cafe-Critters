@@ -11,3 +11,8 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	pass
+
+func onDiscarded(attacker: BattleMonster):
+	attacker.addMP(1)
+	pass
+	

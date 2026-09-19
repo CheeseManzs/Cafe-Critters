@@ -13,6 +13,8 @@ enum EFFECTS {
 	ROOTED,
 	BURNOUT,
 	FORGED,
+	ATK_UP,
+	DEF_UP,
 }
 var X: int = 0
 var effectDone = false
