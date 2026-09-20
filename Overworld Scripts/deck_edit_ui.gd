@@ -414,12 +414,6 @@ func applyFilter(item: Card, mon, crd, loose = false, searchText: String = ""):
 			return true
 
 	
-	if mon != null && item.role not in ["Basic",mon.role,mon.name]:
-		if strictMode and !loose:
-			return true
-		else:
-			crd.setTextColor(Color.RED)
-	
 	if mon != null:
 		var allAlignments = [mon.alignment, item.ALIGNMENT.Default]+mon.getHeldItem().alignments
 		if mon != null and item.alignment not in allAlignments:
