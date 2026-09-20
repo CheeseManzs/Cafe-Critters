@@ -103,5 +103,6 @@ func runActions(battleController: BattleController) -> void:
 			await status.onCardPlayed(action.battleMonster, action.card)
 		
 		# check blackjack
-		await action.battleMonster.currentDeck.storedCards[0].onBlackjack(action.battleMonster.currentDeck.storedCards[0].owner)
+		if len(action.battleMonster.currentDeck.storedCards) > 0:
+			await action.battleMonster.currentDeck.storedCards[0].onBlackjack(action.battleMonster.currentDeck.storedCards[0].owner)
 		
