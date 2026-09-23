@@ -29,7 +29,8 @@ func setup(battleMonster: BattleMonster):
 	for child in displayContainer.get_children():
 		child.queue_free()
 	
-	for card in battleMonster.rawData.deck.storedCards:
+	#for card in battleMonster.rawData.deck.storedCards:
+	for card in battleMonster.currentDeck.storedCards:
 		var newDisplay: RichTextLabel = cardDiplay.instantiate()
 		displayContainer.add_child(newDisplay)
 		newDisplay.text = card.name

@@ -15,3 +15,4 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 
 func onBlackjack(attacker: BattleMonster):
 	await dealDamage(attacker, attacker.getActiveEnemy())
+	await attacker.battleController.addToGraveyard(self, attacker)

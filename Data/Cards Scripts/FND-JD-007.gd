@@ -9,6 +9,7 @@ func _init() -> void:
 	tags = ['Attack']
 	rarity = RARITY.Common
 	power = 0.8
+	triggersBlackjack = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
@@ -17,4 +18,5 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 func onBlackjack(attacker: BattleMonster):
 	#attacker.battleController.EffectFlair.singleton._runFlair("Blackjack", Color.RED)
 	await giveStatus(attacker, Status_Atk_Up.new(1))
+	#await attacker.battleController.addToGraveyard(self, attacker)
 	pass

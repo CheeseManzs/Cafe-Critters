@@ -11,12 +11,15 @@ func _init() -> void:
 	power = 0.1
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	dealDamage(attacker, defender)
-	attacker.drawCards(1)
+	await dealDamage(attacker, defender)
+	await attacker.drawCards(1)
 	pass
 
 func onBlackjack(attacker: BattleMonster):
-	cost = 0
-	var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
-	await newSequence.runActions(attacker.battleController)
-	cost = 2
+	await dealDamage(attacker, attacker.getActiveEnemy())
+	await attacker.drawCards(1)
+	await attacker.battleController.addToGraveyard(self, attacker)
+	#cost = 0
+	#var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
+	#await newSequence.runActions(attacker.battleController)
+	#cost = 2

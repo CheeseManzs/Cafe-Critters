@@ -113,6 +113,8 @@ var originator: BattleMonster = null #the monster that owns this card
 var owner: BattleMonster = null ## initialized when card is created
 var selfTarget: bool = false
 var salvaged: bool = false
+var freeAction: bool = false ## indicates if card is "played from hand"
+var triggersBlackjack: bool = false ## indicates if card should trigger blackjack effects
 
 @export var art: Texture2D
 

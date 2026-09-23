@@ -48,6 +48,10 @@ func exileCards(cards: Array[Card], mon: BattleMonster):
 			BattleLog.singleton.log("found card to exile")
 			storedCards.remove_at(storedCards.find(card))
 			mon.exileZone.storedCards.push_back(card)
+			
+func insertCard(card: Card, index: int):
+	storedCards.insert(index, card)
+	pass
 
 # draws/removes random cards in bulk and returns an array
 func bulkDraw(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
