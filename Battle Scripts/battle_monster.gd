@@ -302,6 +302,9 @@ func discardCard(card: Card, removeFromHand = true, playAnimation = true):
 	if removeFromHand:
 		await currentHand.removeCards([card])
 	await card.onDiscarded(self)
+	for status in statusConditions:
+		await status.onCardDiscarded(self, card)
+	
 	
 func forgeCard(card: Card, count: int, playAnimation = true):
 	if card == null:
@@ -390,6 +393,7 @@ func isKO() -> bool:
 func hardReset() -> void:
 	shield = 0
 	currentDeck = rawData.deck.clone()
+	currentDeck.storedCards.shuffle()
 	currentHand = Zone.new()
 
 func removeCard(card: Card):

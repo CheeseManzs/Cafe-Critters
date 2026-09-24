@@ -9,6 +9,7 @@ func _init() -> void:
 	tags = ['Attack']
 	rarity = RARITY.Rare
 	power = 0.1
+	triggersBlackjack = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await dealDamage(attacker, defender)
@@ -18,7 +19,6 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 func onBlackjack(attacker: BattleMonster):
 	await dealDamage(attacker, attacker.getActiveEnemy())
 	await attacker.drawCards(1)
-	await attacker.battleController.addToGraveyard(self, attacker)
 	#cost = 0
 	#var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
 	#await newSequence.runActions(attacker.battleController)

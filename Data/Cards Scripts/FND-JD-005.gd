@@ -10,4 +10,5 @@ func _init() -> void:
 	rarity = RARITY.Rare
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await giveStatus(attacker, Status_Stack_Your_Chips.new())
 	pass

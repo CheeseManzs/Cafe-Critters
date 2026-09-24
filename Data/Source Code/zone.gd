@@ -69,7 +69,7 @@ func bulkDraw(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	return cards
 
 
-#bulk draws with respect to status conditions
+## draws with respect to status conditions from the top of the deck
 func specialDraw(count: int, battleController: BattleController, mon: BattleMonster, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if BattleController.multiplayer_game:
@@ -80,7 +80,7 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 	
 	for i in min(count, len(drawArray)):
 		var oldState = rng.state
-		var cardID = rng.randi_range(0, len(drawArray) - 1)
+		var cardID = 0
 		if oldState == rng.state:
 			print("state not changed! > ",BattleMonster.totalDraws)
 		var card = pullCard(cardID, drawArray)

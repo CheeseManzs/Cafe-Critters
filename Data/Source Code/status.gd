@@ -15,6 +15,7 @@ enum EFFECTS {
 	FORGED,
 	ATK_UP,
 	DEF_UP,
+	STACK_YOUR_CHIPS,
 }
 var X: int = 0
 var effectDone = false
@@ -120,6 +121,10 @@ func onCardDrawn(user: BattleMonster, card: Card):
 
 ## Triggers if any card is sent to the graveyard
 func onCardSentToGraveyard(user: BattleMonster, card: Card):
+	pass
+
+## Triggers if any card is discarded from hand
+func onCardDiscarded(user: BattleMonster, card: Card):
 	pass
 
 ## Triggers if a unit (so a Fae in this case) skips their turn

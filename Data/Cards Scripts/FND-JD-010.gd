@@ -9,10 +9,10 @@ func _init() -> void:
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
 	power = 1
+	triggersBlackjack = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	pass
 
 func onBlackjack(attacker: BattleMonster):
 	await dealDamage(attacker, attacker.getActiveEnemy())
-	await attacker.battleController.addToGraveyard(self, attacker)
