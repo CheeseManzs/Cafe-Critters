@@ -1297,6 +1297,8 @@ func activeTurn() -> void:
 			var mon: BattleMonster = sortedMon
 			for status in mon.statusConditions:
 				await status.onTurnEnd(mon)
+				if status.endsOnTurn:
+					mon.statusConditions.erase(status)
 		inTurn = false
 	else:
 		await endBattle(winner)

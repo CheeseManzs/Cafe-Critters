@@ -10,4 +10,8 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	await attacker.drawCards(2)
+	var toInsert = await attacker.battleController.chooseCards(1, attacker.playerControlled)
+	attacker.currentHand.storedCards.erase(toInsert[0])
+	await attacker.currentDeck.insertCard(toInsert[0], 0)
 	pass

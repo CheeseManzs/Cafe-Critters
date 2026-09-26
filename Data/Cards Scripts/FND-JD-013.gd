@@ -10,4 +10,8 @@ func _init() -> void:
 	rarity = RARITY.Legendary
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
+	while true:
+		if attacker.currentDeck.storedCards[0].triggersBlackjack: break
+		if attacker.currentDeck.storedCards.size() == 0: break
+		await attacker.drawCards(1)
 	pass

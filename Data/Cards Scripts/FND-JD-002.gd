@@ -4,7 +4,7 @@ func _init() -> void:
 	cost = 3
 	priority = 0
 	alignment = ALIGNMENT.Jacks
-	description = "Fold: Play me. Deal (75% ATK) damage."
+	description = "Deal (75% ATK) damage. \nFold: Play me."
 	name = "Oops!"
 	tags = ['Attack']
 	rarity = RARITY.Common
@@ -15,7 +15,8 @@ func effect(attacker: BattleMonster, defender: BattleMonster):
 	pass
 	
 func onDiscarded(attacker: BattleMonster):
-	cost = 0
-	var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
-	await newSequence.runActions(attacker.battleController)
-	cost = 3
+	await dealDamage(attacker, attacker.getActiveEnemy())
+	#cost = 0
+	#var newSequence = BattleSequence.new([BattleAction.new(attacker, attacker.playerControlled, priority, -1, selfTarget, self, attacker.battleController)])
+	#await newSequence.runActions(attacker.battleController)
+	#cost = 3

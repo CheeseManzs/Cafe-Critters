@@ -9,6 +9,7 @@ func _init() -> void:
 	tags = ['Attack']
 	rarity = RARITY.Uncommon
 	power = 1
+	triggersBlackjack = true
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	pass

@@ -48,6 +48,10 @@ func exileCards(cards: Array[Card], mon: BattleMonster):
 			BattleLog.singleton.log("found card to exile")
 			storedCards.remove_at(storedCards.find(card))
 			mon.exileZone.storedCards.push_back(card)
+			
+func insertCard(card: Card, index: int):
+	storedCards.insert(index, card)
+	pass
 
 # draws/removes random cards in bulk and returns an array
 func bulkDraw(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
@@ -65,7 +69,7 @@ func bulkDraw(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	return cards
 
 
-#bulk draws with respect to status conditions
+## draws with respect to status conditions from the top of the deck
 func specialDraw(count: int, battleController: BattleController, mon: BattleMonster, filter: CardFilter = CardFilter.new()) -> Array[Card]:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if BattleController.multiplayer_game:
@@ -76,7 +80,7 @@ func specialDraw(count: int, battleController: BattleController, mon: BattleMons
 	
 	for i in min(count, len(drawArray)):
 		var oldState = rng.state
-		var cardID = rng.randi_range(0, len(drawArray) - 1)
+		var cardID = 0
 		if oldState == rng.state:
 			print("state not changed! > ",BattleMonster.totalDraws)
 		var card = pullCard(cardID, drawArray)
