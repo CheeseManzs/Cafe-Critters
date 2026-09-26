@@ -126,8 +126,8 @@ lockedButtons = [NodePath("../Control UI/HBoxContainer/VBoxContainer2/Online Bat
 defaultPersonality = SubResource("Resource_7t0me")
 defaultTeam = "```
 Rev (50)
-- Stack Your Chips (1)
-- I'm Out (1)
+- Charlie (3)
+- Blunt End (3)
 - Strike (3)
 Inkhor (50)
 - Strike (1)

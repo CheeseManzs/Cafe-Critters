@@ -104,8 +104,9 @@ func runActions(battleController: BattleController) -> void:
 		
 		# check blackjack
 		if len(action.battleMonster.currentDeck.storedCards) > 0:
-			if action.battleMonster.currentDeck.storedCards[0].triggersBlackjack:
+			var topDeck = action.battleMonster.currentDeck.storedCards[0]
+			if topDeck.triggersBlackjack:
 				await EffectFlair.singleton._runFlair("Blackjack", Color.RED)
-				await action.battleMonster.currentDeck.storedCards[0].onBlackjack(action.battleMonster.currentDeck.storedCards[0].owner)
-				await battleController.addToGraveyard(action.battleMonster.currentDeck.storedCards[0], action.battleMonster)
-				await action.battleMonster.currentDeck.storedCards.pop_front()
+				action.battleMonster.currentDeck.storedCards.erase(topDeck)
+				await topDeck.onBlackjack(topDeck.owner)
+				await battleController.addToGraveyard(topDeck, action.battleMonster)

@@ -11,4 +11,5 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	await giveStatus(attacker, Status_Stack_Your_Chips.new())
+	await attacker.addMP(1)
 	pass
