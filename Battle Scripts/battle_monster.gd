@@ -458,8 +458,8 @@ func chooseAndDiscardCards(count: int) -> Array[Card]:
 	await battleController.get_tree().create_timer(1.0).timeout
 	return toDiscard
 
-func chooseAndForgeCard(count: int) -> Array[Card]:
-	var toForge = await battleController.chooseCards(1, playerControlled)
+func chooseAndForgeCard(count: int, filter: CardFilter = CardFilter.new()) -> Array[Card]:
+	var toForge = await battleController.chooseCards(1, playerControlled, filter)
 	for card in toForge:
 		await forgeCard(card, count)
 	await battleController.get_tree().create_timer(1.0).timeout

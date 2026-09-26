@@ -10,6 +10,6 @@ func _init() -> void:
 	rarity = RARITY.Common
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
-	await attacker.chooseAndForgeCard(3)
+	await attacker.chooseAndForgeCard(3, CardFilter.new(["Attack", "Defence"]))
 	pass
 	

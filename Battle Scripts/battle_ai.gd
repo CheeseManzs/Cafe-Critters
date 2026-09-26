@@ -186,9 +186,10 @@ func enemyShouldSwitch():
 	return shouldSwich
 
 #choose cards from hand
-func enemyChooseHand(count: int, requirement: Callable = func(x): return true) -> Array[Card]:
+func enemyChooseHand(count: int, filter: CardFilter = CardFilter.new(), requirement: Callable = func(x): return true) -> Array[Card]:
 	var mon: BattleMonster = battleController.getActiveEnemyMon()
-	var cards: Array[Card] = mon.currentHand.storedCards
+	var _cards: Array[Card] = mon.currentHand.storedCards
+	var cards: Array[Card] = filter.filter(_cards)
 	var chosen: Array[Card] = []
 	var scores = []
 	for card in cards:

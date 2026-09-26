@@ -402,9 +402,9 @@ func randomTeammateID(mon: BattleMonster):
 
 
 ## Called when the player gains control of the game.
-func playerChooseCards(count: int, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
+func playerChooseCards(count: int, endable = false, filter: CardFilter = CardFilter.new(),requirement: Callable = func(x): return true ) -> Array[Card]:
 	## Draws the appropriate cards of their current mon.
-	setCardSelection(getActivePlayerMon(), true)
+	setCardSelection(getActivePlayerMon(), true, filter)
 	if endable:
 		skipButton.text = "Done"
 		skipButton.disabled = false
@@ -464,7 +464,7 @@ func playerChooseCards(count: int, endable = false, requirement: Callable = func
 	return cardsChosen
 
 
-func enemyChooseCards(count: int, requirement: Callable = func(x): return true ) -> Array[Card]:
+func enemyChooseCards(count: int, filter: CardFilter = CardFilter.new(), requirement: Callable = func(x): return true ) -> Array[Card]:
 	var cardsChosen: Array[Card] = []
 	if multiplayer_game:
 		while true:
@@ -474,21 +474,22 @@ func enemyChooseCards(count: int, requirement: Callable = func(x): return true )
 			else:
 				var card = getActiveEnemyMon().currentHand.storedCards[choice]
 				if !cardsChosen.has(card):
-					cardsChosen.push_back(card)
+					if filter.matchesFilter(card):
+						cardsChosen.push_back(card)
 				else:
 					cardsChosen.remove_at(cardsChosen.find(card))
 	else:
-		cardsChosen = enemyAI.enemyChooseHand(count, requirement)
+		cardsChosen = enemyAI.enemyChooseHand(count, filter, requirement)
 	return cardsChosen
 	
 
 
-func chooseCards(count: int, playerControlled: bool = true, endable = false, requirement: Callable = func(x): return true ) -> Array[Card]:
+func chooseCards(count: int, playerControlled: bool = true, endable = false, filter: CardFilter = CardFilter.new(),requirement: Callable = func(x): return true ) -> Array[Card]:
 	var cardsChosen: Array[Card] = []
 	if playerControlled:
-		cardsChosen = await playerChooseCards(count, endable, requirement)
+		cardsChosen = await playerChooseCards(count, endable, filter, requirement)
 	else:
-		cardsChosen = await enemyChooseCards(count, requirement)
+		cardsChosen = await enemyChooseCards(count, filter, requirement)
 	return cardsChosen
 
 func forceRngSync():
@@ -856,7 +857,7 @@ func displayEnemyCards(mon: BattleMonster):
 		
 		index += 1
 
-func setCardSelection(mon: BattleMonster, allSelectable = false):
+func setCardSelection(mon: BattleMonster, allSelectable = false, filter: CardFilter = CardFilter.new()):
 	
 	## Removes all existing Card UI elements. -A
 	while len(cardButtons) > 0:
@@ -864,11 +865,16 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		cardButtons.remove_at(0)
 		button.queue_free()
 	
-	var id = 0
+	var id = -1
 
 	## Creates a new Card UI element for each card in the current monster's hand.
 	## Assigns each card ui element a corresponding ID.
 	for card in mon.currentHand.storedCards:
+		id += 1
+		
+		if !filter.matchesFilter(card):
+			continue
+		
 		var newButton: CardDisplay = cardPrefab.instantiate()
 		get_parent().add_child(newButton)
 		
@@ -876,7 +882,7 @@ func setCardSelection(mon: BattleMonster, allSelectable = false):
 		newButton.show()
 		
 		cardButtons.push_back(newButton)
-		id += 1
+		
 	
 	## Modifies card text wherever necessary.
 	for uiIndex in len(cardButtons):
