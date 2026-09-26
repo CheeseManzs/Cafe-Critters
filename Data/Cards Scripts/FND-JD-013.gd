@@ -11,7 +11,10 @@ func _init() -> void:
 
 func effect(attacker: BattleMonster, defender: BattleMonster):
 	while true:
+		# check for blackjack in deck
+		if attacker.deckEmpty(): break
 		if attacker.currentDeck.storedCards[0].triggersBlackjack: break
-		if attacker.currentDeck.storedCards.size() == 0: break
 		await attacker.drawCards(1)
+	if not attacker.deckEmpty():
+		print("top card: ", attacker.currentDeck.storedCards[0].name)
 	pass

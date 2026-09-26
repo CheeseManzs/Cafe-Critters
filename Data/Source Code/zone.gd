@@ -22,6 +22,12 @@ func draw(target: Zone, cardID = 0) -> void:
 		var selected = target.storedCards[cardID]
 	pass
 
+func containsProperty(propertyName: String, value):
+	for card in storedCards:
+		if card.get(propertyName) == value:
+			return true
+	return false
+
 #removes a card from the deck and returns it
 func pullCard(cardID: int, tempArray: Array[Card] = storedCards) -> Card:
 	var card = tempArray[cardID]

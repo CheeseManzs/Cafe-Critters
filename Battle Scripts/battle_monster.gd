@@ -834,3 +834,7 @@ func removeMP(mpAmount: int) -> void:
 #returns monster's current held item
 func getHeldItem() -> HeldItem:
 	return heldItem
+
+# checks if deck is empty
+func deckEmpty() -> bool:
+	return (currentDeck.storedCards.size() <= 0)
