@@ -34,6 +34,8 @@ var faintAnimated = false
 var lockToIntendedPosition = true
 var lastDelta = 0
 
+var fast_anims = false
+
 
 func getHeight() -> float:
 	return sprite.texture.get_height()*sprite.pixel_size
@@ -58,6 +60,8 @@ func faintAnimation(delta: float):
 	bobMultiplier = 0
 
 func hitAnimation() -> void:
+	if fast_anims:
+		return
 	lockToIntendedPosition = false
 	var elapsed: float = 0
 	var timeMax: float = 0.5
@@ -116,6 +120,8 @@ func updateStatusConditions():
 
 
 func contactAnimation(target: MonsterDisplay) -> void:
+	if fast_anims:
+		return
 	lockToIntendedPosition = false
 	var elapsed: float = 0
 	var timeMax: float = 0.3
@@ -158,6 +164,7 @@ func contactAnimation(target: MonsterDisplay) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	fast_anims = "-fast" in OS.get_cmdline_args()
 	reloadMonster()
 	playerControlled = get_meta("playerControlled")
 	#generate the bobbing offset

@@ -5,6 +5,7 @@ extends Camera3D
 @export var moveParticles: GPUParticles3D
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 static var singleton: BattleCamera
+static var fast_camera = false
 var ogPos: Vector3
 var focusPos: Vector3
 var focusOffset: Vector3 = Vector3.ZERO
@@ -19,6 +20,8 @@ func _ready() -> void:
 	singleton = self
 	position.y += 30
 	ogDistance = (position - ogPos).length()
+	fast_camera = "-fast" in OS.get_cmdline_args()
+	print("cmd args:",OS.get_cmdline_args())
 	pass # Replace with function body.
 
 func randomOffset(range: float) -> Vector3:
@@ -29,10 +32,13 @@ func randomOffset(range: float) -> Vector3:
 	)
 
 func focusMonster(mon: BattleMonster, _zoom = 1.5, _yweight = 1.0):
+	if fast_camera:
+		return
 	await  focusMonsters([mon],_zoom,_yweight)
 	
 func focusMonsters(mons: Array, _zoom = 1.5,_yweight = 1.0):
-	
+	if fast_camera:
+		return
 	if len(mons) == 0:
 		return
 	focusZoom = _zoom
