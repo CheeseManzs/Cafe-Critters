@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bxid70s6fodje"
+path="res://.godot/imported/A Stitch in Time - Chiretta's Theme - Duelists of Eden Original Soundtrack - steelplus (はがね) (192k).mp3-be0ab11e3dc50ddd315d282e631a76c2.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/A Stitch in Time - Chiretta's Theme - Duelists of Eden Original Soundtrack - steelplus (はがね) (192k).mp3"
+dest_files=["res://.godot/imported/A Stitch in Time - Chiretta's Theme - Duelists of Eden Original Soundtrack - steelplus (はがね) (192k).mp3-be0ab11e3dc50ddd315d282e631a76c2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -51,6 +51,7 @@
 [ext_resource type="Script" uid="uid://qyjjk824ex4m" path="res://Scenes/bg_manager.gd" id="46_csjxp"]
 [ext_resource type="Resource" uid="uid://banab6f75ryxy" path="res://Data/Backdrops/Testing Grounds.tres" id="48_66d1q"]
 [ext_resource type="AudioStream" uid="uid://bqtsg540mqb3p" path="res://Audio/BGM/Gluttony Fang II.mp3" id="48_vovxs"]
+[ext_resource type="AudioStream" uid="uid://bxid70s6fodje" path="res://Audio/BGM/A Stitch in Time - Chiretta's Theme - Duelists of Eden Original Soundtrack - steelplus (はがね) (192k).mp3" id="50_d5bmu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qslj5"]
 bg_color = Color(0, 0, 0, 0.423529)
@@ -577,7 +578,7 @@ stream = ExtResource("28_r2avy")
 volume_db = -10.569
 parameters/looping = true
 script = ExtResource("31_hrdfj")
-audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("42_qj1ib"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj"), ExtResource("48_vovxs")])
+audioList = Array[AudioStream]([ExtResource("34_ua6n4"), ExtResource("32_jhibm"), ExtResource("28_r2avy"), ExtResource("33_l0gwg"), ExtResource("34_jd5b4"), ExtResource("35_01yby"), ExtResource("36_40yr6"), ExtResource("40_2aoel"), ExtResource("42_qj1ib"), ExtResource("41_50g80"), ExtResource("42_2ti1b"), ExtResource("43_6o2cy"), ExtResource("44_6uit3"), ExtResource("45_qncyj"), ExtResource("48_vovxs"), ExtResource("50_d5bmu")])
 multiplayerGameIndex = -1
 
 [node name="SFX1" type="AudioStreamPlayer" parent="." unique_id=1328530875]
